@@ -59,7 +59,7 @@ public class LedgerUiTests
         await service.CreateAsync(new CreateAccountRequest("Zichtrekening", AccountType.PersonalCurrent, Opening, Money.FromCents(184_235), Share.Full));
         await service.CreateAsync(new CreateAccountRequest("Gezamenlijke rekening", AccountType.JointCurrent, Opening, Money.FromCents(240_000), new Share(5000)));
         await service.CreateAsync(new CreateAccountRequest("Spaarrekening 1", AccountType.Savings, Opening, Money.FromCents(815_000), Share.Full));
-        await service.CreateAsync(new CreateAccountRequest("VISA", AccountType.CreditCard, Opening, Money.FromCents(-31_240), Share.Full));
+        await service.CreateAsync(new CreateAccountRequest("VISA", AccountType.CreditCard, Opening, Money.FromCents(-31_240), Share.Full, Card: new PersonalFinanceOS.Application.Cards.CardSettings(Money.FromCents(150_000), 28, null, null)));
     }
 
     private static void Type(QuickAddViewModel quickAdd, string text)

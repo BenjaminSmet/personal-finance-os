@@ -1,7 +1,9 @@
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Cards;
 using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Domain.Imports;
 using PersonalFinanceOS.Domain.Ledger;
+using PersonalFinanceOS.Domain.Planning;
 using PersonalFinanceOS.Domain.Transactions;
 
 namespace PersonalFinanceOS.Application.Abstractions;
@@ -12,7 +14,8 @@ public interface IAccountRepository
 
     Task<Account?> FindAsync(Guid id, CancellationToken ct = default);
 
-    Task AddAsync(Account account, CancellationToken ct = default);
+    /// <summary>Adds the account and, for a credit card, its settings together: all or nothing.</summary>
+    Task AddAsync(Account account, CreditCardProfile? card = null, CancellationToken ct = default);
 
     Task UpdateAsync(Account account, CancellationToken ct = default);
 }
@@ -115,4 +118,38 @@ public interface IImportRepository
 
     /// <summary>The batch's new status and every changed line in one database transaction.</summary>
     Task SaveUndoAsync(ImportBatch batch, IReadOnlyCollection<Transaction> changed, CancellationToken ct = default);
+}
+
+public interface ICreditCardRepository
+{
+    Task<IReadOnlyList<CreditCardProfile>> ListAsync(CancellationToken ct = default);
+
+    Task<CreditCardProfile?> FindAsync(Guid accountId, CancellationToken ct = default);
+
+    /// <summary>Inserts or updates the settings of one card.</summary>
+    Task SaveAsync(CreditCardProfile profile, CancellationToken ct = default);
+}
+
+public interface IRecurringRepository
+{
+    Task<IReadOnlyList<RecurringRule>> ListRulesAsync(bool includeEnded, CancellationToken ct = default);
+
+    Task<RecurringRule?> FindRuleAsync(Guid id, CancellationToken ct = default);
+
+    Task AddRuleAsync(RecurringRule rule, CancellationToken ct = default);
+
+    Task UpdateRuleAsync(RecurringRule rule, CancellationToken ct = default);
+
+    Task<IReadOnlyList<ScheduledItem>> ListItemsAsync(CancellationToken ct = default);
+
+    Task<ScheduledItem?> FindItemAsync(Guid ruleId, DateOnly occurrenceDate, CancellationToken ct = default);
+
+    /// <summary>
+    /// Saves the decision and the transactions it created (for a confirmation) in one database
+    /// transaction, so a planned item is never linked to a transaction that was not saved.
+    /// </summary>
+    Task SaveItemAsync(ScheduledItem item, IReadOnlyCollection<Transaction> created, CancellationToken ct = default);
+
+    /// <summary>Removes a decision, so the occurrence is open again. Only decisions without a live transaction.</summary>
+    Task DeleteItemAsync(ScheduledItem item, CancellationToken ct = default);
 }

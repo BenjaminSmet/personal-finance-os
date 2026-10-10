@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Cards;
 using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Domain.Imports;
 using PersonalFinanceOS.Domain.Ledger;
+using PersonalFinanceOS.Domain.Planning;
 using PersonalFinanceOS.Domain.Transactions;
 using PersonalFinanceOS.Infrastructure.Database;
 
@@ -28,6 +30,9 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     public DbSet<ImportBatch> ImportBatches => Set<ImportBatch>();
     public DbSet<ImportTransferLink> ImportTransferLinks => Set<ImportTransferLink>();
     public DbSet<ImportProfile> ImportProfiles => Set<ImportProfile>();
+    public DbSet<CreditCardProfile> CreditCardProfiles => Set<CreditCardProfile>();
+    public DbSet<RecurringRule> RecurringRules => Set<RecurringRule>();
+    public DbSet<ScheduledItem> ScheduledItems => Set<ScheduledItem>();
 
     public static DbContextOptions<FinanceDbContext> OptionsFor(string databaseFile) =>
         new DbContextOptionsBuilder<FinanceDbContext>()
@@ -212,6 +217,60 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
             e.Property(p => p.MappingJson).HasColumnName("mapping_json");
             e.Property(p => p.UseCount).HasColumnName("use_count");
             e.Property(p => p.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+        });
+
+        modelBuilder.Entity<CreditCardProfile>(e =>
+        {
+            e.ToTable("credit_card_profiles");
+            e.HasKey(p => p.AccountId);
+            e.Property(p => p.AccountId).HasColumnName("account_id").HasConversion(guid).ValueGeneratedNever();
+            e.Property(p => p.CreditLimit).HasColumnName("credit_limit_cents").HasConversion(money);
+            e.Property(p => p.StatementStartDay).HasColumnName("statement_start_day");
+            e.Property(p => p.SettlementDay).HasColumnName("settlement_day");
+            e.Property(p => p.SettlementAccountId).HasColumnName("settlement_account_id").HasConversion(optionalGuid);
+            e.Property(p => p.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+            e.HasOne<Account>().WithOne().HasForeignKey<CreditCardProfile>(p => p.AccountId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Account>().WithMany().HasForeignKey(p => p.SettlementAccountId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<RecurringRule>(e =>
+        {
+            e.ToTable("recurring_rules");
+            e.HasKey(r => r.Id);
+            e.Ignore(r => r.IsActive);
+            e.Property(r => r.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(r => r.Name).HasColumnName("name").HasMaxLength(RecurringRule.MaxNameLength);
+            e.Property(r => r.Kind).HasColumnName("kind").HasConversion<string>();
+            e.Property(r => r.AccountId).HasColumnName("account_id").HasConversion(guid);
+            e.Property(r => r.ToAccountId).HasColumnName("to_account_id").HasConversion(optionalGuid);
+            e.Property(r => r.CategoryId).HasColumnName("category_id").HasConversion(optionalGuid);
+            e.Property(r => r.Amount).HasColumnName("amount_cents").HasConversion(money);
+            e.Property(r => r.Frequency).HasColumnName("frequency").HasConversion<string>();
+            e.Property(r => r.StartDate).HasColumnName("start_date").HasConversion(date);
+            e.Property(r => r.EndDate).HasColumnName("end_date").HasConversion(optionalDate);
+            e.Property(r => r.Status).HasColumnName("status").HasConversion<string>();
+            e.Property(r => r.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.Property(r => r.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+            e.HasOne<Account>().WithMany().HasForeignKey(r => r.AccountId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Account>().WithMany().HasForeignKey(r => r.ToAccountId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Category>().WithMany().HasForeignKey(r => r.CategoryId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<ScheduledItem>(e =>
+        {
+            e.ToTable("scheduled_items");
+            e.HasKey(i => i.Id);
+            e.HasIndex(i => new { i.RuleId, i.OccurrenceDate }).IsUnique();
+            e.Property(i => i.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(i => i.RuleId).HasColumnName("rule_id").HasConversion(guid);
+            e.Property(i => i.OccurrenceDate).HasColumnName("occurrence_date").HasConversion(date);
+            e.Property(i => i.Status).HasColumnName("status").HasConversion<string>();
+            e.Property(i => i.PlannedDate).HasColumnName("planned_date").HasConversion(optionalDate);
+            e.Property(i => i.TransactionId).HasColumnName("transaction_id").HasConversion(optionalGuid);
+            e.Property(i => i.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.Property(i => i.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+            e.HasOne<RecurringRule>().WithMany().HasForeignKey(i => i.RuleId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Transaction>().WithMany().HasForeignKey(i => i.TransactionId).OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

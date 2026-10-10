@@ -64,6 +64,37 @@
           </StackPanel>
         </Grid>
 
+        <!-- Credit-card settings (spec §10): entered for every card, nothing assumed -->
+        <StackPanel Spacing="12" IsVisible="{Binding IsCreditCard}">
+          <Border Classes="separator" />
+          <TextBlock Classes="headline" Text="{l:T Card_SettingsTitle}" />
+          <TextBlock Classes="caption" Text="{l:T Card_SettingsIntro}" TextWrapping="Wrap" />
+          <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,16,Auto">
+          <StackPanel>
+            <TextBlock Classes="fieldLabel" Text="{l:T Card_Limit_Label}" />
+            <TextBox Text="{Binding CardLimitText}" PlaceholderText="{l:T Card_LimitPlaceholder}" />
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Card_StartDay}" />
+            <TextBox Text="{Binding CardStartDayText}" PlaceholderText="{l:T Card_StartDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
+            <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Card_StartDayHint}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Row="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Card_SettlementDay}" />
+            <TextBox Text="{Binding CardSettlementDayText}" PlaceholderText="{l:T Card_SettlementDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
+            <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Card_SettlementDayHint}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Row="2" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Card_SettlementAccount}" />
+            <ComboBox ItemsSource="{Binding SettlementOptions}" SelectedItem="{Binding CardSettlementAccount}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+        </Grid>
+        </StackPanel>
+
         <Border Classes="error" IsVisible="{Binding FormError, Converter={x:Static ObjectConverters.IsNotNull}}">
           <TextBlock Text="{Binding FormError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
         </Border>
@@ -71,6 +102,45 @@
         <StackPanel Orientation="Horizontal" Spacing="10">
           <Button Classes="primary" Content="{l:T Accounts_Save}" Command="{Binding SaveCommand}" IsDefault="True" />
           <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelFormCommand}" IsCancel="True" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- Change a card's settings -->
+    <Border Classes="glass strong" IsVisible="{Binding IsCardEditOpen}" Padding="26,24">
+      <StackPanel Spacing="16">
+        <TextBlock Classes="title" Text="{Binding CardEditTitle}" />
+        <TextBlock Classes="secondary" Text="{l:T Card_EditIntro}" TextWrapping="Wrap" />
+        <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,16,Auto">
+          <StackPanel>
+            <TextBlock Classes="fieldLabel" Text="{l:T Card_Limit_Label}" />
+            <TextBox Text="{Binding CardLimitText}" PlaceholderText="{l:T Card_LimitPlaceholder}" />
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Card_StartDay}" />
+            <TextBox Text="{Binding CardStartDayText}" PlaceholderText="{l:T Card_StartDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
+            <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Card_StartDayHint}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Row="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Card_SettlementDay}" />
+            <TextBox Text="{Binding CardSettlementDayText}" PlaceholderText="{l:T Card_SettlementDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
+            <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Card_SettlementDayHint}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Row="2" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Card_SettlementAccount}" />
+            <ComboBox ItemsSource="{Binding SettlementOptions}" SelectedItem="{Binding CardSettlementAccount}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+        </Grid>
+        <Border Classes="error" IsVisible="{Binding CardError, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding CardError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+        </Border>
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Classes="primary" Content="{l:T Accounts_Save}" Command="{Binding SaveCardCommand}" />
+          <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelCardCommand}" />
         </StackPanel>
       </StackPanel>
     </Border>
@@ -150,6 +220,7 @@
                   </StackPanel>
                   <TextBlock Classes="secondary" FontSize="13" Text="{Binding TypeName}" />
                   <TextBlock Classes="caption" Text="{Binding ShareText}" IsVisible="{Binding HasPartialShare}" />
+                  <TextBlock Classes="caption" Text="{Binding CardText}" IsVisible="{Binding HasCardText}" Classes.debt="{Binding CardMissing}" TextWrapping="Wrap" />
                   <TextBlock Classes="caption" Text="{Binding ReconciliationText}" IsVisible="{Binding !HasReconciliationDifference}" />
                   <TextBlock Classes="caption debt" Text="{Binding ReconciliationText, StringFormat='⚠ {0}'}"
                              IsVisible="{Binding HasReconciliationDifference}" />
@@ -160,6 +231,8 @@
                   <TextBlock Classes="caption" HorizontalAlignment="Right" Text="{Binding SinceText}" />
                 </StackPanel>
                 <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                  <Button Content="{l:T Accounts_EditCard}" Padding="14,6" FontSize="13" Command="{Binding EditCardCommand}"
+                          IsVisible="{Binding CanEditCard}" />
                   <Button Content="{l:T Accounts_Reconcile}" Padding="14,6" FontSize="13" Command="{Binding ReconcileCommand}"
                           IsVisible="{Binding CanReconcile}" />
                   <Button Content="{l:T Accounts_Archive}" Padding="14,6" FontSize="13" Command="{Binding ArchiveCommand}"

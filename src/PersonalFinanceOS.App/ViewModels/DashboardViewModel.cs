@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using PersonalFinanceOS.App.Localization;
 using PersonalFinanceOS.Application.Accounts;
 using PersonalFinanceOS.Application.Ledger;
+using PersonalFinanceOS.Application.Planning;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
 using PersonalFinanceOS.Domain.Ledger;
@@ -11,20 +12,24 @@ using PersonalFinanceOS.Domain.Ledger;
 namespace PersonalFinanceOS.App.ViewModels;
 
 /// <summary>
-/// A starting point: balances and this month's income and spending. The full dashboard (safe-to-spend,
-/// upcoming payments, VISA status…) arrives in phase 5 and uses the same calculation services.
+/// A starting point: balances, this month's income and spending, safe-to-spend and what is waiting to be
+/// confirmed. The full dashboard arrives in phase 5 and uses the same calculation services.
 /// </summary>
 public sealed partial class DashboardViewModel : PageViewModel
 {
     private readonly AccountService _accounts;
     private readonly LedgerService _ledger;
+    private readonly ForecastService _forecast;
+    private readonly RecurringService _recurring;
     private readonly IClock _clock;
     private bool _active;
 
-    public DashboardViewModel(AccountService accounts, LedgerService ledger, IClock clock)
+    public DashboardViewModel(AccountService accounts, LedgerService ledger, ForecastService forecast, RecurringService recurring, IClock clock)
     {
         _accounts = accounts;
         _ledger = ledger;
+        _forecast = forecast;
+        _recurring = recurring;
         _clock = clock;
         ledger.Changed += (_, _) => Dispatcher.UIThread.Post(() =>
         {
@@ -36,6 +41,23 @@ public sealed partial class DashboardViewModel : PageViewModel
     }
 
     public Action? NavigateToAccounts { get; set; }
+
+    public Action? NavigateToPlanning { get; set; }
+
+    [ObservableProperty]
+    private bool _hasSafeToSpend;
+
+    [ObservableProperty]
+    private string _safeToSpendText = string.Empty;
+
+    [ObservableProperty]
+    private bool _safeIsNegative;
+
+    [ObservableProperty]
+    private string _safeCaption = string.Empty;
+
+    [ObservableProperty]
+    private string? _attentionText;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(AccountsSummary))]
@@ -83,11 +105,23 @@ public sealed partial class DashboardViewModel : PageViewModel
             Tiles.Add(new AccountRowViewModel(account, balances[account.Id], null, _ => Task.CompletedTask));
         }
 
+        var safe = await _forecast.SafeToSpendAsync();
+        HasSafeToSpend = safe.CanCalculate;
+        SafeToSpendText = safe.Amount.Format(Loc.Instance.Culture);
+        SafeIsNegative = safe.Amount.IsNegative;
+        SafeCaption = Loc.Format("Dashboard_SafeUntil", LedgerText.Date(safe.Until, today));
+
+        var due = (await _recurring.ListOpenAsync(today, withMatches: false)).Count;
+        AttentionText = due == 0 ? null : Loc.Format(due == 1 ? "Dashboard_ToConfirmOne" : "Dashboard_ToConfirmMany", due);
+
         OnPropertyChanged(nameof(HasAccounts));
     }
 
     [RelayCommand]
     private void GoToAccounts() => NavigateToAccounts?.Invoke();
+
+    [RelayCommand]
+    private void GoToPlanning() => NavigateToPlanning?.Invoke();
 
     protected override void OnLanguageChanged()
     {

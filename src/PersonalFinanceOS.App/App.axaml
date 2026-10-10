@@ -12,6 +12,7 @@
     <DataTemplate DataType="vm:TransactionsViewModel"><v:TransactionsView /></DataTemplate>
     <DataTemplate DataType="vm:AccountsViewModel"><v:AccountsView /></DataTemplate>
     <DataTemplate DataType="vm:ImportViewModel"><v:ImportView /></DataTemplate>
+    <DataTemplate DataType="vm:PlanningViewModel"><v:PlanningView /></DataTemplate>
     <DataTemplate DataType="vm:SettingsViewModel"><v:SettingsView /></DataTemplate>
     <DataTemplate DataType="vm:PlaceholderViewModel"><v:PlaceholderView /></DataTemplate>
   </Application.DataTemplates>

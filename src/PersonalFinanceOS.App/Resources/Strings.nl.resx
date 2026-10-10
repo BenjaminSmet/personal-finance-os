@@ -11,7 +11,7 @@
   <data name="Nav_Transactions" xml:space="preserve"><value>Transacties</value></data>
   <data name="Nav_Accounts" xml:space="preserve"><value>Rekeningen</value></data>
   <data name="Nav_Budgets" xml:space="preserve"><value>Budgetten &amp; analyse</value></data>
-  <data name="Nav_Forecasts" xml:space="preserve"><value>Prognoses</value></data>
+  <data name="Nav_Forecasts" xml:space="preserve"><value>Planning</value></data>
   <data name="Nav_Wishlist" xml:space="preserve"><value>Verlanglijst</value></data>
   <data name="Nav_Assets" xml:space="preserve"><value>Bezittingen &amp; beleggingen</value></data>
   <data name="Nav_Assistant" xml:space="preserve"><value>Assistent</value></data>
@@ -321,4 +321,135 @@
   <data name="Import_Columns_Edit" xml:space="preserve"><value>Kolommen aanpassen</value></data>
   <data name="Import_ConfirmOne" xml:space="preserve"><value>1 regel importeren</value></data>
   <data name="Import_ResultOne" xml:space="preserve"><value>1 regel is toegevoegd.</value></data>
+  <data name="Dashboard_SafeUntil" xml:space="preserve"><value>Tot en met {0}, na alles wat gepland is en je buffer. Een prognose, geen saldo.</value></data>
+  <data name="Dashboard_ToConfirmOne" xml:space="preserve"><value>1 geplande post wacht op bevestiging</value></data>
+  <data name="Dashboard_ToConfirmMany" xml:space="preserve"><value>{0} geplande posten wachten op bevestiging</value></data>
+  <data name="Dashboard_GoToPlanning" xml:space="preserve"><value>Naar planning</value></data>
+  <data name="Accounts_EditCard" xml:space="preserve"><value>Kaartinstellingen</value></data>
+  <data name="Accounts_CardNotSetUp" xml:space="preserve"><value>Kaartinstellingen ontbreken: vul de limiet en de afrekenperiode in</value></data>
+  <data name="Accounts_CardSummary" xml:space="preserve"><value>Limiet {0} · periode van de {1}e tot de {2}e</value></data>
+  <data name="Accounts_CardDebitDay" xml:space="preserve"><value>afschrijving op de {0}e</value></data>
+  <data name="Accounts_CardDebitDayUnknown" xml:space="preserve"><value>afschrijvingsdag niet ingesteld</value></data>
+  <data name="Card_MonthEnd" xml:space="preserve"><value>laatste dag van de maand</value></data>
+  <data name="Card_SettingsTitle" xml:space="preserve"><value>Kaartinstellingen</value></data>
+  <data name="Card_SettingsIntro" xml:space="preserve"><value>Vul deze in zoals op je kaartafrekening. Je kunt ze later aanpassen; geregistreerde transacties veranderen nooit.</value></data>
+  <data name="Card_EditTitle" xml:space="preserve"><value>Instellingen voor {0}</value></data>
+  <data name="Card_EditIntro" xml:space="preserve"><value>Een wijziging verandert alleen schattingen: periodes, de verwachte afrekening en het beschikbare krediet.</value></data>
+  <data name="Card_Limit_Label" xml:space="preserve"><value>Kredietlimiet</value></data>
+  <data name="Card_LimitPlaceholder" xml:space="preserve"><value>bv. 1500</value></data>
+  <data name="Card_StartDay" xml:space="preserve"><value>Nieuwe periode begint op dag</value></data>
+  <data name="Card_StartDayPlaceholder" xml:space="preserve"><value>bv. 28</value></data>
+  <data name="Card_StartDayHint" xml:space="preserve"><value>De periode eindigt de dag ervoor. Met 28: van de 28e tot en met de 27e. In korte maanden betekent een latere dag de laatste dag.</value></data>
+  <data name="Card_SettlementDay" xml:space="preserve"><value>Afgeschreven op dag (optioneel)</value></data>
+  <data name="Card_SettlementDayPlaceholder" xml:space="preserve"><value>onbekend</value></data>
+  <data name="Card_SettlementDayHint" xml:space="preserve"><value>De eerste zulke dag na het einde van de periode. Laat leeg als je het nog niet weet.</value></data>
+  <data name="Card_SettlementAccount" xml:space="preserve"><value>Automatisch betaald vanaf</value></data>
+  <data name="Card_NoSettlementAccount" xml:space="preserve"><value>Niet ingesteld</value></data>
+  <data name="Card_Saved" xml:space="preserve"><value>Kaartinstellingen bewaard.</value></data>
+  <data name="Card_NotSetUp" xml:space="preserve"><value>Deze kaart heeft nog geen instellingen. Ga naar Rekeningen › Kaartinstellingen om de limiet en periode in te vullen.</value></data>
+  <data name="Card_Period" xml:space="preserve"><value>periode {0} – {1}</value></data>
+  <data name="Card_Limit" xml:space="preserve"><value>limiet {0}</value></data>
+  <data name="Card_Outstanding" xml:space="preserve"><value>Openstaand</value></data>
+  <data name="Card_Available" xml:space="preserve"><value>Beschikbaar krediet (schatting)</value></data>
+  <data name="Card_PeriodSpending" xml:space="preserve"><value>Uitgegeven deze periode</value></data>
+  <data name="Card_Estimate" xml:space="preserve"><value>Verwachte afrekening voor deze periode: {0}</value></data>
+  <data name="Card_EstimateWithPlanned" xml:space="preserve"><value>Verwachte afrekening voor deze periode: {0} (waarvan {1} gepland)</value></data>
+  <data name="Card_NothingToPay" xml:space="preserve"><value>Op dit moment geen afrekening te betalen.</value></data>
+  <data name="Card_SettlementOn" xml:space="preserve"><value>Volgende afschrijving: {0} op {1}</value></data>
+  <data name="Card_SettlementOverdue" xml:space="preserve"><value>Afschrijving van {0} verwacht op {1}, nog niet geregistreerd</value></data>
+  <data name="Card_SettlementNoDate" xml:space="preserve"><value>Volgende afschrijving: {0}, datum niet ingesteld</value></data>
+  <data name="Card_NotCash" xml:space="preserve"><value>Beschikbaar krediet is leenruimte, geen geld dat je hebt.</value></data>
+  <data name="Card_PaidMore" xml:space="preserve"><value>De geregistreerde betaling is {0} hoger dan de geschatte afrekening ({1} verwacht, {2} betaald). Vergelijk met de echte afrekening.</value></data>
+  <data name="Card_PaidLess" xml:space="preserve"><value>De geregistreerde betaling is {0} lager dan de geschatte afrekening ({1} verwacht, {2} betaald). Vergelijk met de echte afrekening.</value></data>
+  <data name="Planning_Title" xml:space="preserve"><value>Planning</value></data>
+  <data name="Planning_Subtitle" xml:space="preserve"><value>Wat er verwacht wordt: gepland inkomen en betalingen, kaartafrekeningen en wat je veilig kunt uitgeven. Niets hier verandert een saldo tot je het bevestigt.</value></data>
+  <data name="Planning_SafeToSpend" xml:space="preserve"><value>Veilig te besteden</value></data>
+  <data name="Planning_SafeUntilIncome" xml:space="preserve"><value>Tot en met {0}, de dag voor {1} verwacht wordt ({2}).</value></data>
+  <data name="Planning_SafeUntil" xml:space="preserve"><value>Voor de komende dagen, tot en met {0}.</value></data>
+  <data name="Planning_SafeNoAccounts" xml:space="preserve"><value>Voeg eerst een persoonlijke zichtrekening toe; veilig te besteden wordt daarmee berekend.</value></data>
+  <data name="Forecast_Balance" xml:space="preserve"><value>Saldo nu ({0})</value></data>
+  <data name="Forecast_RecordedLater" xml:space="preserve"><value>Al geregistreerd met een latere datum</value></data>
+  <data name="Forecast_Planned" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="Forecast_CardSettlement" xml:space="preserve"><value>Afrekening {0} · {1}</value></data>
+  <data name="Forecast_Buffer" xml:space="preserve"><value>Minimumbuffer</value></data>
+  <data name="ForecastCaveat_NoIncomePlanned" xml:space="preserve"><value>Er is geen inkomen gepland, dus de komende 30 dagen worden gebruikt. Voeg je loon toe als terugkerende post voor een betere schatting.</value></data>
+  <data name="ForecastCaveat_CardNotSetUp" xml:space="preserve"><value>Een kredietkaart heeft nog geen instellingen; de afrekening telt niet mee.</value></data>
+  <data name="ForecastCaveat_SettlementDateUnknown" xml:space="preserve"><value>De afschrijvingsdag van een kaart is niet ingesteld; de afrekening telt mee alsof ze meteen na de periode valt.</value></data>
+  <data name="ForecastCaveat_SettlementAccountUnknown" xml:space="preserve"><value>Voor een kaart is geen betalende rekening ingesteld; de afrekening telt niet mee.</value></data>
+  <data name="ForecastCaveat_OverdueItems" xml:space="preserve"><value>Sommige geplande betalingen zijn over datum en niet bevestigd; ze tellen nog mee.</value></data>
+  <data name="Planning_CashFlow" xml:space="preserve"><value>Verwachte kasstroom</value></data>
+  <data name="Planning_NextDays" xml:space="preserve"><value>Komende {0} dagen</value></data>
+  <data name="Planning_CashFlowNote" xml:space="preserve"><value>Persoonlijke zichtrekening en cash. Verwacht inkomen is een prognose, geen zeker geld. Kaartafrekeningen tellen op hun afschrijvingsdag.</value></data>
+  <data name="Planning_ToConfirm" xml:space="preserve"><value>Te bevestigen</value></data>
+  <data name="Planning_ToConfirmNote" xml:space="preserve"><value>Is het gebeurd? Bevestig het (pas datum of bedrag aan indien nodig), koppel het aan een regel die er al is, stel het uit of sla het deze keer over.</value></data>
+  <data name="Planning_NothingPlanned" xml:space="preserve"><value>Niets gepland in de komende 30 dagen.</value></data>
+  <data name="Planning_Due" xml:space="preserve"><value>Verwacht {0}</value></data>
+  <data name="Planning_DueOverdue" xml:space="preserve"><value>Verwacht {0}, nog niet bevestigd</value></data>
+  <data name="Planning_PostponedBadge" xml:space="preserve"><value>Uitgesteld</value></data>
+  <data name="Planning_Match" xml:space="preserve"><value>Al geregistreerd? {0} op {1} ({2})</value></data>
+  <data name="Planning_LinkButton" xml:space="preserve"><value>Koppelen</value></data>
+  <data name="Planning_Date" xml:space="preserve"><value>Datum</value></data>
+  <data name="Planning_Amount" xml:space="preserve"><value>Bedrag</value></data>
+  <data name="Planning_ConfirmButton" xml:space="preserve"><value>Bevestigen</value></data>
+  <data name="Planning_PostponeButton" xml:space="preserve"><value>Uitstellen tot datum</value></data>
+  <data name="Planning_SkipButton" xml:space="preserve"><value>Overslaan</value></data>
+  <data name="Planning_PostponePickDate" xml:space="preserve"><value>Kies eerst een latere datum en stel dan uit.</value></data>
+  <data name="Planning_Confirmed" xml:space="preserve"><value>{0} bevestigd en geregistreerd.</value></data>
+  <data name="Planning_Linked" xml:space="preserve"><value>{0} gekoppeld aan de bestaande regel.</value></data>
+  <data name="Planning_Postponed" xml:space="preserve"><value>{0} uitgesteld tot {1}.</value></data>
+  <data name="Planning_Skipped" xml:space="preserve"><value>{0} deze keer overgeslagen.</value></data>
+  <data name="Planning_Cards" xml:space="preserve"><value>Kredietkaarten</value></data>
+  <data name="Planning_Rules" xml:space="preserve"><value>Terugkerende posten</value></data>
+  <data name="Planning_RulesNote" xml:space="preserve"><value>Loon, huur, abonnementen, verzekeringen, overschrijvingen naar de gezamenlijke rekening… Ze maken verwachte posten aan, nooit zelf transacties. Kaartafrekeningen worden uit de kaart zelf berekend.</value></data>
+  <data name="Planning_AddRule" xml:space="preserve"><value>Nieuwe terugkerende post</value></data>
+  <data name="Planning_NoRules" xml:space="preserve"><value>Nog geen terugkerende posten.</value></data>
+  <data name="Planning_RuleName" xml:space="preserve"><value>Naam</value></data>
+  <data name="Planning_RuleNamePlaceholder" xml:space="preserve"><value>bv. Loon, Netflix, Huur</value></data>
+  <data name="Planning_Kind" xml:space="preserve"><value>Soort</value></data>
+  <data name="Planning_Account" xml:space="preserve"><value>Rekening</value></data>
+  <data name="Planning_FromAccount" xml:space="preserve"><value>Van rekening</value></data>
+  <data name="Planning_ToAccount" xml:space="preserve"><value>Naar rekening</value></data>
+  <data name="Planning_Frequency" xml:space="preserve"><value>Herhaling</value></data>
+  <data name="Planning_StartDate" xml:space="preserve"><value>Eerste datum</value></data>
+  <data name="Planning_StartDateHint" xml:space="preserve"><value>Volgende datums houden deze dag van de maand (of de laatste dag in kortere maanden).</value></data>
+  <data name="Planning_EndDate" xml:space="preserve"><value>Laatste datum (optioneel)</value></data>
+  <data name="Planning_EndRule" xml:space="preserve"><value>Stoppen</value></data>
+  <data name="Planning_RuleSaved" xml:space="preserve"><value>Terugkerende post bewaard.</value></data>
+  <data name="Planning_RuleEnded" xml:space="preserve"><value>{0} gestopt. Eerdere bevestigingen blijven bewaard.</value></data>
+  <data name="Planning_NextOn" xml:space="preserve"><value>Volgende: {0}</value></data>
+  <data name="Planning_Settings" xml:space="preserve"><value>Instellingen voor de prognose</value></data>
+  <data name="Planning_Buffer" xml:space="preserve"><value>Minimumbuffer</value></data>
+  <data name="Planning_BufferHint" xml:space="preserve"><value>Geld dat altijd op je zichtrekening moet blijven. Veilig te besteden telt het nooit mee.</value></data>
+  <data name="Planning_RoundingAccount" xml:space="preserve"><value>Afrondingen van de bank gaan naar</value></data>
+  <data name="Planning_RoundingNone" xml:space="preserve"><value>Automatisch (enige spaarrekening)</value></data>
+  <data name="Planning_RoundingHint" xml:space="preserve"><value>Gebruikt bij importeren: afrondingsregels worden een overschrijving naar deze rekening, nooit een uitgave.</value></data>
+  <data name="Planning_SettingsSaved" xml:space="preserve"><value>Bewaard.</value></data>
+  <data name="RecurringKind_Income" xml:space="preserve"><value>Inkomen (verwacht)</value></data>
+  <data name="RecurringKind_Expense" xml:space="preserve"><value>Betaling</value></data>
+  <data name="RecurringKind_Transfer" xml:space="preserve"><value>Overschrijving</value></data>
+  <data name="Frequency_Weekly" xml:space="preserve"><value>Elke week</value></data>
+  <data name="Frequency_Monthly" xml:space="preserve"><value>Elke maand</value></data>
+  <data name="Frequency_Quarterly" xml:space="preserve"><value>Elk kwartaal</value></data>
+  <data name="Frequency_Yearly" xml:space="preserve"><value>Elk jaar</value></data>
+  <data name="Import_Suggestion_Rounding" xml:space="preserve"><value>Afronding van de bank naar sparen: een overschrijving, geen uitgave</value></data>
+  <data name="Import_Suggestion_RoundingUncertain" xml:space="preserve"><value>Lijkt een afronding van de bank, maar de spaarrekening of het bedrag is onduidelijk. Controleer en vink zelf aan.</value></data>
+  <data name="Error_card_settings_required" xml:space="preserve"><value>Vul de limiet en de afrekenperiode van de kaart in.</value></data>
+  <data name="Error_card_limit_invalid" xml:space="preserve"><value>Vul de kredietlimiet in, bijvoorbeeld 1500.</value></data>
+  <data name="Error_card_limit_negative" xml:space="preserve"><value>De kredietlimiet kan niet negatief zijn.</value></data>
+  <data name="Error_card_startDay_invalid" xml:space="preserve"><value>Vul de dag in waarop de periode begint: een getal van 1 tot 31.</value></data>
+  <data name="Error_card_settlementDay_invalid" xml:space="preserve"><value>De afschrijvingsdag moet een getal van 1 tot 31 zijn, of leeg.</value></data>
+  <data name="Error_card_settlementAccount_invalid" xml:space="preserve"><value>De kaart moet betaald worden vanaf een andere actieve rekening met geld.</value></data>
+  <data name="Error_card_notACard" xml:space="preserve"><value>Deze instellingen zijn alleen voor kredietkaarten.</value></data>
+  <data name="Error_recurring_name_required" xml:space="preserve"><value>Geef de terugkerende post een naam.</value></data>
+  <data name="Error_recurring_name_tooLong" xml:space="preserve"><value>De naam is te lang (max. 100 tekens).</value></data>
+  <data name="Error_recurring_toAccount_required" xml:space="preserve"><value>Kies de rekening waar de overschrijving naartoe gaat.</value></data>
+  <data name="Error_recurring_endBeforeStart" xml:space="preserve"><value>De laatste datum ligt voor de eerste datum.</value></data>
+  <data name="Error_recurring_notFound" xml:space="preserve"><value>Deze terugkerende post bestaat niet meer.</value></data>
+  <data name="Error_scheduled_notFound" xml:space="preserve"><value>Deze geplande post bestaat niet.</value></data>
+  <data name="Error_scheduled_alreadyHandled" xml:space="preserve"><value>Deze post is al bevestigd of overgeslagen.</value></data>
+  <data name="Error_scheduled_postpone_beforeDue" xml:space="preserve"><value>Stel uit tot een datum na de geplande datum.</value></data>
+  <data name="Error_scheduled_link_invalid" xml:space="preserve"><value>Die regel past niet bij deze post (andere rekening of soort).</value></data>
+  <data name="Error_scheduled_link_taken" xml:space="preserve"><value>Die regel is al gekoppeld aan een andere geplande post.</value></data>
+  <data name="Error_scheduled_reopen_confirmed" xml:space="preserve"><value>Verwijder de geregistreerde transactie om een bevestiging ongedaan te maken.</value></data>
+  <data name="Error_forecast_buffer_negative" xml:space="preserve"><value>De buffer kan niet negatief zijn.</value></data>
 </root>

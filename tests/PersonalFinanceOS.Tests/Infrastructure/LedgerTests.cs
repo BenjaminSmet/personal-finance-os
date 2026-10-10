@@ -45,7 +45,7 @@ public sealed class LedgerTests : IDisposable
     public void Dispose() => _temp.Dispose();
 
     private Task<Account> AccountAsync(string name, AccountType type, long openingCents = 0, int shareBp = Share.FullBasisPoints) =>
-        _accounts.CreateAsync(new CreateAccountRequest(name, type, Opening, Money.FromCents(openingCents), new Share(shareBp)));
+        _accounts.CreateAsync(new CreateAccountRequest(name, type, Opening, Money.FromCents(openingCents), new Share(shareBp), Card: type == AccountType.CreditCard ? new PersonalFinanceOS.Application.Cards.CardSettings(Money.FromCents(150_000), 28, null, null) : null));
 
     private Task<Transaction> ExpenseAsync(Account account, long cents, Guid? category = null) =>
         _ledger.RecordAsync(new TransactionRequest(account.Id, Day, Money.FromCents(cents), TransactionType.Expense, "Supermarkt", category));

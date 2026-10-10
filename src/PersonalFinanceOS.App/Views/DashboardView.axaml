@@ -25,6 +25,20 @@
       </Grid>
     </Border>
 
+    <!-- Safe-to-spend and items waiting to be confirmed (phase 4) -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasSafeToSpend}">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Spacing="2">
+          <TextBlock Classes="overline" Text="{l:T Planning_SafeToSpend}" />
+          <TextBlock Classes="amount" Text="{Binding SafeToSpendText}" Classes.debt="{Binding SafeIsNegative}" />
+          <TextBlock Classes="caption" Text="{Binding SafeCaption}" TextWrapping="Wrap" />
+          <TextBlock Classes="caption debt" Text="{Binding AttentionText, StringFormat='⚠ {0}'}" Margin="0,4,0,0"
+                     IsVisible="{Binding AttentionText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </StackPanel>
+        <Button Grid.Column="1" Content="{l:T Dashboard_GoToPlanning}" Command="{Binding GoToPlanningCommand}" VerticalAlignment="Center" />
+      </Grid>
+    </Border>
+
     <!-- This month: income and spending; transfers and card settlements never count -->
     <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasAccounts}">
       <StackPanel Spacing="12">

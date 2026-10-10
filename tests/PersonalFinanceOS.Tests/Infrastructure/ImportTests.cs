@@ -51,13 +51,13 @@ public sealed class ImportTests : IDisposable
         _categories = new CategoryService(categoryRepository, settings, audit, _clock);
         _ledger = new LedgerService(transactions, accountRepository, categoryRepository, audit, new UndoHistory(), _clock);
         _reconciliation = new ReconciliationService(_ledger, accountRepository, new ReconciliationRepository(_db), audit, _clock);
-        _import = new ImportService(new ImportRepository(_db), transactions, accountRepository, categoryRepository, _rules, audit, _ledger, _clock);
+        _import = new ImportService(new ImportRepository(_db), transactions, accountRepository, categoryRepository, _rules, audit, _ledger, new PersonalFinanceOS.Application.Settings.AppSettingsService(settings), _clock);
     }
 
     public void Dispose() => _temp.Dispose();
 
     private Task<Account> AccountAsync(string name, AccountType type, long openingCents = 0, DateOnly? opening = null) =>
-        _accounts.CreateAsync(new CreateAccountRequest(name, type, opening ?? Opening, Money.FromCents(openingCents), Share.Full));
+        _accounts.CreateAsync(new CreateAccountRequest(name, type, opening ?? Opening, Money.FromCents(openingCents), Share.Full, Card: type == AccountType.CreditCard ? new PersonalFinanceOS.Application.Cards.CardSettings(Money.FromCents(150_000), 28, null, null) : null));
 
     private static ImportFile File(string name, params string[] lines) =>
         ImportFile.Read(name, Encoding.UTF8.GetBytes(Header + "\n" + string.Join("\n", lines) + "\n"));

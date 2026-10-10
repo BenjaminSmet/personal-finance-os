@@ -1,6 +1,8 @@
 using PersonalFinanceOS.Application.Abstractions;
+using PersonalFinanceOS.Application.Cards;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Cards;
 
 namespace PersonalFinanceOS.Application.Accounts;
 
@@ -10,7 +12,10 @@ public sealed record CreateAccountRequest(
     DateOnly OpeningDate,
     Money OpeningBalance,
     Share OwnershipShare,
-    string? Notes = null);
+    string? Notes = null,
+
+    /// <summary>Required for a credit card (spec §10): limit and statement period are entered, never assumed.</summary>
+    CardSettings? Card = null);
 
 public sealed class AccountService(IAccountRepository accounts, IAuditLog audit, IClock clock)
 {
@@ -32,7 +37,23 @@ public sealed class AccountService(IAccountRepository accounts, IAuditLog audit,
             request.Notes,
             sortOrder);
 
-        await accounts.AddAsync(account, ct);
+        CreditCardProfile? card = null;
+        if (request.Type.IsLiability())
+        {
+            if (request.Card is not { } settings)
+            {
+                throw new DomainValidationException("card.settings.required");
+            }
+
+            if (!await CreditCardService.IsValidSettlementAccountAsync(accounts, account.Id, settings.SettlementAccountId, ct))
+            {
+                throw new DomainValidationException("card.settlementAccount.invalid");
+            }
+
+            card = CreditCardProfile.Create(account.Id, settings.CreditLimit, settings.StatementStartDay, settings.SettlementDay, settings.SettlementAccountId, clock.Now);
+        }
+
+        await accounts.AddAsync(account, card, ct);
         await audit.RecordAsync("Account", account.Id, "Created", ct);
         return account;
     }

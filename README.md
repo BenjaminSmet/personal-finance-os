@@ -57,7 +57,7 @@ Never edit a migration that has been released.
 
 ## Status
 
-Phase 3 (bank-file import) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
+Phase 4 (recurring items, VISA, cash flow) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
 
 Quick Add sits above every page (Ctrl+K). Type a line and press Enter, for example:
 
@@ -86,3 +86,21 @@ Export your transactions from your bank's website as CSV (or XLSX) and open **Im
    added twice.
 5. Confirm. Everything is saved together or not at all. Any import can be undone later from **Earlier imports**;
    lines you changed since are kept unless you choose otherwise.
+6. Bank rounding lines ("afronding", "round up") become a transfer to the savings account chosen under
+   **Planning › Forecast settings** (or the only savings account). When that is unclear, the line is flagged and
+   left unticked.
+
+### Credit card and planning
+
+- A credit card asks for its **credit limit** and the **day a new statement period starts** when you create it
+  (with 28: the 28th through the 27th). The debit day and the paying account are optional. All of it can be changed
+  later under **Accounts › Card settings**; recorded transactions never change.
+- **Planning** shows, for each card, what is owed, the estimated available credit (not cash), this period's
+  spending, the expected statement and the next debit. A recorded payment that differs from the estimate is shown,
+  never corrected silently.
+- **Recurring items** (salary, rent, subscriptions, transfers…) create expected items, not transactions. Under
+  **To confirm** you confirm each one (date and amount editable), link it to a line that is already there (an
+  import, for example), postpone it or skip it. Removing the confirmed transaction makes the item open again.
+- **Safe to spend** = personal current account and cash, minus everything planned and the card statements due
+  before your next expected income, minus your minimum buffer. Expected income is never counted before it arrives.
+  The calculation and anything that makes it less certain are shown with it.

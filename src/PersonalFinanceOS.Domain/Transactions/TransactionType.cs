@@ -43,6 +43,9 @@ public enum TransactionSource
 
     /// <summary>Read from a bank file; <see cref="Transaction.ImportBatchId"/> names the import.</summary>
     Import,
+
+    /// <summary>A planned occurrence of a recurring rule that the user confirmed (spec §12).</summary>
+    Scheduled,
 }
 
 public static class TransactionTypeRules
