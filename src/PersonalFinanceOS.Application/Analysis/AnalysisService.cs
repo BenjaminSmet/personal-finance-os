@@ -5,6 +5,7 @@ using PersonalFinanceOS.Domain.Accounts;
 using PersonalFinanceOS.Domain.Budgets;
 using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Domain.Ledger;
+using PersonalFinanceOS.Domain.Ownership;
 using PersonalFinanceOS.Domain.Transactions;
 
 namespace PersonalFinanceOS.Application.Analysis;
@@ -43,7 +44,8 @@ public sealed record CategoryAmount(
 public sealed record MonthPoint(DateOnly Month, bool HasData, bool IsPartial, PeriodTotals Totals);
 
 /// <summary>Spending on an account the user shares, with their own part (spec §13 joint spending/share).</summary>
-public sealed record SharedSpending(Account Account, Money Spending, Money PersonalPart);
+/// <summary>Spending from a shared account and the user's part of it, at the share that applied that month.</summary>
+public sealed record SharedSpending(Account Account, Money Spending, Share Share, Money PersonalPart);
 
 /// <summary>
 /// One month analysed (spec §13, §24 phase 5): income, spending and net, spending per category against budget and
@@ -93,6 +95,7 @@ public sealed class AnalysisService(
     ICategoryRepository categories,
     ITransactionRepository transactions,
     IBudgetRepository budgets,
+    IOwnershipRepository ownership,
     RecurringService recurring,
     IClock clock)
 {
@@ -187,11 +190,14 @@ public sealed class AnalysisService(
 
         var recurringSpending = Spending(lines.Where(t => settling.Contains(t.Id) || t.Source == TransactionSource.Scheduled), first, last);
 
+        // The share that applied at the end of the month (or today), so a later change never rewrites past months.
+        var changes = await ownership.ListAsync(ct);
+        var shareDate = last < today ? last : today;
         var shared = accountList
-            .Where(a => !a.OwnershipShare.IsFull && !a.Type.IsLiability())
-            .Select(a => (Account: a, Spent: LedgerMath.Totals(lines.Where(t => t.AccountId == a.Id), first, last).Expenses))
-            .Where(x => x.Account.Status == AccountStatus.Active || !x.Spent.IsZero)
-            .Select(x => new SharedSpending(x.Account, x.Spent, x.Account.PersonalPart(x.Spent)))
+            .Where(a => !a.Type.IsLiability())
+            .Select(a => (Account: a, Share: OwnershipHistory.ShareAt(changes, a.Id, a.OwnershipShare, shareDate), Spent: LedgerMath.Totals(lines.Where(t => t.AccountId == a.Id), first, last).Expenses))
+            .Where(x => !x.Share.IsFull && (x.Account.Status == AccountStatus.Active || !x.Spent.IsZero))
+            .Select(x => new SharedSpending(x.Account, x.Spent, x.Share, x.Share.ApplyTo(x.Spent)))
             .ToList();
 
         var trend = Enumerable.Range(0, TrendMonths)

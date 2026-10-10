@@ -46,7 +46,7 @@ public sealed class AnalysisTests : IDisposable
         _categories = new CategoryService(categoryRepository, budgetRepository, new SettingsStore(_db, _clock), audit, _clock);
         _budgets = new BudgetService(budgetRepository, categoryRepository, audit, _clock);
         _recurring = new RecurringService(new RecurringRepository(_db), accountRepository, categoryRepository, transactions, _ledger, audit, _clock);
-        _analysis = new AnalysisService(accountRepository, categoryRepository, transactions, budgetRepository, _recurring, _clock);
+        _analysis = new AnalysisService(accountRepository, categoryRepository, transactions, budgetRepository, new OwnershipRepository(_db), _recurring, _clock);
     }
 
     public void Dispose() => _temp.Dispose();

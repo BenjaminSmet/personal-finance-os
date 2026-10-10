@@ -219,3 +219,59 @@ over limit or a payment that differs from the statement, reconciliation differen
 the next 14 days, expected cash flow, credit cards, savings and investments apart from spendable money, and every
 account. Import review, unmatched transfers and stale valuations are not stored as open items yet; valuations come in
 phase 6.
+
+### D-027 · Valuations are dated and never overwrite history (2026-10-10)
+Pension and investment accounts (§17: pension, Saxo) and every asset or liability get their value from `valuations`:
+one value per owner and date, never negative (a liability's value is what is still owed). A value for a date that
+already has one corrects that date; any other date adds a value, so the history is kept. Values cannot be dated in the
+future. Current, savings, cash and card accounts always take their value from the ledger and refuse valuations.
+For a pension or investment account the value on a date is its latest valuation on or before that date plus the
+deposits and withdrawals recorded after it; without any valuation the recorded deposits are used and the line (and net
+worth) is marked incomplete. A valuation older than 90 days is flagged as out of date on the page and the Dashboard.
+
+### D-028 · Assets and liabilities outside the ledger (2026-10-10)
+`assets` holds a house, vehicle, mortgage, loan or other asset/liability with the user's share. There are no
+transactions on them and loan payments recorded as expenses never lower a liability (§17): the user enters the
+remaining amount. "Sold or paid off" records a zero value today and archives the item, so earlier months keep their
+value. An asset with values, but none on a given date, makes that date's net worth incomplete.
+
+### D-029 · Ownership shares change from a date on (2026-10-10)
+`ownership_changes` keeps the share of an account or asset from a date on (§9). The first change also stores the share
+used so far, from the account's opening date (or the asset's first value), so earlier months keep it. Changes cannot
+start in the future and a credit card is always owed in full. `Account.OwnershipShare` stays the share of today and is
+saved together with the history. The share on a date is the latest change on or before it (before the first, the
+earliest). Shared spending in the monthly analysis (D-025) now uses the share of that month.
+
+### D-030 · Net worth (2026-10-10)
+Net worth = the user's share of every account and asset minus the user's share of every liability (§17). A card counts
+with what is owed; its limit never counts. A shared account counts once, at the user's share; the household view shows
+full amounts separately, never added to the personal total. Archived items are left out once their value is zero. The
+history shows month ends for the last 12 months (today for this month), leaves out months before the first balance
+date or value, and marks months where a value was missing as incomplete instead of guessing. An account opened later
+with an opening balance marks earlier months incomplete; one opened with zero did not exist yet.
+
+### D-031 · Affordability: technically affordable versus prudent (2026-10-10)
+Affordability uses the same forecast as safe-to-spend (D-022), projected day by day for the personal current
+account(s) and cash: recorded later transactions, open planned items (overdue ones today, overdue income left out) and
+card statements on their debit day. Savings, the joint account and card credit are never spendable cash.
+- **Prudent**: bought today, the lowest expected balance over the next 90 days (30 when no income is planned) stays at
+  or above the minimum buffer. 90 days covers about three pay cycles, so a purchase that only looks fine until the next
+  salary but breaks the month after is not called prudent. Without planned income the answer says so.
+- **Technically affordable**: the money is on the accounts now, but the buffer or (shown separately) the expected
+  bills and card statements would not be covered. Otherwise **not affordable now**; without a current account or cash
+  it **cannot be calculated** rather than guessing (§23).
+- **Earliest comfortable date**: the first day within a year from which buying keeps the buffer through the look-ahead.
+- **By card**: the purchase joins the current statement and leaves the paying account on the debit day; it needs
+  enough available credit. When the paying account is unknown or not counted, no verdict is given.
+- **Effect on other wishes**: each open item's earliest comfortable date before and after buying this one (today when
+  the money is there, else on its own earliest date).
+
+### D-032 · Wishlist and buying (2026-10-10)
+Statuses stored: wanted, saving, postponed, bought, cancelled. "Affordable" (§14) is calculated every time and shown
+as a badge, never stored, so it cannot go stale. The monthly saving is the user's plan, shown as "together in N
+months"; it moves no money. Buying is confirmed by the user and records one expense (on a current account, cash or
+card) together with the item in one database transaction, or only marks it bought when the expense is already in the
+ledger. One expense can belong to one item only, and a bought item cannot be bought again; undoing or voiding its
+expense puts it back on the list. Only an item marked bought without an expense can be reopened by hand.
+**Dashboard**: net worth with assets and liabilities, savings and investments at their valued amount, and attention
+items for missing or out-of-date values; pension and investment tiles show their valued amount.

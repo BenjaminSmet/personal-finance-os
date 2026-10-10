@@ -33,7 +33,10 @@
           <TextBlock Classes="amount" Text="{Binding SafeToSpendText}" Classes.debt="{Binding SafeIsNegative}" />
           <TextBlock Classes="caption" Text="{Binding SafeCaption}" TextWrapping="Wrap" />
         </StackPanel>
-        <Button Grid.Column="1" Content="{l:T Dashboard_GoToPlanning}" Command="{Binding GoToPlanningCommand}" VerticalAlignment="Center" />
+        <StackPanel Grid.Column="1" Spacing="8" VerticalAlignment="Center">
+          <Button Content="{l:T Dashboard_GoToPlanning}" Command="{Binding GoToPlanningCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+          <Button Content="{l:T Dashboard_GoToWishlist}" Command="{Binding GoToWishlistCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+        </StackPanel>
       </Grid>
     </Border>
 
@@ -157,14 +160,27 @@
       </StackPanel>
     </Border>
 
-    <!-- Savings and investments: kept apart from spendable money -->
-    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasSavings}">
-      <StackPanel Spacing="2">
-        <TextBlock Classes="overline" Text="{l:T Dashboard_Savings}" />
-        <TextBlock Classes="amount" Text="{Binding SavingsText}" />
-        <TextBlock Classes="caption" Text="{l:T Dashboard_SavingsNote}" TextWrapping="Wrap" />
-      </StackPanel>
-    </Border>
+    <!-- Net worth with its explanation, and savings and investments kept apart from spendable money (spec §13, §17) -->
+    <Grid ColumnDefinitions="*,18,*" IsVisible="{Binding HasAccounts}">
+      <Border Classes="glass" Padding="24,20">
+        <StackPanel Spacing="2">
+          <TextBlock Classes="overline" Text="{l:T Dashboard_NetWorth}" />
+          <TextBlock Classes="amount" Text="{Binding NetWorthText}" Classes.debt="{Binding NetWorthIsNegative}" />
+          <TextBlock Classes="caption" Text="{Binding NetWorthDetail}" TextWrapping="Wrap" />
+          <TextBlock Classes="caption" Text="{Binding NetWorthNote, StringFormat='ℹ  {0}'}" TextWrapping="Wrap"
+                     IsVisible="{Binding NetWorthNote, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          <Button Margin="0,8,0,0" Padding="12,5" FontSize="13" Content="{l:T Dashboard_GoToAssets}" Command="{Binding GoToAssetsCommand}" HorizontalAlignment="Left" />
+        </StackPanel>
+      </Border>
+      <Border Grid.Column="2" Classes="glass" Padding="24,20">
+        <StackPanel Spacing="2">
+          <TextBlock Classes="overline" Text="{l:T Dashboard_Savings}" />
+          <TextBlock Classes="amount" Text="{Binding SavingsText}" IsVisible="{Binding HasSavings}" />
+          <TextBlock Classes="caption" Text="{l:T Dashboard_SavingsNote}" TextWrapping="Wrap" IsVisible="{Binding HasSavings}" />
+          <TextBlock Classes="caption" Text="{l:T Dashboard_NoSavings}" TextWrapping="Wrap" IsVisible="{Binding !HasSavings}" />
+        </StackPanel>
+      </Border>
+    </Grid>
 
     <!-- Account tiles -->
     <ItemsControl ItemsSource="{Binding Tiles}" IsVisible="{Binding HasAccounts}">

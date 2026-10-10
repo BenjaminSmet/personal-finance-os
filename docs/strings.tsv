@@ -525,3 +525,180 @@ Dashboard_Cards	Credit cards	Kredietkaarten
 Dashboard_CardLine	Owed {0} · available {1} (not cash)	Verschuldigd {0} · beschikbaar {1} (geen cash)
 Dashboard_View	View	Bekijken
 Dashboard_CardSettlementItem	{0} statement	Afrekening {0}
+Dashboard_NetWorth	Net worth (your share)	Nettovermogen (jouw deel)
+Dashboard_NetWorthDetail	Assets {0} · liabilities {1}	Bezittingen {0} · schulden {1}
+Dashboard_NetWorthIncomplete	Some values are missing, so this is incomplete.	Sommige waarden ontbreken, dus dit is onvolledig.
+Dashboard_GoToAssets	Open assets	Naar bezittingen
+Dashboard_GoToWishlist	Can I afford…?	Kan ik dit betalen?
+Dashboard_NoSavings	No savings, pension or investment accounts yet.	Nog geen spaar-, pensioen- of beleggingsrekeningen.
+Dashboard_ValuationStale	{0}: last value is from {1}; enter a new one	{0}: laatste waarde is van {1}; vul een nieuwe in
+Dashboard_ValuationMissing	{0} has no value yet	{0} heeft nog geen waarde
+AssetKind_Property	Property	Vastgoed
+AssetKind_Vehicle	Vehicle	Voertuig
+AssetKind_OtherAsset	Other asset	Andere bezitting
+AssetKind_Mortgage	Mortgage	Hypotheek
+AssetKind_Loan	Loan	Lening
+AssetKind_OtherLiability	Other liability	Andere schuld
+Assets_Title	Assets & investments	Bezittingen & beleggingen
+Assets_Subtitle	Net worth from your balances, the values you enter for pension, investments and other assets, and what you owe. Values are entered by you; nothing is fetched online.	Nettovermogen uit je saldi, de waarden die je invult voor pensioen, beleggingen en andere bezittingen, en wat je verschuldigd bent. Jij vult de waarden in; er wordt niets online opgehaald.
+Assets_Add	Add asset or liability	Bezitting of schuld toevoegen
+Assets_AddTitle	New asset or liability	Nieuwe bezitting of schuld
+Assets_AddNote	For things without transactions, such as a house, a car or a mortgage. Pension and Saxo are accounts: add them under Accounts and enter their value here.	Voor wat geen transacties heeft, zoals een huis, een auto of een hypotheek. Pensioen en Saxo zijn rekeningen: voeg ze toe bij Rekeningen en vul hier hun waarde in.
+Assets_NamePlaceholder	For example: House, Car, Mortgage	Bijvoorbeeld: Huis, Auto, Hypotheek
+Assets_Value	Value	Waarde
+Assets_ValueHint	For a liability: the amount still owed. Optional; you can add it later.	Voor een schuld: het bedrag dat je nog verschuldigd bent. Optioneel; kan ook later.
+Assets_ValueDate	Value on	Waarde op
+Assets_YourShare	Your share (%)	Jouw aandeel (%)
+Assets_Added	{0} added.	{0} toegevoegd.
+Assets_Empty	No accounts or assets yet. Add your accounts first; pension and investment accounts then get their value here.	Nog geen rekeningen of bezittingen. Voeg eerst je rekeningen toe; pensioen- en beleggingsrekeningen krijgen hier dan hun waarde.
+Assets_NetWorth	Net worth (your share)	Nettovermogen (jouw deel)
+Assets_Assets	Assets	Bezittingen
+Assets_Liabilities	Liabilities	Schulden
+Assets_Household	Household (full amounts)	Huishouden (volledige bedragen)
+Assets_Explanation	Net worth = your share of everything you own minus your share of everything you owe. A shared account counts once, at your share; a credit limit is never counted, only what is owed on the card.	Nettovermogen = jouw deel van alles wat je bezit min jouw deel van alles wat je verschuldigd bent. Een gedeelde rekening telt één keer mee, aan jouw aandeel; een kredietlimiet telt nooit mee, alleen wat er op de kaart verschuldigd is.
+Assets_Incomplete	Incomplete: no value yet for {0}.	Onvolledig: nog geen waarde voor {0}.
+Assets_Stale	The value of {0} is older than {1} days. Enter a recent value.	De waarde van {0} is ouder dan {1} dagen. Vul een recente waarde in.
+Assets_StaleBadge	Out of date	Verouderd
+Assets_MissingBadge	No value	Geen waarde
+Assets_SourceLedger	balance from transactions	saldo uit transacties
+Assets_SourceValuation	value of {0}	waarde van {0}
+Assets_SourceValuationPlus	value of {0} plus deposits since	waarde van {0} plus stortingen sindsdien
+Assets_SourceNoValuationYet	no value yet; recorded deposits used	nog geen waarde; geregistreerde stortingen gebruikt
+Assets_SourceNone	no value for this date	geen waarde voor deze datum
+Assets_ShareOf	Your share {0} of {1}	Jouw aandeel {0} van {1}
+Assets_EnterValue	Enter value	Waarde invullen
+Assets_ChangeShare	Change share	Aandeel wijzigen
+Assets_ValuationTitle	Value of {0}	Waarde van {0}
+Assets_ValuationNote	Each date keeps its own value, so earlier months stay as they were. Entering a value for a date that already has one corrects it.	Elke datum houdt zijn eigen waarde, zodat eerdere maanden blijven zoals ze waren. Een waarde voor een datum die er al een heeft, verbetert die.
+Assets_ValuationComment	Note (optional)	Notitie (optioneel)
+Assets_ValuationHistory	Earlier values	Eerdere waarden
+Assets_Remove	Remove	Verwijderen
+Assets_ValuationSaved	Value of {0} saved: {1}.	Waarde van {0} opgeslagen: {1}.
+Assets_ArchiveNote	Sold or paid off? The value becomes 0 from today and the item is hidden. Earlier months keep their value.	Verkocht of afgelost? De waarde wordt 0 vanaf vandaag en het item wordt verborgen. Eerdere maanden houden hun waarde.
+Assets_Archive	Sold or paid off	Verkocht of afgelost
+Assets_Archived	{0} is set to 0 from today and archived.	{0} staat vanaf vandaag op 0 en is gearchiveerd.
+Assets_ShareTitle	Your share of {0}	Jouw aandeel in {0}
+Assets_ShareNote	A new share applies from the chosen date. Earlier months keep the share they had, so past reports do not change.	Een nieuw aandeel geldt vanaf de gekozen datum. Eerdere maanden houden het aandeel dat ze hadden, zodat vroegere overzichten niet veranderen.
+Assets_ShareFromDate	Applies from	Geldt vanaf
+Assets_ShareHistory	Shares so far	Aandelen tot nu toe
+Assets_ShareFrom	From {0}	Vanaf {0}
+Assets_ShareSaved	{0}: your share is {1} from {2}.	{0}: jouw aandeel is {1} vanaf {2}.
+Assets_LiabilitiesNote	Loan payments recorded as expenses do not lower a loan by themselves: enter the remaining amount as a new value.	Afbetalingen die als uitgave geregistreerd zijn, verlagen een lening niet vanzelf: vul het resterende bedrag in als nieuwe waarde.
+Assets_NoLiabilities	No liabilities.	Geen schulden.
+Assets_History	Net worth over time	Nettovermogen door de tijd
+Assets_HistoryIncomplete	Incomplete: values were missing for some months.	Onvolledig: voor sommige maanden ontbraken waarden.
+Priority_High	High	Hoog
+Priority_Normal	Normal	Normaal
+Priority_Low	Low	Laag
+WishlistStatus_Desired	Wanted	Gewenst
+WishlistStatus_Saving	Saving up	Aan het sparen
+WishlistStatus_Postponed	Postponed	Uitgesteld
+WishlistStatus_Purchased	Bought	Gekocht
+WishlistStatus_Cancelled	Cancelled	Geannuleerd
+Wishlist_Title	Wishlist	Verlanglijst
+Wishlist_Subtitle	What you would like to buy, and whether it is affordable and prudent now, with every bill, card statement and your buffer taken into account.	Wat je graag wil kopen, en of het nu betaalbaar en verstandig is, met alle rekeningen, kaartafrekeningen en je buffer erbij.
+Wishlist_Add	Add item	Item toevoegen
+Wishlist_NewItem	New item	Nieuw item
+Wishlist_EditItem	Change item	Item wijzigen
+Wishlist_NamePlaceholder	For example: Bicycle	Bijvoorbeeld: Fiets
+Wishlist_Price	Expected price	Verwachte prijs
+Wishlist_Priority	Priority	Prioriteit
+Wishlist_TargetDate	Target date (optional)	Streefdatum (optioneel)
+Wishlist_MonthlySaving	Saving per month (optional)	Sparen per maand (optioneel)
+Wishlist_MonthlySavingHint	Your plan, for information: no money is moved.	Je plan, ter info: er wordt geen geld verplaatst.
+Wishlist_Url	Link or shop (optional)	Link of winkel (optioneel)
+Wishlist_Alternative	Alternative (optional)	Alternatief (optioneel)
+Wishlist_AlternativePlaceholder	For example: second-hand for €450	Bijvoorbeeld: tweedehands voor €450
+Wishlist_Saved	{0} saved.	{0} opgeslagen.
+Wishlist_QuickQuestion	Can I afford this amount?	Kan ik dit bedrag betalen?
+Wishlist_QuickTitle	A purchase of {0}	Een aankoop van {0}
+Wishlist_Check	Check	Bekijken
+Wishlist_Edit	Change	Wijzigen
+Wishlist_Close	Close	Sluiten
+Wishlist_Open	Wanted	Gewenst
+Wishlist_Closed	Bought and cancelled	Gekocht en geannuleerd
+Wishlist_Empty	Nothing on your wishlist yet.	Nog niets op je verlanglijst.
+Wishlist_AffordableBadge	✓ Affordable	✓ Betaalbaar
+Wishlist_RowPrudent	Comfortably affordable now	Nu comfortabel betaalbaar
+Wishlist_RowUnknown	Cannot be calculated yet	Nog niet te berekenen
+Wishlist_RowTechnicalFrom	Technically affordable now, comfortably from {0}	Technisch nu betaalbaar, comfortabel vanaf {0}
+Wishlist_RowFrom	Comfortably affordable from {0}	Comfortabel betaalbaar vanaf {0}
+Wishlist_RowNoDate	Not comfortably affordable within a year	Niet comfortabel betaalbaar binnen een jaar
+Wishlist_Target	target {0}	streefdatum {0}
+Wishlist_BoughtOn	bought {0}	gekocht {0}
+Wishlist_PurchaseRemoved	the purchase was undone, so it is open again	de aankoop is ongedaan gemaakt, dus het staat weer open
+Wishlist_AlternativeLine	alternative: {0}	alternatief: {0}
+Wishlist_HowToPay	How to pay	Hoe betalen
+Wishlist_Effects	Effect on your other wishes	Effect op je andere wensen
+Wishlist_ForecastNote	A forecast from your planned items and expected income, never a guarantee. Nothing changes until you confirm a purchase.	Een prognose op basis van je geplande posten en verwacht inkomen, nooit een garantie. Er verandert niets tot je een aankoop bevestigt.
+Wishlist_SavingPlan	Saving {0} a month, you have it together in {1} months ({2}).	Met {0} per maand heb je het bij elkaar in {1} maanden ({2}).
+Wishlist_Buy	Bought it	Gekocht
+Wishlist_MarkSaving	Saving up	Aan het sparen
+Wishlist_Postpone	Postpone	Uitstellen
+Wishlist_Cancel	Cancel item	Item annuleren
+Wishlist_Reopen	Put back on the list	Terug op de lijst
+Wishlist_BuyTitle	Confirm the purchase	Aankoop bevestigen
+Wishlist_RecordTransaction	Record the expense	De uitgave registreren
+Wishlist_RecordTransactionNote	Turn this off when the expense is already in your transactions (typed in or imported), so it is not counted twice.	Zet dit uit als de uitgave al bij je transacties staat (ingetypt of geïmporteerd), zodat ze niet dubbel telt.
+Wishlist_PaidWith	Paid with	Betaald met
+Wishlist_PaidAmount	Amount paid	Betaald bedrag
+Wishlist_ConfirmBuy	Confirm purchase	Aankoop bevestigen
+Wishlist_BoughtRecorded	{0} bought: {1} recorded on {2}.	{0} gekocht: {1} geregistreerd op {2}.
+Wishlist_BoughtMarked	{0} marked as bought; no expense recorded.	{0} gemarkeerd als gekocht; geen uitgave geregistreerd.
+Wishlist_StatusSaved	{0}: {1}.	{0}: {1}.
+Verdict_Prudent	Financially prudent	Financieel verstandig
+Verdict_TechnicallyOnly	Technically affordable, not prudent	Technisch betaalbaar, niet verstandig
+Verdict_NotAffordable	Not affordable now	Nu niet betaalbaar
+Verdict_CannotCalculate	Cannot be calculated reliably	Niet betrouwbaar te berekenen
+Verdict_PrudentWhy	Your balance stays above your minimum buffer through every expected bill, card statement and income until {0}.	Je saldo blijft boven je minimumbuffer bij alle verwachte rekeningen, kaartafrekeningen en inkomsten tot {0}.
+Verdict_TechnicalBuffer	The money is there, but your balance would drop below your minimum buffer before the next income.	Het geld is er, maar je saldo zou onder je minimumbuffer zakken voor het volgende inkomen.
+Verdict_TechnicalBills	The money is there now, but some expected bills or a card statement could no longer be paid.	Het geld is er nu, maar sommige verwachte rekeningen of een kaartafrekening zouden niet meer betaald kunnen worden.
+Verdict_NotAffordableWhy	There is not enough on your current account and cash for it now.	Er staat nu niet genoeg op je zichtrekening en in cash.
+Verdict_CannotCalculateWhy	Add a personal current account or cash first; savings, joint accounts and card credit are never counted as spendable money.	Voeg eerst een persoonlijke zichtrekening of cash toe; spaargeld, gezamenlijke rekeningen en kaartkrediet tellen nooit als besteedbaar geld.
+Check_CashNow	Spendable money now	Besteedbaar geld nu
+Check_CashAfter	Right after paying now	Direct na betalen
+Check_Lowest	Lowest expected balance until {0}	Laagste verwachte saldo tot {0}
+Check_LowestOn	{0} on {1}	{0} op {1}
+Check_Buffer	Minimum buffer of {0} intact	Minimumbuffer van {0} intact
+Check_Bills	Bills and card statements still paid	Rekeningen en kaartafrekeningen nog betaald
+Check_Yes	yes	ja
+Check_No	no	nee
+Check_NextIncome	Next income	Volgend inkomen
+Check_Expected	expected {0}	verwacht {0}
+Check_NoIncome	none planned	niets gepland
+Check_Earliest	Earliest comfortable date	Vroegste comfortabele datum
+Check_NoDate	none within {0} days	geen binnen {0} dagen
+Pay_Now	Now, from your current account	Nu, van je zichtrekening
+Pay_NowDetail	Lowest balance afterwards: {0}	Laagste saldo daarna: {0}
+Pay_Card	With {0}	Met {0}
+Pay_CardDetail	Paid with the statement on {0} (statement {1}); credit left {2} (not cash); lowest balance {3}	Betaald met de afrekening op {0} (afrekening {1}); krediet over {2} (geen cash); laagste saldo {3}
+Pay_CardOverLimit	{0} over the available credit	{0} boven het beschikbare krediet
+Pay_CardNoAccount	The card has no paying account, so its statement cannot be checked.	De kaart heeft geen betalende rekening, dus de afrekening kan niet gecontroleerd worden.
+Pay_CardOtherAccount	The statement on {0} is paid from an account that is not counted as spendable.	De afrekening op {0} wordt betaald van een rekening die niet als besteedbaar telt.
+Pay_Postpone	Wait	Wachten
+Pay_PostponeUntil	Comfortable from {0}	Comfortabel vanaf {0}
+Pay_BeforeTarget	Before your target date.	Voor je streefdatum.
+Pay_AfterTarget	After your target date.	Na je streefdatum.
+Effect_Delayed	{0}: comfortable from {1} becomes {2}	{0}: comfortabel vanaf {1} wordt {2}
+Effect_NoDate	no date within a year	geen datum binnen een jaar
+Effect_None	No effect on your other wishes.	Geen effect op je andere wensen.
+Error_asset_name_required	Enter a name.	Vul een naam in.
+Error_asset_name_tooLong	The name is too long (maximum 100 characters).	De naam is te lang (maximaal 100 tekens).
+Error_asset_notes_tooLong	The notes are too long (maximum 1000 characters).	De notities zijn te lang (maximaal 1000 tekens).
+Error_asset_notFound	This asset no longer exists.	Deze bezitting bestaat niet meer.
+Error_valuation_value_negative	A value cannot be negative. For a liability, enter the amount owed.	Een waarde kan niet negatief zijn. Vul voor een schuld het verschuldigde bedrag in.
+Error_valuation_note_tooLong	The note is too long (maximum 500 characters).	De notitie is te lang (maximaal 500 tekens).
+Error_valuation_date_future	A value cannot be for a date in the future.	Een waarde kan niet voor een datum in de toekomst zijn.
+Error_valuation_account_notManual	This account's value comes from its transactions.	De waarde van deze rekening komt uit haar transacties.
+Error_valuation_notFound	This value no longer exists.	Deze waarde bestaat niet meer.
+Error_share_date_future	A share change cannot start in the future.	Een wijziging van het aandeel kan niet in de toekomst beginnen.
+Error_share_card	A credit card is always owed in full.	Een kredietkaart is altijd volledig verschuldigd.
+Error_wishlist_name_required	Enter a name.	Vul een naam in.
+Error_wishlist_name_tooLong	The name is too long (maximum 100 characters).	De naam is te lang (maximaal 100 tekens).
+Error_wishlist_price_notPositive	Enter a price above zero.	Vul een prijs boven nul in.
+Error_wishlist_saving_notPositive	Enter a monthly amount above zero, or leave it empty.	Vul een maandbedrag boven nul in, of laat het leeg.
+Error_wishlist_text_tooLong	One of the texts is too long.	Een van de teksten is te lang.
+Error_wishlist_status_invalid	Use "Bought it" to mark an item as bought.	Gebruik "Gekocht" om een item als gekocht te markeren.
+Error_wishlist_alreadyPurchased	This item is already bought. Void its expense first to change it.	Dit item is al gekocht. Maak eerst de uitgave ongedaan om het te wijzigen.
+Error_wishlist_purchase_future	A purchase without an expense cannot be dated in the future.	Een aankoop zonder uitgave kan niet in de toekomst gedateerd zijn.
+Error_wishlist_notFound	This item no longer exists.	Dit item bestaat niet meer.

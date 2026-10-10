@@ -1,11 +1,14 @@
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Assets;
 using PersonalFinanceOS.Domain.Budgets;
 using PersonalFinanceOS.Domain.Cards;
 using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Domain.Imports;
 using PersonalFinanceOS.Domain.Ledger;
+using PersonalFinanceOS.Domain.Ownership;
 using PersonalFinanceOS.Domain.Planning;
 using PersonalFinanceOS.Domain.Transactions;
+using PersonalFinanceOS.Domain.Wishlist;
 
 namespace PersonalFinanceOS.Application.Abstractions;
 
@@ -174,4 +177,56 @@ public interface IRecurringRepository
 
     /// <summary>Removes a decision, so the occurrence is open again. Only decisions without a live transaction.</summary>
     Task DeleteItemAsync(ScheduledItem item, CancellationToken ct = default);
+}
+
+public interface IAssetRepository
+{
+    Task<IReadOnlyList<Asset>> ListAsync(bool includeArchived, CancellationToken ct = default);
+
+    Task<Asset?> FindAsync(Guid id, CancellationToken ct = default);
+
+    /// <summary>Adds the asset and, when given, its first valuation together: all or nothing.</summary>
+    Task AddAsync(Asset asset, Valuation? first, CancellationToken ct = default);
+
+    /// <summary>Saves the asset and, when given, a valuation (for example the zero value when it is sold) together.</summary>
+    Task UpdateAsync(Asset asset, Valuation? valuation = null, CancellationToken ct = default);
+}
+
+public interface IValuationRepository
+{
+    /// <summary>Every valuation of every account and asset, oldest first.</summary>
+    Task<IReadOnlyList<Valuation>> ListAsync(CancellationToken ct = default);
+
+    Task<Valuation?> FindAsync(Guid id, CancellationToken ct = default);
+
+    /// <summary>Inserts or updates one valuation.</summary>
+    Task SaveAsync(Valuation valuation, CancellationToken ct = default);
+
+    Task RemoveAsync(Valuation valuation, CancellationToken ct = default);
+}
+
+public interface IOwnershipRepository
+{
+    /// <summary>Every ownership change, oldest first.</summary>
+    Task<IReadOnlyList<OwnershipChange>> ListAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Inserts or updates the changes and saves the owner's current share in one database transaction, so the
+    /// history and the current share never disagree. Exactly one of <paramref name="account"/> and <paramref name="asset"/> is set.
+    /// </summary>
+    Task SaveAsync(IReadOnlyCollection<OwnershipChange> changes, Account? account, Asset? asset, CancellationToken ct = default);
+}
+
+public interface IWishlistRepository
+{
+    Task<IReadOnlyList<WishlistItem>> ListAsync(CancellationToken ct = default);
+
+    Task<WishlistItem?> FindAsync(Guid id, CancellationToken ct = default);
+
+    Task AddAsync(WishlistItem item, CancellationToken ct = default);
+
+    Task UpdateAsync(WishlistItem item, CancellationToken ct = default);
+
+    /// <summary>Saves the purchased item and, when given, its new expense in one database transaction: all or nothing.</summary>
+    Task SavePurchaseAsync(WishlistItem item, Transaction? created, CancellationToken ct = default);
 }

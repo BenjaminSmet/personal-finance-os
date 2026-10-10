@@ -3,13 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Assets;
 using PersonalFinanceOS.Domain.Cards;
 using PersonalFinanceOS.Domain.Budgets;
 using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Domain.Imports;
 using PersonalFinanceOS.Domain.Ledger;
+using PersonalFinanceOS.Domain.Ownership;
 using PersonalFinanceOS.Domain.Planning;
 using PersonalFinanceOS.Domain.Transactions;
+using PersonalFinanceOS.Domain.Wishlist;
 using PersonalFinanceOS.Infrastructure.Database;
 
 namespace PersonalFinanceOS.Infrastructure.Persistence;
@@ -35,6 +38,10 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     public DbSet<RecurringRule> RecurringRules => Set<RecurringRule>();
     public DbSet<ScheduledItem> ScheduledItems => Set<ScheduledItem>();
     public DbSet<Budget> Budgets => Set<Budget>();
+    public DbSet<Asset> Assets => Set<Asset>();
+    public DbSet<Valuation> Valuations => Set<Valuation>();
+    public DbSet<OwnershipChange> OwnershipChanges => Set<OwnershipChange>();
+    public DbSet<WishlistItem> WishlistItems => Set<WishlistItem>();
 
     public static DbContextOptions<FinanceDbContext> OptionsFor(string databaseFile) =>
         new DbContextOptionsBuilder<FinanceDbContext>()
@@ -287,6 +294,79 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
             e.Property(b => b.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
             e.Property(b => b.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
             e.HasOne<Category>().WithMany().HasForeignKey(b => b.CategoryId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        var optionalMoney = new ValueConverter<Money?, long?>(m => m.HasValue ? m.Value.Cents : null, c => c.HasValue ? Money.FromCents(c.Value) : null);
+
+        modelBuilder.Entity<Asset>(e =>
+        {
+            e.ToTable("assets");
+            e.HasKey(a => a.Id);
+            e.Ignore(a => a.IsLiability);
+            e.Property(a => a.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(a => a.Name).HasColumnName("name").HasMaxLength(Asset.MaxNameLength);
+            e.Property(a => a.Kind).HasColumnName("kind").HasConversion<string>();
+            e.Property(a => a.OwnershipShare).HasColumnName("ownership_share_bp").HasConversion(share);
+            e.Property(a => a.Status).HasColumnName("status").HasConversion<string>();
+            e.Property(a => a.Notes).HasColumnName("notes");
+            e.Property(a => a.SortOrder).HasColumnName("sort_order");
+            e.Property(a => a.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.Property(a => a.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+        });
+
+        modelBuilder.Entity<Valuation>(e =>
+        {
+            e.ToTable("valuations");
+            e.HasKey(v => v.Id);
+            e.Ignore(v => v.OwnerId);
+            e.Property(v => v.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(v => v.AccountId).HasColumnName("account_id").HasConversion(optionalGuid);
+            e.Property(v => v.AssetId).HasColumnName("asset_id").HasConversion(optionalGuid);
+            e.Property(v => v.Date).HasColumnName("date").HasConversion(date);
+            e.Property(v => v.Value).HasColumnName("value_cents").HasConversion(money);
+            e.Property(v => v.Note).HasColumnName("note").HasMaxLength(Valuation.MaxNoteLength);
+            e.Property(v => v.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.Property(v => v.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+            e.HasOne<Account>().WithMany().HasForeignKey(v => v.AccountId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Asset>().WithMany().HasForeignKey(v => v.AssetId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<OwnershipChange>(e =>
+        {
+            e.ToTable("ownership_changes");
+            e.HasKey(c => c.Id);
+            e.Ignore(c => c.OwnerId);
+            e.Property(c => c.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(c => c.AccountId).HasColumnName("account_id").HasConversion(optionalGuid);
+            e.Property(c => c.AssetId).HasColumnName("asset_id").HasConversion(optionalGuid);
+            e.Property(c => c.EffectiveFrom).HasColumnName("effective_from").HasConversion(date);
+            e.Property(c => c.Share).HasColumnName("share_bp").HasConversion(share);
+            e.Property(c => c.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.Property(c => c.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+            e.HasOne<Account>().WithMany().HasForeignKey(c => c.AccountId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Asset>().WithMany().HasForeignKey(c => c.AssetId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<WishlistItem>(e =>
+        {
+            e.ToTable("wishlist_items");
+            e.HasKey(w => w.Id);
+            e.Ignore(w => w.IsOpen);
+            e.Property(w => w.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(w => w.Name).HasColumnName("name").HasMaxLength(WishlistItem.MaxNameLength);
+            e.Property(w => w.ExpectedPrice).HasColumnName("expected_price_cents").HasConversion(money);
+            e.Property(w => w.Url).HasColumnName("url").HasMaxLength(WishlistItem.MaxUrlLength);
+            e.Property(w => w.Note).HasColumnName("note");
+            e.Property(w => w.Priority).HasColumnName("priority").HasConversion<string>();
+            e.Property(w => w.TargetDate).HasColumnName("target_date").HasConversion(optionalDate);
+            e.Property(w => w.MonthlySaving).HasColumnName("monthly_saving_cents").HasConversion(optionalMoney);
+            e.Property(w => w.Alternative).HasColumnName("alternative");
+            e.Property(w => w.Status).HasColumnName("status").HasConversion<string>();
+            e.Property(w => w.PurchasedOn).HasColumnName("purchased_on").HasConversion(optionalDate);
+            e.Property(w => w.PurchaseTransactionId).HasColumnName("purchase_transaction_id").HasConversion(optionalGuid);
+            e.Property(w => w.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.Property(w => w.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+            e.HasOne<Transaction>().WithMany().HasForeignKey(w => w.PurchaseTransactionId).OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

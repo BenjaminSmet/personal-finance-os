@@ -532,4 +532,181 @@
   <data name="Dashboard_CardLine" xml:space="preserve"><value>Verschuldigd {0} · beschikbaar {1} (geen cash)</value></data>
   <data name="Dashboard_View" xml:space="preserve"><value>Bekijken</value></data>
   <data name="Dashboard_CardSettlementItem" xml:space="preserve"><value>Afrekening {0}</value></data>
+  <data name="Dashboard_NetWorth" xml:space="preserve"><value>Nettovermogen (jouw deel)</value></data>
+  <data name="Dashboard_NetWorthDetail" xml:space="preserve"><value>Bezittingen {0} · schulden {1}</value></data>
+  <data name="Dashboard_NetWorthIncomplete" xml:space="preserve"><value>Sommige waarden ontbreken, dus dit is onvolledig.</value></data>
+  <data name="Dashboard_GoToAssets" xml:space="preserve"><value>Naar bezittingen</value></data>
+  <data name="Dashboard_GoToWishlist" xml:space="preserve"><value>Kan ik dit betalen?</value></data>
+  <data name="Dashboard_NoSavings" xml:space="preserve"><value>Nog geen spaar-, pensioen- of beleggingsrekeningen.</value></data>
+  <data name="Dashboard_ValuationStale" xml:space="preserve"><value>{0}: laatste waarde is van {1}; vul een nieuwe in</value></data>
+  <data name="Dashboard_ValuationMissing" xml:space="preserve"><value>{0} heeft nog geen waarde</value></data>
+  <data name="AssetKind_Property" xml:space="preserve"><value>Vastgoed</value></data>
+  <data name="AssetKind_Vehicle" xml:space="preserve"><value>Voertuig</value></data>
+  <data name="AssetKind_OtherAsset" xml:space="preserve"><value>Andere bezitting</value></data>
+  <data name="AssetKind_Mortgage" xml:space="preserve"><value>Hypotheek</value></data>
+  <data name="AssetKind_Loan" xml:space="preserve"><value>Lening</value></data>
+  <data name="AssetKind_OtherLiability" xml:space="preserve"><value>Andere schuld</value></data>
+  <data name="Assets_Title" xml:space="preserve"><value>Bezittingen &amp; beleggingen</value></data>
+  <data name="Assets_Subtitle" xml:space="preserve"><value>Nettovermogen uit je saldi, de waarden die je invult voor pensioen, beleggingen en andere bezittingen, en wat je verschuldigd bent. Jij vult de waarden in; er wordt niets online opgehaald.</value></data>
+  <data name="Assets_Add" xml:space="preserve"><value>Bezitting of schuld toevoegen</value></data>
+  <data name="Assets_AddTitle" xml:space="preserve"><value>Nieuwe bezitting of schuld</value></data>
+  <data name="Assets_AddNote" xml:space="preserve"><value>Voor wat geen transacties heeft, zoals een huis, een auto of een hypotheek. Pensioen en Saxo zijn rekeningen: voeg ze toe bij Rekeningen en vul hier hun waarde in.</value></data>
+  <data name="Assets_NamePlaceholder" xml:space="preserve"><value>Bijvoorbeeld: Huis, Auto, Hypotheek</value></data>
+  <data name="Assets_Value" xml:space="preserve"><value>Waarde</value></data>
+  <data name="Assets_ValueHint" xml:space="preserve"><value>Voor een schuld: het bedrag dat je nog verschuldigd bent. Optioneel; kan ook later.</value></data>
+  <data name="Assets_ValueDate" xml:space="preserve"><value>Waarde op</value></data>
+  <data name="Assets_YourShare" xml:space="preserve"><value>Jouw aandeel (%)</value></data>
+  <data name="Assets_Added" xml:space="preserve"><value>{0} toegevoegd.</value></data>
+  <data name="Assets_Empty" xml:space="preserve"><value>Nog geen rekeningen of bezittingen. Voeg eerst je rekeningen toe; pensioen- en beleggingsrekeningen krijgen hier dan hun waarde.</value></data>
+  <data name="Assets_NetWorth" xml:space="preserve"><value>Nettovermogen (jouw deel)</value></data>
+  <data name="Assets_Assets" xml:space="preserve"><value>Bezittingen</value></data>
+  <data name="Assets_Liabilities" xml:space="preserve"><value>Schulden</value></data>
+  <data name="Assets_Household" xml:space="preserve"><value>Huishouden (volledige bedragen)</value></data>
+  <data name="Assets_Explanation" xml:space="preserve"><value>Nettovermogen = jouw deel van alles wat je bezit min jouw deel van alles wat je verschuldigd bent. Een gedeelde rekening telt één keer mee, aan jouw aandeel; een kredietlimiet telt nooit mee, alleen wat er op de kaart verschuldigd is.</value></data>
+  <data name="Assets_Incomplete" xml:space="preserve"><value>Onvolledig: nog geen waarde voor {0}.</value></data>
+  <data name="Assets_Stale" xml:space="preserve"><value>De waarde van {0} is ouder dan {1} dagen. Vul een recente waarde in.</value></data>
+  <data name="Assets_StaleBadge" xml:space="preserve"><value>Verouderd</value></data>
+  <data name="Assets_MissingBadge" xml:space="preserve"><value>Geen waarde</value></data>
+  <data name="Assets_SourceLedger" xml:space="preserve"><value>saldo uit transacties</value></data>
+  <data name="Assets_SourceValuation" xml:space="preserve"><value>waarde van {0}</value></data>
+  <data name="Assets_SourceValuationPlus" xml:space="preserve"><value>waarde van {0} plus stortingen sindsdien</value></data>
+  <data name="Assets_SourceNoValuationYet" xml:space="preserve"><value>nog geen waarde; geregistreerde stortingen gebruikt</value></data>
+  <data name="Assets_SourceNone" xml:space="preserve"><value>geen waarde voor deze datum</value></data>
+  <data name="Assets_ShareOf" xml:space="preserve"><value>Jouw aandeel {0} van {1}</value></data>
+  <data name="Assets_EnterValue" xml:space="preserve"><value>Waarde invullen</value></data>
+  <data name="Assets_ChangeShare" xml:space="preserve"><value>Aandeel wijzigen</value></data>
+  <data name="Assets_ValuationTitle" xml:space="preserve"><value>Waarde van {0}</value></data>
+  <data name="Assets_ValuationNote" xml:space="preserve"><value>Elke datum houdt zijn eigen waarde, zodat eerdere maanden blijven zoals ze waren. Een waarde voor een datum die er al een heeft, verbetert die.</value></data>
+  <data name="Assets_ValuationComment" xml:space="preserve"><value>Notitie (optioneel)</value></data>
+  <data name="Assets_ValuationHistory" xml:space="preserve"><value>Eerdere waarden</value></data>
+  <data name="Assets_Remove" xml:space="preserve"><value>Verwijderen</value></data>
+  <data name="Assets_ValuationSaved" xml:space="preserve"><value>Waarde van {0} opgeslagen: {1}.</value></data>
+  <data name="Assets_ArchiveNote" xml:space="preserve"><value>Verkocht of afgelost? De waarde wordt 0 vanaf vandaag en het item wordt verborgen. Eerdere maanden houden hun waarde.</value></data>
+  <data name="Assets_Archive" xml:space="preserve"><value>Verkocht of afgelost</value></data>
+  <data name="Assets_Archived" xml:space="preserve"><value>{0} staat vanaf vandaag op 0 en is gearchiveerd.</value></data>
+  <data name="Assets_ShareTitle" xml:space="preserve"><value>Jouw aandeel in {0}</value></data>
+  <data name="Assets_ShareNote" xml:space="preserve"><value>Een nieuw aandeel geldt vanaf de gekozen datum. Eerdere maanden houden het aandeel dat ze hadden, zodat vroegere overzichten niet veranderen.</value></data>
+  <data name="Assets_ShareFromDate" xml:space="preserve"><value>Geldt vanaf</value></data>
+  <data name="Assets_ShareHistory" xml:space="preserve"><value>Aandelen tot nu toe</value></data>
+  <data name="Assets_ShareFrom" xml:space="preserve"><value>Vanaf {0}</value></data>
+  <data name="Assets_ShareSaved" xml:space="preserve"><value>{0}: jouw aandeel is {1} vanaf {2}.</value></data>
+  <data name="Assets_LiabilitiesNote" xml:space="preserve"><value>Afbetalingen die als uitgave geregistreerd zijn, verlagen een lening niet vanzelf: vul het resterende bedrag in als nieuwe waarde.</value></data>
+  <data name="Assets_NoLiabilities" xml:space="preserve"><value>Geen schulden.</value></data>
+  <data name="Assets_History" xml:space="preserve"><value>Nettovermogen door de tijd</value></data>
+  <data name="Assets_HistoryIncomplete" xml:space="preserve"><value>Onvolledig: voor sommige maanden ontbraken waarden.</value></data>
+  <data name="Priority_High" xml:space="preserve"><value>Hoog</value></data>
+  <data name="Priority_Normal" xml:space="preserve"><value>Normaal</value></data>
+  <data name="Priority_Low" xml:space="preserve"><value>Laag</value></data>
+  <data name="WishlistStatus_Desired" xml:space="preserve"><value>Gewenst</value></data>
+  <data name="WishlistStatus_Saving" xml:space="preserve"><value>Aan het sparen</value></data>
+  <data name="WishlistStatus_Postponed" xml:space="preserve"><value>Uitgesteld</value></data>
+  <data name="WishlistStatus_Purchased" xml:space="preserve"><value>Gekocht</value></data>
+  <data name="WishlistStatus_Cancelled" xml:space="preserve"><value>Geannuleerd</value></data>
+  <data name="Wishlist_Title" xml:space="preserve"><value>Verlanglijst</value></data>
+  <data name="Wishlist_Subtitle" xml:space="preserve"><value>Wat je graag wil kopen, en of het nu betaalbaar en verstandig is, met alle rekeningen, kaartafrekeningen en je buffer erbij.</value></data>
+  <data name="Wishlist_Add" xml:space="preserve"><value>Item toevoegen</value></data>
+  <data name="Wishlist_NewItem" xml:space="preserve"><value>Nieuw item</value></data>
+  <data name="Wishlist_EditItem" xml:space="preserve"><value>Item wijzigen</value></data>
+  <data name="Wishlist_NamePlaceholder" xml:space="preserve"><value>Bijvoorbeeld: Fiets</value></data>
+  <data name="Wishlist_Price" xml:space="preserve"><value>Verwachte prijs</value></data>
+  <data name="Wishlist_Priority" xml:space="preserve"><value>Prioriteit</value></data>
+  <data name="Wishlist_TargetDate" xml:space="preserve"><value>Streefdatum (optioneel)</value></data>
+  <data name="Wishlist_MonthlySaving" xml:space="preserve"><value>Sparen per maand (optioneel)</value></data>
+  <data name="Wishlist_MonthlySavingHint" xml:space="preserve"><value>Je plan, ter info: er wordt geen geld verplaatst.</value></data>
+  <data name="Wishlist_Url" xml:space="preserve"><value>Link of winkel (optioneel)</value></data>
+  <data name="Wishlist_Alternative" xml:space="preserve"><value>Alternatief (optioneel)</value></data>
+  <data name="Wishlist_AlternativePlaceholder" xml:space="preserve"><value>Bijvoorbeeld: tweedehands voor €450</value></data>
+  <data name="Wishlist_Saved" xml:space="preserve"><value>{0} opgeslagen.</value></data>
+  <data name="Wishlist_QuickQuestion" xml:space="preserve"><value>Kan ik dit bedrag betalen?</value></data>
+  <data name="Wishlist_QuickTitle" xml:space="preserve"><value>Een aankoop van {0}</value></data>
+  <data name="Wishlist_Check" xml:space="preserve"><value>Bekijken</value></data>
+  <data name="Wishlist_Edit" xml:space="preserve"><value>Wijzigen</value></data>
+  <data name="Wishlist_Close" xml:space="preserve"><value>Sluiten</value></data>
+  <data name="Wishlist_Open" xml:space="preserve"><value>Gewenst</value></data>
+  <data name="Wishlist_Closed" xml:space="preserve"><value>Gekocht en geannuleerd</value></data>
+  <data name="Wishlist_Empty" xml:space="preserve"><value>Nog niets op je verlanglijst.</value></data>
+  <data name="Wishlist_AffordableBadge" xml:space="preserve"><value>✓ Betaalbaar</value></data>
+  <data name="Wishlist_RowPrudent" xml:space="preserve"><value>Nu comfortabel betaalbaar</value></data>
+  <data name="Wishlist_RowUnknown" xml:space="preserve"><value>Nog niet te berekenen</value></data>
+  <data name="Wishlist_RowTechnicalFrom" xml:space="preserve"><value>Technisch nu betaalbaar, comfortabel vanaf {0}</value></data>
+  <data name="Wishlist_RowFrom" xml:space="preserve"><value>Comfortabel betaalbaar vanaf {0}</value></data>
+  <data name="Wishlist_RowNoDate" xml:space="preserve"><value>Niet comfortabel betaalbaar binnen een jaar</value></data>
+  <data name="Wishlist_Target" xml:space="preserve"><value>streefdatum {0}</value></data>
+  <data name="Wishlist_BoughtOn" xml:space="preserve"><value>gekocht {0}</value></data>
+  <data name="Wishlist_PurchaseRemoved" xml:space="preserve"><value>de aankoop is ongedaan gemaakt, dus het staat weer open</value></data>
+  <data name="Wishlist_AlternativeLine" xml:space="preserve"><value>alternatief: {0}</value></data>
+  <data name="Wishlist_HowToPay" xml:space="preserve"><value>Hoe betalen</value></data>
+  <data name="Wishlist_Effects" xml:space="preserve"><value>Effect op je andere wensen</value></data>
+  <data name="Wishlist_ForecastNote" xml:space="preserve"><value>Een prognose op basis van je geplande posten en verwacht inkomen, nooit een garantie. Er verandert niets tot je een aankoop bevestigt.</value></data>
+  <data name="Wishlist_SavingPlan" xml:space="preserve"><value>Met {0} per maand heb je het bij elkaar in {1} maanden ({2}).</value></data>
+  <data name="Wishlist_Buy" xml:space="preserve"><value>Gekocht</value></data>
+  <data name="Wishlist_MarkSaving" xml:space="preserve"><value>Aan het sparen</value></data>
+  <data name="Wishlist_Postpone" xml:space="preserve"><value>Uitstellen</value></data>
+  <data name="Wishlist_Cancel" xml:space="preserve"><value>Item annuleren</value></data>
+  <data name="Wishlist_Reopen" xml:space="preserve"><value>Terug op de lijst</value></data>
+  <data name="Wishlist_BuyTitle" xml:space="preserve"><value>Aankoop bevestigen</value></data>
+  <data name="Wishlist_RecordTransaction" xml:space="preserve"><value>De uitgave registreren</value></data>
+  <data name="Wishlist_RecordTransactionNote" xml:space="preserve"><value>Zet dit uit als de uitgave al bij je transacties staat (ingetypt of geïmporteerd), zodat ze niet dubbel telt.</value></data>
+  <data name="Wishlist_PaidWith" xml:space="preserve"><value>Betaald met</value></data>
+  <data name="Wishlist_PaidAmount" xml:space="preserve"><value>Betaald bedrag</value></data>
+  <data name="Wishlist_ConfirmBuy" xml:space="preserve"><value>Aankoop bevestigen</value></data>
+  <data name="Wishlist_BoughtRecorded" xml:space="preserve"><value>{0} gekocht: {1} geregistreerd op {2}.</value></data>
+  <data name="Wishlist_BoughtMarked" xml:space="preserve"><value>{0} gemarkeerd als gekocht; geen uitgave geregistreerd.</value></data>
+  <data name="Wishlist_StatusSaved" xml:space="preserve"><value>{0}: {1}.</value></data>
+  <data name="Verdict_Prudent" xml:space="preserve"><value>Financieel verstandig</value></data>
+  <data name="Verdict_TechnicallyOnly" xml:space="preserve"><value>Technisch betaalbaar, niet verstandig</value></data>
+  <data name="Verdict_NotAffordable" xml:space="preserve"><value>Nu niet betaalbaar</value></data>
+  <data name="Verdict_CannotCalculate" xml:space="preserve"><value>Niet betrouwbaar te berekenen</value></data>
+  <data name="Verdict_PrudentWhy" xml:space="preserve"><value>Je saldo blijft boven je minimumbuffer bij alle verwachte rekeningen, kaartafrekeningen en inkomsten tot {0}.</value></data>
+  <data name="Verdict_TechnicalBuffer" xml:space="preserve"><value>Het geld is er, maar je saldo zou onder je minimumbuffer zakken voor het volgende inkomen.</value></data>
+  <data name="Verdict_TechnicalBills" xml:space="preserve"><value>Het geld is er nu, maar sommige verwachte rekeningen of een kaartafrekening zouden niet meer betaald kunnen worden.</value></data>
+  <data name="Verdict_NotAffordableWhy" xml:space="preserve"><value>Er staat nu niet genoeg op je zichtrekening en in cash.</value></data>
+  <data name="Verdict_CannotCalculateWhy" xml:space="preserve"><value>Voeg eerst een persoonlijke zichtrekening of cash toe; spaargeld, gezamenlijke rekeningen en kaartkrediet tellen nooit als besteedbaar geld.</value></data>
+  <data name="Check_CashNow" xml:space="preserve"><value>Besteedbaar geld nu</value></data>
+  <data name="Check_CashAfter" xml:space="preserve"><value>Direct na betalen</value></data>
+  <data name="Check_Lowest" xml:space="preserve"><value>Laagste verwachte saldo tot {0}</value></data>
+  <data name="Check_LowestOn" xml:space="preserve"><value>{0} op {1}</value></data>
+  <data name="Check_Buffer" xml:space="preserve"><value>Minimumbuffer van {0} intact</value></data>
+  <data name="Check_Bills" xml:space="preserve"><value>Rekeningen en kaartafrekeningen nog betaald</value></data>
+  <data name="Check_Yes" xml:space="preserve"><value>ja</value></data>
+  <data name="Check_No" xml:space="preserve"><value>nee</value></data>
+  <data name="Check_NextIncome" xml:space="preserve"><value>Volgend inkomen</value></data>
+  <data name="Check_Expected" xml:space="preserve"><value>verwacht {0}</value></data>
+  <data name="Check_NoIncome" xml:space="preserve"><value>niets gepland</value></data>
+  <data name="Check_Earliest" xml:space="preserve"><value>Vroegste comfortabele datum</value></data>
+  <data name="Check_NoDate" xml:space="preserve"><value>geen binnen {0} dagen</value></data>
+  <data name="Pay_Now" xml:space="preserve"><value>Nu, van je zichtrekening</value></data>
+  <data name="Pay_NowDetail" xml:space="preserve"><value>Laagste saldo daarna: {0}</value></data>
+  <data name="Pay_Card" xml:space="preserve"><value>Met {0}</value></data>
+  <data name="Pay_CardDetail" xml:space="preserve"><value>Betaald met de afrekening op {0} (afrekening {1}); krediet over {2} (geen cash); laagste saldo {3}</value></data>
+  <data name="Pay_CardOverLimit" xml:space="preserve"><value>{0} boven het beschikbare krediet</value></data>
+  <data name="Pay_CardNoAccount" xml:space="preserve"><value>De kaart heeft geen betalende rekening, dus de afrekening kan niet gecontroleerd worden.</value></data>
+  <data name="Pay_CardOtherAccount" xml:space="preserve"><value>De afrekening op {0} wordt betaald van een rekening die niet als besteedbaar telt.</value></data>
+  <data name="Pay_Postpone" xml:space="preserve"><value>Wachten</value></data>
+  <data name="Pay_PostponeUntil" xml:space="preserve"><value>Comfortabel vanaf {0}</value></data>
+  <data name="Pay_BeforeTarget" xml:space="preserve"><value>Voor je streefdatum.</value></data>
+  <data name="Pay_AfterTarget" xml:space="preserve"><value>Na je streefdatum.</value></data>
+  <data name="Effect_Delayed" xml:space="preserve"><value>{0}: comfortabel vanaf {1} wordt {2}</value></data>
+  <data name="Effect_NoDate" xml:space="preserve"><value>geen datum binnen een jaar</value></data>
+  <data name="Effect_None" xml:space="preserve"><value>Geen effect op je andere wensen.</value></data>
+  <data name="Error_asset_name_required" xml:space="preserve"><value>Vul een naam in.</value></data>
+  <data name="Error_asset_name_tooLong" xml:space="preserve"><value>De naam is te lang (maximaal 100 tekens).</value></data>
+  <data name="Error_asset_notes_tooLong" xml:space="preserve"><value>De notities zijn te lang (maximaal 1000 tekens).</value></data>
+  <data name="Error_asset_notFound" xml:space="preserve"><value>Deze bezitting bestaat niet meer.</value></data>
+  <data name="Error_valuation_value_negative" xml:space="preserve"><value>Een waarde kan niet negatief zijn. Vul voor een schuld het verschuldigde bedrag in.</value></data>
+  <data name="Error_valuation_note_tooLong" xml:space="preserve"><value>De notitie is te lang (maximaal 500 tekens).</value></data>
+  <data name="Error_valuation_date_future" xml:space="preserve"><value>Een waarde kan niet voor een datum in de toekomst zijn.</value></data>
+  <data name="Error_valuation_account_notManual" xml:space="preserve"><value>De waarde van deze rekening komt uit haar transacties.</value></data>
+  <data name="Error_valuation_notFound" xml:space="preserve"><value>Deze waarde bestaat niet meer.</value></data>
+  <data name="Error_share_date_future" xml:space="preserve"><value>Een wijziging van het aandeel kan niet in de toekomst beginnen.</value></data>
+  <data name="Error_share_card" xml:space="preserve"><value>Een kredietkaart is altijd volledig verschuldigd.</value></data>
+  <data name="Error_wishlist_name_required" xml:space="preserve"><value>Vul een naam in.</value></data>
+  <data name="Error_wishlist_name_tooLong" xml:space="preserve"><value>De naam is te lang (maximaal 100 tekens).</value></data>
+  <data name="Error_wishlist_price_notPositive" xml:space="preserve"><value>Vul een prijs boven nul in.</value></data>
+  <data name="Error_wishlist_saving_notPositive" xml:space="preserve"><value>Vul een maandbedrag boven nul in, of laat het leeg.</value></data>
+  <data name="Error_wishlist_text_tooLong" xml:space="preserve"><value>Een van de teksten is te lang.</value></data>
+  <data name="Error_wishlist_status_invalid" xml:space="preserve"><value>Gebruik "Gekocht" om een item als gekocht te markeren.</value></data>
+  <data name="Error_wishlist_alreadyPurchased" xml:space="preserve"><value>Dit item is al gekocht. Maak eerst de uitgave ongedaan om het te wijzigen.</value></data>
+  <data name="Error_wishlist_purchase_future" xml:space="preserve"><value>Een aankoop zonder uitgave kan niet in de toekomst gedateerd zijn.</value></data>
+  <data name="Error_wishlist_notFound" xml:space="preserve"><value>Dit item bestaat niet meer.</value></data>
 </root>

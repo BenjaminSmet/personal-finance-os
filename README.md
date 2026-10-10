@@ -57,7 +57,7 @@ Never edit a migration that has been released.
 
 ## Status
 
-Phase 5 (dashboard, budgets, analysis) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
+Phase 6 (assets, joint ownership, wishlist) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
 
 Quick Add sits above every page (Ctrl+K). Type a line and press Enter, for example:
 
@@ -119,3 +119,26 @@ Export your transactions from your bank's website as CSV (or XLSX) and open **Im
   first), archive, and bring archived categories back.
 - The **Dashboard** adds what needs attention, the month's budget, the next 14 days, expected cash flow, credit cards
   and savings and investments, kept apart from spendable money.
+
+### Assets, net worth and the wishlist
+
+- **Assets & investments** shows your **net worth**: your share of everything you own minus your share of everything
+  you owe, with every line explained (balance from transactions, or a value you entered and its date). The full
+  household amount is shown separately when something is shared. A credit limit never counts; only what is owed.
+- Pension and Saxo are accounts of type *Pension savings* and *Investment account*; use **Enter value** to record
+  their value on a date. Nothing is fetched online. Each date keeps its own value, so earlier months stay as they
+  were; deposits recorded after the last value are added to it. Values older than 90 days are flagged, also on the
+  Dashboard.
+- **Add asset or liability** for a house, car, mortgage or loan, with your share. A loan's remaining amount is entered
+  as a new value; payments recorded as expenses do not lower it by themselves. **Sold or paid off** sets it to zero
+  from today and hides it.
+- **Change share** sets your share of an account or asset from a date on. Earlier months keep the share they had, in
+  net worth and in the shared spending of Budgets & analysis.
+- The **net worth history** shows the last twelve months and marks months for which values were missing.
+- **Wishlist**: add what you want to buy (price, priority, target date, optional monthly saving, link, alternative).
+  **Check** answers: technically affordable or financially prudent, money now and right after, the lowest expected
+  balance (with every planned bill, card statement and expected income), whether your buffer stays intact, the
+  earliest comfortable date, paying now versus by card (when the statement is debited) versus waiting, and how it
+  delays your other wishes. **Can I afford this amount?** gives the same answer for any amount.
+- **Bought it** records one expense on the account or card you choose (or only marks it bought when the expense is
+  already in your transactions). Undoing that expense puts the item back on the list.

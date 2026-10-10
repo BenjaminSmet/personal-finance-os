@@ -532,4 +532,181 @@
   <data name="Dashboard_CardLine" xml:space="preserve"><value>Owed {0} · available {1} (not cash)</value></data>
   <data name="Dashboard_View" xml:space="preserve"><value>View</value></data>
   <data name="Dashboard_CardSettlementItem" xml:space="preserve"><value>{0} statement</value></data>
+  <data name="Dashboard_NetWorth" xml:space="preserve"><value>Net worth (your share)</value></data>
+  <data name="Dashboard_NetWorthDetail" xml:space="preserve"><value>Assets {0} · liabilities {1}</value></data>
+  <data name="Dashboard_NetWorthIncomplete" xml:space="preserve"><value>Some values are missing, so this is incomplete.</value></data>
+  <data name="Dashboard_GoToAssets" xml:space="preserve"><value>Open assets</value></data>
+  <data name="Dashboard_GoToWishlist" xml:space="preserve"><value>Can I afford…?</value></data>
+  <data name="Dashboard_NoSavings" xml:space="preserve"><value>No savings, pension or investment accounts yet.</value></data>
+  <data name="Dashboard_ValuationStale" xml:space="preserve"><value>{0}: last value is from {1}; enter a new one</value></data>
+  <data name="Dashboard_ValuationMissing" xml:space="preserve"><value>{0} has no value yet</value></data>
+  <data name="AssetKind_Property" xml:space="preserve"><value>Property</value></data>
+  <data name="AssetKind_Vehicle" xml:space="preserve"><value>Vehicle</value></data>
+  <data name="AssetKind_OtherAsset" xml:space="preserve"><value>Other asset</value></data>
+  <data name="AssetKind_Mortgage" xml:space="preserve"><value>Mortgage</value></data>
+  <data name="AssetKind_Loan" xml:space="preserve"><value>Loan</value></data>
+  <data name="AssetKind_OtherLiability" xml:space="preserve"><value>Other liability</value></data>
+  <data name="Assets_Title" xml:space="preserve"><value>Assets &amp; investments</value></data>
+  <data name="Assets_Subtitle" xml:space="preserve"><value>Net worth from your balances, the values you enter for pension, investments and other assets, and what you owe. Values are entered by you; nothing is fetched online.</value></data>
+  <data name="Assets_Add" xml:space="preserve"><value>Add asset or liability</value></data>
+  <data name="Assets_AddTitle" xml:space="preserve"><value>New asset or liability</value></data>
+  <data name="Assets_AddNote" xml:space="preserve"><value>For things without transactions, such as a house, a car or a mortgage. Pension and Saxo are accounts: add them under Accounts and enter their value here.</value></data>
+  <data name="Assets_NamePlaceholder" xml:space="preserve"><value>For example: House, Car, Mortgage</value></data>
+  <data name="Assets_Value" xml:space="preserve"><value>Value</value></data>
+  <data name="Assets_ValueHint" xml:space="preserve"><value>For a liability: the amount still owed. Optional; you can add it later.</value></data>
+  <data name="Assets_ValueDate" xml:space="preserve"><value>Value on</value></data>
+  <data name="Assets_YourShare" xml:space="preserve"><value>Your share (%)</value></data>
+  <data name="Assets_Added" xml:space="preserve"><value>{0} added.</value></data>
+  <data name="Assets_Empty" xml:space="preserve"><value>No accounts or assets yet. Add your accounts first; pension and investment accounts then get their value here.</value></data>
+  <data name="Assets_NetWorth" xml:space="preserve"><value>Net worth (your share)</value></data>
+  <data name="Assets_Assets" xml:space="preserve"><value>Assets</value></data>
+  <data name="Assets_Liabilities" xml:space="preserve"><value>Liabilities</value></data>
+  <data name="Assets_Household" xml:space="preserve"><value>Household (full amounts)</value></data>
+  <data name="Assets_Explanation" xml:space="preserve"><value>Net worth = your share of everything you own minus your share of everything you owe. A shared account counts once, at your share; a credit limit is never counted, only what is owed on the card.</value></data>
+  <data name="Assets_Incomplete" xml:space="preserve"><value>Incomplete: no value yet for {0}.</value></data>
+  <data name="Assets_Stale" xml:space="preserve"><value>The value of {0} is older than {1} days. Enter a recent value.</value></data>
+  <data name="Assets_StaleBadge" xml:space="preserve"><value>Out of date</value></data>
+  <data name="Assets_MissingBadge" xml:space="preserve"><value>No value</value></data>
+  <data name="Assets_SourceLedger" xml:space="preserve"><value>balance from transactions</value></data>
+  <data name="Assets_SourceValuation" xml:space="preserve"><value>value of {0}</value></data>
+  <data name="Assets_SourceValuationPlus" xml:space="preserve"><value>value of {0} plus deposits since</value></data>
+  <data name="Assets_SourceNoValuationYet" xml:space="preserve"><value>no value yet; recorded deposits used</value></data>
+  <data name="Assets_SourceNone" xml:space="preserve"><value>no value for this date</value></data>
+  <data name="Assets_ShareOf" xml:space="preserve"><value>Your share {0} of {1}</value></data>
+  <data name="Assets_EnterValue" xml:space="preserve"><value>Enter value</value></data>
+  <data name="Assets_ChangeShare" xml:space="preserve"><value>Change share</value></data>
+  <data name="Assets_ValuationTitle" xml:space="preserve"><value>Value of {0}</value></data>
+  <data name="Assets_ValuationNote" xml:space="preserve"><value>Each date keeps its own value, so earlier months stay as they were. Entering a value for a date that already has one corrects it.</value></data>
+  <data name="Assets_ValuationComment" xml:space="preserve"><value>Note (optional)</value></data>
+  <data name="Assets_ValuationHistory" xml:space="preserve"><value>Earlier values</value></data>
+  <data name="Assets_Remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="Assets_ValuationSaved" xml:space="preserve"><value>Value of {0} saved: {1}.</value></data>
+  <data name="Assets_ArchiveNote" xml:space="preserve"><value>Sold or paid off? The value becomes 0 from today and the item is hidden. Earlier months keep their value.</value></data>
+  <data name="Assets_Archive" xml:space="preserve"><value>Sold or paid off</value></data>
+  <data name="Assets_Archived" xml:space="preserve"><value>{0} is set to 0 from today and archived.</value></data>
+  <data name="Assets_ShareTitle" xml:space="preserve"><value>Your share of {0}</value></data>
+  <data name="Assets_ShareNote" xml:space="preserve"><value>A new share applies from the chosen date. Earlier months keep the share they had, so past reports do not change.</value></data>
+  <data name="Assets_ShareFromDate" xml:space="preserve"><value>Applies from</value></data>
+  <data name="Assets_ShareHistory" xml:space="preserve"><value>Shares so far</value></data>
+  <data name="Assets_ShareFrom" xml:space="preserve"><value>From {0}</value></data>
+  <data name="Assets_ShareSaved" xml:space="preserve"><value>{0}: your share is {1} from {2}.</value></data>
+  <data name="Assets_LiabilitiesNote" xml:space="preserve"><value>Loan payments recorded as expenses do not lower a loan by themselves: enter the remaining amount as a new value.</value></data>
+  <data name="Assets_NoLiabilities" xml:space="preserve"><value>No liabilities.</value></data>
+  <data name="Assets_History" xml:space="preserve"><value>Net worth over time</value></data>
+  <data name="Assets_HistoryIncomplete" xml:space="preserve"><value>Incomplete: values were missing for some months.</value></data>
+  <data name="Priority_High" xml:space="preserve"><value>High</value></data>
+  <data name="Priority_Normal" xml:space="preserve"><value>Normal</value></data>
+  <data name="Priority_Low" xml:space="preserve"><value>Low</value></data>
+  <data name="WishlistStatus_Desired" xml:space="preserve"><value>Wanted</value></data>
+  <data name="WishlistStatus_Saving" xml:space="preserve"><value>Saving up</value></data>
+  <data name="WishlistStatus_Postponed" xml:space="preserve"><value>Postponed</value></data>
+  <data name="WishlistStatus_Purchased" xml:space="preserve"><value>Bought</value></data>
+  <data name="WishlistStatus_Cancelled" xml:space="preserve"><value>Cancelled</value></data>
+  <data name="Wishlist_Title" xml:space="preserve"><value>Wishlist</value></data>
+  <data name="Wishlist_Subtitle" xml:space="preserve"><value>What you would like to buy, and whether it is affordable and prudent now, with every bill, card statement and your buffer taken into account.</value></data>
+  <data name="Wishlist_Add" xml:space="preserve"><value>Add item</value></data>
+  <data name="Wishlist_NewItem" xml:space="preserve"><value>New item</value></data>
+  <data name="Wishlist_EditItem" xml:space="preserve"><value>Change item</value></data>
+  <data name="Wishlist_NamePlaceholder" xml:space="preserve"><value>For example: Bicycle</value></data>
+  <data name="Wishlist_Price" xml:space="preserve"><value>Expected price</value></data>
+  <data name="Wishlist_Priority" xml:space="preserve"><value>Priority</value></data>
+  <data name="Wishlist_TargetDate" xml:space="preserve"><value>Target date (optional)</value></data>
+  <data name="Wishlist_MonthlySaving" xml:space="preserve"><value>Saving per month (optional)</value></data>
+  <data name="Wishlist_MonthlySavingHint" xml:space="preserve"><value>Your plan, for information: no money is moved.</value></data>
+  <data name="Wishlist_Url" xml:space="preserve"><value>Link or shop (optional)</value></data>
+  <data name="Wishlist_Alternative" xml:space="preserve"><value>Alternative (optional)</value></data>
+  <data name="Wishlist_AlternativePlaceholder" xml:space="preserve"><value>For example: second-hand for €450</value></data>
+  <data name="Wishlist_Saved" xml:space="preserve"><value>{0} saved.</value></data>
+  <data name="Wishlist_QuickQuestion" xml:space="preserve"><value>Can I afford this amount?</value></data>
+  <data name="Wishlist_QuickTitle" xml:space="preserve"><value>A purchase of {0}</value></data>
+  <data name="Wishlist_Check" xml:space="preserve"><value>Check</value></data>
+  <data name="Wishlist_Edit" xml:space="preserve"><value>Change</value></data>
+  <data name="Wishlist_Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Wishlist_Open" xml:space="preserve"><value>Wanted</value></data>
+  <data name="Wishlist_Closed" xml:space="preserve"><value>Bought and cancelled</value></data>
+  <data name="Wishlist_Empty" xml:space="preserve"><value>Nothing on your wishlist yet.</value></data>
+  <data name="Wishlist_AffordableBadge" xml:space="preserve"><value>✓ Affordable</value></data>
+  <data name="Wishlist_RowPrudent" xml:space="preserve"><value>Comfortably affordable now</value></data>
+  <data name="Wishlist_RowUnknown" xml:space="preserve"><value>Cannot be calculated yet</value></data>
+  <data name="Wishlist_RowTechnicalFrom" xml:space="preserve"><value>Technically affordable now, comfortably from {0}</value></data>
+  <data name="Wishlist_RowFrom" xml:space="preserve"><value>Comfortably affordable from {0}</value></data>
+  <data name="Wishlist_RowNoDate" xml:space="preserve"><value>Not comfortably affordable within a year</value></data>
+  <data name="Wishlist_Target" xml:space="preserve"><value>target {0}</value></data>
+  <data name="Wishlist_BoughtOn" xml:space="preserve"><value>bought {0}</value></data>
+  <data name="Wishlist_PurchaseRemoved" xml:space="preserve"><value>the purchase was undone, so it is open again</value></data>
+  <data name="Wishlist_AlternativeLine" xml:space="preserve"><value>alternative: {0}</value></data>
+  <data name="Wishlist_HowToPay" xml:space="preserve"><value>How to pay</value></data>
+  <data name="Wishlist_Effects" xml:space="preserve"><value>Effect on your other wishes</value></data>
+  <data name="Wishlist_ForecastNote" xml:space="preserve"><value>A forecast from your planned items and expected income, never a guarantee. Nothing changes until you confirm a purchase.</value></data>
+  <data name="Wishlist_SavingPlan" xml:space="preserve"><value>Saving {0} a month, you have it together in {1} months ({2}).</value></data>
+  <data name="Wishlist_Buy" xml:space="preserve"><value>Bought it</value></data>
+  <data name="Wishlist_MarkSaving" xml:space="preserve"><value>Saving up</value></data>
+  <data name="Wishlist_Postpone" xml:space="preserve"><value>Postpone</value></data>
+  <data name="Wishlist_Cancel" xml:space="preserve"><value>Cancel item</value></data>
+  <data name="Wishlist_Reopen" xml:space="preserve"><value>Put back on the list</value></data>
+  <data name="Wishlist_BuyTitle" xml:space="preserve"><value>Confirm the purchase</value></data>
+  <data name="Wishlist_RecordTransaction" xml:space="preserve"><value>Record the expense</value></data>
+  <data name="Wishlist_RecordTransactionNote" xml:space="preserve"><value>Turn this off when the expense is already in your transactions (typed in or imported), so it is not counted twice.</value></data>
+  <data name="Wishlist_PaidWith" xml:space="preserve"><value>Paid with</value></data>
+  <data name="Wishlist_PaidAmount" xml:space="preserve"><value>Amount paid</value></data>
+  <data name="Wishlist_ConfirmBuy" xml:space="preserve"><value>Confirm purchase</value></data>
+  <data name="Wishlist_BoughtRecorded" xml:space="preserve"><value>{0} bought: {1} recorded on {2}.</value></data>
+  <data name="Wishlist_BoughtMarked" xml:space="preserve"><value>{0} marked as bought; no expense recorded.</value></data>
+  <data name="Wishlist_StatusSaved" xml:space="preserve"><value>{0}: {1}.</value></data>
+  <data name="Verdict_Prudent" xml:space="preserve"><value>Financially prudent</value></data>
+  <data name="Verdict_TechnicallyOnly" xml:space="preserve"><value>Technically affordable, not prudent</value></data>
+  <data name="Verdict_NotAffordable" xml:space="preserve"><value>Not affordable now</value></data>
+  <data name="Verdict_CannotCalculate" xml:space="preserve"><value>Cannot be calculated reliably</value></data>
+  <data name="Verdict_PrudentWhy" xml:space="preserve"><value>Your balance stays above your minimum buffer through every expected bill, card statement and income until {0}.</value></data>
+  <data name="Verdict_TechnicalBuffer" xml:space="preserve"><value>The money is there, but your balance would drop below your minimum buffer before the next income.</value></data>
+  <data name="Verdict_TechnicalBills" xml:space="preserve"><value>The money is there now, but some expected bills or a card statement could no longer be paid.</value></data>
+  <data name="Verdict_NotAffordableWhy" xml:space="preserve"><value>There is not enough on your current account and cash for it now.</value></data>
+  <data name="Verdict_CannotCalculateWhy" xml:space="preserve"><value>Add a personal current account or cash first; savings, joint accounts and card credit are never counted as spendable money.</value></data>
+  <data name="Check_CashNow" xml:space="preserve"><value>Spendable money now</value></data>
+  <data name="Check_CashAfter" xml:space="preserve"><value>Right after paying now</value></data>
+  <data name="Check_Lowest" xml:space="preserve"><value>Lowest expected balance until {0}</value></data>
+  <data name="Check_LowestOn" xml:space="preserve"><value>{0} on {1}</value></data>
+  <data name="Check_Buffer" xml:space="preserve"><value>Minimum buffer of {0} intact</value></data>
+  <data name="Check_Bills" xml:space="preserve"><value>Bills and card statements still paid</value></data>
+  <data name="Check_Yes" xml:space="preserve"><value>yes</value></data>
+  <data name="Check_No" xml:space="preserve"><value>no</value></data>
+  <data name="Check_NextIncome" xml:space="preserve"><value>Next income</value></data>
+  <data name="Check_Expected" xml:space="preserve"><value>expected {0}</value></data>
+  <data name="Check_NoIncome" xml:space="preserve"><value>none planned</value></data>
+  <data name="Check_Earliest" xml:space="preserve"><value>Earliest comfortable date</value></data>
+  <data name="Check_NoDate" xml:space="preserve"><value>none within {0} days</value></data>
+  <data name="Pay_Now" xml:space="preserve"><value>Now, from your current account</value></data>
+  <data name="Pay_NowDetail" xml:space="preserve"><value>Lowest balance afterwards: {0}</value></data>
+  <data name="Pay_Card" xml:space="preserve"><value>With {0}</value></data>
+  <data name="Pay_CardDetail" xml:space="preserve"><value>Paid with the statement on {0} (statement {1}); credit left {2} (not cash); lowest balance {3}</value></data>
+  <data name="Pay_CardOverLimit" xml:space="preserve"><value>{0} over the available credit</value></data>
+  <data name="Pay_CardNoAccount" xml:space="preserve"><value>The card has no paying account, so its statement cannot be checked.</value></data>
+  <data name="Pay_CardOtherAccount" xml:space="preserve"><value>The statement on {0} is paid from an account that is not counted as spendable.</value></data>
+  <data name="Pay_Postpone" xml:space="preserve"><value>Wait</value></data>
+  <data name="Pay_PostponeUntil" xml:space="preserve"><value>Comfortable from {0}</value></data>
+  <data name="Pay_BeforeTarget" xml:space="preserve"><value>Before your target date.</value></data>
+  <data name="Pay_AfterTarget" xml:space="preserve"><value>After your target date.</value></data>
+  <data name="Effect_Delayed" xml:space="preserve"><value>{0}: comfortable from {1} becomes {2}</value></data>
+  <data name="Effect_NoDate" xml:space="preserve"><value>no date within a year</value></data>
+  <data name="Effect_None" xml:space="preserve"><value>No effect on your other wishes.</value></data>
+  <data name="Error_asset_name_required" xml:space="preserve"><value>Enter a name.</value></data>
+  <data name="Error_asset_name_tooLong" xml:space="preserve"><value>The name is too long (maximum 100 characters).</value></data>
+  <data name="Error_asset_notes_tooLong" xml:space="preserve"><value>The notes are too long (maximum 1000 characters).</value></data>
+  <data name="Error_asset_notFound" xml:space="preserve"><value>This asset no longer exists.</value></data>
+  <data name="Error_valuation_value_negative" xml:space="preserve"><value>A value cannot be negative. For a liability, enter the amount owed.</value></data>
+  <data name="Error_valuation_note_tooLong" xml:space="preserve"><value>The note is too long (maximum 500 characters).</value></data>
+  <data name="Error_valuation_date_future" xml:space="preserve"><value>A value cannot be for a date in the future.</value></data>
+  <data name="Error_valuation_account_notManual" xml:space="preserve"><value>This account's value comes from its transactions.</value></data>
+  <data name="Error_valuation_notFound" xml:space="preserve"><value>This value no longer exists.</value></data>
+  <data name="Error_share_date_future" xml:space="preserve"><value>A share change cannot start in the future.</value></data>
+  <data name="Error_share_card" xml:space="preserve"><value>A credit card is always owed in full.</value></data>
+  <data name="Error_wishlist_name_required" xml:space="preserve"><value>Enter a name.</value></data>
+  <data name="Error_wishlist_name_tooLong" xml:space="preserve"><value>The name is too long (maximum 100 characters).</value></data>
+  <data name="Error_wishlist_price_notPositive" xml:space="preserve"><value>Enter a price above zero.</value></data>
+  <data name="Error_wishlist_saving_notPositive" xml:space="preserve"><value>Enter a monthly amount above zero, or leave it empty.</value></data>
+  <data name="Error_wishlist_text_tooLong" xml:space="preserve"><value>One of the texts is too long.</value></data>
+  <data name="Error_wishlist_status_invalid" xml:space="preserve"><value>Use "Bought it" to mark an item as bought.</value></data>
+  <data name="Error_wishlist_alreadyPurchased" xml:space="preserve"><value>This item is already bought. Void its expense first to change it.</value></data>
+  <data name="Error_wishlist_purchase_future" xml:space="preserve"><value>A purchase without an expense cannot be dated in the future.</value></data>
+  <data name="Error_wishlist_notFound" xml:space="preserve"><value>This item no longer exists.</value></data>
 </root>
