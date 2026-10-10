@@ -12,7 +12,7 @@
       <Grid ColumnDefinitions="*,Auto">
         <StackPanel Spacing="4">
           <TextBlock Classes="overline" Text="{l:T Dashboard_Available}" />
-          <TextBlock Classes="bigAmount" Text="{Binding LiquidOpeningTotalText}" />
+          <TextBlock Classes="bigAmount" Text="{Binding LiquidTotalText}" />
           <TextBlock Classes="caption" Text="{l:T Dashboard_PhaseNote}" TextWrapping="Wrap" />
         </StackPanel>
         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Spacing="10">
@@ -23,6 +23,27 @@
                   HorizontalAlignment="Right" />
         </StackPanel>
       </Grid>
+    </Border>
+
+    <!-- This month: income and spending; transfers and card settlements never count -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasAccounts}">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="title" Text="{Binding MonthTitle}" />
+        <Grid ColumnDefinitions="*,*,*">
+          <StackPanel Spacing="2">
+            <TextBlock Classes="overline" Text="{l:T Transactions_Income}" />
+            <TextBlock Classes="amount" Text="{Binding MonthIncomeText}" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Spacing="2">
+            <TextBlock Classes="overline" Text="{l:T Transactions_Expenses}" />
+            <TextBlock Classes="amount" Text="{Binding MonthExpensesText}" />
+          </StackPanel>
+          <StackPanel Grid.Column="2" Spacing="2">
+            <TextBlock Classes="overline" Text="{l:T Transactions_Net}" />
+            <TextBlock Classes="amount" Text="{Binding MonthNetText}" />
+          </StackPanel>
+        </Grid>
+      </StackPanel>
     </Border>
 
     <!-- Account tiles -->

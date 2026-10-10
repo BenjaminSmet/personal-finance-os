@@ -12,8 +12,6 @@ public sealed class CategoryService(ICategoryRepository categories, ISettingsSto
     /// <summary>Set once the starter categories were offered, so archiving them all never brings them back.</summary>
     public const string DefaultsCreatedKey = "categories.defaultsCreated";
 
-    public event EventHandler? Changed;
-
     public Task<IReadOnlyList<Category>> ListAsync(bool includeArchived = false, CancellationToken ct = default) =>
         categories.ListAsync(includeArchived, ct);
 
@@ -24,7 +22,6 @@ public sealed class CategoryService(ICategoryRepository categories, ISettingsSto
         var category = Category.Create(name, kind, existing.Count == 0 ? 0 : existing.Max(c => c.SortOrder) + 1, clock.Now);
         await categories.AddAsync([category], ct);
         await audit.RecordAsync("Category", category.Id, "Created", ct);
-        Changed?.Invoke(this, EventArgs.Empty);
         return category;
     }
 
@@ -35,7 +32,6 @@ public sealed class CategoryService(ICategoryRepository categories, ISettingsSto
         category.Rename(name, clock.Now);
         await categories.UpdateAsync(category, ct);
         await audit.RecordAsync("Category", id, "Renamed", ct);
-        Changed?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>Hides the category for new entries. Existing transactions keep it.</summary>
@@ -45,7 +41,6 @@ public sealed class CategoryService(ICategoryRepository categories, ISettingsSto
         category.Archive(clock.Now);
         await categories.UpdateAsync(category, ct);
         await audit.RecordAsync("Category", id, "Archived", ct);
-        Changed?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

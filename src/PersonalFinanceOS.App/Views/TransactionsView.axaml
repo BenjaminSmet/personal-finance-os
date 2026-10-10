@@ -1,0 +1,109 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:v="using:PersonalFinanceOS.App.Views"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.TransactionsView"
+             x:DataType="vm:TransactionsViewModel">
+  <StackPanel Spacing="18">
+    <Grid ColumnDefinitions="*,Auto">
+      <StackPanel Spacing="2">
+        <TextBlock Classes="largeTitle" Text="{l:T Transactions_Title}" />
+        <TextBlock Classes="secondary" Text="{l:T Transactions_Subtitle}" TextWrapping="Wrap" />
+      </StackPanel>
+      <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+        <Button Classes="primary" Content="{l:T Transactions_NewTransfer}" Command="{Binding NewTransferCommand}"
+                IsVisible="{Binding !IsEditorOpen}" />
+      </StackPanel>
+    </Grid>
+
+    <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" />
+    </Border>
+    <Border Classes="error" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding Error, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+    </Border>
+
+    <!-- New transfer / correction -->
+    <Border Classes="glass strong" IsVisible="{Binding IsEditorOpen}" Padding="26,24">
+      <StackPanel Spacing="18">
+        <TextBlock Classes="title" Text="{Binding EditorTitle}" />
+        <v:TransactionEditorView DataContext="{Binding Editor}" />
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Classes="primary" Content="{l:T Editor_Save}" Command="{Binding SaveEditorCommand}" />
+          <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelEditorCommand}" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- This month: transfers and card settlements are never part of these figures -->
+    <Border Classes="glass" Padding="24,20">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock Classes="title" Text="{Binding MonthTitle}" VerticalAlignment="Center" />
+          <ComboBox Grid.Column="1" MinWidth="220" ItemsSource="{Binding FilterOptions}" SelectedItem="{Binding SelectedFilter}"
+                    AutomationProperties.Name="{l:T Transactions_Filter}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate DataType="vm:AccountFilterOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="*,*,*">
+          <StackPanel Spacing="2">
+            <TextBlock Classes="overline" Text="{l:T Transactions_Income}" />
+            <TextBlock Classes="amount" Text="{Binding IncomeText}" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Spacing="2">
+            <TextBlock Classes="overline" Text="{l:T Transactions_Expenses}" />
+            <TextBlock Classes="amount" Text="{Binding ExpensesText}" />
+          </StackPanel>
+          <StackPanel Grid.Column="2" Spacing="2">
+            <TextBlock Classes="overline" Text="{l:T Transactions_Net}" />
+            <TextBlock Classes="amount" Text="{Binding NetText}" Classes.debt="{Binding NetIsNegative}" />
+          </StackPanel>
+        </Grid>
+        <TextBlock Classes="caption" Text="{l:T Transactions_TotalsNote}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+
+    <Border Classes="glass" IsVisible="{Binding IsEmpty}" Padding="26,24">
+      <TextBlock Classes="secondary" Text="{l:T Transactions_Empty}" TextWrapping="Wrap" />
+    </Border>
+
+    <Border Classes="glass" Padding="6" IsVisible="{Binding !IsEmpty}">
+      <ItemsControl ItemsSource="{Binding Rows}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="vm:TransactionRowViewModel">
+            <StackPanel>
+              <Grid ColumnDefinitions="96,*,Auto,Auto" Margin="14,10">
+                <TextBlock Classes="caption" Text="{Binding DateText}" VerticalAlignment="Center" />
+                <StackPanel Grid.Column="1" Spacing="1" VerticalAlignment="Center">
+                  <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Classes="headline" Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                    <Border Classes="badge" IsVisible="{Binding ShowKind}">
+                      <TextBlock Classes="caption" Text="{Binding KindText}" />
+                    </Border>
+                  </StackPanel>
+                  <TextBlock Classes="secondary" FontSize="13" Text="{Binding Subtitle}" TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+                <TextBlock Grid.Column="2" Margin="16,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
+                           Text="{Binding AmountText}" Classes.debt="{Binding IsOutflow}" />
+                <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                  <Button Content="{l:T Transactions_EditRow}" Padding="12,5" FontSize="13" Command="{Binding EditCommand}"
+                          IsVisible="{Binding CanEdit}" />
+                  <Button Content="{l:T Transactions_Void}" Padding="12,5" FontSize="13" Command="{Binding VoidCommand}"
+                          IsVisible="{Binding !IsConfirmingVoid}" />
+                  <Button Content="{l:T Transactions_VoidBoth}" Padding="12,5" FontSize="13" Classes="primary"
+                          Command="{Binding VoidCommand}" IsVisible="{Binding IsConfirmingVoid}" />
+                  <Button Content="{l:T Accounts_Cancel}" Padding="12,5" FontSize="13" Command="{Binding KeepItCommand}"
+                          IsVisible="{Binding IsConfirmingVoid}" />
+                </StackPanel>
+              </Grid>
+              <Border Classes="separator" Margin="14,0" IsVisible="{Binding !IsLast}" />
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </Border>
+  </StackPanel>
+</UserControl>

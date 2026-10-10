@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 
 namespace PersonalFinanceOS.App.Views;
 
@@ -8,6 +9,34 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         GlassWindow.Apply(this, WindowBackdrop);
+        KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.K, KeyModifiers.Control), Command = new FocusQuickAddCommand(this) });
+        DataContextChanged += (_, _) =>
+        {
+            if (DataContext is ViewModels.MainWindowViewModel vm)
+            {
+                vm.QuickAdd.FocusRequested += (_, _) => FocusQuickAdd();
+            }
+        };
+    }
+
+    /// <summary>Ctrl+K: start typing a transaction from any page (keyboard navigation, spec §20).</summary>
+    public void FocusQuickAdd()
+    {
+        QuickAddBox.Focus();
+        QuickAddBox.SelectAll();
+    }
+
+    private sealed class FocusQuickAddCommand(MainWindow window) : System.Windows.Input.ICommand
+    {
+        public event EventHandler? CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
+
+        public bool CanExecute(object? parameter) => true;
+
+        public void Execute(object? parameter) => window.FocusQuickAdd();
     }
 }
 

@@ -91,7 +91,7 @@ public class MainWindowTests
         HeadlessSetup.PumpUntil(() => dashboard.ActiveAccountCount == 4);
 
         // Liquid = personal current + full joint balance. Savings and VISA debt are not spendable cash.
-        Assert.Equal(Money.FromCents(184_235 + 240_000), dashboard.LiquidOpeningTotal);
+        Assert.Equal(Money.FromCents(184_235 + 240_000), dashboard.LiquidTotal);
         Save(window, "02-dashboard-with-accounts");
 
         vm.SelectedItem = vm.NavItems.Single(n => n.Page is AccountsViewModel);

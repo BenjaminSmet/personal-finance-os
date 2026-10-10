@@ -75,6 +75,55 @@
       </StackPanel>
     </Border>
 
+    <!-- Reconcile with a bank statement (spec §5): a difference is shown, never hidden -->
+    <Border Classes="glass strong" IsVisible="{Binding IsReconcileOpen}" Padding="26,24">
+      <StackPanel Spacing="16">
+        <TextBlock Classes="title" Text="{Binding ReconcileTitle}" />
+        <TextBlock Classes="secondary" Text="{l:T Reconcile_Intro}" TextWrapping="Wrap" />
+        <Grid ColumnDefinitions="*,20,*">
+          <StackPanel>
+            <TextBlock Classes="fieldLabel" Text="{l:T Reconcile_Date}" />
+            <CalendarDatePicker SelectedDate="{Binding ReconcileDate}" HorizontalAlignment="Stretch" />
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{Binding ReconcileBalanceLabel}" />
+            <TextBox Text="{Binding ReconcileBalanceText}" PlaceholderText="0,00" FontSize="16" />
+          </StackPanel>
+        </Grid>
+
+        <Border Classes="success">
+          <Border.IsVisible>
+            <MultiBinding Converter="{x:Static BoolConverters.And}">
+              <Binding Path="!ReconcileHasDifference" />
+              <Binding Path="ReconcilePreview" Converter="{x:Static ObjectConverters.IsNotNull}" />
+            </MultiBinding>
+          </Border.IsVisible>
+          <TextBlock Text="{Binding ReconcilePreview, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+        </Border>
+        <StackPanel Spacing="12" IsVisible="{Binding ReconcileHasDifference}">
+          <Border Classes="warning">
+            <TextBlock Text="{Binding ReconcilePreview, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+          </Border>
+          <StackPanel>
+            <TextBlock Classes="fieldLabel" Text="{l:T Reconcile_Reason}" />
+            <TextBox Text="{Binding ReconcileReason}" MaxLength="200" PlaceholderText="{l:T Reconcile_ReasonPlaceholder}" />
+            <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Reconcile_AdjustmentHint}" TextWrapping="Wrap" />
+          </StackPanel>
+        </StackPanel>
+
+        <Border Classes="error" IsVisible="{Binding ReconcileError, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding ReconcileError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+        </Border>
+
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Classes="primary" Content="{l:T Reconcile_Save}" Command="{Binding SaveReconciliationCommand}" />
+          <Button Content="{l:T Reconcile_SaveWithAdjustment}" Command="{Binding SaveReconciliationWithAdjustmentCommand}"
+                  IsVisible="{Binding ReconcileHasDifference}" />
+          <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelReconcileCommand}" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
     <!-- Empty state -->
     <Border Classes="glass" IsVisible="{Binding IsEmpty}" Padding="26,24">
       <TextBlock Classes="secondary" Text="{l:T Accounts_Empty}" TextWrapping="Wrap" />
@@ -101,14 +150,21 @@
                   </StackPanel>
                   <TextBlock Classes="secondary" FontSize="13" Text="{Binding TypeName}" />
                   <TextBlock Classes="caption" Text="{Binding ShareText}" IsVisible="{Binding HasPartialShare}" />
+                  <TextBlock Classes="caption" Text="{Binding ReconciliationText}" IsVisible="{Binding !HasReconciliationDifference}" />
+                  <TextBlock Classes="caption debt" Text="{Binding ReconciliationText, StringFormat='⚠ {0}'}"
+                             IsVisible="{Binding HasReconciliationDifference}" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="16,0">
                   <TextBlock Classes="amount" Text="{Binding BalanceText}" HorizontalAlignment="Right"
                              Classes.debt="{Binding IsLiability}" />
                   <TextBlock Classes="caption" HorizontalAlignment="Right" Text="{Binding SinceText}" />
                 </StackPanel>
-                <Button Grid.Column="3" VerticalAlignment="Center" Content="{l:T Accounts_Archive}" Padding="14,6"
-                        FontSize="13" Command="{Binding ArchiveCommand}" IsVisible="{Binding !IsArchived}" />
+                <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                  <Button Content="{l:T Accounts_Reconcile}" Padding="14,6" FontSize="13" Command="{Binding ReconcileCommand}"
+                          IsVisible="{Binding CanReconcile}" />
+                  <Button Content="{l:T Accounts_Archive}" Padding="14,6" FontSize="13" Command="{Binding ArchiveCommand}"
+                          IsVisible="{Binding !IsArchived}" />
+                </StackPanel>
               </Grid>
               <Border Classes="separator" Margin="68,0,14,0" IsVisible="{Binding !IsLast}" />
             </StackPanel>

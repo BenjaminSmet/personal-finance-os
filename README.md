@@ -29,7 +29,7 @@ A backup on the same disk does not protect against disk failure; copy backups to
 ## Project structure
 
 ```
-src/PersonalFinanceOS.Domain          Money, shares, accounts — pure rules, no dependencies
+src/PersonalFinanceOS.Domain          Money, shares, accounts, ledger rules — pure, no dependencies
 src/PersonalFinanceOS.Application     Use cases and calculations (the single source of truth for numbers)
 src/PersonalFinanceOS.Infrastructure  SQLite, safe migrations, backups, logging
 src/PersonalFinanceOS.App             Avalonia UI (MVVM), Dutch/English
@@ -57,4 +57,16 @@ Never edit a migration that has been released.
 
 ## Status
 
-Phase 1 (foundation) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
+Phase 2 (ledger and Quick Add) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
+
+Quick Add sits above every page (Ctrl+K). Type a line and press Enter, for example:
+
+| You type | Recorded as |
+|---|---|
+| `Supermarkt 42,80` | Expense of €42.80 from the remembered account, today |
+| `Loon 2400` | Income of €2,400 |
+| `Spotify 17,99 visa` | Card purchase on the VISA account |
+| `Koffie 3,20 gisteren` | Expense dated yesterday |
+| `Transfer 600 naar gezamenlijke rekening` | Transfer, not income or spending |
+
+Anything uncertain is shown for checking first; nothing is saved before you confirm.

@@ -24,7 +24,7 @@
   <data name="Dashboard_AccountsSummary" xml:space="preserve"><value>{0} actieve rekeningen</value></data>
   <data name="Dashboard_GoToAccounts" xml:space="preserve"><value>Naar rekeningen</value></data>
   <data name="Dashboard_OpeningTotal" xml:space="preserve"><value>Totaal van openingssaldi (beschikbare rekeningen)</value></data>
-  <data name="Dashboard_PhaseNote" xml:space="preserve"><value>Vanaf fase 2 tellen ook transacties mee in de saldi.</value></data>
+  <data name="Dashboard_PhaseNote" xml:space="preserve"><value>Openingssaldi plus alle geregistreerde transacties. Spaargeld, beleggingen en de VISA-schuld tellen hier niet mee.</value></data>
   <data name="Accounts_Title" xml:space="preserve"><value>Rekeningen</value></data>
   <data name="Accounts_Add" xml:space="preserve"><value>Rekening toevoegen</value></data>
   <data name="Accounts_Empty" xml:space="preserve"><value>Nog geen rekeningen. Voeg je eerste rekening toe om te beginnen.</value></data>
@@ -100,6 +100,123 @@
   <data name="Theme_Dark" xml:space="preserve"><value>Donker</value></data>
   <data name="Dashboard_Available" xml:space="preserve"><value>Beschikbaar op zichtrekeningen en cash</value></data>
   <data name="Dashboard_BasedOnOpening" xml:space="preserve"><value>Op basis van openingssaldi</value></data>
-  <data name="Accounts_Subtitle" xml:space="preserve"><value>Je rekeningen en hun startsaldo</value></data>
+  <data name="Accounts_Subtitle" xml:space="preserve"><value>Je rekeningen en hun huidige saldo</value></data>
   <data name="Accounts_ListTitle" xml:space="preserve"><value>Alle rekeningen</value></data>
+  <data name="Accounts_Reconcile" xml:space="preserve"><value>Afstemmen</value></data>
+  <data name="Accounts_NotReconciled" xml:space="preserve"><value>Nog niet afgestemd</value></data>
+  <data name="Accounts_ReconciledOn" xml:space="preserve"><value>Afgestemd op {0}</value></data>
+  <data name="Accounts_ReconcileDifference" xml:space="preserve"><value>Verschil van {0} met het afschrift van {1}</value></data>
+  <data name="Reconcile_Title" xml:space="preserve"><value>{0} afstemmen</value></data>
+  <data name="Reconcile_Intro" xml:space="preserve"><value>Vul het saldo van je bankafschrift in. De app vergelijkt het met haar eigen berekening en wijzigt je saldo nooit zonder het te vragen.</value></data>
+  <data name="Reconcile_Date" xml:space="preserve"><value>Datum afschrift</value></data>
+  <data name="Reconcile_StatementBalance" xml:space="preserve"><value>Saldo op het afschrift</value></data>
+  <data name="Reconcile_StatementOwed" xml:space="preserve"><value>Verschuldigd bedrag op het afschrift</value></data>
+  <data name="Reconcile_Matches" xml:space="preserve"><value>De app berekent ook {0}. Alles klopt.</value></data>
+  <data name="Reconcile_Difference" xml:space="preserve"><value>De app berekent {0}. Verschil: {1}.</value></data>
+  <data name="Reconcile_Reason" xml:space="preserve"><value>Reden voor een correctie</value></data>
+  <data name="Reconcile_ReasonPlaceholder" xml:space="preserve"><value>bv. bankkosten niet ingevoerd</value></data>
+  <data name="Reconcile_AdjustmentHint" xml:space="preserve"><value>Alleen nodig als je een correctie toevoegt. Een correctie zet het saldo juist; ze telt niet als inkomen of uitgave. Je kunt ook zonder correctie opslaan en het verschil later zoeken.</value></data>
+  <data name="Reconcile_Save" xml:space="preserve"><value>Afstemming opslaan</value></data>
+  <data name="Reconcile_SaveWithAdjustment" xml:space="preserve"><value>Opslaan met correctie</value></data>
+  <data name="Reconcile_SavedMatched" xml:space="preserve"><value>Afstemming opgeslagen. De rekening klopt met het afschrift.</value></data>
+  <data name="Reconcile_SavedDifference" xml:space="preserve"><value>Afstemming opgeslagen. Het verschil blijft zichtbaar tot het opgelost is.</value></data>
+  <data name="Transactions_Title" xml:space="preserve"><value>Transacties</value></data>
+  <data name="Transactions_Subtitle" xml:space="preserve"><value>Alles wat je registreerde. Overschrijvingen tussen je eigen rekeningen tellen nooit als inkomen of uitgave.</value></data>
+  <data name="Transactions_NewTransfer" xml:space="preserve"><value>Nieuwe overschrijving</value></data>
+  <data name="Transactions_Edit" xml:space="preserve"><value>Transactie wijzigen</value></data>
+  <data name="Transactions_EditRow" xml:space="preserve"><value>Wijzigen</value></data>
+  <data name="Transactions_Void" xml:space="preserve"><value>Verwijderen</value></data>
+  <data name="Transactions_VoidBoth" xml:space="preserve"><value>Beide kanten verwijderen</value></data>
+  <data name="Transactions_Voided" xml:space="preserve"><value>Transactie verwijderd. Je kunt dit ongedaan maken.</value></data>
+  <data name="Transactions_Saved" xml:space="preserve"><value>Opgeslagen.</value></data>
+  <data name="Transactions_Income" xml:space="preserve"><value>Inkomsten</value></data>
+  <data name="Transactions_Expenses" xml:space="preserve"><value>Uitgaven</value></data>
+  <data name="Transactions_Net" xml:space="preserve"><value>Netto</value></data>
+  <data name="Transactions_TotalsNote" xml:space="preserve"><value>Terugbetalingen verlagen de uitgaven. Een VISA-aankoop telt op de aankoopdatum; de kaart betalen is een overschrijving.</value></data>
+  <data name="Transactions_Empty" xml:space="preserve"><value>Nog geen transacties. Typ er een in de snelinvoer hierboven, bijvoorbeeld "Supermarkt 42,80".</value></data>
+  <data name="Transactions_AllAccounts" xml:space="preserve"><value>Alle rekeningen</value></data>
+  <data name="Transactions_Filter" xml:space="preserve"><value>Rekening</value></data>
+  <data name="QuickAdd_Label" xml:space="preserve"><value>Snel toevoegen</value></data>
+  <data name="QuickAdd_Placeholder" xml:space="preserve"><value>Snel toevoegen (Ctrl+K): Supermarkt 42,80 · Loon 2400 · Transfer 600 naar gezamenlijke rekening</value></data>
+  <data name="QuickAdd_Add" xml:space="preserve"><value>Toevoegen</value></data>
+  <data name="QuickAdd_Review" xml:space="preserve"><value>Nakijken</value></data>
+  <data name="QuickAdd_ReviewTitle" xml:space="preserve"><value>Nakijken voor het opslaan</value></data>
+  <data name="QuickAdd_Confirm" xml:space="preserve"><value>Bevestigen</value></data>
+  <data name="QuickAdd_Undo" xml:space="preserve"><value>Ongedaan maken</value></data>
+  <data name="QuickAdd_Saved" xml:space="preserve"><value>Opgeslagen: {0}</value></data>
+  <data name="QuickAdd_Undone" xml:space="preserve"><value>Ongedaan gemaakt.</value></data>
+  <data name="QuickAddIssue_AmountMissing" xml:space="preserve"><value>Geen bedrag gevonden</value></data>
+  <data name="QuickAddIssue_AmountAmbiguous" xml:space="preserve"><value>Controleer hoe het bedrag gelezen werd</value></data>
+  <data name="QuickAddIssue_SeveralAmounts" xml:space="preserve"><value>Meerdere getallen: het laatste is als bedrag genomen</value></data>
+  <data name="QuickAddIssue_NoAccount" xml:space="preserve"><value>Kies een rekening</value></data>
+  <data name="QuickAddIssue_DestinationUnknown" xml:space="preserve"><value>Kies de rekening waarnaar je overschrijft</value></data>
+  <data name="QuickAddIssue_SameAccount" xml:space="preserve"><value>Van en naar zijn dezelfde rekening</value></data>
+  <data name="QuickAddIssue_FutureDate" xml:space="preserve"><value>De datum ligt in de toekomst</value></data>
+  <data name="Editor_Type" xml:space="preserve"><value>Soort</value></data>
+  <data name="Editor_Amount" xml:space="preserve"><value>Bedrag</value></data>
+  <data name="Editor_Description" xml:space="preserve"><value>Omschrijving of begunstigde</value></data>
+  <data name="Editor_Date" xml:space="preserve"><value>Datum</value></data>
+  <data name="Editor_Account" xml:space="preserve"><value>Rekening</value></data>
+  <data name="Editor_From" xml:space="preserve"><value>Van rekening</value></data>
+  <data name="Editor_To" xml:space="preserve"><value>Naar rekening</value></data>
+  <data name="Editor_Category" xml:space="preserve"><value>Categorie</value></data>
+  <data name="Editor_NoCategory" xml:space="preserve"><value>Geen categorie</value></data>
+  <data name="Editor_Save" xml:space="preserve"><value>Opslaan</value></data>
+  <data name="Editor_TransferWarning" xml:space="preserve"><value>Dit is een overschrijving: beide rekeningen wijzigen samen.</value></data>
+  <data name="TxType_Income" xml:space="preserve"><value>Inkomen</value></data>
+  <data name="TxType_Expense" xml:space="preserve"><value>Uitgave</value></data>
+  <data name="TxType_Refund" xml:space="preserve"><value>Terugbetaling</value></data>
+  <data name="TxType_Transfer" xml:space="preserve"><value>Overschrijving</value></data>
+  <data name="TxType_Adjustment" xml:space="preserve"><value>Correctie</value></data>
+  <data name="EntryKind_Income" xml:space="preserve"><value>Inkomen</value></data>
+  <data name="EntryKind_Expense" xml:space="preserve"><value>Uitgave</value></data>
+  <data name="EntryKind_CardPurchase" xml:space="preserve"><value>Kaartaankoop</value></data>
+  <data name="EntryKind_Refund" xml:space="preserve"><value>Terugbetaling</value></data>
+  <data name="EntryKind_Transfer" xml:space="preserve"><value>Overschrijving</value></data>
+  <data name="EntryKind_CardSettlement" xml:space="preserve"><value>Kaartaflossing</value></data>
+  <data name="EntryKind_Adjustment" xml:space="preserve"><value>Correctie</value></data>
+  <data name="Date_Today" xml:space="preserve"><value>vandaag</value></data>
+  <data name="Date_Yesterday" xml:space="preserve"><value>gisteren</value></data>
+  <data name="CategoryKind_Expense" xml:space="preserve"><value>Uitgave</value></data>
+  <data name="CategoryKind_Income" xml:space="preserve"><value>Inkomen</value></data>
+  <data name="Settings_Categories" xml:space="preserve"><value>Categorieën</value></data>
+  <data name="Settings_CategoriesNote" xml:space="preserve"><value>Gearchiveerde categorieën blijven op eerdere transacties staan, maar worden niet meer aangeboden.</value></data>
+  <data name="Settings_CategoryName" xml:space="preserve"><value>Nieuwe categorie</value></data>
+  <data name="Settings_CategoryAdd" xml:space="preserve"><value>Toevoegen</value></data>
+  <data name="Settings_CategoryRename" xml:space="preserve"><value>Hernoemen</value></data>
+  <data name="DefaultCategory_Housing" xml:space="preserve"><value>Wonen</value></data>
+  <data name="DefaultCategory_LoanPayment" xml:space="preserve"><value>Lening</value></data>
+  <data name="DefaultCategory_Groceries" xml:space="preserve"><value>Boodschappen</value></data>
+  <data name="DefaultCategory_Transport" xml:space="preserve"><value>Vervoer</value></data>
+  <data name="DefaultCategory_Utilities" xml:space="preserve"><value>Nutsvoorzieningen</value></data>
+  <data name="DefaultCategory_Insurance" xml:space="preserve"><value>Verzekeringen</value></data>
+  <data name="DefaultCategory_Subscriptions" xml:space="preserve"><value>Abonnementen</value></data>
+  <data name="DefaultCategory_PersonalCare" xml:space="preserve"><value>Persoonlijke verzorging</value></data>
+  <data name="DefaultCategory_Leisure" xml:space="preserve"><value>Vrije tijd</value></data>
+  <data name="DefaultCategory_Shopping" xml:space="preserve"><value>Shopping</value></data>
+  <data name="DefaultCategory_HomeRenovation" xml:space="preserve"><value>Renovatie</value></data>
+  <data name="DefaultCategory_OtherExpenses" xml:space="preserve"><value>Andere uitgaven</value></data>
+  <data name="DefaultCategory_Salary" xml:space="preserve"><value>Loon</value></data>
+  <data name="DefaultCategory_OtherIncome" xml:space="preserve"><value>Ander inkomen</value></data>
+  <data name="Error_account_archived" xml:space="preserve"><value>Deze rekening is gearchiveerd. Kies een actieve rekening.</value></data>
+  <data name="Error_transaction_amount_zero" xml:space="preserve"><value>Vul een bedrag groter dan nul in.</value></data>
+  <data name="Error_transaction_amount_negative" xml:space="preserve"><value>Vul het bedrag in zonder minteken; de soort bepaalt de richting.</value></data>
+  <data name="Error_transaction_adjustment_reasonRequired" xml:space="preserve"><value>Een correctie heeft een reden nodig.</value></data>
+  <data name="Error_transaction_voided" xml:space="preserve"><value>Deze transactie is verwijderd. Maak het verwijderen eerst ongedaan.</value></data>
+  <data name="Error_transaction_description_tooLong" xml:space="preserve"><value>De omschrijving is te lang (max. 200 tekens).</value></data>
+  <data name="Error_transaction_note_tooLong" xml:space="preserve"><value>De notitie is te lang (max. 1000 tekens).</value></data>
+  <data name="Error_transaction_wrongKind" xml:space="preserve"><value>Dit soort transactie kan zo niet gewijzigd worden.</value></data>
+  <data name="Error_transaction_income_liability" xml:space="preserve"><value>Geld terug op een kredietkaart is een terugbetaling, geen inkomen.</value></data>
+  <data name="Error_transaction_category_kindMismatch" xml:space="preserve"><value>Deze categorie past niet bij dit soort transactie.</value></data>
+  <data name="Error_transaction_date_beforeOpening" xml:space="preserve"><value>De datum ligt vóór de saldodatum van de rekening. Die periode zit al in het startsaldo.</value></data>
+  <data name="Error_transaction_notFound" xml:space="preserve"><value>Deze transactie bestaat niet meer.</value></data>
+  <data name="Error_transfer_sameAccount" xml:space="preserve"><value>Kies twee verschillende rekeningen.</value></data>
+  <data name="Error_category_name_required" xml:space="preserve"><value>Vul een naam in.</value></data>
+  <data name="Error_category_name_tooLong" xml:space="preserve"><value>De naam is te lang (max. 60 tekens).</value></data>
+  <data name="Error_category_name_duplicate" xml:space="preserve"><value>Er bestaat al een categorie met deze naam.</value></data>
+  <data name="Error_category_notFound" xml:space="preserve"><value>Deze categorie bestaat niet meer.</value></data>
+  <data name="Error_category_archived" xml:space="preserve"><value>Deze categorie is gearchiveerd. Kies een andere.</value></data>
+  <data name="Error_undo_stale" xml:space="preserve"><value>Dit kan niet meer ongedaan gemaakt worden omdat het intussen gewijzigd is. Er is niets gewijzigd.</value></data>
+  <data name="Error_quickAdd_noAccount" xml:space="preserve"><value>Kies een rekening.</value></data>
+  <data name="Error_quickAdd_noDestination" xml:space="preserve"><value>Kies de rekening waarnaar je overschrijft.</value></data>
 </root>

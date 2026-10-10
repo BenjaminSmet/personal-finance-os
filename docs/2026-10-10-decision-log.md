@@ -74,3 +74,37 @@ Requested by Benjamin: an iOS 26/27-like look.
 - iOS-style toggle switches (green when on) and segmented pickers (theme, language).
 - Theme: System (follows Windows) / Light / Dark, stored in settings. All colours are tokens in `Styles/Theme.axaml`.
 - Meaning is never carried by colour alone: warnings, errors and debts also use symbols or labels (spec §20).
+
+### D-013 · Ledger model: card purchases and settlements follow from the account (2026-10-10)
+**Spec:** §6 lists eight transaction types, including credit-card purchase, credit-card settlement and opening balance.
+**Decision:** stored types are Income, Expense, Refund, Transfer and Adjustment. A card purchase is an Expense on the
+credit-card account; paying the card is a Transfer from the current account to the card (as D-004 already implies).
+The screens still label them "card purchase" and "card payment". Opening balances stay on the account (spec §19
+allows "explicit opening-balance fields").
+**Why:** double counting becomes impossible by construction instead of by rule: a settlement can never be an
+expense because it is a transfer, and the database enforces the direction of every type (an expense can never add
+money, income never removes it, every transfer has a linked second side).
+**Rules:** income cannot be booked on a credit card (money back is a refund, §10); a transaction cannot be dated
+before its account's balance date, because that period is already in the opening balance.
+
+### D-014 · Remove = void, with undo (2026-10-10)
+Removing a transaction marks it voided instead of deleting it; voided lines never count anywhere. Every add, edit and
+remove of this session can be undone, newest first (spec §7). Undo refuses, and changes nothing, when the
+transaction was changed in another way since. Both sides of a transfer are always edited, voided and undone together.
+Important changes go to the local audit log (no amounts or names). Phase 3 import batches will build on the same void.
+
+### D-015 · Quick Add (2026-10-10)
+One line in Dutch or English, read locally and deterministically: amount (D-009 formats), payee, date words
+(`vandaag`, `gisteren`, `5/10`…), `naar`/`van`/`met` + account, `visa`/`cash`, and keywords for transfers, income and
+refunds. A clear line is saved with Enter; anything uncertain (ambiguous or several amounts, unknown destination,
+missing account, future date) opens an editable preview first. Nothing is saved before confirmation. Each confirmed
+entry teaches a payee rule (type, category, account); a correction made in the preview is what is learned, so
+suggestions never override corrections. Quick Add sits above every page; Ctrl+K focuses it.
+
+### D-016 · Categories and reconciliation (2026-10-10)
+Starter categories (spec §13 list, plus "Loan payment") are created once, in the interface language of that moment,
+and are then ordinary editable data; archiving them all never brings them back. Categories can be added, renamed and
+archived; merging and reordering come with budgets in phase 5.
+Reconciliation records the statement balance and date per account and shows the difference. It never changes the
+balance by itself: an adjustment is only added when the user asks, with a reason, and an adjustment is never
+income or spending.

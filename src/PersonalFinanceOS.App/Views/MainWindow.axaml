@@ -44,11 +44,62 @@
         </DockPanel>
       </Border>
 
-      <!-- Page -->
-      <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled">
-        <ContentControl Content="{Binding CurrentPage}" Margin="36,48,40,40" MaxWidth="1080"
-                        HorizontalAlignment="Stretch" />
-      </ScrollViewer>
+      <Grid Grid.Column="1" RowDefinitions="Auto,*">
+        <!-- Quick Add: on every page, Ctrl+K from anywhere (spec §7, §22) -->
+        <Border Grid.Row="0" Classes="glass strong" Margin="36,44,40,0" MaxWidth="1080" Padding="18,14"
+                DataContext="{Binding QuickAdd}" x:DataType="vm:QuickAddViewModel">
+          <StackPanel Spacing="10">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBox x:Name="QuickAddBox" Text="{Binding Text}" FontSize="16"
+                       PlaceholderText="{l:T QuickAdd_Placeholder}"
+                       AutomationProperties.Name="{l:T QuickAdd_Label}">
+                <TextBox.KeyBindings>
+                  <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand}" />
+                  <KeyBinding Gesture="Escape" Command="{Binding CancelCommand}" />
+                </TextBox.KeyBindings>
+              </TextBox>
+              <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" Margin="10,0,0,0">
+                <Button Classes="primary" Content="{l:T QuickAdd_Add}" Command="{Binding SubmitCommand}" IsVisible="{Binding HasDraft}" />
+                <Button Content="{l:T QuickAdd_Review}" Command="{Binding ReviewCommand}" IsVisible="{Binding HasDraft}" />
+                <Button Content="{l:T QuickAdd_Undo}" Command="{Binding UndoCommand}" IsVisible="{Binding CanUndo}" />
+              </StackPanel>
+            </Grid>
+
+            <!-- How the line is read; nothing is saved yet -->
+            <TextBlock Classes="secondary" Margin="4,0,0,0" Text="{Binding Summary, StringFormat='→  {0}'}" TextWrapping="Wrap"
+                       IsVisible="{Binding HasDraft}" />
+            <Border Classes="warning" IsVisible="{Binding IssueText, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Text="{Binding IssueText, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+            </Border>
+            <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+            </Border>
+            <Border Classes="error" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Text="{Binding Error, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+            </Border>
+
+            <!-- Preview: shown when something is uncertain, or on request -->
+            <StackPanel Spacing="14" IsVisible="{Binding IsReviewOpen}" Margin="0,6,0,0">
+              <StackPanel.KeyBindings>
+                <KeyBinding Gesture="Enter" Command="{Binding SaveReviewCommand}" />
+                <KeyBinding Gesture="Escape" Command="{Binding CancelCommand}" />
+              </StackPanel.KeyBindings>
+              <TextBlock Classes="headline" Text="{l:T QuickAdd_ReviewTitle}" />
+              <v:TransactionEditorView DataContext="{Binding Editor}" />
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Classes="primary" Content="{l:T QuickAdd_Confirm}" Command="{Binding SaveReviewCommand}" />
+                <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelCommand}" />
+              </StackPanel>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- Page -->
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+          <ContentControl Content="{Binding CurrentPage}" Margin="36,24,40,40" MaxWidth="1080"
+                          HorizontalAlignment="Stretch" />
+        </ScrollViewer>
+      </Grid>
     </Grid>
   </Panel>
 </Window>
