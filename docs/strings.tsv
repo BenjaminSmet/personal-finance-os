@@ -212,3 +212,105 @@ Error_category_archived	This category is archived. Choose another one.	Deze cate
 Error_undo_stale	This can no longer be undone because it was changed since. Nothing was changed.	Dit kan niet meer ongedaan gemaakt worden omdat het intussen gewijzigd is. Er is niets gewijzigd.
 Error_quickAdd_noAccount	Choose an account.	Kies een rekening.
 Error_quickAdd_noDestination	Choose the account to transfer to.	Kies de rekening waarnaar je overschrijft.
+Nav_Import	Import	Importeren
+Import_Title	Import bank file	Bankbestand importeren
+Import_Subtitle	Read a CSV or Excel export from your bank. You see every line first; nothing is saved until you confirm.	Lees een CSV- of Excel-export van je bank in. Je ziet eerst elke regel; er wordt niets opgeslagen tot je bevestigt.
+Import_NoAccounts	Add an account first on the Accounts page. The import goes into one account.	Maak eerst een rekening aan op de pagina Rekeningen. Een import komt altijd in één rekening.
+Import_Account	Account this file is from	Rekening van dit bestand
+Import_ChooseFile	Choose file…	Bestand kiezen…
+Import_FileType	Bank export (CSV, XLSX)	Bankexport (CSV, XLSX)
+Import_Privacy	The file is only read on this computer and is not kept. Only its name is remembered with the import.	Het bestand wordt alleen op deze computer gelezen en niet bewaard. Alleen de naam wordt bij de import onthouden.
+Import_ChooseAccountFirst	Choose the account this file belongs to first.	Kies eerst de rekening waar dit bestand bij hoort.
+Import_Columns	Columns	Kolommen
+Import_Columns_Remembered	Known layout: the columns from last time are used.	Bekend formaat: de kolommen van de vorige keer worden gebruikt.
+Import_Columns_Detected	Detected automatically. Check them once; the choice is remembered for this bank format.	Automatisch herkend. Controleer ze één keer; de keuze wordt onthouden voor dit bankformaat.
+Import_HeaderRow	Header line	Kopregel
+Import_Header_None	No header line	Geen kopregel
+Import_Header_Line	Line {0}: {1}	Regel {0}: {1}
+Import_Delimiter	Separator	Scheidingsteken
+Import_Delimiter_Semicolon	; (semicolon)	; (puntkomma)
+Import_Delimiter_Comma	, (comma)	, (komma)
+Import_Delimiter_Tab	Tab	Tab
+Import_DateColumn	Date	Datum
+Import_DateFormat	Date format	Datumnotatie
+Import_Layout	Amounts	Bedragen
+Import_Layout_Signed	One column, minus for money out	Eén kolom, min voor geld uit
+Import_Layout_DebitCredit	Separate columns for out and in	Aparte kolommen voor uit en in
+Import_Layout_WithDirection	Amount plus an out/in column	Bedrag plus een kolom af/bij
+Import_Decimal	Number format	Getalnotatie
+Import_AmountColumn	Amount	Bedrag
+Import_DirectionColumn	Out/in (Af/Bij)	Af/bij
+Import_DebitColumn	Money out	Geld uit
+Import_CreditColumn	Money in	Geld in
+Import_CounterpartyColumn	Counterparty name	Naam tegenpartij
+Import_DescriptionColumn	Description	Omschrijving
+Import_ReferenceColumn	Bank reference (optional)	Bankreferentie (optioneel)
+Import_CurrencyColumn	Currency (optional)	Munt (optioneel)
+Import_Column_None	(none)	(geen)
+Import_Column_Number	Column {0}	Kolom {0}
+Import_Reread	Read again with these columns	Opnieuw lezen met deze kolommen
+Import_Lines	Lines in this file	Regels in dit bestand
+Import_ReviewHint	Ticked lines are imported. Lines that are probably already in the app are unticked; tick them if they are not. Type and category are suggestions you can change.	Aangevinkte regels worden geïmporteerd. Regels die waarschijnlijk al in de app staan, zijn niet aangevinkt; vink ze aan als dat niet zo is. Soort en categorie zijn voorstellen die je kunt wijzigen.
+Import_IncludeLine	Import this line	Deze regel importeren
+Import_NoDescription	(no description)	(geen omschrijving)
+Import_TransferTo	Transfer to own account	Overschrijving naar eigen rekening
+Import_TransferFrom	Transfer from own account	Overschrijving van eigen rekening
+Import_ChooseOwnAccount	Choose account	Kies rekening
+Import_Status_Duplicate	Already in the app	Staat al in de app
+Import_Status_PossibleDuplicate	Possibly already entered by hand	Mogelijk al met de hand ingevoerd
+Import_Status_BeforeOpening	Before the balance date: already in the starting balance	Vóór de saldodatum: zit al in het startsaldo
+Import_Status_Removed	You removed this line earlier	Je hebt deze regel eerder verwijderd
+Import_Suggestion_PayeeRule	Category from earlier choices	Categorie uit eerdere keuzes
+Import_Suggestion_OwnAccount	Looks like a transfer between your accounts	Lijkt een overschrijving tussen je rekeningen
+Import_Suggestion_CardPayment	Looks like paying off the card	Lijkt een afbetaling van de kaart
+Import_Count_New	{0} new	{0} nieuw
+Import_Count_Duplicate	{0} already in the app	{0} al in de app
+Import_Count_Possible	{0} possibly entered by hand	{0} mogelijk al ingevoerd
+Import_Count_BeforeOpening	{0} before the balance date	{0} vóór de saldodatum
+Import_Count_Invalid	{0} unreadable	{0} onleesbaar
+Import_Confirm	Import	Importeren
+Import_ConfirmCount	Import {0} lines	{0} regels importeren
+Import_RowError	Line {0}: {1}	Regel {0}: {1}
+Import_DoneTitle	Import done	Import klaar
+Import_Result	{0} lines were added.	{0} regels zijn toegevoegd.
+Import_Result_Linked	{0} existing lines were linked as the other side of a transfer.	{0} bestaande regels zijn gekoppeld als andere kant van een overschrijving.
+Import_Result_NowDuplicate	{0} lines were skipped because they were added in the meantime.	{0} regels zijn overgeslagen omdat ze intussen al toegevoegd waren.
+Import_Another	Import another file	Nog een bestand importeren
+Import_UndoThis	Undo this import	Deze import ongedaan maken
+Import_History	Earlier imports	Eerdere imports
+Import_History_Line	{0} · {1} · {2} lines	{0} · {1} · {2} regels
+Import_History_Undone	Undone	Ongedaan gemaakt
+Import_Undo	Undo	Ongedaan maken
+Import_Undo_Plan	This removes the {0} lines of this import.	Dit verwijdert de {0} regels van deze import.
+Import_Undo_PlanChanged	{1} lines of this import were changed since. They are kept unless you choose otherwise; {0} unchanged lines are removed.	{1} regels van deze import zijn intussen gewijzigd. Die blijven staan tenzij je anders kiest; {0} ongewijzigde regels worden verwijderd.
+Import_Undo_Confirm	Remove unchanged lines	Ongewijzigde regels verwijderen
+Import_Undo_All	Remove all {0} lines	Alle {0} regels verwijderen
+Import_Undone	Import undone: {0} lines removed.	Import ongedaan gemaakt: {0} regels verwijderd.
+Editor_ImportWarning	This line was read from a bank file. Changing it keeps it out of an undo of that import.	Deze regel komt uit een bankbestand. Als je hem wijzigt, blijft hij staan wanneer je die import ongedaan maakt.
+Transactions_VoidImported	Remove anyway	Toch verwijderen
+Error_import_file_empty	This file is empty.	Dit bestand is leeg.
+Error_import_file_tooLarge	This file is too large for a bank export (max 20 MB).	Dit bestand is te groot voor een bankexport (max. 20 MB).
+Error_import_file_unsupported	This file type is not supported. Export a CSV or XLSX file from your bank.	Dit bestandstype wordt niet ondersteund. Exporteer een CSV- of XLSX-bestand bij je bank.
+Error_import_file_unreadable	This file could not be read.	Dit bestand kon niet gelezen worden.
+Error_import_file_noRows	No lines were found below the header line.	Er zijn geen regels gevonden onder de kopregel.
+Error_import_mapping_column	A chosen column does not exist in this file.	Een gekozen kolom bestaat niet in dit bestand.
+Error_import_mapping_date	Choose a date format.	Kies een datumnotatie.
+Error_import_mapping_amount	Choose the amount column(s).	Kies de kolom(men) met het bedrag.
+Error_import_mapping_description	Choose a description or counterparty column.	Kies een kolom met omschrijving of tegenpartij.
+Error_import_row_date	Date not readable	Datum niet leesbaar
+Error_import_row_amount	Amount not readable	Bedrag niet leesbaar
+Error_import_row_zero	Amount is zero	Bedrag is nul
+Error_import_row_currency	Not in euro: not imported	Niet in euro: niet geïmporteerd
+Error_import_row_direction	Out/in not recognised	Af/bij niet herkend
+Error_import_row_transferAccount	Choose the other account of this transfer.	Kies de andere rekening van deze overschrijving.
+Error_import_row_transferBeforeOpening	The other account starts after this date. Change its balance date or choose another type.	De andere rekening begint na deze datum. Pas de saldodatum aan of kies een andere soort.
+Error_import_row_typeDirection	This type does not fit the direction of the amount.	Deze soort past niet bij de richting van het bedrag.
+Error_import_alreadyConfirmed	This import was already saved.	Deze import is al opgeslagen.
+Error_import_nothingSelected	No lines are ticked to import.	Er zijn geen regels aangevinkt om te importeren.
+Error_import_notFound	This import no longer exists.	Deze import bestaat niet meer.
+Error_import_alreadyUndone	This import was already undone.	Deze import is al ongedaan gemaakt.
+Import_Undo_ConfirmSimple	Yes, undo	Ja, ongedaan maken
+Import_Columns_Hide	Hide	Verbergen
+Import_Columns_Edit	Change columns	Kolommen aanpassen
+Import_ConfirmOne	Import 1 line	1 regel importeren
+Import_ResultOne	1 line was added.	1 regel is toegevoegd.

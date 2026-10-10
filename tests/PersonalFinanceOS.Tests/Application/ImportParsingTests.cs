@@ -37,6 +37,7 @@ public class ImportParsingTests
     [Fact]
     public void Windows_1252_files_keep_the_euro_sign_and_accents()
     {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance); // only to write the test file; the app registers it itself
         var bytes = Encoding.GetEncoding(1252).GetBytes("Datum;Bedrag;Omschrijving\n01/10/2026;-42,80;Café € terras\n");
         var file = ImportFile.Read("x.csv", bytes);
 

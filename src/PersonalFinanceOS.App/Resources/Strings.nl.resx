@@ -219,4 +219,106 @@
   <data name="Error_undo_stale" xml:space="preserve"><value>Dit kan niet meer ongedaan gemaakt worden omdat het intussen gewijzigd is. Er is niets gewijzigd.</value></data>
   <data name="Error_quickAdd_noAccount" xml:space="preserve"><value>Kies een rekening.</value></data>
   <data name="Error_quickAdd_noDestination" xml:space="preserve"><value>Kies de rekening waarnaar je overschrijft.</value></data>
+  <data name="Nav_Import" xml:space="preserve"><value>Importeren</value></data>
+  <data name="Import_Title" xml:space="preserve"><value>Bankbestand importeren</value></data>
+  <data name="Import_Subtitle" xml:space="preserve"><value>Lees een CSV- of Excel-export van je bank in. Je ziet eerst elke regel; er wordt niets opgeslagen tot je bevestigt.</value></data>
+  <data name="Import_NoAccounts" xml:space="preserve"><value>Maak eerst een rekening aan op de pagina Rekeningen. Een import komt altijd in één rekening.</value></data>
+  <data name="Import_Account" xml:space="preserve"><value>Rekening van dit bestand</value></data>
+  <data name="Import_ChooseFile" xml:space="preserve"><value>Bestand kiezen…</value></data>
+  <data name="Import_FileType" xml:space="preserve"><value>Bankexport (CSV, XLSX)</value></data>
+  <data name="Import_Privacy" xml:space="preserve"><value>Het bestand wordt alleen op deze computer gelezen en niet bewaard. Alleen de naam wordt bij de import onthouden.</value></data>
+  <data name="Import_ChooseAccountFirst" xml:space="preserve"><value>Kies eerst de rekening waar dit bestand bij hoort.</value></data>
+  <data name="Import_Columns" xml:space="preserve"><value>Kolommen</value></data>
+  <data name="Import_Columns_Remembered" xml:space="preserve"><value>Bekend formaat: de kolommen van de vorige keer worden gebruikt.</value></data>
+  <data name="Import_Columns_Detected" xml:space="preserve"><value>Automatisch herkend. Controleer ze één keer; de keuze wordt onthouden voor dit bankformaat.</value></data>
+  <data name="Import_HeaderRow" xml:space="preserve"><value>Kopregel</value></data>
+  <data name="Import_Header_None" xml:space="preserve"><value>Geen kopregel</value></data>
+  <data name="Import_Header_Line" xml:space="preserve"><value>Regel {0}: {1}</value></data>
+  <data name="Import_Delimiter" xml:space="preserve"><value>Scheidingsteken</value></data>
+  <data name="Import_Delimiter_Semicolon" xml:space="preserve"><value>; (puntkomma)</value></data>
+  <data name="Import_Delimiter_Comma" xml:space="preserve"><value>, (komma)</value></data>
+  <data name="Import_Delimiter_Tab" xml:space="preserve"><value>Tab</value></data>
+  <data name="Import_DateColumn" xml:space="preserve"><value>Datum</value></data>
+  <data name="Import_DateFormat" xml:space="preserve"><value>Datumnotatie</value></data>
+  <data name="Import_Layout" xml:space="preserve"><value>Bedragen</value></data>
+  <data name="Import_Layout_Signed" xml:space="preserve"><value>Eén kolom, min voor geld uit</value></data>
+  <data name="Import_Layout_DebitCredit" xml:space="preserve"><value>Aparte kolommen voor uit en in</value></data>
+  <data name="Import_Layout_WithDirection" xml:space="preserve"><value>Bedrag plus een kolom af/bij</value></data>
+  <data name="Import_Decimal" xml:space="preserve"><value>Getalnotatie</value></data>
+  <data name="Import_AmountColumn" xml:space="preserve"><value>Bedrag</value></data>
+  <data name="Import_DirectionColumn" xml:space="preserve"><value>Af/bij</value></data>
+  <data name="Import_DebitColumn" xml:space="preserve"><value>Geld uit</value></data>
+  <data name="Import_CreditColumn" xml:space="preserve"><value>Geld in</value></data>
+  <data name="Import_CounterpartyColumn" xml:space="preserve"><value>Naam tegenpartij</value></data>
+  <data name="Import_DescriptionColumn" xml:space="preserve"><value>Omschrijving</value></data>
+  <data name="Import_ReferenceColumn" xml:space="preserve"><value>Bankreferentie (optioneel)</value></data>
+  <data name="Import_CurrencyColumn" xml:space="preserve"><value>Munt (optioneel)</value></data>
+  <data name="Import_Column_None" xml:space="preserve"><value>(geen)</value></data>
+  <data name="Import_Column_Number" xml:space="preserve"><value>Kolom {0}</value></data>
+  <data name="Import_Reread" xml:space="preserve"><value>Opnieuw lezen met deze kolommen</value></data>
+  <data name="Import_Lines" xml:space="preserve"><value>Regels in dit bestand</value></data>
+  <data name="Import_ReviewHint" xml:space="preserve"><value>Aangevinkte regels worden geïmporteerd. Regels die waarschijnlijk al in de app staan, zijn niet aangevinkt; vink ze aan als dat niet zo is. Soort en categorie zijn voorstellen die je kunt wijzigen.</value></data>
+  <data name="Import_IncludeLine" xml:space="preserve"><value>Deze regel importeren</value></data>
+  <data name="Import_NoDescription" xml:space="preserve"><value>(geen omschrijving)</value></data>
+  <data name="Import_TransferTo" xml:space="preserve"><value>Overschrijving naar eigen rekening</value></data>
+  <data name="Import_TransferFrom" xml:space="preserve"><value>Overschrijving van eigen rekening</value></data>
+  <data name="Import_ChooseOwnAccount" xml:space="preserve"><value>Kies rekening</value></data>
+  <data name="Import_Status_Duplicate" xml:space="preserve"><value>Staat al in de app</value></data>
+  <data name="Import_Status_PossibleDuplicate" xml:space="preserve"><value>Mogelijk al met de hand ingevoerd</value></data>
+  <data name="Import_Status_BeforeOpening" xml:space="preserve"><value>Vóór de saldodatum: zit al in het startsaldo</value></data>
+  <data name="Import_Status_Removed" xml:space="preserve"><value>Je hebt deze regel eerder verwijderd</value></data>
+  <data name="Import_Suggestion_PayeeRule" xml:space="preserve"><value>Categorie uit eerdere keuzes</value></data>
+  <data name="Import_Suggestion_OwnAccount" xml:space="preserve"><value>Lijkt een overschrijving tussen je rekeningen</value></data>
+  <data name="Import_Suggestion_CardPayment" xml:space="preserve"><value>Lijkt een afbetaling van de kaart</value></data>
+  <data name="Import_Count_New" xml:space="preserve"><value>{0} nieuw</value></data>
+  <data name="Import_Count_Duplicate" xml:space="preserve"><value>{0} al in de app</value></data>
+  <data name="Import_Count_Possible" xml:space="preserve"><value>{0} mogelijk al ingevoerd</value></data>
+  <data name="Import_Count_BeforeOpening" xml:space="preserve"><value>{0} vóór de saldodatum</value></data>
+  <data name="Import_Count_Invalid" xml:space="preserve"><value>{0} onleesbaar</value></data>
+  <data name="Import_Confirm" xml:space="preserve"><value>Importeren</value></data>
+  <data name="Import_ConfirmCount" xml:space="preserve"><value>{0} regels importeren</value></data>
+  <data name="Import_RowError" xml:space="preserve"><value>Regel {0}: {1}</value></data>
+  <data name="Import_DoneTitle" xml:space="preserve"><value>Import klaar</value></data>
+  <data name="Import_Result" xml:space="preserve"><value>{0} regels zijn toegevoegd.</value></data>
+  <data name="Import_Result_Linked" xml:space="preserve"><value>{0} bestaande regels zijn gekoppeld als andere kant van een overschrijving.</value></data>
+  <data name="Import_Result_NowDuplicate" xml:space="preserve"><value>{0} regels zijn overgeslagen omdat ze intussen al toegevoegd waren.</value></data>
+  <data name="Import_Another" xml:space="preserve"><value>Nog een bestand importeren</value></data>
+  <data name="Import_UndoThis" xml:space="preserve"><value>Deze import ongedaan maken</value></data>
+  <data name="Import_History" xml:space="preserve"><value>Eerdere imports</value></data>
+  <data name="Import_History_Line" xml:space="preserve"><value>{0} · {1} · {2} regels</value></data>
+  <data name="Import_History_Undone" xml:space="preserve"><value>Ongedaan gemaakt</value></data>
+  <data name="Import_Undo" xml:space="preserve"><value>Ongedaan maken</value></data>
+  <data name="Import_Undo_Plan" xml:space="preserve"><value>Dit verwijdert de {0} regels van deze import.</value></data>
+  <data name="Import_Undo_PlanChanged" xml:space="preserve"><value>{1} regels van deze import zijn intussen gewijzigd. Die blijven staan tenzij je anders kiest; {0} ongewijzigde regels worden verwijderd.</value></data>
+  <data name="Import_Undo_Confirm" xml:space="preserve"><value>Ongewijzigde regels verwijderen</value></data>
+  <data name="Import_Undo_All" xml:space="preserve"><value>Alle {0} regels verwijderen</value></data>
+  <data name="Import_Undone" xml:space="preserve"><value>Import ongedaan gemaakt: {0} regels verwijderd.</value></data>
+  <data name="Editor_ImportWarning" xml:space="preserve"><value>Deze regel komt uit een bankbestand. Als je hem wijzigt, blijft hij staan wanneer je die import ongedaan maakt.</value></data>
+  <data name="Transactions_VoidImported" xml:space="preserve"><value>Toch verwijderen</value></data>
+  <data name="Error_import_file_empty" xml:space="preserve"><value>Dit bestand is leeg.</value></data>
+  <data name="Error_import_file_tooLarge" xml:space="preserve"><value>Dit bestand is te groot voor een bankexport (max. 20 MB).</value></data>
+  <data name="Error_import_file_unsupported" xml:space="preserve"><value>Dit bestandstype wordt niet ondersteund. Exporteer een CSV- of XLSX-bestand bij je bank.</value></data>
+  <data name="Error_import_file_unreadable" xml:space="preserve"><value>Dit bestand kon niet gelezen worden.</value></data>
+  <data name="Error_import_file_noRows" xml:space="preserve"><value>Er zijn geen regels gevonden onder de kopregel.</value></data>
+  <data name="Error_import_mapping_column" xml:space="preserve"><value>Een gekozen kolom bestaat niet in dit bestand.</value></data>
+  <data name="Error_import_mapping_date" xml:space="preserve"><value>Kies een datumnotatie.</value></data>
+  <data name="Error_import_mapping_amount" xml:space="preserve"><value>Kies de kolom(men) met het bedrag.</value></data>
+  <data name="Error_import_mapping_description" xml:space="preserve"><value>Kies een kolom met omschrijving of tegenpartij.</value></data>
+  <data name="Error_import_row_date" xml:space="preserve"><value>Datum niet leesbaar</value></data>
+  <data name="Error_import_row_amount" xml:space="preserve"><value>Bedrag niet leesbaar</value></data>
+  <data name="Error_import_row_zero" xml:space="preserve"><value>Bedrag is nul</value></data>
+  <data name="Error_import_row_currency" xml:space="preserve"><value>Niet in euro: niet geïmporteerd</value></data>
+  <data name="Error_import_row_direction" xml:space="preserve"><value>Af/bij niet herkend</value></data>
+  <data name="Error_import_row_transferAccount" xml:space="preserve"><value>Kies de andere rekening van deze overschrijving.</value></data>
+  <data name="Error_import_row_transferBeforeOpening" xml:space="preserve"><value>De andere rekening begint na deze datum. Pas de saldodatum aan of kies een andere soort.</value></data>
+  <data name="Error_import_row_typeDirection" xml:space="preserve"><value>Deze soort past niet bij de richting van het bedrag.</value></data>
+  <data name="Error_import_alreadyConfirmed" xml:space="preserve"><value>Deze import is al opgeslagen.</value></data>
+  <data name="Error_import_nothingSelected" xml:space="preserve"><value>Er zijn geen regels aangevinkt om te importeren.</value></data>
+  <data name="Error_import_notFound" xml:space="preserve"><value>Deze import bestaat niet meer.</value></data>
+  <data name="Error_import_alreadyUndone" xml:space="preserve"><value>Deze import is al ongedaan gemaakt.</value></data>
+  <data name="Import_Undo_ConfirmSimple" xml:space="preserve"><value>Ja, ongedaan maken</value></data>
+  <data name="Import_Columns_Hide" xml:space="preserve"><value>Verbergen</value></data>
+  <data name="Import_Columns_Edit" xml:space="preserve"><value>Kolommen aanpassen</value></data>
+  <data name="Import_ConfirmOne" xml:space="preserve"><value>1 regel importeren</value></data>
+  <data name="Import_ResultOne" xml:space="preserve"><value>1 regel is toegevoegd.</value></data>
 </root>

@@ -108,3 +108,44 @@ archived; merging and reordering come with budgets in phase 5.
 Reconciliation records the statement balance and date per account and shows the difference. It never changes the
 balance by itself: an adjustment is only added when the user asks, with a reason, and an adjustment is never
 income or spending.
+
+### D-017 · Bank-file import: formats and column detection (2026-10-10)
+**Spec:** §8 (CSV required, XLSX if reliable, PDF not in v1.0) and §25 (bank column mappings deferred).
+**Decision:** CSV in UTF-8, UTF-16 or Windows-1252 (Belgian exports, € sign) with `;`, `,`, tab or `|`, quoted cells
+as in RFC 4180. XLSX is read without a third-party library (first worksheet, shared strings, number and date
+cells; formulas use their saved value) with size limits on every part. Old `.xls` and PDF are refused with a clear
+message. No bank is hard-coded: the header line, date format (day-first wins ties), decimal separator, and the
+amount layout (signed / separate debit and credit / amount plus "Af/Bij") are detected from the file, and a
+"Saldo"/"Balance" column is never taken for the amount. "Valuta" is only a currency when it holds codes like EUR,
+because Belgian exports use it for the value date. Lines in another currency are rejected (§6). The confirmed
+mapping is remembered per header line, never the file.
+**Navigation:** Import gets its own item after Accounts (11 items instead of the 10 suggested in §22), because §22 lists
+CSV import among the flows to prioritise and it then is one click away.
+
+### D-018 · Duplicates are candidates, matched one to one (2026-10-10)
+Each existing line can match one bank line, so two identical coffees on one day stay two lines. In order:
+(1) same bank reference and amount → already in the app; (2) same date, amount and text, unless both carry different
+references → already in the app; (3) same amount within 3 days: the generated other side of a transfer imported
+from the other account's file → already in the app; a line typed in by hand (Quick Add or manual) → *possibly*
+entered by hand. Text alone never decides. Duplicates and possible duplicates are unticked but can be ticked.
+A line the user removed still counts, so re-importing does not bring it back silently; lines removed by undoing
+their import do not, so that file can be imported again. Duplicates are checked again at confirmation, so two
+imports of the same file never both land.
+
+### D-019 · Import batches, transfer linking and undo (2026-10-10)
+A confirmed import is one batch, saved in one database transaction with its lines (`import_batch_id`, bank
+reference) and the remembered mapping: a failure leaves nothing behind (§8 step 10). Lines before the account's
+balance date are skipped, because the opening balance already contains them.
+A line marked as a transfer to an own account creates both sides — unless the other account already has an income,
+expense or refund with the opposite amount within 3 days. That line then *becomes* the other side (it keeps its
+date, text and reference; its category no longer applies) instead of a second copy (§9). What it was is stored in
+`import_transfer_links`, so undo restores it exactly. Card payments use the same mechanism, so a VISA settlement
+never counts as spending twice.
+Undo voids the batch's lines (never deletes) and marks the batch undone. Lines edited since the import are listed
+separately and kept unless the user chooses to remove them too (guided recovery); both sides of a transfer are
+always kept or removed together. Editing or removing an imported line warns first (§7).
+Learning: a category chosen in the preview is learned for the counterparty name (never a whole bank description),
+the same payee rules Quick Add uses. Suggested transfers come from an own account's name in the text, "VISA" (paying
+the card), and payment words on a card statement; refunds from words like "terugbetaling". Rounding transfers and
+recurring items follow in phase 4.
+

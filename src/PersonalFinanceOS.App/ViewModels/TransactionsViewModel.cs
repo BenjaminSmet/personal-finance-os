@@ -65,11 +65,15 @@ public sealed partial class TransactionRowViewModel(
     [RelayCommand]
     private Task Edit() => edit(this);
 
-    /// <summary>Voiding a transfer changes two accounts, so it asks once more (spec §7).</summary>
+    /// <summary>Imported lines and transfers are linked to other records, so removing them asks once more (spec §7).</summary>
+    public bool NeedsVoidConfirmation => Transaction.IsTransfer || Transaction.ImportBatchId is not null;
+
+    public string VoidConfirmText => Loc.T(Transaction.IsTransfer ? "Transactions_VoidBoth" : "Transactions_VoidImported");
+
     [RelayCommand]
     private Task Void()
     {
-        if (Transaction.IsTransfer && !IsConfirmingVoid)
+        if (NeedsVoidConfirmation && !IsConfirmingVoid)
         {
             IsConfirmingVoid = true;
             return Task.CompletedTask;
@@ -252,7 +256,8 @@ public sealed partial class TransactionsViewModel : PageViewModel
         }
         else
         {
-            Editor.Load(accounts, categories, SpendingTypes, t.Type, t.Amount.Abs(), t.Description, t.AccountId, null, t.CategoryId, t.Date, t.Note);
+            Editor.Load(accounts, categories, SpendingTypes, t.Type, t.Amount.Abs(), t.Description, t.AccountId, null, t.CategoryId, t.Date, t.Note,
+                t.ImportBatchId is null ? null : Loc.T("Editor_ImportWarning"));
         }
 
         EditorTitle = Loc.T("Transactions_Edit");

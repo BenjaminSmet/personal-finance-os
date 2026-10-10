@@ -33,7 +33,7 @@ public class LedgerUiTests
         }
     }
 
-    private static (MainWindow Window, MainWindowViewModel Vm) Start(TempDataFolder temp)
+    internal static (MainWindow Window, MainWindowViewModel Vm) Start(TempDataFolder temp)
     {
         var app = (PersonalFinanceOS.App.App)Avalonia.Application.Current!;
         var window = Assert.IsType<MainWindow>(app.CreateStartWindow(temp.Paths, _ => { }));
@@ -43,13 +43,13 @@ public class LedgerUiTests
         return (window, (MainWindowViewModel)window.DataContext!);
     }
 
-    private static void Save(Window window, string name)
+    internal static void Save(Window window, string name)
     {
         HeadlessSetup.Pump(250);
         window.CaptureRenderedFrame()?.Save(Path.Combine(ScreenshotDirectory, name + ".png"), new Avalonia.Media.Imaging.PngBitmapEncoderOptions());
     }
 
-    private static async Task SeedAsync(TempDataFolder temp)
+    internal static async Task SeedAsync(TempDataFolder temp)
     {
         Assert.True(temp.Initializer().Initialize().CanOpen);
         var options = FinanceDbContext.OptionsFor(temp.Paths.DatabaseFile);
@@ -68,7 +68,7 @@ public class LedgerUiTests
         HeadlessSetup.PumpUntil(() => quickAdd.Draft?.Input == text.Trim());
     }
 
-    private static T Navigate<T>(MainWindowViewModel vm)
+    internal static T Navigate<T>(MainWindowViewModel vm)
         where T : PageViewModel
     {
         vm.SelectedItem = vm.NavItems.Single(n => n.Page is T);

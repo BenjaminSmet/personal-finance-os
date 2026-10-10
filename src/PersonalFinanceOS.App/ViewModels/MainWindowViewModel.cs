@@ -35,6 +35,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         DashboardViewModel dashboard,
         TransactionsViewModel transactions,
         AccountsViewModel accounts,
+        ImportViewModel import,
         SettingsViewModel settings,
         QuickAddViewModel quickAdd)
     {
@@ -44,6 +45,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             new NavItem("Nav_Dashboard", Icons.Dashboard, dashboard),
             new NavItem("Nav_Transactions", Icons.Transactions, transactions),
             new NavItem("Nav_Accounts", Icons.Accounts, accounts),
+            new NavItem("Nav_Import", Icons.Import, import),
             new NavItem("Nav_Budgets", Icons.Budgets, new PlaceholderViewModel("Nav_Budgets", 5)),
             new NavItem("Nav_Forecasts", Icons.Forecasts, new PlaceholderViewModel("Nav_Forecasts", 4)),
             new NavItem("Nav_Wishlist", Icons.Wishlist, new PlaceholderViewModel("Nav_Wishlist", 6)),
@@ -82,6 +84,7 @@ internal static class Icons
     public const string Dashboard = "M3,3 H10 V10 H3 Z M14,3 H21 V10 H14 Z M3,14 H10 V21 H3 Z M14,14 H21 V21 H14 Z";
     public const string Transactions = "M4,7 H18 M14,3 L18,7 L14,11 M20,17 H6 M10,13 L6,17 L10,21";
     public const string Accounts = "M3,9 L12,4 L21,9 M5,9 V18 M9.5,9 V18 M14.5,9 V18 M19,9 V18 M3,20 H21";
+    public const string Import = "M12,3 V14 M7.5,9.5 L12,14 L16.5,9.5 M4,15 V20 H20 V15";
     public const string Budgets = "M12,3 A9,9 0 1 0 21,12 H12 Z M15,3.5 A8,8 0 0 1 20.5,9 H15 Z";
     public const string Forecasts = "M3,20 H21 M4,16 L9,11 L13,14 L20,6 M16,6 H20 V10";
     public const string Wishlist = "M12,20 L4.5,12.5 A4.5,4.5 0 0 1 12,6.5 A4.5,4.5 0 0 1 19.5,12.5 Z";

@@ -64,14 +64,14 @@ public class MainWindowTests
     }
 
     [AvaloniaFact]
-    public void Fresh_start_shows_dashboard_with_all_ten_sections()
+    public void Fresh_start_shows_dashboard_with_all_sections()
     {
         using var temp = new TempDataFolder();
         var window = Start(temp);
 
         var main = Assert.IsType<MainWindow>(window);
         var vm = Assert.IsType<MainWindowViewModel>(main.DataContext);
-        Assert.Equal(10, vm.NavItems.Count);
+        Assert.Equal(11, vm.NavItems.Count); // the ten sections of spec §22 plus Import (D-017)
         Assert.IsType<DashboardViewModel>(vm.CurrentPage);
         Assert.True(File.Exists(temp.Paths.DatabaseFile));
 
