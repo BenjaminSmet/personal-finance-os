@@ -57,7 +57,7 @@ Never edit a migration that has been released.
 
 ## Status
 
-Phase 2 (ledger and Quick Add) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
+Phase 3 (bank-file import) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
 
 Quick Add sits above every page (Ctrl+K). Type a line and press Enter, for example:
 
@@ -70,3 +70,19 @@ Quick Add sits above every page (Ctrl+K). Type a line and press Enter, for examp
 | `Transfer 600 naar gezamenlijke rekening` | Transfer, not income or spending |
 
 Anything uncertain is shown for checking first; nothing is saved before you confirm.
+
+### Importing a bank file
+
+Export your transactions from your bank's website as CSV (or XLSX) and open **Import**:
+
+1. Choose the account the file belongs to and the file. It is read on this computer only and not kept.
+2. The columns are detected (date, amount, description, counterparty, reference). Check them once; the choice is
+   remembered for the next file with the same header line.
+3. Every line is shown with what will happen. Lines that are probably already in the app (same bank reference, or
+   same date, amount and text, or typed in by hand a few days earlier) are unticked. Unreadable lines, lines in
+   another currency and lines before the account's balance date are never imported, and the reason is shown.
+4. Type and category are suggestions: learned payee rules, refunds, and transfers to your own accounts (an own
+   account's name or "VISA" in the text). A transfer whose other side is already in the app is linked to it, not
+   added twice.
+5. Confirm. Everything is saved together or not at all. Any import can be undone later from **Earlier imports**;
+   lines you changed since are kept unless you choose otherwise.

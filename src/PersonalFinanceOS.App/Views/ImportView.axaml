@@ -1,0 +1,282 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.ImportView"
+             x:DataType="vm:ImportViewModel">
+  <UserControl.Resources>
+    <DataTemplate x:Key="ColumnTemplate" DataType="vm:ColumnOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+  </UserControl.Resources>
+
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="2">
+      <TextBlock Classes="largeTitle" Text="{l:T Import_Title}" />
+      <TextBlock Classes="secondary" Text="{l:T Import_Subtitle}" TextWrapping="Wrap" />
+    </StackPanel>
+
+    <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+    </Border>
+    <Border Classes="error" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding Error, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+    </Border>
+
+    <!-- 1. Account and file -->
+    <Border Classes="glass" Padding="26,22" IsVisible="{Binding !IsDone}">
+      <StackPanel Spacing="14">
+        <TextBlock Classes="secondary" Text="{l:T Import_NoAccounts}" TextWrapping="Wrap" IsVisible="{Binding !HasAccounts}" />
+        <Grid ColumnDefinitions="*,20,Auto" IsVisible="{Binding HasAccounts}">
+          <StackPanel>
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_Account}" />
+            <ComboBox ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedAccount}" HorizontalAlignment="Stretch"
+                      AutomationProperties.Name="{l:T Import_Account}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+          <Button Grid.Column="2" Name="ChooseFileButton" Classes="primary" VerticalAlignment="Bottom"
+                  Content="{l:T Import_ChooseFile}" Click="OnChooseFile" />
+        </Grid>
+        <TextBlock Classes="headline" Text="{Binding FileName}" IsVisible="{Binding FileName, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        <TextBlock Classes="caption" Text="{l:T Import_Privacy}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+
+    <!-- 2. Columns: detected or remembered, always editable -->
+    <Border Classes="glass" Padding="26,20" IsVisible="{Binding IsReviewing}">
+      <StackPanel Spacing="14">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Spacing="2" VerticalAlignment="Center">
+            <TextBlock Classes="title" Text="{l:T Import_Columns}" />
+            <TextBlock Classes="caption" Text="{l:T Import_Columns_Remembered}" IsVisible="{Binding MappingRemembered}" />
+            <TextBlock Classes="caption" Text="{l:T Import_Columns_Detected}" IsVisible="{Binding !MappingRemembered}" TextWrapping="Wrap" />
+          </StackPanel>
+          <Button Grid.Column="1" Content="{Binding MappingToggleText}" Command="{Binding ToggleMappingCommand}" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,12,Auto,12,Auto,12,Auto,12,Auto,12,Auto" IsVisible="{Binding IsMappingOpen}">
+          <StackPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_HeaderRow}" />
+            <ComboBox ItemsSource="{Binding HeaderRowOptions}" SelectedItem="{Binding SelectedHeaderRow}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:HeaderRowOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Grid.Row="0" Grid.Column="2" IsVisible="{Binding IsCsv}">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_Delimiter}" />
+            <ComboBox ItemsSource="{Binding DelimiterOptions}" SelectedItem="{Binding Delimiter}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:CharOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+
+          <StackPanel Grid.Row="2" Grid.Column="0">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_DateColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DateColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+          <StackPanel Grid.Row="2" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_DateFormat}" />
+            <ComboBox ItemsSource="{Binding DateFormats}" SelectedItem="{Binding DateFormat}" HorizontalAlignment="Stretch" />
+          </StackPanel>
+
+          <StackPanel Grid.Row="4" Grid.Column="0">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_Layout}" />
+            <ComboBox ItemsSource="{Binding LayoutOptions}" SelectedItem="{Binding SelectedLayout}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:LayoutOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Grid.Row="4" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_Decimal}" />
+            <ComboBox ItemsSource="{Binding DecimalOptions}" SelectedItem="{Binding DecimalSeparator}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:CharOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+
+          <StackPanel Grid.Row="6" Grid.Column="0" IsVisible="{Binding ShowSignedAmount}">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_AmountColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding AmountColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+          <StackPanel Grid.Row="6" Grid.Column="2" IsVisible="{Binding ShowDirection}">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_DirectionColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DirectionColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+          <StackPanel Grid.Row="6" Grid.Column="0" IsVisible="{Binding ShowDebitCredit}">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_DebitColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DebitColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+          <StackPanel Grid.Row="6" Grid.Column="2" IsVisible="{Binding ShowDebitCredit}">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_CreditColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CreditColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+
+          <StackPanel Grid.Row="8" Grid.Column="0">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_CounterpartyColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CounterpartyColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+          <StackPanel Grid.Row="8" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_DescriptionColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DescriptionColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+
+          <StackPanel Grid.Row="10" Grid.Column="0">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_ReferenceColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding ReferenceColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+          <StackPanel Grid.Row="10" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Import_CurrencyColumn}" />
+            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CurrencyColumn}" HorizontalAlignment="Stretch"
+                      ItemTemplate="{StaticResource ColumnTemplate}" />
+          </StackPanel>
+        </Grid>
+        <Button Content="{l:T Import_Reread}" Command="{Binding ApplyMappingCommand}" IsVisible="{Binding IsMappingOpen}" />
+      </StackPanel>
+    </Border>
+
+    <!-- 3. Every line, with what was found and what will happen -->
+    <Border Classes="glass" Padding="6" IsVisible="{Binding IsReviewing}">
+      <StackPanel Spacing="4">
+        <Grid ColumnDefinitions="*,Auto" Margin="20,16,20,8">
+          <StackPanel Spacing="2" VerticalAlignment="Center">
+            <TextBlock Classes="title" Text="{l:T Import_Lines}" />
+            <TextBlock Classes="secondary" Text="{Binding SummaryText}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+            <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelCommand}" />
+            <Button Name="ConfirmImportButton" Classes="primary" Content="{Binding ConfirmText}" Command="{Binding ConfirmCommand}"
+                    IsEnabled="{Binding CanConfirm}" />
+          </StackPanel>
+        </Grid>
+        <TextBlock Classes="caption" Margin="20,0,20,8" Text="{l:T Import_ReviewHint}" TextWrapping="Wrap" />
+
+        <ItemsControl ItemsSource="{Binding Rows}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:ImportRowViewModel">
+              <StackPanel>
+                <Border Classes="separator" Margin="14,0" />
+                <Grid ColumnDefinitions="36,92,*,Auto" RowDefinitions="Auto,Auto" Margin="14,10">
+                  <CheckBox IsChecked="{Binding Include}" IsEnabled="{Binding CanInclude}" VerticalAlignment="Center"
+                            AutomationProperties.Name="{l:T Import_IncludeLine}" />
+                  <TextBlock Grid.Column="1" Classes="caption" Text="{Binding DateText}" VerticalAlignment="Center" />
+                  <StackPanel Grid.Column="2" Spacing="1" VerticalAlignment="Center">
+                    <TextBlock Classes="headline" Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Classes="secondary" FontSize="13" Text="{Binding Subtitle}" TextTrimming="CharacterEllipsis"
+                               IsVisible="{Binding HasSubtitle}" />
+                  </StackPanel>
+                  <TextBlock Grid.Column="3" Margin="16,0,0,0" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
+                             Text="{Binding AmountText}" Classes.debt="{Binding IsOutflow}" />
+
+                  <WrapPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,8,0,0" Orientation="Horizontal">
+                    <ComboBox Margin="0,0,8,6" MinWidth="190" ItemsSource="{Binding TypeOptions}" SelectedItem="{Binding SelectedType}"
+                              IsVisible="{Binding CanInclude}" AutomationProperties.Name="{l:T Editor_Type}">
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="vm:TypeOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox Margin="0,0,8,6" MinWidth="210" ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding SelectedCategory}"
+                              AutomationProperties.Name="{l:T Editor_Category}">
+                      <ComboBox.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                          <Binding Path="CanInclude" />
+                          <Binding Path="ShowCategory" />
+                        </MultiBinding>
+                      </ComboBox.IsVisible>
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="vm:CategoryOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox Margin="0,0,8,6" MinWidth="210" ItemsSource="{Binding TransferOptions}" SelectedItem="{Binding SelectedTransfer}"
+                              PlaceholderText="{l:T Import_ChooseOwnAccount}" AutomationProperties.Name="{l:T Editor_To}">
+                      <ComboBox.IsVisible>
+                        <MultiBinding Converter="{x:Static BoolConverters.And}">
+                          <Binding Path="CanInclude" />
+                          <Binding Path="IsTransfer" />
+                        </MultiBinding>
+                      </ComboBox.IsVisible>
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Border Classes="badge" Margin="0,0,8,6" VerticalAlignment="Center" IsVisible="{Binding ShowStatus}">
+                      <TextBlock Classes="caption" Text="{Binding StatusText, StringFormat='⚠  {0}'}" />
+                    </Border>
+                    <Border Classes="badge" Margin="0,0,8,6" VerticalAlignment="Center" IsVisible="{Binding HasSuggestion}">
+                      <TextBlock Classes="caption" Text="{Binding SuggestionText, StringFormat='✦  {0}'}" />
+                    </Border>
+                  </WrapPanel>
+                </Grid>
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- 4. Result -->
+    <Border Classes="glass strong" Padding="26,22" IsVisible="{Binding IsDone}">
+      <StackPanel Spacing="14">
+        <TextBlock Classes="title" Text="{l:T Import_DoneTitle}" />
+        <TextBlock Text="{Binding ResultText}" TextWrapping="Wrap" />
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Classes="primary" Content="{l:T Import_Another}" Command="{Binding StartOverCommand}" />
+          <Button Content="{l:T Import_UndoThis}" Command="{Binding UndoLastCommand}" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- Earlier imports, each can be undone as a whole -->
+    <Border Classes="glass" Padding="6" IsVisible="{Binding HasHistory}">
+      <StackPanel>
+        <TextBlock Classes="title" Margin="20,16,20,8" Text="{l:T Import_History}" />
+        <ItemsControl ItemsSource="{Binding History}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:ImportBatchViewModel">
+              <StackPanel>
+                <Grid ColumnDefinitions="*,Auto" Margin="20,10">
+                  <StackPanel Spacing="1" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                      <TextBlock Classes="headline" Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                      <Border Classes="badge" IsVisible="{Binding IsUndone}">
+                        <TextBlock Classes="caption" Text="{Binding UndoneText}" />
+                      </Border>
+                    </StackPanel>
+                    <TextBlock Classes="secondary" FontSize="13" Text="{Binding Subtitle}" TextWrapping="Wrap" />
+                  </StackPanel>
+                  <Button Grid.Column="1" Content="{l:T Import_Undo}" Padding="12,5" FontSize="13" VerticalAlignment="Center"
+                          Command="{Binding StartUndoCommand}" IsVisible="{Binding CanUndo}" />
+                </Grid>
+                <Border Classes="warning" Margin="20,0,20,12" IsVisible="{Binding IsConfirming}">
+                  <StackPanel Spacing="10">
+                    <TextBlock Text="{Binding PlanText, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                      <Button Classes="primary" Content="{Binding UndoConfirmText}" Padding="12,5" FontSize="13"
+                              Command="{Binding UndoUnchangedCommand}" />
+                      <Button Content="{Binding UndoAllText}" Padding="12,5" FontSize="13" Command="{Binding UndoAllCommand}"
+                              IsVisible="{Binding NeedsChoice}" />
+                      <Button Content="{l:T Accounts_Cancel}" Padding="12,5" FontSize="13" Command="{Binding KeepItCommand}" />
+                    </StackPanel>
+                  </StackPanel>
+                </Border>
+                <Border Classes="separator" Margin="20,0" IsVisible="{Binding !IsLast}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

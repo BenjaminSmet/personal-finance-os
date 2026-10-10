@@ -93,7 +93,7 @@
                           IsVisible="{Binding CanEdit}" />
                   <Button Content="{l:T Transactions_Void}" Padding="12,5" FontSize="13" Command="{Binding VoidCommand}"
                           IsVisible="{Binding !IsConfirmingVoid}" />
-                  <Button Content="{l:T Transactions_VoidBoth}" Padding="12,5" FontSize="13" Classes="primary"
+                  <Button Content="{Binding VoidConfirmText}" Padding="12,5" FontSize="13" Classes="primary"
                           Command="{Binding VoidCommand}" IsVisible="{Binding IsConfirmingVoid}" />
                   <Button Content="{l:T Accounts_Cancel}" Padding="12,5" FontSize="13" Command="{Binding KeepItCommand}"
                           IsVisible="{Binding IsConfirmingVoid}" />

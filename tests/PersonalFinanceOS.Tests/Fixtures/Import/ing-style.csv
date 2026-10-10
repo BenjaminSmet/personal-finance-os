@@ -1,0 +1,4 @@
+"Datum","Naam / Omschrijving","Rekening","Tegenrekening","Code","Af Bij","Bedrag (EUR)","Mutatiesoort","Mededelingen"
+"20261002","Albert Heijn 1234","NL00INGB0000000000","","BA","Af","42,80","Betaalautomaat","Pasvolgnr: 001 02-10-2026 18:31"
+"20261005","Werkgever BV","NL00INGB0000000000","NL11RABO0111111111","OV","Bij","2.400,00","Overschrijving","Salaris, september"
+"20261006","Gemeente","NL00INGB0000000000","NL22BANK0222222222","IC","Af","1.234,56","Incasso","Belasting ""gemeente"" 2026"

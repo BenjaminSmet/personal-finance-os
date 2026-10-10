@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
 using PersonalFinanceOS.Domain.Categories;
+using PersonalFinanceOS.Domain.Imports;
 using PersonalFinanceOS.Domain.Ledger;
 using PersonalFinanceOS.Domain.Transactions;
 using PersonalFinanceOS.Infrastructure.Database;
@@ -24,6 +25,9 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     public DbSet<Transaction> Transactions => Set<Transaction>();
     public DbSet<PayeeRule> PayeeRules => Set<PayeeRule>();
     public DbSet<ReconciliationRecord> Reconciliations => Set<ReconciliationRecord>();
+    public DbSet<ImportBatch> ImportBatches => Set<ImportBatch>();
+    public DbSet<ImportTransferLink> ImportTransferLinks => Set<ImportTransferLink>();
+    public DbSet<ImportProfile> ImportProfiles => Set<ImportProfile>();
 
     public static DbContextOptions<FinanceDbContext> OptionsFor(string databaseFile) =>
         new DbContextOptionsBuilder<FinanceDbContext>()
@@ -114,10 +118,13 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
             e.Property(t => t.Source).HasColumnName("source").HasConversion<string>();
             e.Property(t => t.TransferId).HasColumnName("transfer_id").HasConversion(optionalGuid);
             e.Property(t => t.Status).HasColumnName("status").HasConversion<string>();
+            e.Property(t => t.ImportBatchId).HasColumnName("import_batch_id").HasConversion(optionalGuid);
+            e.Property(t => t.BankReference).HasColumnName("bank_reference").HasMaxLength(Transaction.MaxBankReferenceLength);
             e.Property(t => t.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
             e.Property(t => t.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
             e.HasOne<Account>().WithMany().HasForeignKey(t => t.AccountId).OnDelete(DeleteBehavior.Restrict);
             e.HasOne<Category>().WithMany().HasForeignKey(t => t.CategoryId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<ImportBatch>().WithMany().HasForeignKey(t => t.ImportBatchId).OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<PayeeRule>(e =>
@@ -152,6 +159,59 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
             e.Property(r => r.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
             e.HasOne<Account>().WithMany().HasForeignKey(r => r.AccountId).OnDelete(DeleteBehavior.Restrict);
             e.HasOne<Transaction>().WithMany().HasForeignKey(r => r.AdjustmentTransactionId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        var optionalDate = new ValueConverter<DateOnly?, string?>(
+            d => d.HasValue ? d.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : null,
+            s => s == null ? null : DateOnly.ParseExact(s, "yyyy-MM-dd", CultureInfo.InvariantCulture));
+        var optionalTimestamp = new ValueConverter<DateTimeOffset?, string?>(
+            t => t.HasValue ? t.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ", CultureInfo.InvariantCulture) : null,
+            s => s == null ? null : DateTimeOffset.Parse(s, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal));
+
+        modelBuilder.Entity<ImportBatch>(e =>
+        {
+            e.ToTable("import_batches");
+            e.HasKey(b => b.Id);
+            e.Ignore(b => b.IsActive);
+            e.Property(b => b.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(b => b.AccountId).HasColumnName("account_id").HasConversion(guid);
+            e.Property(b => b.FileName).HasColumnName("file_name").HasMaxLength(ImportBatch.MaxFileNameLength);
+            e.Property(b => b.Format).HasColumnName("format");
+            e.Property(b => b.FirstDate).HasColumnName("first_date").HasConversion(optionalDate);
+            e.Property(b => b.LastDate).HasColumnName("last_date").HasConversion(optionalDate);
+            e.Property(b => b.ImportedCount).HasColumnName("imported_count");
+            e.Property(b => b.DuplicateCount).HasColumnName("duplicate_count");
+            e.Property(b => b.SkippedCount).HasColumnName("skipped_count");
+            e.Property(b => b.InvalidCount).HasColumnName("invalid_count");
+            e.Property(b => b.Status).HasColumnName("status").HasConversion<string>();
+            e.Property(b => b.ImportedAt).HasColumnName("imported_at").HasConversion(timestamp);
+            e.Property(b => b.UndoneAt).HasColumnName("undone_at").HasConversion(optionalTimestamp);
+            e.HasOne<Account>().WithMany().HasForeignKey(b => b.AccountId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<ImportTransferLink>(e =>
+        {
+            e.ToTable("import_transfer_links");
+            e.HasKey(l => new { l.BatchId, l.TransactionId });
+            e.Property(l => l.BatchId).HasColumnName("batch_id").HasConversion(guid);
+            e.Property(l => l.TransactionId).HasColumnName("transaction_id").HasConversion(guid);
+            e.Property(l => l.OriginalType).HasColumnName("original_type").HasConversion<string>();
+            e.Property(l => l.OriginalCategoryId).HasColumnName("original_category_id").HasConversion(optionalGuid);
+            e.HasOne<ImportBatch>().WithMany().HasForeignKey(l => l.BatchId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Transaction>().WithMany().HasForeignKey(l => l.TransactionId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Category>().WithMany().HasForeignKey(l => l.OriginalCategoryId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<ImportProfile>(e =>
+        {
+            e.ToTable("import_profiles");
+            e.HasKey(p => p.Id);
+            e.HasIndex(p => p.HeaderKey).IsUnique();
+            e.Property(p => p.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(p => p.HeaderKey).HasColumnName("header_key");
+            e.Property(p => p.MappingJson).HasColumnName("mapping_json");
+            e.Property(p => p.UseCount).HasColumnName("use_count");
+            e.Property(p => p.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
         });
     }
 }

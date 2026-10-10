@@ -34,12 +34,15 @@ public enum TransactionStatus
     Voided,
 }
 
-/// <summary>Where a transaction came from. Import batches are added in phase 3.</summary>
+/// <summary>Where a transaction came from.</summary>
 public enum TransactionSource
 {
     Manual,
     QuickAdd,
     Reconciliation,
+
+    /// <summary>Read from a bank file; <see cref="Transaction.ImportBatchId"/> names the import.</summary>
+    Import,
 }
 
 public static class TransactionTypeRules

@@ -44,6 +44,9 @@ public class PersistenceTests
         Assert.Empty(context.Transactions.ToList());
         Assert.Empty(context.PayeeRules.ToList());
         Assert.Empty(context.Reconciliations.ToList());
+        Assert.Empty(context.ImportBatches.ToList());
+        Assert.Empty(context.ImportTransferLinks.ToList());
+        Assert.Empty(context.ImportProfiles.ToList());
     }
 
     [Fact]

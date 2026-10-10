@@ -1,0 +1,8 @@
+Boekingen van rekening BE00 0000 0000 0000
+Periode: 01/10/2026 - 10/10/2026
+
+Rekening;Boekingsdatum;Rekeninguittrekselnummer;Transactienummer;Rekening tegenpartij;Naam tegenpartij bevat;Transactie;Valutadatum;Bedrag;Devies;Mededelingen
+BE00 0000 0000 0000;02/10/2026;10;2026-00101;;BAKKERIJ JANSSENS;Betaling Bancontact;02/10/2026;-3,20;EUR;
+BE00 0000 0000 0000;04/10/2026;10;2026-00102;BE33 3333 3333 3333;HUISBAAS;Overschrijving;04/10/2026;-850,00;EUR;huur oktober
+BE00 0000 0000 0000;06/10/2026;10;2026-00103;;TANKSTATION;Betaling Bancontact;06/10/2026;-65,00;EUR;
+BE00 0000 0000 0000;31/09/2026;10;2026-00104;;FOUTE DATUM;Betaling;31/09/2026;-1,00;EUR;

@@ -39,6 +39,25 @@ public class DatabaseInitializerTests
     }
 
     [Fact]
+    public void Upgrading_a_phase_2_ledger_to_the_import_schema_keeps_every_transaction()
+    {
+        using var temp = new TempDataFolder();
+        temp.Initializer(new OlderMigrationSource(2)).Initialize();
+        temp.Execute(InsertAccount);
+        temp.Execute("""
+            INSERT INTO transactions (id, account_id, date, amount_cents, type, description, source, status, created_at, updated_at)
+            VALUES ('22222222-2222-2222-2222-222222222222', '11111111-1111-1111-1111-111111111111', '2026-10-05', -4280, 'Expense', 'Supermarkt', 'QuickAdd', 'Active', '2026-10-05T00:00:00.0000000Z', '2026-10-05T00:00:00.0000000Z');
+            """);
+
+        var result = temp.Initializer().Initialize();
+
+        Assert.Equal(DatabaseStartupStatus.Migrated, result.Status);
+        Assert.Equal(-4280, temp.Scalar("SELECT SUM(amount_cents) FROM transactions;"));
+        Assert.Equal(1, temp.Scalar("SELECT COUNT(*) FROM transactions WHERE import_batch_id IS NULL AND bank_reference IS NULL;"));
+        Assert.Equal(0, temp.Scalar("SELECT COUNT(*) FROM import_batches;"));
+    }
+
+    [Fact]
     public void Fresh_install_creates_database_in_the_data_folder()
     {
         using var temp = new TempDataFolder();
