@@ -18,6 +18,10 @@
     <PackageReference Include="Avalonia.Skia" />
   </ItemGroup>
   <ItemGroup>
+    <!-- Synthetic bank files only; real exports are blocked by .gitignore. -->
+    <None Include="Fixtures\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 </Project>

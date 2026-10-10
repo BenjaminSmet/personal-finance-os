@@ -9,6 +9,7 @@ public sealed class Transaction
 {
     public const int MaxDescriptionLength = 200;
     public const int MaxNoteLength = 1000;
+    public const int MaxBankReferenceLength = 100;
 
     public Guid Id { get; private set; }
     public Guid AccountId { get; private set; }
@@ -27,6 +28,13 @@ public sealed class Transaction
     public Guid? TransferId { get; private set; }
 
     public TransactionStatus Status { get; private set; }
+
+    /// <summary>The bank-file import that created this line, so the whole import can be undone (spec §8).</summary>
+    public Guid? ImportBatchId { get; private set; }
+
+    /// <summary>The bank's own id for the line, when the export has one. Strongest duplicate signal.</summary>
+    public string? BankReference { get; private set; }
+
     public DateTimeOffset CreatedAt { get; private set; }
     public DateTimeOffset UpdatedAt { get; private set; }
 
@@ -84,17 +92,37 @@ public sealed class Transaction
 
         RequirePositive(amount);
         var transferId = Guid.NewGuid();
-        var from = New(fromAccountId, date, TransactionType.Transfer, source, now);
-        var to = New(toAccountId, date, TransactionType.Transfer, source, now);
-        foreach (var (leg, signed) in new[] { (from, amount.Negate()), (to, amount) })
+        var from = CreateTransferLeg(fromAccountId, date, amount.Negate(), transferId, description, note, source, now);
+        var to = CreateTransferLeg(toAccountId, date, amount, transferId, description, note, source, now);
+        return (from, to);
+    }
+
+    /// <summary>
+    /// One side of a transfer whose other side already exists or is created separately, e.g. when an
+    /// import links a bank line to a line already in the other account (spec §9).
+    /// <paramref name="signedAmount"/> is negative for money leaving this account.
+    /// </summary>
+    public static Transaction CreateTransferLeg(
+        Guid accountId,
+        DateOnly date,
+        Money signedAmount,
+        Guid transferId,
+        string? description,
+        string? note,
+        TransactionSource source,
+        DateTimeOffset now)
+    {
+        if (signedAmount.IsZero)
         {
-            leg.TransferId = transferId;
-            leg.SetAmount(signed);
-            leg.SetDescription(description);
-            leg.SetNote(note);
+            throw new DomainValidationException("transaction.amount.zero");
         }
 
-        return (from, to);
+        var leg = New(accountId, date, TransactionType.Transfer, source, now);
+        leg.TransferId = transferId;
+        leg.SetAmount(signedAmount);
+        leg.SetDescription(description);
+        leg.SetNote(note);
+        return leg;
     }
 
     /// <summary>
@@ -153,6 +181,58 @@ public sealed class Transaction
         SetNote(note);
         AccountId = accountId;
         Date = date;
+        UpdatedAt = now;
+    }
+
+    /// <summary>Marks a new line as coming from a bank-file import. Only once, before it is saved.</summary>
+    public void AttachImport(Guid batchId, string? bankReference)
+    {
+        if (ImportBatchId is not null)
+        {
+            throw new InvalidOperationException("This transaction already belongs to an import.");
+        }
+
+        var reference = string.IsNullOrWhiteSpace(bankReference) ? null : bankReference.Trim();
+        if (reference is { Length: > MaxBankReferenceLength })
+        {
+            reference = reference[..MaxBankReferenceLength];
+        }
+
+        ImportBatchId = batchId;
+        BankReference = reference;
+        Source = TransactionSource.Import;
+    }
+
+    /// <summary>
+    /// Turns an existing income, expense or refund into one side of a transfer, because the bank line
+    /// for the other side showed it was a movement between own accounts (spec §9: no second copy).
+    /// Amount, date and description stay as they are; the category no longer applies.
+    /// </summary>
+    public void LinkAsTransfer(Guid transferId, DateTimeOffset now)
+    {
+        RequireActive();
+        if (!Type.IsIncomeOrSpending())
+        {
+            throw new DomainValidationException("transaction.wrongKind");
+        }
+
+        Type = TransactionType.Transfer;
+        TransferId = transferId;
+        CategoryId = null;
+        UpdatedAt = now;
+    }
+
+    /// <summary>Reverses <see cref="LinkAsTransfer"/>: the line becomes what it was before.</summary>
+    public void UnlinkTransfer(TransactionType type, Guid? categoryId, DateTimeOffset now)
+    {
+        if (!IsTransfer || !type.IsIncomeOrSpending() || (type == TransactionType.Expense) != Amount.IsNegative)
+        {
+            throw new DomainValidationException("transaction.wrongKind");
+        }
+
+        Type = type;
+        TransferId = null;
+        CategoryId = categoryId;
         UpdatedAt = now;
     }
 

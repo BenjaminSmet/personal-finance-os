@@ -1,5 +1,6 @@
 using PersonalFinanceOS.Domain.Accounts;
 using PersonalFinanceOS.Domain.Categories;
+using PersonalFinanceOS.Domain.Imports;
 using PersonalFinanceOS.Domain.Ledger;
 using PersonalFinanceOS.Domain.Transactions;
 
@@ -82,4 +83,36 @@ public interface IReconciliationRepository
 
     /// <summary>Saves the record and, when given, its adjustment transaction together: all or nothing.</summary>
     Task AddAsync(ReconciliationRecord record, Transaction? adjustment, CancellationToken ct = default);
+}
+
+/// <summary>Everything one import changes, saved together: all or nothing (spec §8 step 10).</summary>
+public sealed record ImportChanges(
+    ImportBatch Batch,
+    IReadOnlyCollection<Transaction> Added,
+    IReadOnlyCollection<Transaction> Linked,
+    IReadOnlyCollection<ImportTransferLink> Links,
+    ImportProfile? Profile);
+
+public interface IImportRepository
+{
+    /// <summary>Newest first.</summary>
+    Task<IReadOnlyList<ImportBatch>> ListBatchesAsync(Guid? accountId = null, CancellationToken ct = default);
+
+    Task<ImportBatch?> FindBatchAsync(Guid id, CancellationToken ct = default);
+
+    /// <summary>Lines created by the import, voided ones included.</summary>
+    Task<IReadOnlyList<Transaction>> ListBatchTransactionsAsync(Guid batchId, CancellationToken ct = default);
+
+    Task<IReadOnlyList<ImportTransferLink>> ListLinksAsync(Guid batchId, CancellationToken ct = default);
+
+    /// <summary>Lines of one account between two dates, voided ones included, with the status of their import.</summary>
+    Task<IReadOnlyList<(Transaction Transaction, ImportBatch? Batch)>> ListForDuplicateCheckAsync(Guid accountId, DateOnly from, DateOnly to, CancellationToken ct = default);
+
+    Task<ImportProfile?> FindProfileAsync(string headerKey, CancellationToken ct = default);
+
+    /// <summary>Batch, new lines, linked lines and the remembered mapping in one database transaction.</summary>
+    Task SaveImportAsync(ImportChanges changes, CancellationToken ct = default);
+
+    /// <summary>The batch's new status and every changed line in one database transaction.</summary>
+    Task SaveUndoAsync(ImportBatch batch, IReadOnlyCollection<Transaction> changed, CancellationToken ct = default);
 }

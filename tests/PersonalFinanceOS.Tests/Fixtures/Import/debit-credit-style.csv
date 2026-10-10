@@ -1,0 +1,4 @@
+Date,Transaction ID,Payee,Details,Debit,Credit,Balance
+02/10/2026,TX-1001,Coffee Corner,Card payment,3.20,,996.80
+05/10/2026,TX-1002,Employer Ltd,Salary,,"2,400.00","3,396.80"
+06/10/2026,TX-1003,Grocer,Card payment,"1,042.80",,"2,354.00"
