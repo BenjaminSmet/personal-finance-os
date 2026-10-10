@@ -173,7 +173,7 @@ Date_Yesterday	yesterday	gisteren
 CategoryKind_Expense	Spending	Uitgave
 CategoryKind_Income	Income	Inkomen
 Settings_Categories	Categories	Categorieën
-Settings_CategoriesNote	Archived categories stay on earlier transactions but are no longer offered.	Gearchiveerde categorieën blijven op eerdere transacties staan, maar worden niet meer aangeboden.
+Settings_CategoriesNote	The order here is used in budgets and lists. Archived categories stay on earlier transactions but are no longer offered; bring them back any time.	De volgorde hier wordt gebruikt in budgetten en lijsten. Gearchiveerde categorieën blijven op eerdere transacties staan, maar worden niet meer aangeboden; je kunt ze altijd terugzetten.
 Settings_CategoryName	New category	Nieuwe categorie
 Settings_CategoryAdd	Add	Toevoegen
 Settings_CategoryRename	Rename	Hernoemen
@@ -445,3 +445,83 @@ Error_scheduled_link_invalid	That line does not fit this item (other account or 
 Error_scheduled_link_taken	That line is already linked to another planned item.	Die regel is al gekoppeld aan een andere geplande post.
 Error_scheduled_reopen_confirmed	Remove the recorded transaction to undo a confirmation.	Verwijder de geregistreerde transactie om een bevestiging ongedaan te maken.
 Error_forecast_buffer_negative	The buffer cannot be negative.	De buffer kan niet negatief zijn.
+Budgets_Title	Budgets & analysis	Budgetten & analyse
+Budgets_Subtitle	Your month at a glance: spending per category against your budget and your own history. Planned items never count as spent.	Je maand in één oogopslag: uitgaven per categorie tegenover je budget en je eigen geschiedenis. Geplande posten tellen nooit als uitgegeven.
+Budgets_Previous	Previous month	Vorige maand
+Budgets_Next	Next month	Volgende maand
+Budgets_ThisMonth	This month	Deze maand
+Budgets_NoAccounts	Add your accounts first; the analysis is calculated from your transactions.	Voeg eerst je rekeningen toe; de analyse wordt berekend uit je transacties.
+Budgets_InProgress	This month is still running (up to and including {0}).	Deze maand loopt nog (tot en met {0}).
+Budgets_Incomplete	Your data starts on {0}, so this month is incomplete.	Je gegevens beginnen op {0}, dus deze maand is onvolledig.
+Budgets_NoData	There is no data for this month: your accounts start on {0}.	Er zijn geen gegevens voor deze maand: je rekeningen beginnen op {0}.
+Budgets_Compared	Average of the previous {0} complete months: income {1}, spending {2}.	Gemiddelde van de vorige {0} volledige maanden: inkomsten {1}, uitgaven {2}.
+Budgets_ComparedOne	Previous complete month: income {0}, spending {1}.	Vorige volledige maand: inkomsten {0}, uitgaven {1}.
+Budgets_NotCompared	No complete earlier month yet to compare with.	Nog geen volledige eerdere maand om mee te vergelijken.
+Budgets_Categories	Spending per category	Uitgaven per categorie
+Budgets_CategoriesNote	A budget holds from the month shown until you change it; earlier months keep theirs. Transfers and card payments never count as spending; refunds lower it.	Een budget geldt vanaf de getoonde maand tot je het wijzigt; eerdere maanden behouden het hunne. Overschrijvingen en kaartafrekeningen tellen nooit als uitgave; terugbetalingen verlagen ze.
+Budgets_BudgetTotal	{0} of {1} budgeted spent	{0} van {1} gebudgetteerd uitgegeven
+Budgets_NoBudgets	No budgets yet. Type an amount next to a category and press Save.	Nog geen budgetten. Typ een bedrag naast een categorie en kies Opslaan.
+Budgets_Budget	Budget	Budget
+Budgets_Left	{0} left	Nog {0} over
+Budgets_Over	{0} over budget	{0} boven budget
+Budgets_NoBudget	No budget	Geen budget
+Budgets_Uncategorised	Without category	Zonder categorie
+Budgets_Average	Average {0}	Gemiddeld {0}
+Budgets_Unusual	Unusual	Ongewoon
+Budgets_UnusualNote	Unusual changes are only pointed out once there are {0} complete months of history.	Ongewone veranderingen worden pas gemeld vanaf {0} volledige maanden geschiedenis.
+Budgets_BudgetSaved	Budget for {0} saved from {1} on.	Budget voor {0} opgeslagen vanaf {1}.
+Budgets_BudgetRemoved	Budget for {0} removed from {1} on.	Budget voor {0} geschrapt vanaf {1}.
+Budgets_Income	Income per category	Inkomsten per categorie
+Budgets_NoIncome	No income recorded this month.	Geen inkomsten geregistreerd deze maand.
+Budgets_Recurring	Recurring and one-off spending	Vaste en eenmalige uitgaven
+Budgets_RecurringAmount	Recurring (confirmed planned items)	Vast (bevestigde geplande posten)
+Budgets_OneOff	One-off	Eenmalig
+Budgets_Planned	Planned and actual	Gepland en werkelijk
+Budgets_PlannedNote	Recurring items due this month and what happened to them.	Terugkerende posten van deze maand en wat ermee gebeurde.
+Budgets_NothingPlanned	Nothing planned this month.	Niets gepland deze maand.
+Budgets_PlannedOn	Planned {0} on {1}	Gepland {0} op {1}
+Budgets_ActualOn	Actual {0} on {1}	Werkelijk {0} op {1}
+Budgets_DifferenceMore	{0} more than planned	{0} meer dan gepland
+Budgets_DifferenceLess	{0} less than planned	{0} minder dan gepland
+Outcome_Open	Still expected	Nog verwacht
+Outcome_Overdue	Overdue, not confirmed	Achterstallig, niet bevestigd
+Outcome_Confirmed	Happened	Gebeurd
+Outcome_Skipped	Skipped	Overgeslagen
+Budgets_Shared	Shared accounts	Gedeelde rekeningen
+Budgets_SharedLine	{0}: {1} spent in total; your part ({2}) is {3}.	{0}: in totaal {1} uitgegeven; jouw deel ({2}) is {3}.
+Budgets_Trend	Last 6 months	Laatste 6 maanden
+Budgets_TrendIn	In {0}	In {0}
+Budgets_TrendOut	Out {0}	Uit {0}
+Budgets_TrendNoData	no data	geen gegevens
+Budgets_TrendPartial	incomplete	onvolledig
+Budgets_TrendNote	Months before your first balance date have no data and are never compared.	Maanden vóór je eerste saldodatum hebben geen gegevens en worden nooit vergeleken.
+Settings_MoveUp	Move up	Omhoog
+Settings_MoveDown	Move down	Omlaag
+Settings_CategoryMerge	Merge…	Samenvoegen…
+Settings_MergeInto	Merge "{0}" into:	"{0}" samenvoegen met:
+Settings_MergeExplain	All transactions, payee rules and recurring items of "{0}" move to the chosen category, and "{0}" is archived. The chosen category keeps its own budget; only if it has none, it takes over this one. Undo cannot reverse a merge.	Alle transacties, betaalregels en terugkerende posten van "{0}" gaan naar de gekozen categorie, en "{0}" wordt gearchiveerd. De gekozen categorie houdt haar eigen budget; alleen als ze er geen heeft, neemt ze dit over. Ongedaan maken kan een samenvoeging niet terugdraaien.
+Settings_MergeConfirm	Merge	Samenvoegen
+Settings_Merged	"{0}" was merged into "{1}".	"{0}" is samengevoegd met "{1}".
+Settings_ArchivedCategories	Archived categories	Gearchiveerde categorieën
+Settings_Reactivate	Bring back	Terugzetten
+Error_category_merge_invalid	Choose another active category of the same kind.	Kies een andere actieve categorie van dezelfde soort.
+Error_budget_category_invalid	Budgets are for active spending categories.	Budgetten zijn er voor actieve uitgavencategorieën.
+Error_budget_amount_negative	A budget cannot be negative.	Een budget kan niet negatief zijn.
+Dashboard_Savings	Savings and investments	Spaargeld en beleggingen
+Dashboard_SavingsNote	Not spendable cash, so shown separately.	Geen besteedbaar geld, daarom apart getoond.
+Dashboard_Upcoming	Coming up in the next 14 days	Binnenkort, in de komende 14 dagen
+Dashboard_NothingUpcoming	Nothing planned in the next 14 days.	Niets gepland in de komende 14 dagen.
+Dashboard_CashFlow	Expected in and out	Verwacht in en uit
+Dashboard_Budget	Budget this month	Budget deze maand
+Dashboard_NoBudget	No budgets set yet.	Nog geen budgetten ingesteld.
+Dashboard_GoToBudgets	Open budgets	Naar budgetten
+Dashboard_Attention	Needs attention	Vraagt aandacht
+Dashboard_OverBudget	{0} is {1} over budget	{0} zit {1} boven budget
+Dashboard_CardDifference	{0}: the recorded payment differs from the statement	{0}: de geregistreerde betaling verschilt van het overzicht
+Dashboard_CardNotSetUp	{0} has no card settings yet	{0} heeft nog geen kaartinstellingen
+Dashboard_CardOverLimit	{0} is over its limit	{0} zit boven de limiet
+Dashboard_ReconcileDifference	{0}: the last reconciliation left a difference of {1}	{0}: de laatste afstemming liet een verschil van {1}
+Dashboard_Cards	Credit cards	Kredietkaarten
+Dashboard_CardLine	Owed {0} · available {1} (not cash)	Verschuldigd {0} · beschikbaar {1} (geen cash)
+Dashboard_View	View	Bekijken
+Dashboard_CardSettlementItem	{0} statement	Afrekening {0}

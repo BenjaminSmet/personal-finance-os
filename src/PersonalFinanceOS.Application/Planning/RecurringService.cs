@@ -38,6 +38,36 @@ public sealed record PlannedOccurrence(
     /// <summary>A recorded transaction that looks like this occurrence (spec §12 step 6). Only a suggestion.</summary>
     Transaction? SuggestedMatch);
 
+/// <summary>What became of a planned occurrence.</summary>
+public enum OutcomeState
+{
+    /// <summary>Not handled yet (or its transaction was removed): still expected.</summary>
+    Open,
+
+    /// <summary>Happened: <see cref="PlannedOutcome.Actual"/> is the recorded transaction.</summary>
+    Confirmed,
+
+    /// <summary>Will not happen this time.</summary>
+    Skipped,
+}
+
+/// <summary>A planned occurrence next to what actually happened (spec §24 phase 5: actual vs planned).</summary>
+public sealed record PlannedOutcome(
+    RecurringRule Rule,
+    DateOnly OccurrenceDate,
+
+    /// <summary>The planned date, or the new date when postponed.</summary>
+    DateOnly DueDate,
+    Money Planned,
+    OutcomeState State,
+
+    /// <summary>The transaction that settled it; for a transfer, the side leaving the first account.</summary>
+    Transaction? Actual)
+{
+    /// <summary>Actual minus planned (both positive), when it happened.</summary>
+    public Money? Difference => Actual is { } a ? a.Amount.Abs() - Planned : null;
+}
+
 /// <summary>
 /// Recurring rules and their occurrences (spec §12): the user confirms, edits, postpones or skips
 /// each one; confirming creates the real transaction, or links one that already exists (for example
@@ -149,6 +179,56 @@ public sealed class RecurringService(
                 matches.GetValueOrDefault((o.Rule.Id, o.Occurrence))))
             .ToList();
     }
+
+    /// <summary>
+    /// Every occurrence expected between two dates (by its due date, so a postponed one counts where it was moved
+    /// to) with what became of it. Read-only; oldest first.
+    /// </summary>
+    public async Task<IReadOnlyList<PlannedOutcome>> ListOutcomesAsync(DateOnly from, DateOnly to, CancellationToken ct = default)
+    {
+        var rules = await repository.ListRulesAsync(includeEnded: true, ct);
+        if (rules.Count == 0)
+        {
+            return [];
+        }
+
+        var items = (await repository.ListItemsAsync(ct)).ToDictionary(i => (i.RuleId, i.OccurrenceDate));
+        var result = new List<PlannedOutcome>();
+        foreach (var rule in rules)
+        {
+            // A postponed occurrence is never due before its original date, so later ones cannot fall in the range.
+            foreach (var date in rule.Occurrences(rule.StartDate, to))
+            {
+                var decision = items.GetValueOrDefault((rule.Id, date));
+                var due = decision is { Status: ScheduledItemStatus.Postponed, PlannedDate: { } moved } ? moved : date;
+                if (due < from || due > to)
+                {
+                    continue;
+                }
+
+                var state = OutcomeState.Open;
+                Transaction? actual = null;
+                if (decision?.Status == ScheduledItemStatus.Skipped)
+                {
+                    state = OutcomeState.Skipped;
+                }
+                else if (decision is { Status: ScheduledItemStatus.Confirmed, TransactionId: { } id } &&
+                         await transactions.FindAsync(id, ct) is { IsActive: true } t)
+                {
+                    state = OutcomeState.Confirmed;
+                    actual = t;
+                }
+
+                result.Add(new PlannedOutcome(rule, date, due, rule.Amount, state, actual));
+            }
+        }
+
+        return result.OrderBy(o => o.DueDate).ThenBy(o => o.Rule.Name, StringComparer.CurrentCultureIgnoreCase).ToList();
+    }
+
+    /// <summary>Transactions that settle a planned occurrence (confirmed or linked, not removed): the recurring ones.</summary>
+    public async Task<IReadOnlySet<Guid>> ListSettlingTransactionIdsAsync(CancellationToken ct = default) =>
+        await LiveLinksAsync(await repository.ListItemsAsync(ct), ct);
 
     /// <summary>
     /// It happened: records the real transaction (with the date and amount the user confirms) and

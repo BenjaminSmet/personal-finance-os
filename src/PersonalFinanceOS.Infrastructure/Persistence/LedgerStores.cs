@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PersonalFinanceOS.Application.Abstractions;
+using PersonalFinanceOS.Domain.Budgets;
 using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Domain.Ledger;
 using PersonalFinanceOS.Domain.Transactions;
@@ -96,6 +97,66 @@ public sealed class CategoryRepository(Func<FinanceDbContext> contextFactory) : 
     {
         await using var db = contextFactory();
         db.Categories.Update(category);
+        await db.SaveChangesAsync(ct);
+    }
+
+    public async Task UpdateAsync(IReadOnlyCollection<Category> categories, CancellationToken ct = default)
+    {
+        await using var db = contextFactory();
+        db.Categories.UpdateRange(categories);
+        await db.SaveChangesAsync(ct);
+    }
+
+    public async Task MergeAsync(Category source, Guid targetId, IReadOnlyCollection<Budget> movedBudgets, IReadOnlyCollection<Budget> removedBudgets, CancellationToken ct = default)
+    {
+        await using var db = contextFactory();
+        await using var transaction = await db.Database.BeginTransactionAsync(ct);
+        Guid? from = source.Id;
+        Guid? to = targetId;
+
+        // Only the category changes; updated_at stays, so an imported line does not look edited by the user.
+        await db.Transactions.Where(t => t.CategoryId == from).ExecuteUpdateAsync(s => s.SetProperty(t => t.CategoryId, to), ct);
+        await db.PayeeRules.Where(r => r.CategoryId == from).ExecuteUpdateAsync(s => s.SetProperty(r => r.CategoryId, to), ct);
+        await db.RecurringRules.Where(r => r.CategoryId == from).ExecuteUpdateAsync(s => s.SetProperty(r => r.CategoryId, to), ct);
+        await db.ImportTransferLinks.Where(l => l.OriginalCategoryId == from).ExecuteUpdateAsync(s => s.SetProperty(l => l.OriginalCategoryId, to), ct);
+
+        db.Budgets.RemoveRange(removedBudgets);
+        db.Budgets.UpdateRange(movedBudgets);
+        db.Categories.Update(source);
+        await db.SaveChangesAsync(ct);
+        await transaction.CommitAsync(ct);
+    }
+}
+
+public sealed class BudgetRepository(Func<FinanceDbContext> contextFactory) : IBudgetRepository
+{
+    public async Task<IReadOnlyList<Budget>> ListAsync(CancellationToken ct = default)
+    {
+        await using var db = contextFactory();
+        var list = await db.Budgets.AsNoTracking().ToListAsync(ct);
+        return list.OrderBy(b => b.StartMonth).ToList();
+    }
+
+    public async Task SaveAsync(Budget budget, IReadOnlyCollection<Budget> removed, CancellationToken ct = default)
+    {
+        await using var db = contextFactory();
+        db.Budgets.RemoveRange(removed);
+        if (await db.Budgets.AsNoTracking().AnyAsync(b => b.Id == budget.Id, ct))
+        {
+            db.Budgets.Update(budget);
+        }
+        else
+        {
+            db.Budgets.Add(budget);
+        }
+
+        await db.SaveChangesAsync(ct);
+    }
+
+    public async Task RemoveAsync(IReadOnlyCollection<Budget> removed, CancellationToken ct = default)
+    {
+        await using var db = contextFactory();
+        db.Budgets.RemoveRange(removed);
         await db.SaveChangesAsync(ct);
     }
 }

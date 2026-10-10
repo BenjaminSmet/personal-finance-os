@@ -65,18 +65,48 @@
         <Border Classes="error" IsVisible="{Binding CategoryError, Converter={x:Static ObjectConverters.IsNotNull}}">
           <TextBlock Text="{Binding CategoryError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
         </Border>
+        <Border Classes="success" IsVisible="{Binding CategoryMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding CategoryMessage, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+        </Border>
+
+        <!-- Merge: explained and confirmed first, because Undo cannot reverse it -->
+        <Border Classes="glass row" Padding="18,16" IsVisible="{Binding IsMerging}">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="headline" Text="{Binding MergeTitle}" />
+            <ComboBox ItemsSource="{Binding MergeTargets}" SelectedItem="{Binding MergeTarget}" MinWidth="240"
+                      AutomationProperties.Name="{Binding MergeTitle}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:CategoryOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Border Classes="warning">
+              <TextBlock Text="{Binding MergeExplain}" TextWrapping="Wrap" />
+            </Border>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Button Classes="primary" Content="{l:T Settings_MergeConfirm}" Command="{Binding ConfirmMergeCommand}" />
+              <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelMergeCommand}" />
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
         <ItemsControl ItemsSource="{Binding CategoryRows}">
           <ItemsControl.ItemTemplate>
             <DataTemplate DataType="vm:CategoryRowViewModel">
               <StackPanel>
-                <Grid ColumnDefinitions="*,Auto,Auto" Margin="4,6">
+                <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto,Auto" Margin="4,6">
                   <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <TextBlock Text="{Binding Name}" />
                     <Border Classes="badge"><TextBlock Classes="caption" Text="{Binding KindName}" /></Border>
                   </StackPanel>
-                  <Button Grid.Column="1" Content="{l:T Settings_CategoryRename}" Padding="12,5" FontSize="13"
+                  <Button Grid.Column="1" Content="▲" Padding="10,5" FontSize="13" Command="{Binding MoveUpCommand}"
+                          IsEnabled="{Binding CanMoveUp}" ToolTip.Tip="{l:T Settings_MoveUp}" AutomationProperties.Name="{l:T Settings_MoveUp}" />
+                  <Button Grid.Column="2" Margin="4,0,0,0" Content="▼" Padding="10,5" FontSize="13" Command="{Binding MoveDownCommand}"
+                          IsEnabled="{Binding CanMoveDown}" ToolTip.Tip="{l:T Settings_MoveDown}" AutomationProperties.Name="{l:T Settings_MoveDown}" />
+                  <Button Grid.Column="3" Margin="10,0,0,0" Content="{l:T Settings_CategoryRename}" Padding="12,5" FontSize="13"
                           Command="{Binding RenameCommand}" />
-                  <Button Grid.Column="2" Margin="6,0,0,0" Content="{l:T Accounts_Archive}" Padding="12,5" FontSize="13"
+                  <Button Grid.Column="4" Margin="6,0,0,0" Content="{l:T Settings_CategoryMerge}" Padding="12,5" FontSize="13"
+                          Command="{Binding MergeCommand}" />
+                  <Button Grid.Column="5" Margin="6,0,0,0" Content="{l:T Accounts_Archive}" Padding="12,5" FontSize="13"
                           Command="{Binding ArchiveCommand}" />
                 </Grid>
                 <Border Classes="separator" IsVisible="{Binding !IsLast}" />
@@ -84,6 +114,27 @@
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
+
+        <StackPanel Spacing="6" IsVisible="{Binding HasArchivedCategories}">
+          <TextBlock Classes="fieldLabel" Margin="4,8,0,0" Text="{l:T Settings_ArchivedCategories}" />
+          <ItemsControl ItemsSource="{Binding ArchivedCategoryRows}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="vm:CategoryRowViewModel">
+                <StackPanel>
+                  <Grid ColumnDefinitions="*,Auto" Margin="4,6">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                      <TextBlock Classes="secondary" Text="{Binding Name}" />
+                      <Border Classes="badge"><TextBlock Classes="caption" Text="{Binding KindName}" /></Border>
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="{l:T Settings_Reactivate}" Padding="12,5" FontSize="13"
+                            Command="{Binding ReactivateCommand}" />
+                  </Grid>
+                  <Border Classes="separator" IsVisible="{Binding !IsLast}" />
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
       </StackPanel>
     </Border>
 

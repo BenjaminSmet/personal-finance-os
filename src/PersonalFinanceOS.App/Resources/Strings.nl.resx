@@ -180,7 +180,7 @@
   <data name="CategoryKind_Expense" xml:space="preserve"><value>Uitgave</value></data>
   <data name="CategoryKind_Income" xml:space="preserve"><value>Inkomen</value></data>
   <data name="Settings_Categories" xml:space="preserve"><value>Categorieën</value></data>
-  <data name="Settings_CategoriesNote" xml:space="preserve"><value>Gearchiveerde categorieën blijven op eerdere transacties staan, maar worden niet meer aangeboden.</value></data>
+  <data name="Settings_CategoriesNote" xml:space="preserve"><value>De volgorde hier wordt gebruikt in budgetten en lijsten. Gearchiveerde categorieën blijven op eerdere transacties staan, maar worden niet meer aangeboden; je kunt ze altijd terugzetten.</value></data>
   <data name="Settings_CategoryName" xml:space="preserve"><value>Nieuwe categorie</value></data>
   <data name="Settings_CategoryAdd" xml:space="preserve"><value>Toevoegen</value></data>
   <data name="Settings_CategoryRename" xml:space="preserve"><value>Hernoemen</value></data>
@@ -452,4 +452,84 @@
   <data name="Error_scheduled_link_taken" xml:space="preserve"><value>Die regel is al gekoppeld aan een andere geplande post.</value></data>
   <data name="Error_scheduled_reopen_confirmed" xml:space="preserve"><value>Verwijder de geregistreerde transactie om een bevestiging ongedaan te maken.</value></data>
   <data name="Error_forecast_buffer_negative" xml:space="preserve"><value>De buffer kan niet negatief zijn.</value></data>
+  <data name="Budgets_Title" xml:space="preserve"><value>Budgetten &amp; analyse</value></data>
+  <data name="Budgets_Subtitle" xml:space="preserve"><value>Je maand in één oogopslag: uitgaven per categorie tegenover je budget en je eigen geschiedenis. Geplande posten tellen nooit als uitgegeven.</value></data>
+  <data name="Budgets_Previous" xml:space="preserve"><value>Vorige maand</value></data>
+  <data name="Budgets_Next" xml:space="preserve"><value>Volgende maand</value></data>
+  <data name="Budgets_ThisMonth" xml:space="preserve"><value>Deze maand</value></data>
+  <data name="Budgets_NoAccounts" xml:space="preserve"><value>Voeg eerst je rekeningen toe; de analyse wordt berekend uit je transacties.</value></data>
+  <data name="Budgets_InProgress" xml:space="preserve"><value>Deze maand loopt nog (tot en met {0}).</value></data>
+  <data name="Budgets_Incomplete" xml:space="preserve"><value>Je gegevens beginnen op {0}, dus deze maand is onvolledig.</value></data>
+  <data name="Budgets_NoData" xml:space="preserve"><value>Er zijn geen gegevens voor deze maand: je rekeningen beginnen op {0}.</value></data>
+  <data name="Budgets_Compared" xml:space="preserve"><value>Gemiddelde van de vorige {0} volledige maanden: inkomsten {1}, uitgaven {2}.</value></data>
+  <data name="Budgets_ComparedOne" xml:space="preserve"><value>Vorige volledige maand: inkomsten {0}, uitgaven {1}.</value></data>
+  <data name="Budgets_NotCompared" xml:space="preserve"><value>Nog geen volledige eerdere maand om mee te vergelijken.</value></data>
+  <data name="Budgets_Categories" xml:space="preserve"><value>Uitgaven per categorie</value></data>
+  <data name="Budgets_CategoriesNote" xml:space="preserve"><value>Een budget geldt vanaf de getoonde maand tot je het wijzigt; eerdere maanden behouden het hunne. Overschrijvingen en kaartafrekeningen tellen nooit als uitgave; terugbetalingen verlagen ze.</value></data>
+  <data name="Budgets_BudgetTotal" xml:space="preserve"><value>{0} van {1} gebudgetteerd uitgegeven</value></data>
+  <data name="Budgets_NoBudgets" xml:space="preserve"><value>Nog geen budgetten. Typ een bedrag naast een categorie en kies Opslaan.</value></data>
+  <data name="Budgets_Budget" xml:space="preserve"><value>Budget</value></data>
+  <data name="Budgets_Left" xml:space="preserve"><value>Nog {0} over</value></data>
+  <data name="Budgets_Over" xml:space="preserve"><value>{0} boven budget</value></data>
+  <data name="Budgets_NoBudget" xml:space="preserve"><value>Geen budget</value></data>
+  <data name="Budgets_Uncategorised" xml:space="preserve"><value>Zonder categorie</value></data>
+  <data name="Budgets_Average" xml:space="preserve"><value>Gemiddeld {0}</value></data>
+  <data name="Budgets_Unusual" xml:space="preserve"><value>Ongewoon</value></data>
+  <data name="Budgets_UnusualNote" xml:space="preserve"><value>Ongewone veranderingen worden pas gemeld vanaf {0} volledige maanden geschiedenis.</value></data>
+  <data name="Budgets_BudgetSaved" xml:space="preserve"><value>Budget voor {0} opgeslagen vanaf {1}.</value></data>
+  <data name="Budgets_BudgetRemoved" xml:space="preserve"><value>Budget voor {0} geschrapt vanaf {1}.</value></data>
+  <data name="Budgets_Income" xml:space="preserve"><value>Inkomsten per categorie</value></data>
+  <data name="Budgets_NoIncome" xml:space="preserve"><value>Geen inkomsten geregistreerd deze maand.</value></data>
+  <data name="Budgets_Recurring" xml:space="preserve"><value>Vaste en eenmalige uitgaven</value></data>
+  <data name="Budgets_RecurringAmount" xml:space="preserve"><value>Vast (bevestigde geplande posten)</value></data>
+  <data name="Budgets_OneOff" xml:space="preserve"><value>Eenmalig</value></data>
+  <data name="Budgets_Planned" xml:space="preserve"><value>Gepland en werkelijk</value></data>
+  <data name="Budgets_PlannedNote" xml:space="preserve"><value>Terugkerende posten van deze maand en wat ermee gebeurde.</value></data>
+  <data name="Budgets_NothingPlanned" xml:space="preserve"><value>Niets gepland deze maand.</value></data>
+  <data name="Budgets_PlannedOn" xml:space="preserve"><value>Gepland {0} op {1}</value></data>
+  <data name="Budgets_ActualOn" xml:space="preserve"><value>Werkelijk {0} op {1}</value></data>
+  <data name="Budgets_DifferenceMore" xml:space="preserve"><value>{0} meer dan gepland</value></data>
+  <data name="Budgets_DifferenceLess" xml:space="preserve"><value>{0} minder dan gepland</value></data>
+  <data name="Outcome_Open" xml:space="preserve"><value>Nog verwacht</value></data>
+  <data name="Outcome_Overdue" xml:space="preserve"><value>Achterstallig, niet bevestigd</value></data>
+  <data name="Outcome_Confirmed" xml:space="preserve"><value>Gebeurd</value></data>
+  <data name="Outcome_Skipped" xml:space="preserve"><value>Overgeslagen</value></data>
+  <data name="Budgets_Shared" xml:space="preserve"><value>Gedeelde rekeningen</value></data>
+  <data name="Budgets_SharedLine" xml:space="preserve"><value>{0}: in totaal {1} uitgegeven; jouw deel ({2}) is {3}.</value></data>
+  <data name="Budgets_Trend" xml:space="preserve"><value>Laatste 6 maanden</value></data>
+  <data name="Budgets_TrendIn" xml:space="preserve"><value>In {0}</value></data>
+  <data name="Budgets_TrendOut" xml:space="preserve"><value>Uit {0}</value></data>
+  <data name="Budgets_TrendNoData" xml:space="preserve"><value>geen gegevens</value></data>
+  <data name="Budgets_TrendPartial" xml:space="preserve"><value>onvolledig</value></data>
+  <data name="Budgets_TrendNote" xml:space="preserve"><value>Maanden vóór je eerste saldodatum hebben geen gegevens en worden nooit vergeleken.</value></data>
+  <data name="Settings_MoveUp" xml:space="preserve"><value>Omhoog</value></data>
+  <data name="Settings_MoveDown" xml:space="preserve"><value>Omlaag</value></data>
+  <data name="Settings_CategoryMerge" xml:space="preserve"><value>Samenvoegen…</value></data>
+  <data name="Settings_MergeInto" xml:space="preserve"><value>"{0}" samenvoegen met:</value></data>
+  <data name="Settings_MergeExplain" xml:space="preserve"><value>Alle transacties, betaalregels en terugkerende posten van "{0}" gaan naar de gekozen categorie, en "{0}" wordt gearchiveerd. De gekozen categorie houdt haar eigen budget; alleen als ze er geen heeft, neemt ze dit over. Ongedaan maken kan een samenvoeging niet terugdraaien.</value></data>
+  <data name="Settings_MergeConfirm" xml:space="preserve"><value>Samenvoegen</value></data>
+  <data name="Settings_Merged" xml:space="preserve"><value>"{0}" is samengevoegd met "{1}".</value></data>
+  <data name="Settings_ArchivedCategories" xml:space="preserve"><value>Gearchiveerde categorieën</value></data>
+  <data name="Settings_Reactivate" xml:space="preserve"><value>Terugzetten</value></data>
+  <data name="Error_category_merge_invalid" xml:space="preserve"><value>Kies een andere actieve categorie van dezelfde soort.</value></data>
+  <data name="Error_budget_category_invalid" xml:space="preserve"><value>Budgetten zijn er voor actieve uitgavencategorieën.</value></data>
+  <data name="Error_budget_amount_negative" xml:space="preserve"><value>Een budget kan niet negatief zijn.</value></data>
+  <data name="Dashboard_Savings" xml:space="preserve"><value>Spaargeld en beleggingen</value></data>
+  <data name="Dashboard_SavingsNote" xml:space="preserve"><value>Geen besteedbaar geld, daarom apart getoond.</value></data>
+  <data name="Dashboard_Upcoming" xml:space="preserve"><value>Binnenkort, in de komende 14 dagen</value></data>
+  <data name="Dashboard_NothingUpcoming" xml:space="preserve"><value>Niets gepland in de komende 14 dagen.</value></data>
+  <data name="Dashboard_CashFlow" xml:space="preserve"><value>Verwacht in en uit</value></data>
+  <data name="Dashboard_Budget" xml:space="preserve"><value>Budget deze maand</value></data>
+  <data name="Dashboard_NoBudget" xml:space="preserve"><value>Nog geen budgetten ingesteld.</value></data>
+  <data name="Dashboard_GoToBudgets" xml:space="preserve"><value>Naar budgetten</value></data>
+  <data name="Dashboard_Attention" xml:space="preserve"><value>Vraagt aandacht</value></data>
+  <data name="Dashboard_OverBudget" xml:space="preserve"><value>{0} zit {1} boven budget</value></data>
+  <data name="Dashboard_CardDifference" xml:space="preserve"><value>{0}: de geregistreerde betaling verschilt van het overzicht</value></data>
+  <data name="Dashboard_CardNotSetUp" xml:space="preserve"><value>{0} heeft nog geen kaartinstellingen</value></data>
+  <data name="Dashboard_CardOverLimit" xml:space="preserve"><value>{0} zit boven de limiet</value></data>
+  <data name="Dashboard_ReconcileDifference" xml:space="preserve"><value>{0}: de laatste afstemming liet een verschil van {1}</value></data>
+  <data name="Dashboard_Cards" xml:space="preserve"><value>Kredietkaarten</value></data>
+  <data name="Dashboard_CardLine" xml:space="preserve"><value>Verschuldigd {0} · beschikbaar {1} (geen cash)</value></data>
+  <data name="Dashboard_View" xml:space="preserve"><value>Bekijken</value></data>
+  <data name="Dashboard_CardSettlementItem" xml:space="preserve"><value>Afrekening {0}</value></data>
 </root>

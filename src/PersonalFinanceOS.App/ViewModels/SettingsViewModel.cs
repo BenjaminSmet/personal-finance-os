@@ -14,7 +14,17 @@ public sealed record LanguageOption(AppLanguage Language, string Name);
 
 public sealed record CategoryKindOption(CategoryKind Kind, string Name);
 
-public sealed partial class CategoryRowViewModel(Category category, Func<CategoryRowViewModel, Task> rename, Func<CategoryRowViewModel, Task> archive) : ViewModelBase
+public enum CategoryAction
+{
+    Rename,
+    Archive,
+    MoveUp,
+    MoveDown,
+    Merge,
+    Reactivate,
+}
+
+public sealed partial class CategoryRowViewModel(Category category, Func<CategoryRowViewModel, CategoryAction, Task> act) : ViewModelBase
 {
     public Category Category { get; } = category;
 
@@ -24,11 +34,29 @@ public sealed partial class CategoryRowViewModel(Category category, Func<Categor
 
     public bool IsLast { get; set; }
 
-    [RelayCommand]
-    private Task Rename() => rename(this);
+    /// <summary>Not the first of its kind, so it can move up.</summary>
+    public bool CanMoveUp { get; set; }
+
+    /// <summary>Not the last of its kind, so it can move down.</summary>
+    public bool CanMoveDown { get; set; }
 
     [RelayCommand]
-    private Task Archive() => archive(this);
+    private Task Rename() => act(this, CategoryAction.Rename);
+
+    [RelayCommand]
+    private Task Archive() => act(this, CategoryAction.Archive);
+
+    [RelayCommand]
+    private Task MoveUp() => act(this, CategoryAction.MoveUp);
+
+    [RelayCommand]
+    private Task MoveDown() => act(this, CategoryAction.MoveDown);
+
+    [RelayCommand]
+    private Task Merge() => act(this, CategoryAction.Merge);
+
+    [RelayCommand]
+    private Task Reactivate() => act(this, CategoryAction.Reactivate);
 }
 
 public sealed partial class ThemeOption : ObservableObject
@@ -83,9 +111,33 @@ public sealed partial class SettingsViewModel : PageViewModel
     [ObservableProperty]
     private ThemeOption _selectedTheme;
 
-    // ===== Categories (spec §13: create, rename, archive) =====
+    // ===== Categories (spec §13: create, rename, merge, reorder, archive) =====
 
     public System.Collections.ObjectModel.ObservableCollection<CategoryRowViewModel> CategoryRows { get; } = [];
+
+    public System.Collections.ObjectModel.ObservableCollection<CategoryRowViewModel> ArchivedCategoryRows { get; } = [];
+
+    public bool HasArchivedCategories => ArchivedCategoryRows.Count > 0;
+
+    [ObservableProperty]
+    private string? _categoryMessage;
+
+    /// <summary>The category being merged; the merge panel is open while set.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsMerging), nameof(MergeTitle), nameof(MergeExplain))]
+    private CategoryRowViewModel? _mergeSource;
+
+    [ObservableProperty]
+    private IReadOnlyList<CategoryOption> _mergeTargets = [];
+
+    [ObservableProperty]
+    private CategoryOption? _mergeTarget;
+
+    public bool IsMerging => MergeSource is not null;
+
+    public string MergeTitle => MergeSource is { } s ? Loc.Format("Settings_MergeInto", s.Name) : string.Empty;
+
+    public string MergeExplain => MergeSource is { } s ? Loc.Format("Settings_MergeExplain", s.Name) : string.Empty;
 
     [ObservableProperty]
     private IReadOnlyList<CategoryKindOption> _categoryKinds;
@@ -115,6 +167,7 @@ public sealed partial class SettingsViewModel : PageViewModel
     private async Task SaveCategoryAsync()
     {
         CategoryError = null;
+        CategoryMessage = null;
         try
         {
             if (_renaming is { } row)
@@ -145,29 +198,97 @@ public sealed partial class SettingsViewModel : PageViewModel
         CategoryError = null;
     }
 
-    private Task StartRenameAsync(CategoryRowViewModel row)
+    private async Task ActOnCategoryAsync(CategoryRowViewModel row, CategoryAction action)
     {
-        _renaming = row;
-        IsRenaming = true;
-        NewCategoryName = row.Name;
-        NewCategoryKind = CategoryKinds.First(k => k.Kind == row.Category.Kind);
-        return Task.CompletedTask;
-    }
+        CategoryError = null;
+        CategoryMessage = null;
+        try
+        {
+            switch (action)
+            {
+                case CategoryAction.Rename:
+                    _renaming = row;
+                    IsRenaming = true;
+                    NewCategoryName = row.Name;
+                    NewCategoryKind = CategoryKinds.First(k => k.Kind == row.Category.Kind);
+                    return;
+                case CategoryAction.Merge:
+                    MergeTargets = [.. CategoryRows.Where(r => r.Category.Kind == row.Category.Kind && r != row).Select(r => new CategoryOption(r.Category.Id, r.Name))];
+                    MergeTarget = MergeTargets.FirstOrDefault();
+                    MergeSource = row;
+                    return;
+                case CategoryAction.Archive:
+                    await _categories.ArchiveAsync(row.Category.Id);
+                    break;
+                case CategoryAction.Reactivate:
+                    await _categories.ReactivateAsync(row.Category.Id);
+                    break;
+                case CategoryAction.MoveUp:
+                    await _categories.MoveAsync(row.Category.Id, -1);
+                    break;
+                case CategoryAction.MoveDown:
+                    await _categories.MoveAsync(row.Category.Id, +1);
+                    break;
+            }
+        }
+        catch (DomainValidationException ex)
+        {
+            CategoryError = Loc.Error(ex.Code);
+        }
 
-    private async Task ArchiveCategoryAsync(CategoryRowViewModel row)
-    {
-        await _categories.ArchiveAsync(row.Category.Id);
         await ReloadCategoriesAsync();
     }
 
+    [RelayCommand]
+    private async Task ConfirmMergeAsync()
+    {
+        if (MergeSource is not { } source || MergeTarget?.Id is not { } targetId)
+        {
+            CategoryError = Loc.Error("category.merge.invalid");
+            return;
+        }
+
+        try
+        {
+            await _categories.MergeAsync(source.Category.Id, targetId);
+        }
+        catch (DomainValidationException ex)
+        {
+            CategoryError = Loc.Error(ex.Code);
+            return;
+        }
+
+        CategoryMessage = Loc.Format("Settings_Merged", source.Name, MergeTarget.Name);
+        MergeSource = null;
+        await ReloadCategoriesAsync();
+    }
+
+    [RelayCommand]
+    private void CancelMerge() => MergeSource = null;
+
     private async Task ReloadCategoriesAsync()
     {
-        var list = await _categories.ListAsync();
+        var all = await _categories.ListAsync(includeArchived: true);
+        var list = all.Where(c => c.IsActive).ToList();
         CategoryRows.Clear();
         for (var i = 0; i < list.Count; i++)
         {
-            CategoryRows.Add(new CategoryRowViewModel(list[i], StartRenameAsync, ArchiveCategoryAsync) { IsLast = i == list.Count - 1 });
+            CategoryRows.Add(new CategoryRowViewModel(list[i], ActOnCategoryAsync)
+            {
+                IsLast = i == list.Count - 1,
+                CanMoveUp = i > 0 && list[i - 1].Kind == list[i].Kind,
+                CanMoveDown = i < list.Count - 1 && list[i + 1].Kind == list[i].Kind,
+            });
         }
+
+        var archived = all.Where(c => !c.IsActive).OrderBy(c => c.Name, StringComparer.CurrentCultureIgnoreCase).ToList();
+        ArchivedCategoryRows.Clear();
+        for (var i = 0; i < archived.Count; i++)
+        {
+            ArchivedCategoryRows.Add(new CategoryRowViewModel(archived[i], ActOnCategoryAsync) { IsLast = i == archived.Count - 1 });
+        }
+
+        OnPropertyChanged(nameof(HasArchivedCategories));
     }
 
     private static List<CategoryKindOption> CategoryKindOptions() =>
@@ -178,6 +299,8 @@ public sealed partial class SettingsViewModel : PageViewModel
         var kind = NewCategoryKind.Kind;
         CategoryKinds = CategoryKindOptions();
         NewCategoryKind = CategoryKinds.First(k => k.Kind == kind);
+        MergeSource = null;
+        CategoryMessage = null;
         _ = ReloadCategoriesAsync();
     }
 

@@ -1,0 +1,220 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.BudgetsView"
+             x:DataType="vm:BudgetsViewModel">
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="2">
+      <TextBlock Classes="largeTitle" Text="{l:T Budgets_Title}" />
+      <TextBlock Classes="secondary" Text="{l:T Budgets_Subtitle}" TextWrapping="Wrap" />
+    </StackPanel>
+
+    <!-- Month navigation -->
+    <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+      <Button Content="{l:T Budgets_Previous}" Command="{Binding PreviousMonthCommand}" />
+      <TextBlock Grid.Column="1" Classes="title" Text="{Binding MonthTitle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      <Button Grid.Column="2" Content="{l:T Budgets_Next}" Command="{Binding NextMonthCommand}" />
+      <Button Grid.Column="3" Margin="8,0,0,0" Content="{l:T Budgets_ThisMonth}" Command="{Binding ThisMonthCommand}"
+              IsVisible="{Binding !IsCurrentMonth}" />
+    </Grid>
+
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding !HasAccounts}">
+      <TextBlock Text="{l:T Budgets_NoAccounts}" TextWrapping="Wrap" />
+    </Border>
+
+    <StackPanel Spacing="18" IsVisible="{Binding HasAccounts}">
+      <TextBlock Classes="caption" Text="{Binding MonthNote, StringFormat='ℹ  {0}'}" TextWrapping="Wrap"
+                 IsVisible="{Binding MonthNote, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+      <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+        <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+      </Border>
+
+      <!-- Income, spending, net; compared only with complete earlier months -->
+      <Border Classes="glass strong" Padding="24,20">
+        <StackPanel Spacing="12">
+          <Grid ColumnDefinitions="*,*,*">
+            <StackPanel Spacing="2">
+              <TextBlock Classes="overline" Text="{l:T Transactions_Income}" />
+              <TextBlock Classes="amount" Text="{Binding IncomeText}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Spacing="2">
+              <TextBlock Classes="overline" Text="{l:T Transactions_Expenses}" />
+              <TextBlock Classes="amount" Text="{Binding ExpensesText}" />
+            </StackPanel>
+            <StackPanel Grid.Column="2" Spacing="2">
+              <TextBlock Classes="overline" Text="{l:T Transactions_Net}" />
+              <TextBlock Classes="amount" Text="{Binding NetText}" Classes.debt="{Binding NetIsNegative}" />
+            </StackPanel>
+          </Grid>
+          <TextBlock Classes="caption" Text="{Binding ComparisonText}" TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+
+      <!-- Spending per category against budget and history -->
+      <Border Classes="glass" Padding="24,20">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="title" Text="{l:T Budgets_Categories}" />
+          <TextBlock Classes="secondary" Text="{l:T Budgets_CategoriesNote}" TextWrapping="Wrap" />
+          <StackPanel Spacing="6" IsVisible="{Binding BudgetTotalText, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <TextBlock Classes="headline" Text="{Binding BudgetTotalText}" />
+            <ProgressBar Classes="meter" Classes.over="{Binding BudgetTotalIsOver}" Maximum="100" Value="{Binding BudgetUsedPercent}" />
+          </StackPanel>
+          <TextBlock Classes="caption" Text="{l:T Budgets_NoBudgets}" TextWrapping="Wrap"
+                     IsVisible="{Binding BudgetTotalText, Converter={x:Static ObjectConverters.IsNull}}" />
+          <ItemsControl ItemsSource="{Binding Rows}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="vm:BudgetRowViewModel">
+                <StackPanel>
+                  <Grid ColumnDefinitions="2*,Auto,2*,Auto" Margin="0,8">
+                    <StackPanel Spacing="2" VerticalAlignment="Center">
+                      <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Classes="headline" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                        <Border Classes="badge" IsVisible="{Binding IsArchived}"><TextBlock Classes="caption" Text="{l:T Accounts_Archived}" /></Border>
+                        <Border Classes="badge" IsVisible="{Binding IsUnusual}">
+                          <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock Classes="caption debt" Text="⚠" />
+                            <TextBlock Classes="caption debt" Text="{l:T Budgets_Unusual}" />
+                          </StackPanel>
+                        </Border>
+                      </StackPanel>
+                      <TextBlock Classes="caption" Text="{Binding HistoryText}"
+                                 IsVisible="{Binding HistoryText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Classes="headline" Text="{Binding ActualText}" VerticalAlignment="Center" Margin="16,0" />
+                    <StackPanel Grid.Column="2" Spacing="4" VerticalAlignment="Center">
+                      <ProgressBar Classes="meter" Classes.over="{Binding IsOver}" Maximum="100" Value="{Binding UsedPercent}"
+                                   IsVisible="{Binding HasBudget}" />
+                      <TextBlock Classes="caption" Classes.debt="{Binding IsOver}" Text="{Binding StatusText}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="6" Margin="16,0,0,0" VerticalAlignment="Center"
+                                IsVisible="{Binding CanEditBudget}">
+                      <TextBox Text="{Binding EditBudgetText}" Width="100" PlaceholderText="{l:T Budgets_Budget}"
+                               AutomationProperties.Name="{l:T Budgets_Budget}" />
+                      <Button Padding="12,5" FontSize="13" Content="{l:T Editor_Save}" Command="{Binding SaveBudgetCommand}" />
+                    </StackPanel>
+                  </Grid>
+                  <Border Classes="error" Margin="0,0,0,8" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}">
+                    <TextBlock Text="{Binding Error, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+                  </Border>
+                  <Border Classes="separator" IsVisible="{Binding !IsLast}" />
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <TextBlock Classes="caption" Text="{Binding UnusualNote}" TextWrapping="Wrap"
+                     IsVisible="{Binding UnusualNote, Converter={x:Static ObjectConverters.IsNotNull}}" />
+        </StackPanel>
+      </Border>
+
+      <!-- Income per category, and recurring versus one-off spending -->
+      <Grid ColumnDefinitions="*,18,*">
+        <Border Classes="glass" Padding="24,20">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="title" Text="{l:T Budgets_Income}" />
+            <TextBlock Classes="caption" Text="{l:T Budgets_NoIncome}" IsVisible="{Binding !HasIncome}" />
+            <ItemsControl ItemsSource="{Binding IncomeRows}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="vm:AmountLineViewModel">
+                  <Grid ColumnDefinitions="*,Auto" Margin="0,3">
+                    <TextBlock Text="{Binding Label}" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Grid.Column="1" Margin="12,0,0,0" Text="{Binding AmountText}" />
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+        <Border Grid.Column="2" Classes="glass" Padding="24,20">
+          <StackPanel Spacing="10">
+            <TextBlock Classes="title" Text="{l:T Budgets_Recurring}" />
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Classes="secondary" Text="{l:T Budgets_RecurringAmount}" TextWrapping="Wrap" />
+              <TextBlock Grid.Column="1" Margin="12,0,0,0" Classes="headline" Text="{Binding RecurringText}" />
+            </Grid>
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Classes="secondary" Text="{l:T Budgets_OneOff}" />
+              <TextBlock Grid.Column="1" Margin="12,0,0,0" Classes="headline" Text="{Binding OneOffText}" />
+            </Grid>
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <!-- Planned versus actual -->
+      <Border Classes="glass" Padding="24,20">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="title" Text="{l:T Budgets_Planned}" />
+          <TextBlock Classes="secondary" Text="{l:T Budgets_PlannedNote}" TextWrapping="Wrap" />
+          <TextBlock Classes="caption" Text="{l:T Budgets_NothingPlanned}" IsVisible="{Binding !HasPlanned}" />
+          <ItemsControl ItemsSource="{Binding PlannedRows}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="vm:PlannedOutcomeViewModel">
+                <StackPanel>
+                  <Grid ColumnDefinitions="*,Auto" Margin="0,6">
+                    <StackPanel Spacing="1">
+                      <TextBlock Classes="headline" Text="{Binding Name}" />
+                      <TextBlock Classes="caption" Text="{Binding PlannedText}" />
+                      <TextBlock Classes="caption" Text="{Binding ActualText}"
+                                 IsVisible="{Binding ActualText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                      <TextBlock Classes="caption" Text="{Binding DifferenceText}"
+                                 IsVisible="{Binding DifferenceText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                    </StackPanel>
+                    <Border Grid.Column="1" Classes="badge" VerticalAlignment="Top">
+                      <TextBlock Classes="caption" Classes.debt="{Binding NeedsAttention}" Text="{Binding StateText}" />
+                    </Border>
+                  </Grid>
+                  <Border Classes="separator" IsVisible="{Binding !IsLast}" />
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+
+      <!-- Shared accounts: the full amount and the user's part -->
+      <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasShared}">
+        <StackPanel Spacing="8">
+          <TextBlock Classes="title" Text="{l:T Budgets_Shared}" />
+          <ItemsControl ItemsSource="{Binding SharedLines}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="x:String">
+                <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="0,3" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+
+      <!-- Trend: amounts are always written next to the bars -->
+      <Border Classes="glass" Padding="24,20">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="title" Text="{l:T Budgets_Trend}" />
+          <ItemsControl ItemsSource="{Binding Trend}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="vm:TrendBarViewModel">
+                <Grid ColumnDefinitions="120,*" Margin="0,5">
+                  <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Label}" />
+                    <TextBlock Classes="caption" Text="{Binding Note}" IsVisible="{Binding Note, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                  </StackPanel>
+                  <StackPanel Grid.Column="1" Spacing="4" IsVisible="{Binding HasData}">
+                    <Grid ColumnDefinitions="*,150">
+                      <ProgressBar Classes="meter income" Maximum="{Binding Maximum}" Value="{Binding Income}" VerticalAlignment="Center" />
+                      <TextBlock Grid.Column="1" Classes="caption" Margin="10,0,0,0" Text="{Binding IncomeText}" />
+                    </Grid>
+                    <Grid ColumnDefinitions="*,150">
+                      <ProgressBar Classes="meter" Maximum="{Binding Maximum}" Value="{Binding Expenses}" VerticalAlignment="Center" />
+                      <TextBlock Grid.Column="1" Classes="caption" Margin="10,0,0,0" Text="{Binding ExpensesText}" />
+                    </Grid>
+                  </StackPanel>
+                </Grid>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <TextBlock Classes="caption" Text="{l:T Budgets_TrendNote}" TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

@@ -1,4 +1,5 @@
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Budgets;
 using PersonalFinanceOS.Domain.Cards;
 using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Domain.Imports;
@@ -69,6 +70,27 @@ public interface ICategoryRepository
     Task AddAsync(IReadOnlyCollection<Category> categories, CancellationToken ct = default);
 
     Task UpdateAsync(Category category, CancellationToken ct = default);
+
+    /// <summary>Saves several categories (a new order) in one database transaction.</summary>
+    Task UpdateAsync(IReadOnlyCollection<Category> categories, CancellationToken ct = default);
+
+    /// <summary>
+    /// Moves everything that uses <paramref name="source"/> (transactions, payee rules, recurring rules, import
+    /// links) to <paramref name="targetId"/>, applies the budget changes and saves the archived source, all in one
+    /// database transaction: all or nothing.
+    /// </summary>
+    Task MergeAsync(Category source, Guid targetId, IReadOnlyCollection<Budget> movedBudgets, IReadOnlyCollection<Budget> removedBudgets, CancellationToken ct = default);
+}
+
+public interface IBudgetRepository
+{
+    Task<IReadOnlyList<Budget>> ListAsync(CancellationToken ct = default);
+
+    /// <summary>Inserts or updates one budget and removes the given ones, in one database transaction.</summary>
+    Task SaveAsync(Budget budget, IReadOnlyCollection<Budget> removed, CancellationToken ct = default);
+
+    /// <summary>Removes budgets, in one database transaction.</summary>
+    Task RemoveAsync(IReadOnlyCollection<Budget> removed, CancellationToken ct = default);
 }
 
 public interface IPayeeRuleRepository
