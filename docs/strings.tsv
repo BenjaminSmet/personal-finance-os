@@ -17,7 +17,7 @@ Dashboard_Intro	This is the foundation of your finance app. Start by adding your
 Dashboard_AccountsSummary	{0} active accounts	{0} actieve rekeningen
 Dashboard_GoToAccounts	Go to accounts	Naar rekeningen
 Dashboard_OpeningTotal	Total of opening balances (liquid accounts)	Totaal van openingssaldi (beschikbare rekeningen)
-Dashboard_PhaseNote	Balances will include transactions from phase 2 onwards.	Vanaf fase 2 tellen ook transacties mee in de saldi.
+Dashboard_PhaseNote	Opening balances plus every recorded transaction. Savings, investments and the VISA debt are not included here.	Openingssaldi plus alle geregistreerde transacties. Spaargeld, beleggingen en de VISA-schuld tellen hier niet mee.
 Accounts_Title	Accounts	Rekeningen
 Accounts_Add	Add account	Rekening toevoegen
 Accounts_Empty	No accounts yet. Add your first account to get started.	Nog geen rekeningen. Voeg je eerste rekening toe om te beginnen.
@@ -93,5 +93,122 @@ Theme_Light	Light	Licht
 Theme_Dark	Dark	Donker
 Dashboard_Available	Available in current accounts and cash	Beschikbaar op zichtrekeningen en cash
 Dashboard_BasedOnOpening	Based on opening balances	Op basis van openingssaldi
-Accounts_Subtitle	Your accounts and their starting balances	Je rekeningen en hun startsaldo
+Accounts_Subtitle	Your accounts and their current balances	Je rekeningen en hun huidige saldo
 Accounts_ListTitle	All accounts	Alle rekeningen
+Accounts_Reconcile	Reconcile	Afstemmen
+Accounts_NotReconciled	Not reconciled yet	Nog niet afgestemd
+Accounts_ReconciledOn	Reconciled on {0}	Afgestemd op {0}
+Accounts_ReconcileDifference	Difference of {0} with the statement of {1}	Verschil van {0} met het afschrift van {1}
+Reconcile_Title	Reconcile {0}	{0} afstemmen
+Reconcile_Intro	Enter the balance from your bank statement. The app compares it with its own calculation and never changes your balance without asking.	Vul het saldo van je bankafschrift in. De app vergelijkt het met haar eigen berekening en wijzigt je saldo nooit zonder het te vragen.
+Reconcile_Date	Statement date	Datum afschrift
+Reconcile_StatementBalance	Balance on the statement	Saldo op het afschrift
+Reconcile_StatementOwed	Amount owed on the statement	Verschuldigd bedrag op het afschrift
+Reconcile_Matches	The app also calculates {0}. Everything matches.	De app berekent ook {0}. Alles klopt.
+Reconcile_Difference	The app calculates {0}. Difference: {1}.	De app berekent {0}. Verschil: {1}.
+Reconcile_Reason	Reason for an adjustment	Reden voor een correctie
+Reconcile_ReasonPlaceholder	e.g. bank costs not entered	bv. bankkosten niet ingevoerd
+Reconcile_AdjustmentHint	Only needed if you add an adjustment. An adjustment corrects the balance; it is not counted as income or spending. You can also save without one and look for the difference later.	Alleen nodig als je een correctie toevoegt. Een correctie zet het saldo juist; ze telt niet als inkomen of uitgave. Je kunt ook zonder correctie opslaan en het verschil later zoeken.
+Reconcile_Save	Save reconciliation	Afstemming opslaan
+Reconcile_SaveWithAdjustment	Save and add adjustment	Opslaan met correctie
+Reconcile_SavedMatched	Reconciliation saved. The account matches the statement.	Afstemming opgeslagen. De rekening klopt met het afschrift.
+Reconcile_SavedDifference	Reconciliation saved. The difference stays visible until it is resolved.	Afstemming opgeslagen. Het verschil blijft zichtbaar tot het opgelost is.
+Transactions_Title	Transactions	Transacties
+Transactions_Subtitle	Everything you recorded. Transfers between your own accounts are never counted as income or spending.	Alles wat je registreerde. Overschrijvingen tussen je eigen rekeningen tellen nooit als inkomen of uitgave.
+Transactions_NewTransfer	New transfer	Nieuwe overschrijving
+Transactions_Edit	Edit transaction	Transactie wijzigen
+Transactions_EditRow	Edit	Wijzigen
+Transactions_Void	Remove	Verwijderen
+Transactions_VoidBoth	Remove both sides	Beide kanten verwijderen
+Transactions_Voided	Transaction removed. You can undo this.	Transactie verwijderd. Je kunt dit ongedaan maken.
+Transactions_Saved	Saved.	Opgeslagen.
+Transactions_Income	Income	Inkomsten
+Transactions_Expenses	Spending	Uitgaven
+Transactions_Net	Net	Netto
+Transactions_TotalsNote	Refunds lower spending. A VISA purchase counts on its purchase date; paying the card is a transfer.	Terugbetalingen verlagen de uitgaven. Een VISA-aankoop telt op de aankoopdatum; de kaart betalen is een overschrijving.
+Transactions_Empty	No transactions yet. Type one in the Quick Add bar above, for example "Supermarkt 42,80".	Nog geen transacties. Typ er een in de snelinvoer hierboven, bijvoorbeeld "Supermarkt 42,80".
+Transactions_AllAccounts	All accounts	Alle rekeningen
+Transactions_Filter	Account	Rekening
+QuickAdd_Label	Quick Add	Snel toevoegen
+QuickAdd_Placeholder	Quick Add (Ctrl+K): Supermarkt 42,80 · Loon 2400 · Transfer 600 naar gezamenlijke rekening	Snel toevoegen (Ctrl+K): Supermarkt 42,80 · Loon 2400 · Transfer 600 naar gezamenlijke rekening
+QuickAdd_Add	Add	Toevoegen
+QuickAdd_Review	Check	Nakijken
+QuickAdd_ReviewTitle	Check before saving	Nakijken voor het opslaan
+QuickAdd_Confirm	Confirm	Bevestigen
+QuickAdd_Undo	Undo	Ongedaan maken
+QuickAdd_Saved	Saved: {0}	Opgeslagen: {0}
+QuickAdd_Undone	Undone.	Ongedaan gemaakt.
+QuickAddIssue_AmountMissing	No amount found	Geen bedrag gevonden
+QuickAddIssue_AmountAmbiguous	Check how the amount was read	Controleer hoe het bedrag gelezen werd
+QuickAddIssue_SeveralAmounts	Several numbers: the last one was used as the amount	Meerdere getallen: het laatste is als bedrag genomen
+QuickAddIssue_NoAccount	Choose an account	Kies een rekening
+QuickAddIssue_DestinationUnknown	Choose the account to transfer to	Kies de rekening waarnaar je overschrijft
+QuickAddIssue_SameAccount	From and to are the same account	Van en naar zijn dezelfde rekening
+QuickAddIssue_FutureDate	The date is in the future	De datum ligt in de toekomst
+Editor_Type	Type	Soort
+Editor_Amount	Amount	Bedrag
+Editor_Description	Description or payee	Omschrijving of begunstigde
+Editor_Date	Date	Datum
+Editor_Account	Account	Rekening
+Editor_From	From account	Van rekening
+Editor_To	To account	Naar rekening
+Editor_Category	Category	Categorie
+Editor_NoCategory	No category	Geen categorie
+Editor_Save	Save	Opslaan
+Editor_TransferWarning	This is a transfer: both accounts change together.	Dit is een overschrijving: beide rekeningen wijzigen samen.
+TxType_Income	Income	Inkomen
+TxType_Expense	Expense	Uitgave
+TxType_Refund	Refund	Terugbetaling
+TxType_Transfer	Transfer	Overschrijving
+TxType_Adjustment	Adjustment	Correctie
+EntryKind_Income	Income	Inkomen
+EntryKind_Expense	Expense	Uitgave
+EntryKind_CardPurchase	Card purchase	Kaartaankoop
+EntryKind_Refund	Refund	Terugbetaling
+EntryKind_Transfer	Transfer	Overschrijving
+EntryKind_CardSettlement	Card payment	Kaartaflossing
+EntryKind_Adjustment	Adjustment	Correctie
+Date_Today	today	vandaag
+Date_Yesterday	yesterday	gisteren
+CategoryKind_Expense	Spending	Uitgave
+CategoryKind_Income	Income	Inkomen
+Settings_Categories	Categories	Categorieën
+Settings_CategoriesNote	Archived categories stay on earlier transactions but are no longer offered.	Gearchiveerde categorieën blijven op eerdere transacties staan, maar worden niet meer aangeboden.
+Settings_CategoryName	New category	Nieuwe categorie
+Settings_CategoryAdd	Add	Toevoegen
+Settings_CategoryRename	Rename	Hernoemen
+DefaultCategory_Housing	Housing	Wonen
+DefaultCategory_LoanPayment	Loan payment	Lening
+DefaultCategory_Groceries	Groceries	Boodschappen
+DefaultCategory_Transport	Transport	Vervoer
+DefaultCategory_Utilities	Utilities	Nutsvoorzieningen
+DefaultCategory_Insurance	Insurance	Verzekeringen
+DefaultCategory_Subscriptions	Subscriptions	Abonnementen
+DefaultCategory_PersonalCare	Personal care	Persoonlijke verzorging
+DefaultCategory_Leisure	Leisure	Vrije tijd
+DefaultCategory_Shopping	Shopping	Shopping
+DefaultCategory_HomeRenovation	Home renovation	Renovatie
+DefaultCategory_OtherExpenses	Other spending	Andere uitgaven
+DefaultCategory_Salary	Salary	Loon
+DefaultCategory_OtherIncome	Other income	Ander inkomen
+Error_account_archived	This account is archived. Choose an active account.	Deze rekening is gearchiveerd. Kies een actieve rekening.
+Error_transaction_amount_zero	Enter an amount greater than zero.	Vul een bedrag groter dan nul in.
+Error_transaction_amount_negative	Enter the amount without a minus sign; the type sets the direction.	Vul het bedrag in zonder minteken; de soort bepaalt de richting.
+Error_transaction_adjustment_reasonRequired	An adjustment needs a reason.	Een correctie heeft een reden nodig.
+Error_transaction_voided	This transaction was removed. Undo the removal first.	Deze transactie is verwijderd. Maak het verwijderen eerst ongedaan.
+Error_transaction_description_tooLong	The description is too long (max 200 characters).	De omschrijving is te lang (max. 200 tekens).
+Error_transaction_note_tooLong	The note is too long (max 1000 characters).	De notitie is te lang (max. 1000 tekens).
+Error_transaction_wrongKind	This kind of transaction cannot be changed this way.	Dit soort transactie kan zo niet gewijzigd worden.
+Error_transaction_income_liability	Money back on a credit card is a refund, not income.	Geld terug op een kredietkaart is een terugbetaling, geen inkomen.
+Error_transaction_category_kindMismatch	This category does not fit this type of transaction.	Deze categorie past niet bij dit soort transactie.
+Error_transaction_date_beforeOpening	The date is before the account's balance date. That period is already included in the starting balance.	De datum ligt vóór de saldodatum van de rekening. Die periode zit al in het startsaldo.
+Error_transaction_notFound	This transaction no longer exists.	Deze transactie bestaat niet meer.
+Error_transfer_sameAccount	Choose two different accounts.	Kies twee verschillende rekeningen.
+Error_category_name_required	Please enter a name.	Vul een naam in.
+Error_category_name_tooLong	The name is too long (max 60 characters).	De naam is te lang (max. 60 tekens).
+Error_category_name_duplicate	A category with this name already exists.	Er bestaat al een categorie met deze naam.
+Error_category_notFound	This category no longer exists.	Deze categorie bestaat niet meer.
+Error_category_archived	This category is archived. Choose another one.	Deze categorie is gearchiveerd. Kies een andere.
+Error_undo_stale	This can no longer be undone because it was changed since. Nothing was changed.	Dit kan niet meer ongedaan gemaakt worden omdat het intussen gewijzigd is. Er is niets gewijzigd.
+Error_quickAdd_noAccount	Choose an account.	Kies een rekening.
+Error_quickAdd_noDestination	Choose the account to transfer to.	Kies de rekening waarnaar je overschrijft.

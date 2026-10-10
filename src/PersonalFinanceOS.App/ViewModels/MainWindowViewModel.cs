@@ -33,13 +33,16 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 {
     public MainWindowViewModel(
         DashboardViewModel dashboard,
+        TransactionsViewModel transactions,
         AccountsViewModel accounts,
-        SettingsViewModel settings)
+        SettingsViewModel settings,
+        QuickAddViewModel quickAdd)
     {
+        QuickAdd = quickAdd;
         NavItems =
         [
             new NavItem("Nav_Dashboard", Icons.Dashboard, dashboard),
-            new NavItem("Nav_Transactions", Icons.Transactions, new PlaceholderViewModel("Nav_Transactions", 2)),
+            new NavItem("Nav_Transactions", Icons.Transactions, transactions),
             new NavItem("Nav_Accounts", Icons.Accounts, accounts),
             new NavItem("Nav_Budgets", Icons.Budgets, new PlaceholderViewModel("Nav_Budgets", 5)),
             new NavItem("Nav_Forecasts", Icons.Forecasts, new PlaceholderViewModel("Nav_Forecasts", 4)),
@@ -55,6 +58,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase
     }
 
     public ObservableCollection<NavItem> NavItems { get; }
+
+    /// <summary>Quick Add is on every page (spec §7, §22).</summary>
+    public QuickAddViewModel QuickAdd { get; }
 
     [ObservableProperty]
     private NavItem _selectedItem;

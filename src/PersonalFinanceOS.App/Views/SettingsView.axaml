@@ -41,6 +41,52 @@
       </StackPanel>
     </Border>
 
+    <!-- Categories -->
+    <Border Classes="glass">
+      <StackPanel Spacing="14">
+        <TextBlock Classes="title" Text="{l:T Settings_Categories}" />
+        <TextBlock Classes="secondary" Text="{l:T Settings_CategoriesNote}" TextWrapping="Wrap" />
+        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+          <TextBox Text="{Binding NewCategoryName}" MaxLength="60" PlaceholderText="{l:T Settings_CategoryName}"
+                   AutomationProperties.Name="{l:T Settings_CategoryName}" />
+          <ComboBox Grid.Column="1" Margin="10,0,0,0" MinWidth="150" ItemsSource="{Binding CategoryKinds}"
+                    SelectedItem="{Binding NewCategoryKind}" IsEnabled="{Binding !IsRenaming}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate DataType="vm:CategoryKindOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+          <Button Grid.Column="2" Margin="10,0,0,0" Classes="primary" Content="{l:T Settings_CategoryAdd}"
+                  Command="{Binding SaveCategoryCommand}" IsVisible="{Binding !IsRenaming}" />
+          <Button Grid.Column="2" Margin="10,0,0,0" Classes="primary" Content="{l:T Settings_CategoryRename}"
+                  Command="{Binding SaveCategoryCommand}" IsVisible="{Binding IsRenaming}" />
+          <Button Grid.Column="3" Margin="8,0,0,0" Content="{l:T Accounts_Cancel}" Command="{Binding CancelCategoryEditCommand}"
+                  IsVisible="{Binding IsRenaming}" />
+        </Grid>
+        <Border Classes="error" IsVisible="{Binding CategoryError, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding CategoryError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+        </Border>
+        <ItemsControl ItemsSource="{Binding CategoryRows}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:CategoryRowViewModel">
+              <StackPanel>
+                <Grid ColumnDefinitions="*,Auto,Auto" Margin="4,6">
+                  <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Name}" />
+                    <Border Classes="badge"><TextBlock Classes="caption" Text="{Binding KindName}" /></Border>
+                  </StackPanel>
+                  <Button Grid.Column="1" Content="{l:T Settings_CategoryRename}" Padding="12,5" FontSize="13"
+                          Command="{Binding RenameCommand}" />
+                  <Button Grid.Column="2" Margin="6,0,0,0" Content="{l:T Accounts_Archive}" Padding="12,5" FontSize="13"
+                          Command="{Binding ArchiveCommand}" />
+                </Grid>
+                <Border Classes="separator" IsVisible="{Binding !IsLast}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
     <!-- Data -->
     <Border Classes="glass">
       <StackPanel Spacing="14">

@@ -24,7 +24,7 @@
   <data name="Dashboard_AccountsSummary" xml:space="preserve"><value>{0} active accounts</value></data>
   <data name="Dashboard_GoToAccounts" xml:space="preserve"><value>Go to accounts</value></data>
   <data name="Dashboard_OpeningTotal" xml:space="preserve"><value>Total of opening balances (liquid accounts)</value></data>
-  <data name="Dashboard_PhaseNote" xml:space="preserve"><value>Balances will include transactions from phase 2 onwards.</value></data>
+  <data name="Dashboard_PhaseNote" xml:space="preserve"><value>Opening balances plus every recorded transaction. Savings, investments and the VISA debt are not included here.</value></data>
   <data name="Accounts_Title" xml:space="preserve"><value>Accounts</value></data>
   <data name="Accounts_Add" xml:space="preserve"><value>Add account</value></data>
   <data name="Accounts_Empty" xml:space="preserve"><value>No accounts yet. Add your first account to get started.</value></data>
@@ -100,6 +100,123 @@
   <data name="Theme_Dark" xml:space="preserve"><value>Dark</value></data>
   <data name="Dashboard_Available" xml:space="preserve"><value>Available in current accounts and cash</value></data>
   <data name="Dashboard_BasedOnOpening" xml:space="preserve"><value>Based on opening balances</value></data>
-  <data name="Accounts_Subtitle" xml:space="preserve"><value>Your accounts and their starting balances</value></data>
+  <data name="Accounts_Subtitle" xml:space="preserve"><value>Your accounts and their current balances</value></data>
   <data name="Accounts_ListTitle" xml:space="preserve"><value>All accounts</value></data>
+  <data name="Accounts_Reconcile" xml:space="preserve"><value>Reconcile</value></data>
+  <data name="Accounts_NotReconciled" xml:space="preserve"><value>Not reconciled yet</value></data>
+  <data name="Accounts_ReconciledOn" xml:space="preserve"><value>Reconciled on {0}</value></data>
+  <data name="Accounts_ReconcileDifference" xml:space="preserve"><value>Difference of {0} with the statement of {1}</value></data>
+  <data name="Reconcile_Title" xml:space="preserve"><value>Reconcile {0}</value></data>
+  <data name="Reconcile_Intro" xml:space="preserve"><value>Enter the balance from your bank statement. The app compares it with its own calculation and never changes your balance without asking.</value></data>
+  <data name="Reconcile_Date" xml:space="preserve"><value>Statement date</value></data>
+  <data name="Reconcile_StatementBalance" xml:space="preserve"><value>Balance on the statement</value></data>
+  <data name="Reconcile_StatementOwed" xml:space="preserve"><value>Amount owed on the statement</value></data>
+  <data name="Reconcile_Matches" xml:space="preserve"><value>The app also calculates {0}. Everything matches.</value></data>
+  <data name="Reconcile_Difference" xml:space="preserve"><value>The app calculates {0}. Difference: {1}.</value></data>
+  <data name="Reconcile_Reason" xml:space="preserve"><value>Reason for an adjustment</value></data>
+  <data name="Reconcile_ReasonPlaceholder" xml:space="preserve"><value>e.g. bank costs not entered</value></data>
+  <data name="Reconcile_AdjustmentHint" xml:space="preserve"><value>Only needed if you add an adjustment. An adjustment corrects the balance; it is not counted as income or spending. You can also save without one and look for the difference later.</value></data>
+  <data name="Reconcile_Save" xml:space="preserve"><value>Save reconciliation</value></data>
+  <data name="Reconcile_SaveWithAdjustment" xml:space="preserve"><value>Save and add adjustment</value></data>
+  <data name="Reconcile_SavedMatched" xml:space="preserve"><value>Reconciliation saved. The account matches the statement.</value></data>
+  <data name="Reconcile_SavedDifference" xml:space="preserve"><value>Reconciliation saved. The difference stays visible until it is resolved.</value></data>
+  <data name="Transactions_Title" xml:space="preserve"><value>Transactions</value></data>
+  <data name="Transactions_Subtitle" xml:space="preserve"><value>Everything you recorded. Transfers between your own accounts are never counted as income or spending.</value></data>
+  <data name="Transactions_NewTransfer" xml:space="preserve"><value>New transfer</value></data>
+  <data name="Transactions_Edit" xml:space="preserve"><value>Edit transaction</value></data>
+  <data name="Transactions_EditRow" xml:space="preserve"><value>Edit</value></data>
+  <data name="Transactions_Void" xml:space="preserve"><value>Remove</value></data>
+  <data name="Transactions_VoidBoth" xml:space="preserve"><value>Remove both sides</value></data>
+  <data name="Transactions_Voided" xml:space="preserve"><value>Transaction removed. You can undo this.</value></data>
+  <data name="Transactions_Saved" xml:space="preserve"><value>Saved.</value></data>
+  <data name="Transactions_Income" xml:space="preserve"><value>Income</value></data>
+  <data name="Transactions_Expenses" xml:space="preserve"><value>Spending</value></data>
+  <data name="Transactions_Net" xml:space="preserve"><value>Net</value></data>
+  <data name="Transactions_TotalsNote" xml:space="preserve"><value>Refunds lower spending. A VISA purchase counts on its purchase date; paying the card is a transfer.</value></data>
+  <data name="Transactions_Empty" xml:space="preserve"><value>No transactions yet. Type one in the Quick Add bar above, for example "Supermarkt 42,80".</value></data>
+  <data name="Transactions_AllAccounts" xml:space="preserve"><value>All accounts</value></data>
+  <data name="Transactions_Filter" xml:space="preserve"><value>Account</value></data>
+  <data name="QuickAdd_Label" xml:space="preserve"><value>Quick Add</value></data>
+  <data name="QuickAdd_Placeholder" xml:space="preserve"><value>Quick Add (Ctrl+K): Supermarkt 42,80 · Loon 2400 · Transfer 600 naar gezamenlijke rekening</value></data>
+  <data name="QuickAdd_Add" xml:space="preserve"><value>Add</value></data>
+  <data name="QuickAdd_Review" xml:space="preserve"><value>Check</value></data>
+  <data name="QuickAdd_ReviewTitle" xml:space="preserve"><value>Check before saving</value></data>
+  <data name="QuickAdd_Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="QuickAdd_Undo" xml:space="preserve"><value>Undo</value></data>
+  <data name="QuickAdd_Saved" xml:space="preserve"><value>Saved: {0}</value></data>
+  <data name="QuickAdd_Undone" xml:space="preserve"><value>Undone.</value></data>
+  <data name="QuickAddIssue_AmountMissing" xml:space="preserve"><value>No amount found</value></data>
+  <data name="QuickAddIssue_AmountAmbiguous" xml:space="preserve"><value>Check how the amount was read</value></data>
+  <data name="QuickAddIssue_SeveralAmounts" xml:space="preserve"><value>Several numbers: the last one was used as the amount</value></data>
+  <data name="QuickAddIssue_NoAccount" xml:space="preserve"><value>Choose an account</value></data>
+  <data name="QuickAddIssue_DestinationUnknown" xml:space="preserve"><value>Choose the account to transfer to</value></data>
+  <data name="QuickAddIssue_SameAccount" xml:space="preserve"><value>From and to are the same account</value></data>
+  <data name="QuickAddIssue_FutureDate" xml:space="preserve"><value>The date is in the future</value></data>
+  <data name="Editor_Type" xml:space="preserve"><value>Type</value></data>
+  <data name="Editor_Amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="Editor_Description" xml:space="preserve"><value>Description or payee</value></data>
+  <data name="Editor_Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Editor_Account" xml:space="preserve"><value>Account</value></data>
+  <data name="Editor_From" xml:space="preserve"><value>From account</value></data>
+  <data name="Editor_To" xml:space="preserve"><value>To account</value></data>
+  <data name="Editor_Category" xml:space="preserve"><value>Category</value></data>
+  <data name="Editor_NoCategory" xml:space="preserve"><value>No category</value></data>
+  <data name="Editor_Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Editor_TransferWarning" xml:space="preserve"><value>This is a transfer: both accounts change together.</value></data>
+  <data name="TxType_Income" xml:space="preserve"><value>Income</value></data>
+  <data name="TxType_Expense" xml:space="preserve"><value>Expense</value></data>
+  <data name="TxType_Refund" xml:space="preserve"><value>Refund</value></data>
+  <data name="TxType_Transfer" xml:space="preserve"><value>Transfer</value></data>
+  <data name="TxType_Adjustment" xml:space="preserve"><value>Adjustment</value></data>
+  <data name="EntryKind_Income" xml:space="preserve"><value>Income</value></data>
+  <data name="EntryKind_Expense" xml:space="preserve"><value>Expense</value></data>
+  <data name="EntryKind_CardPurchase" xml:space="preserve"><value>Card purchase</value></data>
+  <data name="EntryKind_Refund" xml:space="preserve"><value>Refund</value></data>
+  <data name="EntryKind_Transfer" xml:space="preserve"><value>Transfer</value></data>
+  <data name="EntryKind_CardSettlement" xml:space="preserve"><value>Card payment</value></data>
+  <data name="EntryKind_Adjustment" xml:space="preserve"><value>Adjustment</value></data>
+  <data name="Date_Today" xml:space="preserve"><value>today</value></data>
+  <data name="Date_Yesterday" xml:space="preserve"><value>yesterday</value></data>
+  <data name="CategoryKind_Expense" xml:space="preserve"><value>Spending</value></data>
+  <data name="CategoryKind_Income" xml:space="preserve"><value>Income</value></data>
+  <data name="Settings_Categories" xml:space="preserve"><value>Categories</value></data>
+  <data name="Settings_CategoriesNote" xml:space="preserve"><value>Archived categories stay on earlier transactions but are no longer offered.</value></data>
+  <data name="Settings_CategoryName" xml:space="preserve"><value>New category</value></data>
+  <data name="Settings_CategoryAdd" xml:space="preserve"><value>Add</value></data>
+  <data name="Settings_CategoryRename" xml:space="preserve"><value>Rename</value></data>
+  <data name="DefaultCategory_Housing" xml:space="preserve"><value>Housing</value></data>
+  <data name="DefaultCategory_LoanPayment" xml:space="preserve"><value>Loan payment</value></data>
+  <data name="DefaultCategory_Groceries" xml:space="preserve"><value>Groceries</value></data>
+  <data name="DefaultCategory_Transport" xml:space="preserve"><value>Transport</value></data>
+  <data name="DefaultCategory_Utilities" xml:space="preserve"><value>Utilities</value></data>
+  <data name="DefaultCategory_Insurance" xml:space="preserve"><value>Insurance</value></data>
+  <data name="DefaultCategory_Subscriptions" xml:space="preserve"><value>Subscriptions</value></data>
+  <data name="DefaultCategory_PersonalCare" xml:space="preserve"><value>Personal care</value></data>
+  <data name="DefaultCategory_Leisure" xml:space="preserve"><value>Leisure</value></data>
+  <data name="DefaultCategory_Shopping" xml:space="preserve"><value>Shopping</value></data>
+  <data name="DefaultCategory_HomeRenovation" xml:space="preserve"><value>Home renovation</value></data>
+  <data name="DefaultCategory_OtherExpenses" xml:space="preserve"><value>Other spending</value></data>
+  <data name="DefaultCategory_Salary" xml:space="preserve"><value>Salary</value></data>
+  <data name="DefaultCategory_OtherIncome" xml:space="preserve"><value>Other income</value></data>
+  <data name="Error_account_archived" xml:space="preserve"><value>This account is archived. Choose an active account.</value></data>
+  <data name="Error_transaction_amount_zero" xml:space="preserve"><value>Enter an amount greater than zero.</value></data>
+  <data name="Error_transaction_amount_negative" xml:space="preserve"><value>Enter the amount without a minus sign; the type sets the direction.</value></data>
+  <data name="Error_transaction_adjustment_reasonRequired" xml:space="preserve"><value>An adjustment needs a reason.</value></data>
+  <data name="Error_transaction_voided" xml:space="preserve"><value>This transaction was removed. Undo the removal first.</value></data>
+  <data name="Error_transaction_description_tooLong" xml:space="preserve"><value>The description is too long (max 200 characters).</value></data>
+  <data name="Error_transaction_note_tooLong" xml:space="preserve"><value>The note is too long (max 1000 characters).</value></data>
+  <data name="Error_transaction_wrongKind" xml:space="preserve"><value>This kind of transaction cannot be changed this way.</value></data>
+  <data name="Error_transaction_income_liability" xml:space="preserve"><value>Money back on a credit card is a refund, not income.</value></data>
+  <data name="Error_transaction_category_kindMismatch" xml:space="preserve"><value>This category does not fit this type of transaction.</value></data>
+  <data name="Error_transaction_date_beforeOpening" xml:space="preserve"><value>The date is before the account's balance date. That period is already included in the starting balance.</value></data>
+  <data name="Error_transaction_notFound" xml:space="preserve"><value>This transaction no longer exists.</value></data>
+  <data name="Error_transfer_sameAccount" xml:space="preserve"><value>Choose two different accounts.</value></data>
+  <data name="Error_category_name_required" xml:space="preserve"><value>Please enter a name.</value></data>
+  <data name="Error_category_name_tooLong" xml:space="preserve"><value>The name is too long (max 60 characters).</value></data>
+  <data name="Error_category_name_duplicate" xml:space="preserve"><value>A category with this name already exists.</value></data>
+  <data name="Error_category_notFound" xml:space="preserve"><value>This category no longer exists.</value></data>
+  <data name="Error_category_archived" xml:space="preserve"><value>This category is archived. Choose another one.</value></data>
+  <data name="Error_undo_stale" xml:space="preserve"><value>This can no longer be undone because it was changed since. Nothing was changed.</value></data>
+  <data name="Error_quickAdd_noAccount" xml:space="preserve"><value>Choose an account.</value></data>
+  <data name="Error_quickAdd_noDestination" xml:space="preserve"><value>Choose the account to transfer to.</value></data>
 </root>

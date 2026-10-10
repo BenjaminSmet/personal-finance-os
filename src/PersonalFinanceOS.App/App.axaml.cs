@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PersonalFinanceOS.App.Localization;
 using PersonalFinanceOS.App.ViewModels;
 using PersonalFinanceOS.App.Views;
+using PersonalFinanceOS.Application.Categories;
 using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Infrastructure;
 using PersonalFinanceOS.Infrastructure.Database;
@@ -77,6 +78,10 @@ public partial class App : Avalonia.Application
         var language = Task.Run(() => settings.GetLanguageAsync()).GetAwaiter().GetResult();
         Loc.Instance.SetLanguage(language);
         ThemeManager.Apply(Task.Run(() => settings.GetThemeAsync()).GetAwaiter().GetResult());
+
+        // Starter categories, once, in the language the user has now. They are ordinary, editable data afterwards.
+        var categories = _services.GetRequiredService<CategoryService>();
+        Task.Run(() => categories.EnsureDefaultsAsync(DefaultCategories.Localized())).GetAwaiter().GetResult();
 
         var viewModel = _services.GetRequiredService<MainWindowViewModel>();
         var window = new MainWindow { DataContext = viewModel };

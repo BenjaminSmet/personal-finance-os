@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.TransactionEditorView"
+             x:DataType="vm:TransactionEditorViewModel">
+  <!-- Shared by the Quick Add preview, new transfers and corrections. -->
+  <StackPanel Spacing="14">
+    <Border Classes="warning" IsVisible="{Binding Warning, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding Warning, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+    </Border>
+
+    <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,14,Auto,14,Auto">
+      <StackPanel Grid.Row="0" Grid.Column="0">
+        <TextBlock Classes="fieldLabel" Text="{l:T Editor_Type}" />
+        <ComboBox ItemsSource="{Binding TypeOptions}" SelectedItem="{Binding SelectedType}" HorizontalAlignment="Stretch"
+                  AutomationProperties.Name="{l:T Editor_Type}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate DataType="vm:TypeOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+      <StackPanel Grid.Row="0" Grid.Column="2">
+        <TextBlock Classes="fieldLabel" Text="{l:T Editor_Amount}" />
+        <TextBox Text="{Binding AmountText}" PlaceholderText="0,00" FontSize="16" AutomationProperties.Name="{l:T Editor_Amount}" />
+        <Border Classes="warning" Margin="0,8,0,0" IsVisible="{Binding AmountHint, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding AmountHint, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+        </Border>
+      </StackPanel>
+
+      <StackPanel Grid.Row="2" Grid.Column="0">
+        <TextBlock Classes="fieldLabel" Text="{l:T Editor_Description}" />
+        <TextBox Text="{Binding Description}" MaxLength="200" AutomationProperties.Name="{l:T Editor_Description}" />
+      </StackPanel>
+      <StackPanel Grid.Row="2" Grid.Column="2">
+        <TextBlock Classes="fieldLabel" Text="{l:T Editor_Date}" />
+        <CalendarDatePicker SelectedDate="{Binding Date}" HorizontalAlignment="Stretch" />
+      </StackPanel>
+
+      <StackPanel Grid.Row="4" Grid.Column="0">
+        <TextBlock Classes="fieldLabel" Text="{Binding AccountLabel}" />
+        <ComboBox ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedAccount}" HorizontalAlignment="Stretch"
+                  AutomationProperties.Name="{Binding AccountLabel}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+      <StackPanel Grid.Row="4" Grid.Column="2" IsVisible="{Binding IsTransfer}">
+        <TextBlock Classes="fieldLabel" Text="{l:T Editor_To}" />
+        <ComboBox ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding SelectedDestination}" HorizontalAlignment="Stretch"
+                  AutomationProperties.Name="{l:T Editor_To}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+      <StackPanel Grid.Row="4" Grid.Column="2" IsVisible="{Binding ShowCategory}">
+        <TextBlock Classes="fieldLabel" Text="{l:T Editor_Category}" />
+        <ComboBox ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding SelectedCategory}" HorizontalAlignment="Stretch"
+                  AutomationProperties.Name="{l:T Editor_Category}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate DataType="vm:CategoryOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+    </Grid>
+
+    <Border Classes="error" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding Error, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+    </Border>
+  </StackPanel>
+</UserControl>

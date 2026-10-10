@@ -4,10 +4,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PersonalFinanceOS.App.Localization;
 using PersonalFinanceOS.Application.Accounts;
+using PersonalFinanceOS.Application.Ledger;
 using PersonalFinanceOS.Application.Parsing;
 using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Ledger;
 
 namespace PersonalFinanceOS.App.ViewModels;
 
@@ -17,9 +19,19 @@ public sealed record AccountTypeOption(AccountType Type, string Name)
         Enum.GetValues<AccountType>().Select(t => new AccountTypeOption(t, Loc.T("AccountType_" + t))).ToList();
 }
 
-public sealed partial class AccountRowViewModel(Account account, Func<AccountRowViewModel, Task> archive) : ViewModelBase
+public sealed partial class AccountRowViewModel(
+    Account account,
+    Money balance,
+    ReconciliationRecord? lastReconciliation,
+    Func<AccountRowViewModel, Task> archive,
+    Func<AccountRowViewModel, Task>? reconcile = null) : ViewModelBase
 {
     public Account Account { get; } = account;
+
+    /// <summary>Opening balance plus all recorded transactions (spec §5), from the ledger service.</summary>
+    public Money Balance { get; } = balance;
+
+    public ReconciliationRecord? LastReconciliation { get; } = lastReconciliation;
 
     /// <summary>Last row in the grouped list (no separator below it).</summary>
     public bool IsLast { get; set; }
@@ -33,32 +45,63 @@ public sealed partial class AccountRowViewModel(Account account, Func<AccountRow
     public bool IsArchived => Account.Status == AccountStatus.Archived;
     public bool IsLiability => Account.Type.IsLiability();
 
-    // Phase 1 has no transactions yet, so the shown balance is the opening balance.
-    public string BalanceText => Account.OpeningBalance.Format(Loc.Instance.Culture);
+    public string BalanceText => Balance.Format(Loc.Instance.Culture);
 
     public string SinceText => Loc.Format("Accounts_Since", Account.OpeningDate.ToString("d", Loc.Instance.Culture));
 
     public bool HasPartialShare => !Account.OwnershipShare.IsFull;
 
     public string ShareText => HasPartialShare
-        ? $"{Account.OwnershipShare.Format(Loc.Instance.Culture)} · {Loc.Format("Accounts_YourPart", Account.PersonalPart(Account.OpeningBalance).Format(Loc.Instance.Culture))}"
+        ? $"{Account.OwnershipShare.Format(Loc.Instance.Culture)} · {Loc.Format("Accounts_YourPart", Account.PersonalPart(Balance).Format(Loc.Instance.Culture))}"
         : string.Empty;
+
+    /// <summary>Reconciliation state in words, so it never depends on colour (spec §20).</summary>
+    public string ReconciliationText => LastReconciliation switch
+    {
+        null => Loc.T("Accounts_NotReconciled"),
+        { IsMatched: true } r => Loc.Format("Accounts_ReconciledOn", r.StatementDate.ToString("d", Loc.Instance.Culture)),
+        { } r => Loc.Format("Accounts_ReconcileDifference", r.Difference.Format(Loc.Instance.Culture), r.StatementDate.ToString("d", Loc.Instance.Culture)),
+    };
+
+    public bool HasReconciliationDifference => LastReconciliation is { IsMatched: false };
+
+    public bool CanReconcile => reconcile is not null && !IsArchived;
 
     [RelayCommand]
     private Task Archive() => archive(this);
+
+    [RelayCommand]
+    private Task Reconcile() => reconcile?.Invoke(this) ?? Task.CompletedTask;
 }
 
 public sealed partial class AccountsViewModel : PageViewModel
 {
     private readonly AccountService _accounts;
     private readonly AppSettingsService _settings;
+    private readonly LedgerService _ledger;
+    private readonly ReconciliationService _reconciliation;
     private readonly IClock _clock;
+    private bool _active;
 
-    public AccountsViewModel(AccountService accounts, AppSettingsService settings, IClock clock)
+    public AccountsViewModel(
+        AccountService accounts,
+        AppSettingsService settings,
+        LedgerService ledger,
+        ReconciliationService reconciliation,
+        IClock clock)
     {
         _accounts = accounts;
         _settings = settings;
+        _ledger = ledger;
+        _reconciliation = reconciliation;
         _clock = clock;
+        ledger.Changed += (_, _) => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+        {
+            if (_active)
+            {
+                _ = ReloadAsync();
+            }
+        });
         TypeOptions = AccountTypeOption.All();
         _newType = TypeOptions[0];
         _newOpeningDate = clock.Today.ToDateTime(TimeOnly.MinValue);
@@ -109,7 +152,51 @@ public sealed partial class AccountsViewModel : PageViewModel
 
     public string BalanceLabel => Loc.T(IsCreditCard ? "Accounts_OutstandingBalance" : "Accounts_OpeningBalance");
 
-    public override Task ActivateAsync() => ReloadAsync();
+    // ===== Reconciliation (spec §5) =====
+
+    [ObservableProperty]
+    private AccountRowViewModel? _reconcileRow;
+
+    [ObservableProperty]
+    private DateTime? _reconcileDate;
+
+    [ObservableProperty]
+    private string _reconcileBalanceText = string.Empty;
+
+    [ObservableProperty]
+    private string? _reconcileReason;
+
+    [ObservableProperty]
+    private string? _reconcilePreview;
+
+    [ObservableProperty]
+    private bool _reconcileHasDifference;
+
+    [ObservableProperty]
+    private string? _reconcileError;
+
+    public bool IsReconcileOpen => ReconcileRow is not null;
+
+    public string ReconcileTitle => ReconcileRow is null ? string.Empty : Loc.Format("Reconcile_Title", ReconcileRow.Name);
+
+    public string ReconcileBalanceLabel => Loc.T(ReconcileRow?.IsLiability == true ? "Reconcile_StatementOwed" : "Reconcile_StatementBalance");
+
+    partial void OnReconcileRowChanged(AccountRowViewModel? value)
+    {
+        OnPropertyChanged(nameof(IsReconcileOpen));
+        OnPropertyChanged(nameof(ReconcileTitle));
+        OnPropertyChanged(nameof(ReconcileBalanceLabel));
+    }
+
+    partial void OnReconcileDateChanged(DateTime? value) => _ = UpdateReconcilePreviewAsync();
+
+    partial void OnReconcileBalanceTextChanged(string value) => _ = UpdateReconcilePreviewAsync();
+
+    public override Task ActivateAsync()
+    {
+        _active = true;
+        return ReloadAsync();
+    }
 
     partial void OnShowArchivedChanged(bool value) => _ = ReloadAsync();
 
@@ -135,6 +222,7 @@ public sealed partial class AccountsViewModel : PageViewModel
     [RelayCommand]
     private void OpenForm()
     {
+        ReconcileRow = null;
         ResetForm();
         IsFormOpen = true;
     }
@@ -203,13 +291,113 @@ public sealed partial class AccountsViewModel : PageViewModel
         await ReloadAsync();
     }
 
+    private Task OpenReconcileAsync(AccountRowViewModel row)
+    {
+        IsFormOpen = false;
+        StatusMessage = null;
+        ReconcileError = null;
+        ReconcileReason = null;
+        ReconcilePreview = null;
+        ReconcileHasDifference = false;
+        ReconcileBalanceText = string.Empty;
+        ReconcileRow = row;
+        ReconcileDate = _clock.Today.ToDateTime(TimeOnly.MinValue);
+        return Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private void CancelReconcile() => ReconcileRow = null;
+
+    [RelayCommand]
+    private Task SaveReconciliationAsync() => SaveReconcileAsync(addAdjustment: false);
+
+    [RelayCommand]
+    private Task SaveReconciliationWithAdjustmentAsync() => SaveReconcileAsync(addAdjustment: true);
+
+    private async Task SaveReconcileAsync(bool addAdjustment)
+    {
+        if (!TryReadStatement(out var row, out var date, out var statement))
+        {
+            return;
+        }
+
+        try
+        {
+            var record = await _reconciliation.RecordAsync(row.Account.Id, date, statement, addAdjustment, ReconcileReason);
+            StatusMessage = Loc.T(record.IsMatched ? "Reconcile_SavedMatched" : "Reconcile_SavedDifference");
+        }
+        catch (DomainValidationException ex)
+        {
+            ReconcileError = Loc.Error(ex.Code);
+            return;
+        }
+
+        ReconcileRow = null;
+        await ReloadAsync();
+    }
+
+    private async Task UpdateReconcilePreviewAsync()
+    {
+        ReconcileError = null;
+        if (!TryReadStatement(out var row, out var date, out var statement, quiet: true))
+        {
+            ReconcilePreview = null;
+            ReconcileHasDifference = false;
+            return;
+        }
+
+        try
+        {
+            var preview = await _reconciliation.PreviewAsync(row.Account.Id, date, statement);
+            var culture = Loc.Instance.Culture;
+            ReconcileHasDifference = !preview.Difference.IsZero;
+            ReconcilePreview = ReconcileHasDifference
+                ? Loc.Format("Reconcile_Difference", preview.Calculated.Format(culture), preview.Difference.Format(culture))
+                : Loc.Format("Reconcile_Matches", preview.Calculated.Format(culture));
+        }
+        catch (DomainValidationException ex)
+        {
+            ReconcilePreview = null;
+            ReconcileError = Loc.Error(ex.Code);
+        }
+    }
+
+    private bool TryReadStatement(out AccountRowViewModel row, out DateOnly date, out Money statement, bool quiet = false)
+    {
+        row = ReconcileRow!;
+        date = default;
+        statement = default;
+        var parsed = AmountParser.Parse(ReconcileBalanceText);
+        if (ReconcileRow is null || ReconcileDate is not { } picked || !parsed.Success)
+        {
+            if (!quiet)
+            {
+                ReconcileError = Loc.Error(ReconcileDate is null ? "date.required" : "amount.invalid");
+            }
+
+            return false;
+        }
+
+        date = DateOnly.FromDateTime(picked);
+
+        // For a credit card the statement shows what is owed; the ledger stores that as a negative balance.
+        statement = ReconcileRow.IsLiability ? parsed.Value.Abs().Negate() : parsed.Value;
+        return true;
+    }
+
     private async Task ReloadAsync()
     {
         var list = await _accounts.ListAsync(ShowArchived);
+        var balances = await _ledger.GetBalancesAsync();
+        var reconciled = await _reconciliation.LatestAsync();
         Rows.Clear();
         for (var i = 0; i < list.Count; i++)
         {
-            Rows.Add(new AccountRowViewModel(list[i], ArchiveAsync) { IsLast = i == list.Count - 1 });
+            var account = list[i];
+            Rows.Add(new AccountRowViewModel(account, balances[account.Id], reconciled.GetValueOrDefault(account.Id), ArchiveAsync, OpenReconcileAsync)
+            {
+                IsLast = i == list.Count - 1,
+            });
         }
 
         OnPropertyChanged(nameof(IsEmpty));
@@ -233,6 +421,8 @@ public sealed partial class AccountsViewModel : PageViewModel
         TypeOptions = AccountTypeOption.All();
         NewType = TypeOptions.First(o => o.Type == selected);
         OnPropertyChanged(nameof(BalanceLabel));
+        OnPropertyChanged(nameof(ReconcileTitle));
+        OnPropertyChanged(nameof(ReconcileBalanceLabel));
         StatusMessage = null;
         FormError = null;
         _ = ReloadAsync();

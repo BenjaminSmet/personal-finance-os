@@ -69,3 +69,9 @@ public sealed class ExtendedMigrationSource(params string[] extraSql) : IMigrati
         return list;
     }
 }
+
+/// <summary>Only the first <paramref name="count"/> real migrations: a database as an older app version left it.</summary>
+public sealed class OlderMigrationSource(int count) : IMigrationSource
+{
+    public IReadOnlyList<Migration> GetMigrations() => new EmbeddedMigrationSource().GetMigrations().Take(count).ToList();
+}

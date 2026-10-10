@@ -2,12 +2,34 @@ using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PersonalFinanceOS.App.Localization;
+using PersonalFinanceOS.Application.Categories;
 using PersonalFinanceOS.Application.Settings;
+using PersonalFinanceOS.Domain;
+using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Infrastructure;
 
 namespace PersonalFinanceOS.App.ViewModels;
 
 public sealed record LanguageOption(AppLanguage Language, string Name);
+
+public sealed record CategoryKindOption(CategoryKind Kind, string Name);
+
+public sealed partial class CategoryRowViewModel(Category category, Func<CategoryRowViewModel, Task> rename, Func<CategoryRowViewModel, Task> archive) : ViewModelBase
+{
+    public Category Category { get; } = category;
+
+    public string Name => Category.Name;
+
+    public string KindName => Loc.T("CategoryKind_" + Category.Kind);
+
+    public bool IsLast { get; set; }
+
+    [RelayCommand]
+    private Task Rename() => rename(this);
+
+    [RelayCommand]
+    private Task Archive() => archive(this);
+}
 
 public sealed partial class ThemeOption : ObservableObject
 {
@@ -25,11 +47,16 @@ public sealed partial class ThemeOption : ObservableObject
 public sealed partial class SettingsViewModel : PageViewModel
 {
     private readonly AppSettingsService _settings;
+    private readonly CategoryService _categories;
     private bool _loading;
+    private CategoryRowViewModel? _renaming;
 
-    public SettingsViewModel(AppSettingsService settings, AppDataPaths paths, AppRuntimeInfo runtime)
+    public SettingsViewModel(AppSettingsService settings, CategoryService categories, AppDataPaths paths, AppRuntimeInfo runtime)
     {
         _settings = settings;
+        _categories = categories;
+        CategoryKinds = CategoryKindOptions();
+        _newCategoryKind = CategoryKinds[0];
         DataFolder = paths.Root;
         AppVersion = runtime.AppVersion;
         SchemaVersion = runtime.SchemaVersion;
@@ -56,13 +83,102 @@ public sealed partial class SettingsViewModel : PageViewModel
     [ObservableProperty]
     private ThemeOption _selectedTheme;
 
-    public override Task ActivateAsync()
+    // ===== Categories (spec §13: create, rename, archive) =====
+
+    public System.Collections.ObjectModel.ObservableCollection<CategoryRowViewModel> CategoryRows { get; } = [];
+
+    [ObservableProperty]
+    private IReadOnlyList<CategoryKindOption> _categoryKinds;
+
+    [ObservableProperty]
+    private string _newCategoryName = string.Empty;
+
+    [ObservableProperty]
+    private CategoryKindOption _newCategoryKind;
+
+    [ObservableProperty]
+    private string? _categoryError;
+
+    [ObservableProperty]
+    private bool _isRenaming;
+
+    public override async Task ActivateAsync()
     {
         _loading = true;
         SelectedLanguage = Languages.First(l => l.Language == Loc.Instance.Language);
         SelectedTheme = Themes.First(t => t.Theme == ThemeManager.Current);
         _loading = false;
+        await ReloadCategoriesAsync();
+    }
+
+    [RelayCommand]
+    private async Task SaveCategoryAsync()
+    {
+        CategoryError = null;
+        try
+        {
+            if (_renaming is { } row)
+            {
+                await _categories.RenameAsync(row.Category.Id, NewCategoryName);
+            }
+            else
+            {
+                await _categories.CreateAsync(NewCategoryName, NewCategoryKind.Kind);
+            }
+        }
+        catch (DomainValidationException ex)
+        {
+            CategoryError = Loc.Error(ex.Code);
+            return;
+        }
+
+        CancelCategoryEdit();
+        await ReloadCategoriesAsync();
+    }
+
+    [RelayCommand]
+    private void CancelCategoryEdit()
+    {
+        _renaming = null;
+        IsRenaming = false;
+        NewCategoryName = string.Empty;
+        CategoryError = null;
+    }
+
+    private Task StartRenameAsync(CategoryRowViewModel row)
+    {
+        _renaming = row;
+        IsRenaming = true;
+        NewCategoryName = row.Name;
+        NewCategoryKind = CategoryKinds.First(k => k.Kind == row.Category.Kind);
         return Task.CompletedTask;
+    }
+
+    private async Task ArchiveCategoryAsync(CategoryRowViewModel row)
+    {
+        await _categories.ArchiveAsync(row.Category.Id);
+        await ReloadCategoriesAsync();
+    }
+
+    private async Task ReloadCategoriesAsync()
+    {
+        var list = await _categories.ListAsync();
+        CategoryRows.Clear();
+        for (var i = 0; i < list.Count; i++)
+        {
+            CategoryRows.Add(new CategoryRowViewModel(list[i], StartRenameAsync, ArchiveCategoryAsync) { IsLast = i == list.Count - 1 });
+        }
+    }
+
+    private static List<CategoryKindOption> CategoryKindOptions() =>
+        [.. Enum.GetValues<CategoryKind>().Select(k => new CategoryKindOption(k, Loc.T("CategoryKind_" + k)))];
+
+    protected override void OnLanguageChanged()
+    {
+        var kind = NewCategoryKind.Kind;
+        CategoryKinds = CategoryKindOptions();
+        NewCategoryKind = CategoryKinds.First(k => k.Kind == kind);
+        _ = ReloadCategoriesAsync();
     }
 
     async partial void OnSelectedLanguageChanged(LanguageOption value)

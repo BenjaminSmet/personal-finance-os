@@ -20,6 +20,25 @@ public class DatabaseInitializerTests
     }
 
     [Fact]
+    public void Every_supported_older_schema_upgrades_to_the_latest_and_keeps_its_data()
+    {
+        var latest = new EmbeddedMigrationSource().GetMigrations().Count;
+        for (var version = 1; version < latest; version++)
+        {
+            using var temp = new TempDataFolder();
+            Assert.Equal(version, temp.Initializer(new OlderMigrationSource(version)).Initialize().SchemaVersion);
+            temp.Execute(InsertAccount);
+
+            var result = temp.Initializer().Initialize();
+
+            Assert.Equal(DatabaseStartupStatus.Migrated, result.Status);
+            Assert.Equal(latest, result.SchemaVersion);
+            Assert.Equal(123456, temp.Scalar("SELECT SUM(opening_balance_cents) FROM accounts;"));
+            Assert.Equal(0, temp.Scalar("SELECT COUNT(*) FROM transactions;"));
+        }
+    }
+
+    [Fact]
     public void Fresh_install_creates_database_in_the_data_folder()
     {
         using var temp = new TempDataFolder();
