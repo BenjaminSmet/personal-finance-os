@@ -141,6 +141,9 @@ public sealed class CardStatusViewModel(CardStatus status, DateOnly today)
 
     public string AvailableText => M(status.AvailableCredit);
 
+    /// <summary>One line for the dashboard: what is owed and the available credit, which is not cash.</summary>
+    public string SummaryText => Loc.Format("Dashboard_CardLine", M(status.Outstanding), M(status.AvailableCredit));
+
     public bool IsOverLimit => status.IsOverLimit;
 
     public string SpendingText => M(status.CurrentSpending);

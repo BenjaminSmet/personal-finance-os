@@ -36,7 +36,7 @@ public sealed class LedgerTests : IDisposable
         var accountRepository = new AccountRepository(db);
         var categoryRepository = new CategoryRepository(db);
         _accounts = new AccountService(accountRepository, audit, _clock);
-        _categories = new CategoryService(categoryRepository, settings, audit, _clock);
+        _categories = new CategoryService(categoryRepository, new BudgetRepository(db), settings, audit, _clock);
         _ledger = new LedgerService(new TransactionRepository(db), accountRepository, categoryRepository, audit, new UndoHistory(), _clock);
         _reconciliation = new ReconciliationService(_ledger, accountRepository, new ReconciliationRepository(db), audit, _clock);
         _quickAdd = new QuickAddService(_accounts, _categories, new PayeeRuleRepository(db), settings, _ledger, _clock);

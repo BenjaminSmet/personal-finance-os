@@ -188,3 +188,34 @@ the incoming side, so the duplicate check of D-018 recognises them and they are 
 account is unclear or the amount too large, the line is flagged "looks like rounding" and left unticked for review.
 **Navigation:** the Forecasts item is called "Planning" and opens this phase's page; budgets stay in phase 5.
 
+
+### D-024 · Budgets hold from a month until changed (2026-10-10)
+A budget belongs to an active spending category and starts in a month (`budgets`: category, start month, amount). The
+budget of a month is the one with the latest start month in or before it, so changing a budget never rewrites earlier
+months and "actual vs budget" for the past stays what it was. Setting a budget for a month replaces budgets that were
+set for later months, so the new amount holds until it is changed again; zero removes the budget from that month on.
+Income categories, archived categories and lines without a category have no budget. Transfers and card settlements
+never count as spending; refunds lower it; a card purchase counts in its purchase month (same rules as `LedgerMath`).
+
+### D-025 · Analysis only compares complete months (2026-10-10)
+Nothing before the earliest balance date of any account is recorded, so a month that starts before it is marked
+incomplete and a month before it has no data. Comparisons use up to 3 earlier months that are complete and over; with
+fewer, the screen says how many it used or that there is nothing to compare with yet. A category is called unusual
+only with 3 complete months of history, when it differs from its average by at least 50 % and €25; a month still in
+progress can only be unusually high. Recurring spending = expenses that settle a planned item (confirmed or linked,
+D-021); the rest is one-off. Planned vs actual lists the month's occurrences by due date with what became of them.
+Shared accounts show their full spending and the personal part from the account's ownership share; totals keep
+counting the full amount, as before.
+
+### D-026 · Category merge, order and bringing back (2026-10-10)
+Merging moves every transaction, payee rule, recurring rule and import link of the source to the target (same kind,
+active) and archives the source, in one database transaction. The transactions' `updated_at` is left alone, so an
+imported line does not look edited by the user. The target keeps its own budgets; only when it has none, it takes over
+the source's. Undo does not reverse a merge, so the screen explains this and asks for confirmation first. Order is
+changed with up/down within a kind and is used in lists and budgets. Archived categories are listed in Settings and
+can be brought back when no active category of the same kind has that name.
+**Dashboard** (§13): spendable money, safe-to-spend, items needing attention (to confirm, over budget, card not set up,
+over limit or a payment that differs from the statement, reconciliation difference), this month with its budget,
+the next 14 days, expected cash flow, credit cards, savings and investments apart from spendable money, and every
+account. Import review, unmatched transfers and stale valuations are not stored as open items yet; valuations come in
+phase 6.

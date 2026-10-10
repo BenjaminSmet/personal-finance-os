@@ -180,7 +180,7 @@
   <data name="CategoryKind_Expense" xml:space="preserve"><value>Spending</value></data>
   <data name="CategoryKind_Income" xml:space="preserve"><value>Income</value></data>
   <data name="Settings_Categories" xml:space="preserve"><value>Categories</value></data>
-  <data name="Settings_CategoriesNote" xml:space="preserve"><value>Archived categories stay on earlier transactions but are no longer offered.</value></data>
+  <data name="Settings_CategoriesNote" xml:space="preserve"><value>The order here is used in budgets and lists. Archived categories stay on earlier transactions but are no longer offered; bring them back any time.</value></data>
   <data name="Settings_CategoryName" xml:space="preserve"><value>New category</value></data>
   <data name="Settings_CategoryAdd" xml:space="preserve"><value>Add</value></data>
   <data name="Settings_CategoryRename" xml:space="preserve"><value>Rename</value></data>
@@ -452,4 +452,84 @@
   <data name="Error_scheduled_link_taken" xml:space="preserve"><value>That line is already linked to another planned item.</value></data>
   <data name="Error_scheduled_reopen_confirmed" xml:space="preserve"><value>Remove the recorded transaction to undo a confirmation.</value></data>
   <data name="Error_forecast_buffer_negative" xml:space="preserve"><value>The buffer cannot be negative.</value></data>
+  <data name="Budgets_Title" xml:space="preserve"><value>Budgets &amp; analysis</value></data>
+  <data name="Budgets_Subtitle" xml:space="preserve"><value>Your month at a glance: spending per category against your budget and your own history. Planned items never count as spent.</value></data>
+  <data name="Budgets_Previous" xml:space="preserve"><value>Previous month</value></data>
+  <data name="Budgets_Next" xml:space="preserve"><value>Next month</value></data>
+  <data name="Budgets_ThisMonth" xml:space="preserve"><value>This month</value></data>
+  <data name="Budgets_NoAccounts" xml:space="preserve"><value>Add your accounts first; the analysis is calculated from your transactions.</value></data>
+  <data name="Budgets_InProgress" xml:space="preserve"><value>This month is still running (up to and including {0}).</value></data>
+  <data name="Budgets_Incomplete" xml:space="preserve"><value>Your data starts on {0}, so this month is incomplete.</value></data>
+  <data name="Budgets_NoData" xml:space="preserve"><value>There is no data for this month: your accounts start on {0}.</value></data>
+  <data name="Budgets_Compared" xml:space="preserve"><value>Average of the previous {0} complete months: income {1}, spending {2}.</value></data>
+  <data name="Budgets_ComparedOne" xml:space="preserve"><value>Previous complete month: income {0}, spending {1}.</value></data>
+  <data name="Budgets_NotCompared" xml:space="preserve"><value>No complete earlier month yet to compare with.</value></data>
+  <data name="Budgets_Categories" xml:space="preserve"><value>Spending per category</value></data>
+  <data name="Budgets_CategoriesNote" xml:space="preserve"><value>A budget holds from the month shown until you change it; earlier months keep theirs. Transfers and card payments never count as spending; refunds lower it.</value></data>
+  <data name="Budgets_BudgetTotal" xml:space="preserve"><value>{0} of {1} budgeted spent</value></data>
+  <data name="Budgets_NoBudgets" xml:space="preserve"><value>No budgets yet. Type an amount next to a category and press Save.</value></data>
+  <data name="Budgets_Budget" xml:space="preserve"><value>Budget</value></data>
+  <data name="Budgets_Left" xml:space="preserve"><value>{0} left</value></data>
+  <data name="Budgets_Over" xml:space="preserve"><value>{0} over budget</value></data>
+  <data name="Budgets_NoBudget" xml:space="preserve"><value>No budget</value></data>
+  <data name="Budgets_Uncategorised" xml:space="preserve"><value>Without category</value></data>
+  <data name="Budgets_Average" xml:space="preserve"><value>Average {0}</value></data>
+  <data name="Budgets_Unusual" xml:space="preserve"><value>Unusual</value></data>
+  <data name="Budgets_UnusualNote" xml:space="preserve"><value>Unusual changes are only pointed out once there are {0} complete months of history.</value></data>
+  <data name="Budgets_BudgetSaved" xml:space="preserve"><value>Budget for {0} saved from {1} on.</value></data>
+  <data name="Budgets_BudgetRemoved" xml:space="preserve"><value>Budget for {0} removed from {1} on.</value></data>
+  <data name="Budgets_Income" xml:space="preserve"><value>Income per category</value></data>
+  <data name="Budgets_NoIncome" xml:space="preserve"><value>No income recorded this month.</value></data>
+  <data name="Budgets_Recurring" xml:space="preserve"><value>Recurring and one-off spending</value></data>
+  <data name="Budgets_RecurringAmount" xml:space="preserve"><value>Recurring (confirmed planned items)</value></data>
+  <data name="Budgets_OneOff" xml:space="preserve"><value>One-off</value></data>
+  <data name="Budgets_Planned" xml:space="preserve"><value>Planned and actual</value></data>
+  <data name="Budgets_PlannedNote" xml:space="preserve"><value>Recurring items due this month and what happened to them.</value></data>
+  <data name="Budgets_NothingPlanned" xml:space="preserve"><value>Nothing planned this month.</value></data>
+  <data name="Budgets_PlannedOn" xml:space="preserve"><value>Planned {0} on {1}</value></data>
+  <data name="Budgets_ActualOn" xml:space="preserve"><value>Actual {0} on {1}</value></data>
+  <data name="Budgets_DifferenceMore" xml:space="preserve"><value>{0} more than planned</value></data>
+  <data name="Budgets_DifferenceLess" xml:space="preserve"><value>{0} less than planned</value></data>
+  <data name="Outcome_Open" xml:space="preserve"><value>Still expected</value></data>
+  <data name="Outcome_Overdue" xml:space="preserve"><value>Overdue, not confirmed</value></data>
+  <data name="Outcome_Confirmed" xml:space="preserve"><value>Happened</value></data>
+  <data name="Outcome_Skipped" xml:space="preserve"><value>Skipped</value></data>
+  <data name="Budgets_Shared" xml:space="preserve"><value>Shared accounts</value></data>
+  <data name="Budgets_SharedLine" xml:space="preserve"><value>{0}: {1} spent in total; your part ({2}) is {3}.</value></data>
+  <data name="Budgets_Trend" xml:space="preserve"><value>Last 6 months</value></data>
+  <data name="Budgets_TrendIn" xml:space="preserve"><value>In {0}</value></data>
+  <data name="Budgets_TrendOut" xml:space="preserve"><value>Out {0}</value></data>
+  <data name="Budgets_TrendNoData" xml:space="preserve"><value>no data</value></data>
+  <data name="Budgets_TrendPartial" xml:space="preserve"><value>incomplete</value></data>
+  <data name="Budgets_TrendNote" xml:space="preserve"><value>Months before your first balance date have no data and are never compared.</value></data>
+  <data name="Settings_MoveUp" xml:space="preserve"><value>Move up</value></data>
+  <data name="Settings_MoveDown" xml:space="preserve"><value>Move down</value></data>
+  <data name="Settings_CategoryMerge" xml:space="preserve"><value>Merge…</value></data>
+  <data name="Settings_MergeInto" xml:space="preserve"><value>Merge "{0}" into:</value></data>
+  <data name="Settings_MergeExplain" xml:space="preserve"><value>All transactions, payee rules and recurring items of "{0}" move to the chosen category, and "{0}" is archived. The chosen category keeps its own budget; only if it has none, it takes over this one. Undo cannot reverse a merge.</value></data>
+  <data name="Settings_MergeConfirm" xml:space="preserve"><value>Merge</value></data>
+  <data name="Settings_Merged" xml:space="preserve"><value>"{0}" was merged into "{1}".</value></data>
+  <data name="Settings_ArchivedCategories" xml:space="preserve"><value>Archived categories</value></data>
+  <data name="Settings_Reactivate" xml:space="preserve"><value>Bring back</value></data>
+  <data name="Error_category_merge_invalid" xml:space="preserve"><value>Choose another active category of the same kind.</value></data>
+  <data name="Error_budget_category_invalid" xml:space="preserve"><value>Budgets are for active spending categories.</value></data>
+  <data name="Error_budget_amount_negative" xml:space="preserve"><value>A budget cannot be negative.</value></data>
+  <data name="Dashboard_Savings" xml:space="preserve"><value>Savings and investments</value></data>
+  <data name="Dashboard_SavingsNote" xml:space="preserve"><value>Not spendable cash, so shown separately.</value></data>
+  <data name="Dashboard_Upcoming" xml:space="preserve"><value>Coming up in the next 14 days</value></data>
+  <data name="Dashboard_NothingUpcoming" xml:space="preserve"><value>Nothing planned in the next 14 days.</value></data>
+  <data name="Dashboard_CashFlow" xml:space="preserve"><value>Expected in and out</value></data>
+  <data name="Dashboard_Budget" xml:space="preserve"><value>Budget this month</value></data>
+  <data name="Dashboard_NoBudget" xml:space="preserve"><value>No budgets set yet.</value></data>
+  <data name="Dashboard_GoToBudgets" xml:space="preserve"><value>Open budgets</value></data>
+  <data name="Dashboard_Attention" xml:space="preserve"><value>Needs attention</value></data>
+  <data name="Dashboard_OverBudget" xml:space="preserve"><value>{0} is {1} over budget</value></data>
+  <data name="Dashboard_CardDifference" xml:space="preserve"><value>{0}: the recorded payment differs from the statement</value></data>
+  <data name="Dashboard_CardNotSetUp" xml:space="preserve"><value>{0} has no card settings yet</value></data>
+  <data name="Dashboard_CardOverLimit" xml:space="preserve"><value>{0} is over its limit</value></data>
+  <data name="Dashboard_ReconcileDifference" xml:space="preserve"><value>{0}: the last reconciliation left a difference of {1}</value></data>
+  <data name="Dashboard_Cards" xml:space="preserve"><value>Credit cards</value></data>
+  <data name="Dashboard_CardLine" xml:space="preserve"><value>Owed {0} · available {1} (not cash)</value></data>
+  <data name="Dashboard_View" xml:space="preserve"><value>View</value></data>
+  <data name="Dashboard_CardSettlementItem" xml:space="preserve"><value>{0} statement</value></data>
 </root>

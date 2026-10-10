@@ -93,6 +93,21 @@
     <Setter Property="FontWeight" Value="Bold" />
     <Setter Property="LetterSpacing" Value="-0.6" />
   </Style>
+  <!-- Budget and trend bars. The amount is always written next to a bar, so colour is never the only signal. -->
+  <Style Selector="ProgressBar.meter">
+    <Setter Property="MinHeight" Value="8" />
+    <Setter Property="Height" Value="8" />
+    <Setter Property="MinWidth" Value="60" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Background" Value="{DynamicResource BadgeFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
+  </Style>
+  <Style Selector="ProgressBar.meter.over">
+    <Setter Property="Foreground" Value="{DynamicResource DebtBrush}" />
+  </Style>
+  <Style Selector="ProgressBar.meter.income">
+    <Setter Property="Foreground" Value="{DynamicResource PositiveBrush}" />
+  </Style>
   <Style Selector="TextBlock.debt">
     <Setter Property="Foreground" Value="{DynamicResource DebtBrush}" />
   </Style>

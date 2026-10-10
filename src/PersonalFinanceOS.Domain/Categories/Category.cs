@@ -57,6 +57,12 @@ public sealed class Category
         UpdatedAt = now;
     }
 
+    public void MoveTo(int sortOrder, DateTimeOffset now)
+    {
+        SortOrder = sortOrder;
+        UpdatedAt = now;
+    }
+
     public void Archive(DateTimeOffset now)
     {
         Status = CategoryStatus.Archived;

@@ -48,7 +48,7 @@ public sealed class ImportTests : IDisposable
         var transactions = new TransactionRepository(_db);
         _rules = new PayeeRuleRepository(_db);
         _accounts = new AccountService(accountRepository, audit, _clock);
-        _categories = new CategoryService(categoryRepository, settings, audit, _clock);
+        _categories = new CategoryService(categoryRepository, new BudgetRepository(_db), settings, audit, _clock);
         _ledger = new LedgerService(transactions, accountRepository, categoryRepository, audit, new UndoHistory(), _clock);
         _reconciliation = new ReconciliationService(_ledger, accountRepository, new ReconciliationRepository(_db), audit, _clock);
         _import = new ImportService(new ImportRepository(_db), transactions, accountRepository, categoryRepository, _rules, audit, _ledger, new PersonalFinanceOS.Application.Settings.AppSettingsService(settings), _clock);

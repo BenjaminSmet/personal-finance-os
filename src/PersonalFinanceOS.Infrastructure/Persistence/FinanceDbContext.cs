@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
 using PersonalFinanceOS.Domain.Cards;
+using PersonalFinanceOS.Domain.Budgets;
 using PersonalFinanceOS.Domain.Categories;
 using PersonalFinanceOS.Domain.Imports;
 using PersonalFinanceOS.Domain.Ledger;
@@ -33,6 +34,7 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     public DbSet<CreditCardProfile> CreditCardProfiles => Set<CreditCardProfile>();
     public DbSet<RecurringRule> RecurringRules => Set<RecurringRule>();
     public DbSet<ScheduledItem> ScheduledItems => Set<ScheduledItem>();
+    public DbSet<Budget> Budgets => Set<Budget>();
 
     public static DbContextOptions<FinanceDbContext> OptionsFor(string databaseFile) =>
         new DbContextOptionsBuilder<FinanceDbContext>()
@@ -271,6 +273,20 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
             e.Property(i => i.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
             e.HasOne<RecurringRule>().WithMany().HasForeignKey(i => i.RuleId).OnDelete(DeleteBehavior.Restrict);
             e.HasOne<Transaction>().WithMany().HasForeignKey(i => i.TransactionId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Budget>(e =>
+        {
+            e.ToTable("budgets");
+            e.HasKey(b => b.Id);
+            e.HasIndex(b => new { b.CategoryId, b.StartMonth }).IsUnique();
+            e.Property(b => b.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(b => b.CategoryId).HasColumnName("category_id").HasConversion(guid);
+            e.Property(b => b.StartMonth).HasColumnName("start_month").HasConversion(date);
+            e.Property(b => b.Amount).HasColumnName("amount_cents").HasConversion(money);
+            e.Property(b => b.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.Property(b => b.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+            e.HasOne<Category>().WithMany().HasForeignKey(b => b.CategoryId).OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

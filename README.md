@@ -57,7 +57,7 @@ Never edit a migration that has been released.
 
 ## Status
 
-Phase 4 (recurring items, VISA, cash flow) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
+Phase 5 (dashboard, budgets, analysis) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
 
 Quick Add sits above every page (Ctrl+K). Type a line and press Enter, for example:
 
@@ -104,3 +104,18 @@ Export your transactions from your bank's website as CSV (or XLSX) and open **Im
 - **Safe to spend** = personal current account and cash, minus everything planned and the card statements due
   before your next expected income, minus your minimum buffer. Expected income is never counted before it arrives.
   The calculation and anything that makes it less certain are shown with it.
+
+### Budgets and analysis
+
+- **Budgets & analysis** shows one month at a time (previous/next): income, spending and net, compared with the
+  average of up to three earlier complete months. Months before your first balance date are never compared.
+- Each spending category shows what was spent, its budget with a bar and what is left or over (in words, not only in
+  colour), and its usual amount. Type a budget and press **Save**: it holds from that month until you change it;
+  earlier months keep theirs. Clear differences from your own history are marked "unusual" once there are three
+  complete months to compare with.
+- Also on the page: income per category, recurring versus one-off spending, planned items next to what actually
+  happened, shared accounts with your part, and a six-month trend.
+- **Settings › Categories**: change the order, rename, merge one category into another (explained and confirmed
+  first), archive, and bring archived categories back.
+- The **Dashboard** adds what needs attention, the month's budget, the next 14 days, expected cash flow, credit cards
+  and savings and investments, kept apart from spendable money.

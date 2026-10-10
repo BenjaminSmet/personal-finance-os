@@ -32,11 +32,29 @@
           <TextBlock Classes="overline" Text="{l:T Planning_SafeToSpend}" />
           <TextBlock Classes="amount" Text="{Binding SafeToSpendText}" Classes.debt="{Binding SafeIsNegative}" />
           <TextBlock Classes="caption" Text="{Binding SafeCaption}" TextWrapping="Wrap" />
-          <TextBlock Classes="caption debt" Text="{Binding AttentionText, StringFormat='⚠ {0}'}" Margin="0,4,0,0"
-                     IsVisible="{Binding AttentionText, Converter={x:Static ObjectConverters.IsNotNull}}" />
         </StackPanel>
         <Button Grid.Column="1" Content="{l:T Dashboard_GoToPlanning}" Command="{Binding GoToPlanningCommand}" VerticalAlignment="Center" />
       </Grid>
+    </Border>
+
+    <!-- Items needing attention (spec §13); each says what it is in words, never by colour alone -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasAttention}">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="title" Text="{l:T Dashboard_Attention}" />
+        <ItemsControl ItemsSource="{Binding Attention}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:AttentionItemViewModel">
+              <Border Classes="warning" Margin="0,3">
+                <Grid ColumnDefinitions="*,Auto">
+                  <TextBlock Text="{Binding Text, StringFormat='⚠  {0}'}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                  <Button Grid.Column="1" Margin="10,0,0,0" Padding="12,5" FontSize="13" Content="{l:T Dashboard_View}"
+                          Command="{Binding OpenCommand}" />
+                </Grid>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
     </Border>
 
     <!-- This month: income and spending; transfers and card settlements never count -->
@@ -57,6 +75,94 @@
             <TextBlock Classes="amount" Text="{Binding MonthNetText}" />
           </StackPanel>
         </Grid>
+        <Border Classes="separator" />
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Spacing="6" VerticalAlignment="Center">
+            <TextBlock Classes="overline" Text="{l:T Dashboard_Budget}" />
+            <StackPanel Spacing="6" IsVisible="{Binding BudgetText, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Text="{Binding BudgetText}" Classes.debt="{Binding BudgetIsOver}" />
+              <ProgressBar Classes="meter" Classes.over="{Binding BudgetIsOver}" Maximum="100" Value="{Binding BudgetUsedPercent}" />
+            </StackPanel>
+            <TextBlock Classes="caption" Text="{l:T Dashboard_NoBudget}"
+                       IsVisible="{Binding BudgetText, Converter={x:Static ObjectConverters.IsNull}}" />
+          </StackPanel>
+          <Button Grid.Column="1" Margin="16,0,0,0" Content="{l:T Dashboard_GoToBudgets}" Command="{Binding GoToBudgetsCommand}"
+                  VerticalAlignment="Center" />
+        </Grid>
+      </StackPanel>
+    </Border>
+
+    <!-- Coming up, and expected money in and out -->
+    <Grid ColumnDefinitions="*,18,*" IsVisible="{Binding HasAccounts}">
+      <Border Classes="glass" Padding="24,20">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="title" Text="{l:T Dashboard_Upcoming}" />
+          <TextBlock Classes="caption" Text="{l:T Dashboard_NothingUpcoming}" IsVisible="{Binding !HasUpcoming}" />
+          <ItemsControl ItemsSource="{Binding Upcoming}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="vm:UpcomingRowViewModel">
+                <StackPanel>
+                  <Grid ColumnDefinitions="*,Auto" Margin="0,5">
+                    <StackPanel Spacing="1">
+                      <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                      <TextBlock Classes="caption" Text="{Binding DateText}" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Margin="12,0,0,0" Text="{Binding AmountText}" VerticalAlignment="Center" />
+                  </Grid>
+                  <Border Classes="separator" IsVisible="{Binding !IsLast}" />
+                </StackPanel>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+      <Border Grid.Column="2" Classes="glass" Padding="24,20">
+        <StackPanel Spacing="12">
+          <TextBlock Classes="title" Text="{l:T Dashboard_CashFlow}" />
+          <ItemsControl ItemsSource="{Binding CashFlows}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="vm:CashFlowViewModel">
+                <Grid ColumnDefinitions="*,Auto" Margin="0,4">
+                  <StackPanel Spacing="1">
+                    <TextBlock Classes="overline" Text="{Binding Title}" />
+                    <TextBlock Classes="caption" Text="{Binding InText, StringFormat='＋ {0}'}" />
+                    <TextBlock Classes="caption" Text="{Binding OutText, StringFormat='－ {0}'}" />
+                  </StackPanel>
+                  <TextBlock Grid.Column="1" Classes="headline" Text="{Binding NetText}" VerticalAlignment="Center" />
+                </Grid>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <TextBlock Classes="caption" Text="{l:T Planning_CashFlowNote}" TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <!-- Credit cards: what is owed and the next statement; available credit is not cash -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasCards}">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="title" Text="{l:T Dashboard_Cards}" />
+        <ItemsControl ItemsSource="{Binding Cards}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:CardStatusViewModel">
+              <StackPanel Spacing="2" Margin="0,4">
+                <TextBlock Classes="headline" Text="{Binding Name}" />
+                <TextBlock Classes="caption" Text="{Binding SummaryText}" TextWrapping="Wrap" IsVisible="{Binding IsSetUp}" />
+                <TextBlock Classes="caption" Text="{Binding NextSettlementText}" TextWrapping="Wrap" IsVisible="{Binding IsSetUp}" />
+                <TextBlock Classes="caption debt" Text="{l:T Card_NotSetUp}" TextWrapping="Wrap" IsVisible="{Binding !IsSetUp}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- Savings and investments: kept apart from spendable money -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasSavings}">
+      <StackPanel Spacing="2">
+        <TextBlock Classes="overline" Text="{l:T Dashboard_Savings}" />
+        <TextBlock Classes="amount" Text="{Binding SavingsText}" />
+        <TextBlock Classes="caption" Text="{l:T Dashboard_SavingsNote}" TextWrapping="Wrap" />
       </StackPanel>
     </Border>
 

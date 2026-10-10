@@ -239,7 +239,7 @@
               <TextBlock Text="{Binding RuleError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
             </Border>
             <StackPanel Orientation="Horizontal" Spacing="10">
-              <Button Classes="primary" Content="{l:T Accounts_Save}" Command="{Binding SaveRuleCommand}" />
+              <Button Classes="primary" Content="{l:T Editor_Save}" Command="{Binding SaveRuleCommand}" />
               <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelRuleFormCommand}" />
             </StackPanel>
           </StackPanel>
@@ -277,7 +277,7 @@
             <TextBlock Classes="fieldLabel" Text="{l:T Planning_Buffer}" />
             <StackPanel Orientation="Horizontal" Spacing="8">
               <TextBox Text="{Binding BufferText}" Width="130" PlaceholderText="0,00" />
-              <Button Content="{l:T Accounts_Save}" Command="{Binding SaveBufferCommand}" />
+              <Button Content="{l:T Editor_Save}" Command="{Binding SaveBufferCommand}" />
             </StackPanel>
             <TextBlock Classes="caption" Text="{l:T Planning_BufferHint}" TextWrapping="Wrap" />
           </StackPanel>
