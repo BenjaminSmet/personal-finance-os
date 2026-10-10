@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel">
+  <StackPanel Spacing="20">
+    <TextBlock Classes="largeTitle" Text="{l:T Dashboard_Welcome}" />
+
+    <!-- Hero: available money -->
+    <Border Classes="glass strong" Padding="28,26" IsVisible="{Binding HasAccounts}">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Spacing="4">
+          <TextBlock Classes="overline" Text="{l:T Dashboard_Available}" />
+          <TextBlock Classes="bigAmount" Text="{Binding LiquidOpeningTotalText}" />
+          <TextBlock Classes="caption" Text="{l:T Dashboard_PhaseNote}" TextWrapping="Wrap" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Spacing="10">
+          <Border Classes="badge" HorizontalAlignment="Right">
+            <TextBlock Classes="caption" Text="{Binding AccountsSummary}" />
+          </Border>
+          <Button Classes="primary" Content="{l:T Dashboard_GoToAccounts}" Command="{Binding GoToAccountsCommand}"
+                  HorizontalAlignment="Right" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Account tiles -->
+    <ItemsControl ItemsSource="{Binding Tiles}" IsVisible="{Binding HasAccounts}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate><WrapPanel ItemSpacing="16" LineSpacing="16" /></ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate DataType="vm:AccountRowViewModel">
+          <Border Classes="glass" Width="250" Padding="18,16">
+            <StackPanel Spacing="12">
+              <Grid ColumnDefinitions="Auto,*">
+                <Border Width="34" Height="34" CornerRadius="17" Background="{Binding IconBackground}">
+                  <Path Data="{Binding Icon}" Width="17" Height="17" Stretch="Uniform" Stroke="White"
+                        StrokeThickness="1.8" StrokeLineCap="Round" StrokeJoin="Round"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                  <TextBlock Classes="headline" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                  <TextBlock Classes="caption" Text="{Binding TypeName}" TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+              </Grid>
+              <StackPanel Spacing="1">
+                <TextBlock Classes="amount" Text="{Binding BalanceText}" Classes.debt="{Binding IsLiability}" />
+                <TextBlock Classes="caption" Text="{Binding ShareText}" IsVisible="{Binding HasPartialShare}" TextTrimming="CharacterEllipsis" />
+              </StackPanel>
+            </StackPanel>
+          </Border>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <!-- First start -->
+    <Border Classes="glass" Padding="28,26" IsVisible="{Binding !HasAccounts}">
+      <StackPanel Spacing="16">
+        <TextBlock Text="{l:T Dashboard_Intro}" TextWrapping="Wrap" FontSize="16" />
+        <Button Classes="primary" Content="{l:T Dashboard_GoToAccounts}" Command="{Binding GoToAccountsCommand}" />
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

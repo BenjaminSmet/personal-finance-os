@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+        xmlns:v="using:PersonalFinanceOS.App.Views"
+        xmlns:l="using:PersonalFinanceOS.App.Localization"
+        x:Class="PersonalFinanceOS.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{l:T App_Title}"
+        Width="1240" Height="800" MinWidth="960" MinHeight="620"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        Foreground="{DynamicResource TextPrimaryBrush}"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaTitleBarHeightHint="44">
+
+  <Panel>
+    <v:Backdrop x:Name="WindowBackdrop" />
+
+    <Grid ColumnDefinitions="268,*">
+      <!-- Floating glass sidebar -->
+      <Border Grid.Column="0" Classes="glass" Margin="12,12,0,12" Padding="0,18,0,12"
+              Background="{DynamicResource GlassSidebarFillBrush}" CornerRadius="26">
+        <DockPanel>
+          <StackPanel DockPanel.Dock="Top" Margin="24,22,20,18" Spacing="2">
+            <TextBlock Text="{l:T App_Title}" FontSize="19" FontWeight="Bold" LetterSpacing="-0.2" />
+            <TextBlock Classes="caption" Text="{l:T App_Tagline}" />
+          </StackPanel>
+          <ListBox Classes="nav"
+                   ItemsSource="{Binding NavItems}"
+                   SelectedItem="{Binding SelectedItem}"
+                   AutomationProperties.Name="Navigation">
+            <ListBox.ItemTemplate>
+              <DataTemplate DataType="vm:NavItem">
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                  <Path Data="{Binding Icon}" Width="18" Height="18" Stretch="Uniform"
+                        Stroke="{Binding #NavLabel.Foreground}" StrokeThickness="1.7"
+                        StrokeLineCap="Round" StrokeJoin="Round" VerticalAlignment="Center" />
+                  <TextBlock x:Name="NavLabel" Text="{Binding Title}" VerticalAlignment="Center"
+                             FontSize="14" FontWeight="Medium" />
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </DockPanel>
+      </Border>
+
+      <!-- Page -->
+      <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled">
+        <ContentControl Content="{Binding CurrentPage}" Margin="36,48,40,40" MaxWidth="1080"
+                        HorizontalAlignment="Stretch" />
+      </ScrollViewer>
+    </Grid>
+  </Panel>
+</Window>

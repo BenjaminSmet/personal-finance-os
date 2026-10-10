@@ -1,0 +1,292 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Styles.Resources>
+    <!--
+      iOS-style switch: grey track when off, green when on, white knob that slides.
+      Keeps the template part names ToggleSwitch expects so clicking and dragging work.
+    -->
+    <ControlTheme x:Key="{x:Type ToggleSwitch}" TargetType="ToggleSwitch">
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="KnobTransitions">
+        <Transitions>
+          <DoubleTransition Property="Canvas.Left" Duration="0:0:0.22" Easing="CubicEaseOut" />
+        </Transitions>
+      </Setter>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid ColumnDefinitions="*,Auto" Background="{TemplateBinding Background}">
+            <ContentPresenter Name="PART_ContentPresenter" Grid.Column="0"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              VerticalAlignment="Center" Margin="0,0,16,0"
+                              Foreground="{TemplateBinding Foreground}" />
+            <Border Name="Track" Grid.Column="1" Width="51" Height="31" CornerRadius="15.5"
+                    Background="{DynamicResource SwitchOffBrush}" VerticalAlignment="Center">
+              <Border.Transitions>
+                <Transitions>
+                  <BrushTransition Property="Background" Duration="0:0:0.22" />
+                </Transitions>
+              </Border.Transitions>
+              <!-- ToggleSwitch moves PART_MovingKnobs from 0 to the width of PART_SwitchKnob,
+                   so that width is the travel distance: 51 (track) - 27 (knob) - 2×2 (padding) = 20. -->
+              <Canvas Name="PART_SwitchKnob" Width="20" Height="27" Margin="2"
+                      HorizontalAlignment="Left" VerticalAlignment="Center" ClipToBounds="False">
+                <Panel Name="PART_MovingKnobs" Width="27" Height="27">
+                  <Ellipse Fill="{DynamicResource SwitchKnobBrush}" Width="27" Height="27" />
+                  <!-- Required parts; on/off labels are not shown in the iOS style. -->
+                  <ContentPresenter Name="PART_OnContentPresenter" IsVisible="False" />
+                  <ContentPresenter Name="PART_OffContentPresenter" IsVisible="False" />
+                </Panel>
+              </Canvas>
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+      <Style Selector="^:checked /template/ Border#Track">
+        <Setter Property="Background" Value="{DynamicResource SwitchOnBrush}" />
+      </Style>
+      <Style Selector="^:disabled">
+        <Setter Property="Opacity" Value="0.45" />
+      </Style>
+      <Style Selector="^:focus-visible /template/ Border#Track">
+        <Setter Property="BoxShadow" Value="0 0 0 3 #660A84FF" />
+      </Style>
+    </ControlTheme>
+  </Styles.Resources>
+
+  <!-- ===== Text ===== -->
+  <Style Selector="TextBlock.largeTitle">
+    <Setter Property="FontSize" Value="34" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LetterSpacing" Value="-0.4" />
+  </Style>
+  <Style Selector="TextBlock.title">
+    <Setter Property="FontSize" Value="20" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="TextBlock.headline">
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+  <Style Selector="TextBlock.secondary, SelectableTextBlock.secondary">
+    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+  </Style>
+  <Style Selector="TextBlock.caption">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+  </Style>
+  <Style Selector="TextBlock.overline">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+  </Style>
+  <Style Selector="TextBlock.amount">
+    <Setter Property="FontSize" Value="22" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="LetterSpacing" Value="-0.3" />
+  </Style>
+  <Style Selector="TextBlock.bigAmount">
+    <Setter Property="FontSize" Value="34" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="LetterSpacing" Value="-0.6" />
+  </Style>
+  <Style Selector="TextBlock.debt">
+    <Setter Property="Foreground" Value="{DynamicResource DebtBrush}" />
+  </Style>
+  <Style Selector="TextBlock.fieldLabel">
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+    <Setter Property="Margin" Value="4,0,0,6" />
+  </Style>
+
+  <!-- ===== Glass surfaces ===== -->
+  <Style Selector="Border.glass">
+    <Setter Property="Background" Value="{DynamicResource GlassFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource GlassStrokeBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{StaticResource GlassRadius}" />
+    <Setter Property="BoxShadow" Value="{DynamicResource GlassShadow}" />
+    <Setter Property="Padding" Value="22" />
+  </Style>
+  <Style Selector="Border.glass.strong">
+    <Setter Property="Background" Value="{DynamicResource GlassStrongFillBrush}" />
+  </Style>
+  <Style Selector="Border.glass.row">
+    <Setter Property="Padding" Value="20,16" />
+    <Setter Property="CornerRadius" Value="18" />
+  </Style>
+  <Style Selector="Border.separator">
+    <Setter Property="Height" Value="1" />
+    <Setter Property="Background" Value="{DynamicResource SeparatorBrush}" />
+  </Style>
+  <Style Selector="Border.badge">
+    <Setter Property="Background" Value="{DynamicResource BadgeFillBrush}" />
+    <Setter Property="CornerRadius" Value="{StaticResource PillRadius}" />
+    <Setter Property="Padding" Value="8,2" />
+  </Style>
+
+  <!-- Messages: tinted glass with a symbol in the text, never colour alone (spec §20). -->
+  <Style Selector="Border.warning, Border.error, Border.success">
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="14" />
+    <Setter Property="Padding" Value="14,10" />
+  </Style>
+  <Style Selector="Border.warning">
+    <Setter Property="Background" Value="{DynamicResource WarningFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource WarningStrokeBrush}" />
+  </Style>
+  <Style Selector="Border.error">
+    <Setter Property="Background" Value="{DynamicResource ErrorFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ErrorStrokeBrush}" />
+  </Style>
+  <Style Selector="Border.success">
+    <Setter Property="Background" Value="{DynamicResource SuccessFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SuccessStrokeBrush}" />
+  </Style>
+
+  <!-- ===== Buttons: pill shaped ===== -->
+  <Style Selector="Button">
+    <Setter Property="CornerRadius" Value="{StaticResource PillRadius}" />
+    <Setter Property="Padding" Value="18,9" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Background" Value="{DynamicResource SecondaryButtonFillBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Transitions">
+      <Transitions>
+        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.12" />
+      </Transitions>
+    </Setter>
+  </Style>
+  <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource SecondaryButtonHoverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+  </Style>
+  <Style Selector="Button:pressed">
+    <Setter Property="RenderTransform" Value="scale(0.97)" />
+  </Style>
+  <Style Selector="Button.primary">
+    <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+  </Style>
+  <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+  </Style>
+  <Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Opacity" Value="0.45" />
+  </Style>
+
+  <!-- ===== Inputs: rounded, soft fill, accent focus ring ===== -->
+  <Style Selector="TextBox">
+    <Setter Property="CornerRadius" Value="{StaticResource FieldRadius}" />
+    <Setter Property="Background" Value="{DynamicResource FieldFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FieldStrokeBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    <Setter Property="Padding" Value="12,9" />
+    <Setter Property="MinHeight" Value="40" />
+  </Style>
+  <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+    <Setter Property="Background" Value="{DynamicResource FieldFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FieldStrokeBrush}" />
+  </Style>
+  <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+    <Setter Property="Background" Value="{DynamicResource FieldFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+    <Setter Property="BorderThickness" Value="2" />
+  </Style>
+  <Style Selector="TextBox:pointerover, TextBox:focus">
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+  </Style>
+
+  <Style Selector="ComboBox">
+    <Setter Property="CornerRadius" Value="{StaticResource FieldRadius}" />
+    <Setter Property="Background" Value="{DynamicResource FieldFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FieldStrokeBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="12,6" />
+  </Style>
+  <Style Selector="ComboBox:pointerover /template/ Border#Background">
+    <Setter Property="Background" Value="{DynamicResource FieldFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FieldStrokeBrush}" />
+  </Style>
+
+  <Style Selector="CalendarDatePicker">
+    <Setter Property="CornerRadius" Value="{StaticResource FieldRadius}" />
+    <Setter Property="Background" Value="{DynamicResource FieldFillBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FieldStrokeBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    <Setter Property="MinHeight" Value="40" />
+  </Style>
+
+  <!-- ===== Segmented control (ListBox with class "segmented") ===== -->
+  <Style Selector="ListBox.segmented">
+    <Setter Property="Background" Value="{DynamicResource SegmentTrackBrush}" />
+    <Setter Property="CornerRadius" Value="11" />
+    <Setter Property="Padding" Value="2" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    <Setter Property="ItemsPanel">
+      <ItemsPanelTemplate>
+        <StackPanel Orientation="Horizontal" Spacing="2" />
+      </ItemsPanelTemplate>
+    </Setter>
+  </Style>
+  <Style Selector="ListBox.segmented ListBoxItem">
+    <Setter Property="CornerRadius" Value="9" />
+    <Setter Property="Padding" Value="18,7" />
+    <Setter Property="MinWidth" Value="96" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="ListBox.segmented ListBoxItem /template/ ContentPresenter">
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="ListBox.segmented ListBoxItem:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource NavHoverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+  </Style>
+  <Style Selector="ListBox.segmented ListBoxItem:selected /template/ ContentPresenter, ListBox.segmented ListBoxItem:selected:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource SegmentSelectedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    <Setter Property="BoxShadow" Value="0 2 6 0 #26000000" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
+  <!-- ===== Sidebar navigation ===== -->
+  <Style Selector="ListBox.nav">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+  <Style Selector="ListBox.nav ListBoxItem">
+    <Setter Property="Padding" Value="12,9" />
+    <Setter Property="Margin" Value="10,1" />
+    <Setter Property="CornerRadius" Value="12" />
+    <Setter Property="Cursor" Value="Hand" />
+  </Style>
+  <Style Selector="ListBox.nav ListBoxItem /template/ ContentPresenter">
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="ListBox.nav ListBoxItem:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource NavHoverBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+  </Style>
+  <Style Selector="ListBox.nav ListBoxItem:selected /template/ ContentPresenter, ListBox.nav ListBoxItem:selected:pointerover /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource NavSelectedBrush}" />
+    <Setter Property="Foreground" Value="{DynamicResource NavSelectedTextBrush}" />
+  </Style>
+
+  <!-- Scroll bars: thin, out of the way -->
+  <Style Selector="ScrollBar">
+    <Setter Property="AllowAutoHide" Value="True" />
+  </Style>
+</Styles>

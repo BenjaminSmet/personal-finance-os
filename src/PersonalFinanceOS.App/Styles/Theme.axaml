@@ -1,0 +1,195 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Design tokens for the "liquid glass" look, inspired by Apple's system colours.
+    Every colour used in the app comes from here so light and dark mode always match.
+    Use {DynamicResource ...} so switching theme updates live.
+  -->
+  <ResourceDictionary.ThemeDictionaries>
+
+    <!-- ===================== LIGHT ===================== -->
+    <ResourceDictionary x:Key="Light">
+      <Color x:Key="AccentColor">#007AFF</Color>
+      <SolidColorBrush x:Key="AccentBrush" Color="#007AFF" />
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#1A88FF" />
+      <SolidColorBrush x:Key="AccentSoftBrush" Color="#1F007AFF" />
+      <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF" />
+
+      <SolidColorBrush x:Key="TextPrimaryBrush" Color="#1C1C1E" />
+      <SolidColorBrush x:Key="TextSecondaryBrush" Color="#6C6C72" />
+      <SolidColorBrush x:Key="TextTertiaryBrush" Color="#8E8E93" />
+
+      <!-- Backdrop behind the glass: soft base with large colour blooms. -->
+      <SolidColorBrush x:Key="BackdropBaseBrush" Color="#EEF1F7" />
+      <RadialGradientBrush x:Key="Bloom1Brush" Opacity="0.9">
+        <GradientStop Offset="0" Color="#FF8DB8FF" />
+        <GradientStop Offset="0.22" Color="#E08DB8FF" />
+        <GradientStop Offset="0.42" Color="#A68DB8FF" />
+        <GradientStop Offset="0.6" Color="#5C8DB8FF" />
+        <GradientStop Offset="0.78" Color="#248DB8FF" />
+        <GradientStop Offset="0.9" Color="#0A8DB8FF" />
+        <GradientStop Offset="1" Color="#008DB8FF" />
+      </RadialGradientBrush>
+      <RadialGradientBrush x:Key="Bloom2Brush" Opacity="0.9">
+        <GradientStop Offset="0" Color="#FFC9B3FF" />
+        <GradientStop Offset="0.22" Color="#E0C9B3FF" />
+        <GradientStop Offset="0.42" Color="#A6C9B3FF" />
+        <GradientStop Offset="0.6" Color="#5CC9B3FF" />
+        <GradientStop Offset="0.78" Color="#24C9B3FF" />
+        <GradientStop Offset="0.9" Color="#0AC9B3FF" />
+        <GradientStop Offset="1" Color="#00C9B3FF" />
+      </RadialGradientBrush>
+      <RadialGradientBrush x:Key="Bloom3Brush" Opacity="0.9">
+        <GradientStop Offset="0" Color="#FFA7EBD6" />
+        <GradientStop Offset="0.22" Color="#E0A7EBD6" />
+        <GradientStop Offset="0.42" Color="#A6A7EBD6" />
+        <GradientStop Offset="0.6" Color="#5CA7EBD6" />
+        <GradientStop Offset="0.78" Color="#24A7EBD6" />
+        <GradientStop Offset="0.9" Color="#0AA7EBD6" />
+        <GradientStop Offset="1" Color="#00A7EBD6" />
+      </RadialGradientBrush>
+      <RadialGradientBrush x:Key="Bloom4Brush" Opacity="0.9">
+        <GradientStop Offset="0" Color="#FFFFD6B8" />
+        <GradientStop Offset="0.22" Color="#E0FFD6B8" />
+        <GradientStop Offset="0.42" Color="#A6FFD6B8" />
+        <GradientStop Offset="0.6" Color="#5CFFD6B8" />
+        <GradientStop Offset="0.78" Color="#24FFD6B8" />
+        <GradientStop Offset="0.9" Color="#0AFFD6B8" />
+        <GradientStop Offset="1" Color="#00FFD6B8" />
+      </RadialGradientBrush>
+
+      <!-- Glass: translucent fill + bright specular edge. -->
+      <SolidColorBrush x:Key="GlassFillBrush" Color="#B8FFFFFF" />
+      <SolidColorBrush x:Key="GlassStrongFillBrush" Color="#E0FFFFFF" />
+      <SolidColorBrush x:Key="GlassSidebarFillBrush" Color="#8CFFFFFF" />
+      <LinearGradientBrush x:Key="GlassStrokeBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Offset="0" Color="#F2FFFFFF" />
+        <GradientStop Offset="0.5" Color="#66FFFFFF" />
+        <GradientStop Offset="1" Color="#B3FFFFFF" />
+      </LinearGradientBrush>
+      <BoxShadows x:Key="GlassShadow">0 10 30 0 #1A1F2A44, 0 1 2 0 #0F000000</BoxShadows>
+
+      <SolidColorBrush x:Key="FieldFillBrush" Color="#CCFFFFFF" />
+      <SolidColorBrush x:Key="FieldStrokeBrush" Color="#1F000000" />
+      <SolidColorBrush x:Key="SecondaryButtonFillBrush" Color="#14000000" />
+      <SolidColorBrush x:Key="SecondaryButtonHoverBrush" Color="#21000000" />
+      <SolidColorBrush x:Key="SeparatorBrush" Color="#1A000000" />
+
+      <SolidColorBrush x:Key="NavHoverBrush" Color="#14000000" />
+      <SolidColorBrush x:Key="NavSelectedBrush" Color="#007AFF" />
+      <SolidColorBrush x:Key="NavSelectedTextBrush" Color="#FFFFFF" />
+
+      <!-- iOS switch -->
+      <SolidColorBrush x:Key="SwitchOnBrush" Color="#34C759" />
+      <SolidColorBrush x:Key="SwitchOffBrush" Color="#E3E3E8" />
+      <SolidColorBrush x:Key="SwitchKnobBrush" Color="#FFFFFF" />
+
+      <!-- Segmented control -->
+      <SolidColorBrush x:Key="SegmentTrackBrush" Color="#1A767680" />
+      <SolidColorBrush x:Key="SegmentSelectedBrush" Color="#FFFFFF" />
+
+      <!-- Meaning colours (always paired with an icon or text, never colour alone). -->
+      <SolidColorBrush x:Key="DebtBrush" Color="#C2410C" />
+      <SolidColorBrush x:Key="PositiveBrush" Color="#248A3D" />
+      <SolidColorBrush x:Key="WarningFillBrush" Color="#26FF9500" />
+      <SolidColorBrush x:Key="WarningStrokeBrush" Color="#80FF9500" />
+      <SolidColorBrush x:Key="ErrorFillBrush" Color="#1FFF3B30" />
+      <SolidColorBrush x:Key="ErrorStrokeBrush" Color="#80FF3B30" />
+      <SolidColorBrush x:Key="SuccessFillBrush" Color="#2434C759" />
+      <SolidColorBrush x:Key="SuccessStrokeBrush" Color="#8034C759" />
+      <SolidColorBrush x:Key="BadgeFillBrush" Color="#1A767680" />
+    </ResourceDictionary>
+
+    <!-- ===================== DARK ===================== -->
+    <ResourceDictionary x:Key="Dark">
+      <Color x:Key="AccentColor">#0A84FF</Color>
+      <SolidColorBrush x:Key="AccentBrush" Color="#0A84FF" />
+      <SolidColorBrush x:Key="AccentHoverBrush" Color="#2B95FF" />
+      <SolidColorBrush x:Key="AccentSoftBrush" Color="#330A84FF" />
+      <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF" />
+
+      <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F5F5F7" />
+      <SolidColorBrush x:Key="TextSecondaryBrush" Color="#A1A1A8" />
+      <SolidColorBrush x:Key="TextTertiaryBrush" Color="#7C7C83" />
+
+      <SolidColorBrush x:Key="BackdropBaseBrush" Color="#0A0B10" />
+      <RadialGradientBrush x:Key="Bloom1Brush" Opacity="0.6">
+        <GradientStop Offset="0" Color="#FF1D4ED8" />
+        <GradientStop Offset="0.22" Color="#E01D4ED8" />
+        <GradientStop Offset="0.42" Color="#A61D4ED8" />
+        <GradientStop Offset="0.6" Color="#5C1D4ED8" />
+        <GradientStop Offset="0.78" Color="#241D4ED8" />
+        <GradientStop Offset="0.9" Color="#0A1D4ED8" />
+        <GradientStop Offset="1" Color="#001D4ED8" />
+      </RadialGradientBrush>
+      <RadialGradientBrush x:Key="Bloom2Brush" Opacity="0.6">
+        <GradientStop Offset="0" Color="#FF6D28D9" />
+        <GradientStop Offset="0.22" Color="#E06D28D9" />
+        <GradientStop Offset="0.42" Color="#A66D28D9" />
+        <GradientStop Offset="0.6" Color="#5C6D28D9" />
+        <GradientStop Offset="0.78" Color="#246D28D9" />
+        <GradientStop Offset="0.9" Color="#0A6D28D9" />
+        <GradientStop Offset="1" Color="#006D28D9" />
+      </RadialGradientBrush>
+      <RadialGradientBrush x:Key="Bloom3Brush" Opacity="0.6">
+        <GradientStop Offset="0" Color="#FF0F766E" />
+        <GradientStop Offset="0.22" Color="#E00F766E" />
+        <GradientStop Offset="0.42" Color="#A60F766E" />
+        <GradientStop Offset="0.6" Color="#5C0F766E" />
+        <GradientStop Offset="0.78" Color="#240F766E" />
+        <GradientStop Offset="0.9" Color="#0A0F766E" />
+        <GradientStop Offset="1" Color="#000F766E" />
+      </RadialGradientBrush>
+      <RadialGradientBrush x:Key="Bloom4Brush" Opacity="0.6">
+        <GradientStop Offset="0" Color="#FF9A3412" />
+        <GradientStop Offset="0.22" Color="#E09A3412" />
+        <GradientStop Offset="0.42" Color="#A69A3412" />
+        <GradientStop Offset="0.6" Color="#5C9A3412" />
+        <GradientStop Offset="0.78" Color="#249A3412" />
+        <GradientStop Offset="0.9" Color="#0A9A3412" />
+        <GradientStop Offset="1" Color="#009A3412" />
+      </RadialGradientBrush>
+
+      <SolidColorBrush x:Key="GlassFillBrush" Color="#8C1C1C22" />
+      <SolidColorBrush x:Key="GlassStrongFillBrush" Color="#D91C1C22" />
+      <SolidColorBrush x:Key="GlassSidebarFillBrush" Color="#7314141A" />
+      <LinearGradientBrush x:Key="GlassStrokeBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Offset="0" Color="#47FFFFFF" />
+        <GradientStop Offset="0.5" Color="#0FFFFFFF" />
+        <GradientStop Offset="1" Color="#24FFFFFF" />
+      </LinearGradientBrush>
+      <BoxShadows x:Key="GlassShadow">0 12 36 0 #66000000, 0 1 2 0 #40000000</BoxShadows>
+
+      <SolidColorBrush x:Key="FieldFillBrush" Color="#4D2C2C32" />
+      <SolidColorBrush x:Key="FieldStrokeBrush" Color="#26FFFFFF" />
+      <SolidColorBrush x:Key="SecondaryButtonFillBrush" Color="#1FFFFFFF" />
+      <SolidColorBrush x:Key="SecondaryButtonHoverBrush" Color="#2EFFFFFF" />
+      <SolidColorBrush x:Key="SeparatorBrush" Color="#1FFFFFFF" />
+
+      <SolidColorBrush x:Key="NavHoverBrush" Color="#1AFFFFFF" />
+      <SolidColorBrush x:Key="NavSelectedBrush" Color="#0A84FF" />
+      <SolidColorBrush x:Key="NavSelectedTextBrush" Color="#FFFFFF" />
+
+      <SolidColorBrush x:Key="SwitchOnBrush" Color="#30D158" />
+      <SolidColorBrush x:Key="SwitchOffBrush" Color="#39393D" />
+      <SolidColorBrush x:Key="SwitchKnobBrush" Color="#FFFFFF" />
+
+      <SolidColorBrush x:Key="SegmentTrackBrush" Color="#3D767680" />
+      <SolidColorBrush x:Key="SegmentSelectedBrush" Color="#636366" />
+
+      <SolidColorBrush x:Key="DebtBrush" Color="#FF9F6E" />
+      <SolidColorBrush x:Key="PositiveBrush" Color="#30D158" />
+      <SolidColorBrush x:Key="WarningFillBrush" Color="#2EFF9F0A" />
+      <SolidColorBrush x:Key="WarningStrokeBrush" Color="#80FF9F0A" />
+      <SolidColorBrush x:Key="ErrorFillBrush" Color="#2EFF453A" />
+      <SolidColorBrush x:Key="ErrorStrokeBrush" Color="#80FF453A" />
+      <SolidColorBrush x:Key="SuccessFillBrush" Color="#2E30D158" />
+      <SolidColorBrush x:Key="SuccessStrokeBrush" Color="#8030D158" />
+      <SolidColorBrush x:Key="BadgeFillBrush" Color="#3D767680" />
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+
+  <CornerRadius x:Key="GlassRadius">22</CornerRadius>
+  <CornerRadius x:Key="FieldRadius">12</CornerRadius>
+  <CornerRadius x:Key="PillRadius">999</CornerRadius>
+</ResourceDictionary>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED from docs/strings.tsv by tools/gen_resx.py. Edit the TSV, not this file. -->
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="App_Title" xml:space="preserve"><value>Personal Finance OS</value></data>
+  <data name="App_Tagline" xml:space="preserve"><value>Private and offline</value></data>
+  <data name="Nav_Dashboard" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Nav_Transactions" xml:space="preserve"><value>Transactions</value></data>
+  <data name="Nav_Accounts" xml:space="preserve"><value>Accounts</value></data>
+  <data name="Nav_Budgets" xml:space="preserve"><value>Budgets &amp; Analysis</value></data>
+  <data name="Nav_Forecasts" xml:space="preserve"><value>Forecasts</value></data>
+  <data name="Nav_Wishlist" xml:space="preserve"><value>Wishlist</value></data>
+  <data name="Nav_Assets" xml:space="preserve"><value>Assets &amp; Investments</value></data>
+  <data name="Nav_Assistant" xml:space="preserve"><value>Assistant</value></data>
+  <data name="Nav_Reports" xml:space="preserve"><value>Reports</value></data>
+  <data name="Nav_Settings" xml:space="preserve"><value>Settings &amp; Backup</value></data>
+  <data name="Placeholder_Title" xml:space="preserve"><value>Coming soon</value></data>
+  <data name="Placeholder_Body" xml:space="preserve"><value>This part of the app is built in phase {0}.</value></data>
+  <data name="Dashboard_Welcome" xml:space="preserve"><value>Welcome</value></data>
+  <data name="Dashboard_Intro" xml:space="preserve"><value>This is the foundation of your finance app. Start by adding your accounts with their current balance.</value></data>
+  <data name="Dashboard_AccountsSummary" xml:space="preserve"><value>{0} active accounts</value></data>
+  <data name="Dashboard_GoToAccounts" xml:space="preserve"><value>Go to accounts</value></data>
+  <data name="Dashboard_OpeningTotal" xml:space="preserve"><value>Total of opening balances (liquid accounts)</value></data>
+  <data name="Dashboard_PhaseNote" xml:space="preserve"><value>Balances will include transactions from phase 2 onwards.</value></data>
+  <data name="Accounts_Title" xml:space="preserve"><value>Accounts</value></data>
+  <data name="Accounts_Add" xml:space="preserve"><value>Add account</value></data>
+  <data name="Accounts_Empty" xml:space="preserve"><value>No accounts yet. Add your first account to get started.</value></data>
+  <data name="Accounts_Name" xml:space="preserve"><value>Name</value></data>
+  <data name="Accounts_Type" xml:space="preserve"><value>Type</value></data>
+  <data name="Accounts_OpeningDate" xml:space="preserve"><value>Balance date</value></data>
+  <data name="Accounts_OpeningBalance" xml:space="preserve"><value>Balance on that date</value></data>
+  <data name="Accounts_OutstandingBalance" xml:space="preserve"><value>Outstanding amount on that date</value></data>
+  <data name="Accounts_OutstandingHint" xml:space="preserve"><value>Enter what you owe on the card. It is recorded as a debt, not as available money.</value></data>
+  <data name="Accounts_Share" xml:space="preserve"><value>Your ownership share (%)</value></data>
+  <data name="Accounts_ShareHint" xml:space="preserve"><value>For a joint account, the part that belongs to you. You can change this later.</value></data>
+  <data name="Accounts_Notes" xml:space="preserve"><value>Notes (optional)</value></data>
+  <data name="Accounts_Save" xml:space="preserve"><value>Save account</value></data>
+  <data name="Accounts_Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Accounts_Archive" xml:space="preserve"><value>Archive</value></data>
+  <data name="Accounts_ShowArchived" xml:space="preserve"><value>Show archived accounts</value></data>
+  <data name="Accounts_Archived" xml:space="preserve"><value>Archived</value></data>
+  <data name="Accounts_OpeningLabel" xml:space="preserve"><value>Opening balance</value></data>
+  <data name="Accounts_Since" xml:space="preserve"><value>since {0}</value></data>
+  <data name="Accounts_YourPart" xml:space="preserve"><value>your part: {0}</value></data>
+  <data name="Accounts_Saved" xml:space="preserve"><value>Account saved.</value></data>
+  <data name="AccountType_PersonalCurrent" xml:space="preserve"><value>Personal current account</value></data>
+  <data name="AccountType_JointCurrent" xml:space="preserve"><value>Joint current account</value></data>
+  <data name="AccountType_Savings" xml:space="preserve"><value>Savings account</value></data>
+  <data name="AccountType_CreditCard" xml:space="preserve"><value>Credit card (VISA)</value></data>
+  <data name="AccountType_Pension" xml:space="preserve"><value>Pension savings</value></data>
+  <data name="AccountType_Investment" xml:space="preserve"><value>Investment account (ETFs)</value></data>
+  <data name="AccountType_Cash" xml:space="preserve"><value>Cash wallet</value></data>
+  <data name="AccountType_Other" xml:space="preserve"><value>Other</value></data>
+  <data name="Settings_Title" xml:space="preserve"><value>Settings &amp; Backup</value></data>
+  <data name="Settings_Language" xml:space="preserve"><value>Language</value></data>
+  <data name="Settings_DataSection" xml:space="preserve"><value>Your data</value></data>
+  <data name="Settings_DataFolder" xml:space="preserve"><value>Data folder</value></data>
+  <data name="Settings_DataFolderNote" xml:space="preserve"><value>Your data is stored only on this computer, in your own Windows user folder. Installing or updating the app never touches it.</value></data>
+  <data name="Settings_OpenFolder" xml:space="preserve"><value>Open folder</value></data>
+  <data name="Settings_Encryption" xml:space="preserve"><value>The database is not encrypted. Anyone with access to your Windows account can read it. Protect your Windows account with a password.</value></data>
+  <data name="Settings_About" xml:space="preserve"><value>About</value></data>
+  <data name="Settings_Version" xml:space="preserve"><value>App version</value></data>
+  <data name="Settings_Schema" xml:space="preserve"><value>Database schema version</value></data>
+  <data name="Settings_Offline" xml:space="preserve"><value>This app makes no internet connections.</value></data>
+  <data name="Settings_BackupComing" xml:space="preserve"><value>Manual backup and restore are added in phase 8. Automatic verified backups are already made before every database upgrade.</value></data>
+  <data name="Language_Dutch" xml:space="preserve"><value>Nederlands</value></data>
+  <data name="Language_English" xml:space="preserve"><value>English</value></data>
+  <data name="Error_account_name_required" xml:space="preserve"><value>Please enter a name.</value></data>
+  <data name="Error_account_name_tooLong" xml:space="preserve"><value>The name is too long (max 100 characters).</value></data>
+  <data name="Error_account_notes_tooLong" xml:space="preserve"><value>The notes are too long (max 1000 characters).</value></data>
+  <data name="Error_account_share_zero" xml:space="preserve"><value>The ownership share must be more than 0%.</value></data>
+  <data name="Error_account_share_invalid" xml:space="preserve"><value>Enter a share between 0.01 and 100.</value></data>
+  <data name="Error_account_opening_creditCardPositive" xml:space="preserve"><value>A credit card balance is recorded as an amount owed.</value></data>
+  <data name="Error_account_notFound" xml:space="preserve"><value>This account no longer exists.</value></data>
+  <data name="Error_amount_invalid" xml:space="preserve"><value>This is not a valid amount. Examples: 1250 or 1.250,40</value></data>
+  <data name="Error_date_required" xml:space="preserve"><value>Please choose a date.</value></data>
+  <data name="Error_unexpected" xml:space="preserve"><value>Something went wrong. Your data was not changed.</value></data>
+  <data name="Warning_amount_ambiguous" xml:space="preserve"><value>Read as {0}. Check that this is correct.</value></data>
+  <data name="Startup_Title" xml:space="preserve"><value>Your data needs attention</value></data>
+  <data name="Startup_DataFolder" xml:space="preserve"><value>Data folder: {0}</value></data>
+  <data name="Startup_BackupFile" xml:space="preserve"><value>Backup: {0}</value></data>
+  <data name="Startup_Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Startup_OpenFolder" xml:space="preserve"><value>Open data folder</value></data>
+  <data name="Startup_StartNew" xml:space="preserve"><value>Start a new, empty profile</value></data>
+  <data name="Startup_StartNewConfirm" xml:space="preserve"><value>I understand that this starts from an empty database</value></data>
+  <data name="Startup_DatabaseMissing" xml:space="preserve"><value>Your financial database could not be found, although this computer had a profile before. The app did not create a new, empty database, so nothing is overwritten. If you have a backup, put it back as finance.db in the data folder. Only start a new profile if you are sure you want to begin from scratch.</value></data>
+  <data name="Startup_DatabaseNewer" xml:space="preserve"><value>Your database was created by a newer version of the app. Install the latest version to open it. Nothing was changed.</value></data>
+  <data name="Startup_DatabaseUnreadable" xml:space="preserve"><value>Your database could not be read. It may be damaged or not be a Personal Finance OS file. Nothing was changed. Restore a backup or contact the person who gave you the app.</value></data>
+  <data name="Startup_BackupFailed" xml:space="preserve"><value>Before updating your database the app must make a backup, but that failed. The update was not started and your data is unchanged. Check that the disk is not full and try again.</value></data>
+  <data name="Startup_MigrationRestored" xml:space="preserve"><value>The database update failed. Your original database was restored from the automatic backup and is unchanged. Please report this problem; do not use this app version for now.</value></data>
+  <data name="Startup_MigrationManual" xml:space="preserve"><value>The database update failed and the automatic restore did not succeed. Your data is safe in the backup file shown below. Do not delete anything in the data folder and ask for help.</value></data>
+  <data name="Settings_Appearance" xml:space="preserve"><value>Appearance</value></data>
+  <data name="Settings_Theme" xml:space="preserve"><value>Theme</value></data>
+  <data name="Settings_ThemeHint" xml:space="preserve"><value>"System" follows the light or dark setting of Windows.</value></data>
+  <data name="Theme_System" xml:space="preserve"><value>System</value></data>
+  <data name="Theme_Light" xml:space="preserve"><value>Light</value></data>
+  <data name="Theme_Dark" xml:space="preserve"><value>Dark</value></data>
+  <data name="Dashboard_Available" xml:space="preserve"><value>Available in current accounts and cash</value></data>
+  <data name="Dashboard_BasedOnOpening" xml:space="preserve"><value>Based on opening balances</value></data>
+  <data name="Accounts_Subtitle" xml:space="preserve"><value>Your accounts and their starting balances</value></data>
+  <data name="Accounts_ListTitle" xml:space="preserve"><value>All accounts</value></data>
+</root>

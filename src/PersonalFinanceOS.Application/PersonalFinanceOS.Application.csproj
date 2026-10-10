@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Use cases and calculations. Depends only on Domain; storage is reached through interfaces. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalFinanceOS.Domain\PersonalFinanceOS.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="PersonalFinanceOS.Tests" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,97 @@
+App_Title	Personal Finance OS	Personal Finance OS
+App_Tagline	Private and offline	Privé en offline
+Nav_Dashboard	Dashboard	Dashboard
+Nav_Transactions	Transactions	Transacties
+Nav_Accounts	Accounts	Rekeningen
+Nav_Budgets	Budgets & Analysis	Budgetten & analyse
+Nav_Forecasts	Forecasts	Prognoses
+Nav_Wishlist	Wishlist	Verlanglijst
+Nav_Assets	Assets & Investments	Bezittingen & beleggingen
+Nav_Assistant	Assistant	Assistent
+Nav_Reports	Reports	Rapporten
+Nav_Settings	Settings & Backup	Instellingen & back-up
+Placeholder_Title	Coming soon	Binnenkort
+Placeholder_Body	This part of the app is built in phase {0}.	Dit onderdeel wordt gebouwd in fase {0}.
+Dashboard_Welcome	Welcome	Welkom
+Dashboard_Intro	This is the foundation of your finance app. Start by adding your accounts with their current balance.	Dit is de basis van je financiële app. Begin met je rekeningen toe te voegen, met hun huidige saldo.
+Dashboard_AccountsSummary	{0} active accounts	{0} actieve rekeningen
+Dashboard_GoToAccounts	Go to accounts	Naar rekeningen
+Dashboard_OpeningTotal	Total of opening balances (liquid accounts)	Totaal van openingssaldi (beschikbare rekeningen)
+Dashboard_PhaseNote	Balances will include transactions from phase 2 onwards.	Vanaf fase 2 tellen ook transacties mee in de saldi.
+Accounts_Title	Accounts	Rekeningen
+Accounts_Add	Add account	Rekening toevoegen
+Accounts_Empty	No accounts yet. Add your first account to get started.	Nog geen rekeningen. Voeg je eerste rekening toe om te beginnen.
+Accounts_Name	Name	Naam
+Accounts_Type	Type	Soort
+Accounts_OpeningDate	Balance date	Datum saldo
+Accounts_OpeningBalance	Balance on that date	Saldo op die datum
+Accounts_OutstandingBalance	Outstanding amount on that date	Openstaand bedrag op die datum
+Accounts_OutstandingHint	Enter what you owe on the card. It is recorded as a debt, not as available money.	Vul in wat je verschuldigd bent op de kaart. Dit wordt als schuld geregistreerd, niet als beschikbaar geld.
+Accounts_Share	Your ownership share (%)	Jouw eigendomsaandeel (%)
+Accounts_ShareHint	For a joint account, the part that belongs to you. You can change this later.	Bij een gezamenlijke rekening het deel dat van jou is. Je kunt dit later aanpassen.
+Accounts_Notes	Notes (optional)	Notities (optioneel)
+Accounts_Save	Save account	Rekening opslaan
+Accounts_Cancel	Cancel	Annuleren
+Accounts_Archive	Archive	Archiveren
+Accounts_ShowArchived	Show archived accounts	Gearchiveerde rekeningen tonen
+Accounts_Archived	Archived	Gearchiveerd
+Accounts_OpeningLabel	Opening balance	Openingssaldo
+Accounts_Since	since {0}	sinds {0}
+Accounts_YourPart	your part: {0}	jouw deel: {0}
+Accounts_Saved	Account saved.	Rekening opgeslagen.
+AccountType_PersonalCurrent	Personal current account	Persoonlijke zichtrekening
+AccountType_JointCurrent	Joint current account	Gezamenlijke zichtrekening
+AccountType_Savings	Savings account	Spaarrekening
+AccountType_CreditCard	Credit card (VISA)	Kredietkaart (VISA)
+AccountType_Pension	Pension savings	Pensioensparen
+AccountType_Investment	Investment account (ETFs)	Beleggingsrekening (ETF's)
+AccountType_Cash	Cash wallet	Cash / portemonnee
+AccountType_Other	Other	Andere
+Settings_Title	Settings & Backup	Instellingen & back-up
+Settings_Language	Language	Taal
+Settings_DataSection	Your data	Jouw gegevens
+Settings_DataFolder	Data folder	Gegevensmap
+Settings_DataFolderNote	Your data is stored only on this computer, in your own Windows user folder. Installing or updating the app never touches it.	Je gegevens staan alleen op deze computer, in je eigen Windows-gebruikersmap. Installeren of bijwerken van de app raakt deze map nooit aan.
+Settings_OpenFolder	Open folder	Map openen
+Settings_Encryption	The database is not encrypted. Anyone with access to your Windows account can read it. Protect your Windows account with a password.	De database is niet versleuteld. Iedereen met toegang tot je Windows-account kan ze lezen. Bescherm je Windows-account met een wachtwoord.
+Settings_About	About	Over
+Settings_Version	App version	App-versie
+Settings_Schema	Database schema version	Versie databaseschema
+Settings_Offline	This app makes no internet connections.	Deze app maakt geen internetverbindingen.
+Settings_BackupComing	Manual backup and restore are added in phase 8. Automatic verified backups are already made before every database upgrade.	Handmatige back-up en herstel komen in fase 8. Vóór elke database-upgrade wordt nu al automatisch een gecontroleerde back-up gemaakt.
+Language_Dutch	Nederlands	Nederlands
+Language_English	English	English
+Error_account_name_required	Please enter a name.	Vul een naam in.
+Error_account_name_tooLong	The name is too long (max 100 characters).	De naam is te lang (max. 100 tekens).
+Error_account_notes_tooLong	The notes are too long (max 1000 characters).	De notities zijn te lang (max. 1000 tekens).
+Error_account_share_zero	The ownership share must be more than 0%.	Het eigendomsaandeel moet meer dan 0% zijn.
+Error_account_share_invalid	Enter a share between 0.01 and 100.	Vul een aandeel in tussen 0,01 en 100.
+Error_account_opening_creditCardPositive	A credit card balance is recorded as an amount owed.	Een kredietkaartsaldo wordt geregistreerd als verschuldigd bedrag.
+Error_account_notFound	This account no longer exists.	Deze rekening bestaat niet meer.
+Error_amount_invalid	This is not a valid amount. Examples: 1250 or 1.250,40	Dit is geen geldig bedrag. Voorbeelden: 1250 of 1.250,40
+Error_date_required	Please choose a date.	Kies een datum.
+Error_unexpected	Something went wrong. Your data was not changed.	Er ging iets mis. Je gegevens zijn niet gewijzigd.
+Warning_amount_ambiguous	Read as {0}. Check that this is correct.	Gelezen als {0}. Controleer of dit klopt.
+Startup_Title	Your data needs attention	Je gegevens vragen aandacht
+Startup_DataFolder	Data folder: {0}	Gegevensmap: {0}
+Startup_BackupFile	Backup: {0}	Back-up: {0}
+Startup_Close	Close	Sluiten
+Startup_OpenFolder	Open data folder	Gegevensmap openen
+Startup_StartNew	Start a new, empty profile	Een nieuw, leeg profiel starten
+Startup_StartNewConfirm	I understand that this starts from an empty database	Ik begrijp dat ik dan met een lege database begin
+Startup_DatabaseMissing	Your financial database could not be found, although this computer had a profile before. The app did not create a new, empty database, so nothing is overwritten. If you have a backup, put it back as finance.db in the data folder. Only start a new profile if you are sure you want to begin from scratch.	Je financiële database is niet gevonden, hoewel er op deze computer al een profiel was. De app heeft geen nieuwe, lege database gemaakt, dus er is niets overschreven. Heb je een back-up, zet die dan terug als finance.db in de gegevensmap. Start alleen een nieuw profiel als je zeker opnieuw wilt beginnen.
+Startup_DatabaseNewer	Your database was created by a newer version of the app. Install the latest version to open it. Nothing was changed.	Je database is gemaakt door een nieuwere versie van de app. Installeer de nieuwste versie om ze te openen. Er is niets gewijzigd.
+Startup_DatabaseUnreadable	Your database could not be read. It may be damaged or not be a Personal Finance OS file. Nothing was changed. Restore a backup or contact the person who gave you the app.	Je database kon niet gelezen worden. Ze is mogelijk beschadigd of geen Personal Finance OS-bestand. Er is niets gewijzigd. Zet een back-up terug of neem contact op met wie je de app gaf.
+Startup_BackupFailed	Before updating your database the app must make a backup, but that failed. The update was not started and your data is unchanged. Check that the disk is not full and try again.	Voor het bijwerken van je database moet de app een back-up maken, maar dat is mislukt. De update is niet gestart en je gegevens zijn ongewijzigd. Controleer of de schijf niet vol is en probeer opnieuw.
+Startup_MigrationRestored	The database update failed. Your original database was restored from the automatic backup and is unchanged. Please report this problem; do not use this app version for now.	De database-update is mislukt. Je oorspronkelijke database is teruggezet vanuit de automatische back-up en is ongewijzigd. Meld dit probleem en gebruik deze app-versie voorlopig niet.
+Startup_MigrationManual	The database update failed and the automatic restore did not succeed. Your data is safe in the backup file shown below. Do not delete anything in the data folder and ask for help.	De database-update is mislukt en het automatisch terugzetten is niet gelukt. Je gegevens zitten veilig in het back-upbestand hieronder. Verwijder niets in de gegevensmap en vraag hulp.
+Settings_Appearance	Appearance	Weergave
+Settings_Theme	Theme	Thema
+Settings_ThemeHint	"System" follows the light or dark setting of Windows.	"Systeem" volgt de lichte of donkere instelling van Windows.
+Theme_System	System	Systeem
+Theme_Light	Light	Licht
+Theme_Dark	Dark	Donker
+Dashboard_Available	Available in current accounts and cash	Beschikbaar op zichtrekeningen en cash
+Dashboard_BasedOnOpening	Based on opening balances	Op basis van openingssaldi
+Accounts_Subtitle	Your accounts and their starting balances	Je rekeningen en hun startsaldo
+Accounts_ListTitle	All accounts	Alle rekeningen

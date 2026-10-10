@@ -1,0 +1,34 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:v="using:PersonalFinanceOS.App.Views"
+             x:Class="PersonalFinanceOS.App.App"
+             RequestedThemeVariant="Default">
+  <!-- "Default" follows the Windows light/dark setting; the user can override it in Settings. -->
+
+  <Application.DataTemplates>
+    <!-- Explicit page mapping: no reflection-based view lookup. -->
+    <DataTemplate DataType="vm:DashboardViewModel"><v:DashboardView /></DataTemplate>
+    <DataTemplate DataType="vm:AccountsViewModel"><v:AccountsView /></DataTemplate>
+    <DataTemplate DataType="vm:SettingsViewModel"><v:SettingsView /></DataTemplate>
+    <DataTemplate DataType="vm:PlaceholderViewModel"><v:PlaceholderView /></DataTemplate>
+  </Application.DataTemplates>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://PersonalFinanceOS/Styles/Theme.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme>
+      <FluentTheme.Palettes>
+        <ColorPaletteResources x:Key="Light" Accent="#007AFF" />
+        <ColorPaletteResources x:Key="Dark" Accent="#0A84FF" />
+      </FluentTheme.Palettes>
+    </FluentTheme>
+    <StyleInclude Source="avares://PersonalFinanceOS/Styles/Controls.axaml" />
+  </Application.Styles>
+</Application>

@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PersonalFinanceOS.App.Views.Backdrop"
+             IsHitTestVisible="False" ClipToBounds="True">
+  <!--
+    The colourful layer behind the glass. Soft colour blooms make the translucent panels read as glass.
+    On Windows 11 the window itself also uses Mica/Acrylic, so the desktop subtly shows through.
+  -->
+  <Panel>
+    <Border Name="Base" Background="{DynamicResource BackdropBaseBrush}" />
+    <Viewbox Stretch="UniformToFill">
+    <Canvas Name="Blooms" Width="1440" Height="900">
+      <Ellipse Width="900" Height="900" Canvas.Left="-280" Canvas.Top="-360" Fill="{DynamicResource Bloom1Brush}" />
+      <Ellipse Width="820" Height="820" Canvas.Left="620" Canvas.Top="-300" Fill="{DynamicResource Bloom2Brush}" />
+      <Ellipse Width="760" Height="760" Canvas.Left="-120" Canvas.Top="420" Fill="{DynamicResource Bloom3Brush}" />
+      <Ellipse Width="880" Height="880" Canvas.Left="760" Canvas.Top="360" Fill="{DynamicResource Bloom4Brush}" />
+    </Canvas>
+    </Viewbox>
+  </Panel>
+</UserControl>

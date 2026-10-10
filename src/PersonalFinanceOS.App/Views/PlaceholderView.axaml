@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.PlaceholderView"
+             x:DataType="vm:PlaceholderViewModel">
+  <StackPanel Spacing="20">
+    <TextBlock Classes="largeTitle" Text="{Binding Title}" />
+    <Border Classes="glass" Padding="28,26">
+      <StackPanel Spacing="6">
+        <TextBlock Classes="title" Text="{l:T Placeholder_Title}" />
+        <TextBlock Classes="secondary" Text="{Binding Body}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+        xmlns:v="using:PersonalFinanceOS.App.Views"
+        xmlns:l="using:PersonalFinanceOS.App.Localization"
+        x:Class="PersonalFinanceOS.App.Views.StartupProblemWindow"
+        x:DataType="vm:StartupProblemViewModel"
+        Title="{l:T App_Title}"
+        Width="680" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        Foreground="{DynamicResource TextPrimaryBrush}">
+  <Panel>
+    <v:Backdrop x:Name="WindowBackdrop" />
+    <Border Classes="glass strong" Margin="24" Padding="28,26">
+      <StackPanel Spacing="16">
+        <TextBlock Classes="title" FontSize="22" Text="{l:T Startup_Title}" />
+        <Border Classes="warning">
+          <TextBlock Text="{Binding Message, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+        </Border>
+        <SelectableTextBlock Classes="secondary" Text="{Binding DataFolderText}" TextWrapping="Wrap" />
+        <SelectableTextBlock Classes="secondary" Text="{Binding BackupText}" TextWrapping="Wrap" IsVisible="{Binding HasBackup}" />
+
+        <StackPanel Spacing="12" IsVisible="{Binding CanStartNew}">
+          <Border Classes="separator" />
+          <ToggleSwitch Content="{l:T Startup_StartNewConfirm}" IsChecked="{Binding ConfirmStartNew}" />
+          <Button Content="{l:T Startup_StartNew}" Command="{Binding StartNewCommand}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Content="{l:T Startup_OpenFolder}" Command="{Binding OpenFolderCommand}" />
+          <Button Classes="primary" Content="{l:T Startup_Close}" Command="{Binding CloseCommand}" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+  </Panel>
+</Window>

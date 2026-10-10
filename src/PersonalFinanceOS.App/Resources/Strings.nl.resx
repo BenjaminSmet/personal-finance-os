@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED from docs/strings.tsv by tools/gen_resx.py. Edit the TSV, not this file. -->
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="App_Title" xml:space="preserve"><value>Personal Finance OS</value></data>
+  <data name="App_Tagline" xml:space="preserve"><value>Privé en offline</value></data>
+  <data name="Nav_Dashboard" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Nav_Transactions" xml:space="preserve"><value>Transacties</value></data>
+  <data name="Nav_Accounts" xml:space="preserve"><value>Rekeningen</value></data>
+  <data name="Nav_Budgets" xml:space="preserve"><value>Budgetten &amp; analyse</value></data>
+  <data name="Nav_Forecasts" xml:space="preserve"><value>Prognoses</value></data>
+  <data name="Nav_Wishlist" xml:space="preserve"><value>Verlanglijst</value></data>
+  <data name="Nav_Assets" xml:space="preserve"><value>Bezittingen &amp; beleggingen</value></data>
+  <data name="Nav_Assistant" xml:space="preserve"><value>Assistent</value></data>
+  <data name="Nav_Reports" xml:space="preserve"><value>Rapporten</value></data>
+  <data name="Nav_Settings" xml:space="preserve"><value>Instellingen &amp; back-up</value></data>
+  <data name="Placeholder_Title" xml:space="preserve"><value>Binnenkort</value></data>
+  <data name="Placeholder_Body" xml:space="preserve"><value>Dit onderdeel wordt gebouwd in fase {0}.</value></data>
+  <data name="Dashboard_Welcome" xml:space="preserve"><value>Welkom</value></data>
+  <data name="Dashboard_Intro" xml:space="preserve"><value>Dit is de basis van je financiële app. Begin met je rekeningen toe te voegen, met hun huidige saldo.</value></data>
+  <data name="Dashboard_AccountsSummary" xml:space="preserve"><value>{0} actieve rekeningen</value></data>
+  <data name="Dashboard_GoToAccounts" xml:space="preserve"><value>Naar rekeningen</value></data>
+  <data name="Dashboard_OpeningTotal" xml:space="preserve"><value>Totaal van openingssaldi (beschikbare rekeningen)</value></data>
+  <data name="Dashboard_PhaseNote" xml:space="preserve"><value>Vanaf fase 2 tellen ook transacties mee in de saldi.</value></data>
+  <data name="Accounts_Title" xml:space="preserve"><value>Rekeningen</value></data>
+  <data name="Accounts_Add" xml:space="preserve"><value>Rekening toevoegen</value></data>
+  <data name="Accounts_Empty" xml:space="preserve"><value>Nog geen rekeningen. Voeg je eerste rekening toe om te beginnen.</value></data>
+  <data name="Accounts_Name" xml:space="preserve"><value>Naam</value></data>
+  <data name="Accounts_Type" xml:space="preserve"><value>Soort</value></data>
+  <data name="Accounts_OpeningDate" xml:space="preserve"><value>Datum saldo</value></data>
+  <data name="Accounts_OpeningBalance" xml:space="preserve"><value>Saldo op die datum</value></data>
+  <data name="Accounts_OutstandingBalance" xml:space="preserve"><value>Openstaand bedrag op die datum</value></data>
+  <data name="Accounts_OutstandingHint" xml:space="preserve"><value>Vul in wat je verschuldigd bent op de kaart. Dit wordt als schuld geregistreerd, niet als beschikbaar geld.</value></data>
+  <data name="Accounts_Share" xml:space="preserve"><value>Jouw eigendomsaandeel (%)</value></data>
+  <data name="Accounts_ShareHint" xml:space="preserve"><value>Bij een gezamenlijke rekening het deel dat van jou is. Je kunt dit later aanpassen.</value></data>
+  <data name="Accounts_Notes" xml:space="preserve"><value>Notities (optioneel)</value></data>
+  <data name="Accounts_Save" xml:space="preserve"><value>Rekening opslaan</value></data>
+  <data name="Accounts_Cancel" xml:space="preserve"><value>Annuleren</value></data>
+  <data name="Accounts_Archive" xml:space="preserve"><value>Archiveren</value></data>
+  <data name="Accounts_ShowArchived" xml:space="preserve"><value>Gearchiveerde rekeningen tonen</value></data>
+  <data name="Accounts_Archived" xml:space="preserve"><value>Gearchiveerd</value></data>
+  <data name="Accounts_OpeningLabel" xml:space="preserve"><value>Openingssaldo</value></data>
+  <data name="Accounts_Since" xml:space="preserve"><value>sinds {0}</value></data>
+  <data name="Accounts_YourPart" xml:space="preserve"><value>jouw deel: {0}</value></data>
+  <data name="Accounts_Saved" xml:space="preserve"><value>Rekening opgeslagen.</value></data>
+  <data name="AccountType_PersonalCurrent" xml:space="preserve"><value>Persoonlijke zichtrekening</value></data>
+  <data name="AccountType_JointCurrent" xml:space="preserve"><value>Gezamenlijke zichtrekening</value></data>
+  <data name="AccountType_Savings" xml:space="preserve"><value>Spaarrekening</value></data>
+  <data name="AccountType_CreditCard" xml:space="preserve"><value>Kredietkaart (VISA)</value></data>
+  <data name="AccountType_Pension" xml:space="preserve"><value>Pensioensparen</value></data>
+  <data name="AccountType_Investment" xml:space="preserve"><value>Beleggingsrekening (ETF's)</value></data>
+  <data name="AccountType_Cash" xml:space="preserve"><value>Cash / portemonnee</value></data>
+  <data name="AccountType_Other" xml:space="preserve"><value>Andere</value></data>
+  <data name="Settings_Title" xml:space="preserve"><value>Instellingen &amp; back-up</value></data>
+  <data name="Settings_Language" xml:space="preserve"><value>Taal</value></data>
+  <data name="Settings_DataSection" xml:space="preserve"><value>Jouw gegevens</value></data>
+  <data name="Settings_DataFolder" xml:space="preserve"><value>Gegevensmap</value></data>
+  <data name="Settings_DataFolderNote" xml:space="preserve"><value>Je gegevens staan alleen op deze computer, in je eigen Windows-gebruikersmap. Installeren of bijwerken van de app raakt deze map nooit aan.</value></data>
+  <data name="Settings_OpenFolder" xml:space="preserve"><value>Map openen</value></data>
+  <data name="Settings_Encryption" xml:space="preserve"><value>De database is niet versleuteld. Iedereen met toegang tot je Windows-account kan ze lezen. Bescherm je Windows-account met een wachtwoord.</value></data>
+  <data name="Settings_About" xml:space="preserve"><value>Over</value></data>
+  <data name="Settings_Version" xml:space="preserve"><value>App-versie</value></data>
+  <data name="Settings_Schema" xml:space="preserve"><value>Versie databaseschema</value></data>
+  <data name="Settings_Offline" xml:space="preserve"><value>Deze app maakt geen internetverbindingen.</value></data>
+  <data name="Settings_BackupComing" xml:space="preserve"><value>Handmatige back-up en herstel komen in fase 8. Vóór elke database-upgrade wordt nu al automatisch een gecontroleerde back-up gemaakt.</value></data>
+  <data name="Language_Dutch" xml:space="preserve"><value>Nederlands</value></data>
+  <data name="Language_English" xml:space="preserve"><value>English</value></data>
+  <data name="Error_account_name_required" xml:space="preserve"><value>Vul een naam in.</value></data>
+  <data name="Error_account_name_tooLong" xml:space="preserve"><value>De naam is te lang (max. 100 tekens).</value></data>
+  <data name="Error_account_notes_tooLong" xml:space="preserve"><value>De notities zijn te lang (max. 1000 tekens).</value></data>
+  <data name="Error_account_share_zero" xml:space="preserve"><value>Het eigendomsaandeel moet meer dan 0% zijn.</value></data>
+  <data name="Error_account_share_invalid" xml:space="preserve"><value>Vul een aandeel in tussen 0,01 en 100.</value></data>
+  <data name="Error_account_opening_creditCardPositive" xml:space="preserve"><value>Een kredietkaartsaldo wordt geregistreerd als verschuldigd bedrag.</value></data>
+  <data name="Error_account_notFound" xml:space="preserve"><value>Deze rekening bestaat niet meer.</value></data>
+  <data name="Error_amount_invalid" xml:space="preserve"><value>Dit is geen geldig bedrag. Voorbeelden: 1250 of 1.250,40</value></data>
+  <data name="Error_date_required" xml:space="preserve"><value>Kies een datum.</value></data>
+  <data name="Error_unexpected" xml:space="preserve"><value>Er ging iets mis. Je gegevens zijn niet gewijzigd.</value></data>
+  <data name="Warning_amount_ambiguous" xml:space="preserve"><value>Gelezen als {0}. Controleer of dit klopt.</value></data>
+  <data name="Startup_Title" xml:space="preserve"><value>Je gegevens vragen aandacht</value></data>
+  <data name="Startup_DataFolder" xml:space="preserve"><value>Gegevensmap: {0}</value></data>
+  <data name="Startup_BackupFile" xml:space="preserve"><value>Back-up: {0}</value></data>
+  <data name="Startup_Close" xml:space="preserve"><value>Sluiten</value></data>
+  <data name="Startup_OpenFolder" xml:space="preserve"><value>Gegevensmap openen</value></data>
+  <data name="Startup_StartNew" xml:space="preserve"><value>Een nieuw, leeg profiel starten</value></data>
+  <data name="Startup_StartNewConfirm" xml:space="preserve"><value>Ik begrijp dat ik dan met een lege database begin</value></data>
+  <data name="Startup_DatabaseMissing" xml:space="preserve"><value>Je financiële database is niet gevonden, hoewel er op deze computer al een profiel was. De app heeft geen nieuwe, lege database gemaakt, dus er is niets overschreven. Heb je een back-up, zet die dan terug als finance.db in de gegevensmap. Start alleen een nieuw profiel als je zeker opnieuw wilt beginnen.</value></data>
+  <data name="Startup_DatabaseNewer" xml:space="preserve"><value>Je database is gemaakt door een nieuwere versie van de app. Installeer de nieuwste versie om ze te openen. Er is niets gewijzigd.</value></data>
+  <data name="Startup_DatabaseUnreadable" xml:space="preserve"><value>Je database kon niet gelezen worden. Ze is mogelijk beschadigd of geen Personal Finance OS-bestand. Er is niets gewijzigd. Zet een back-up terug of neem contact op met wie je de app gaf.</value></data>
+  <data name="Startup_BackupFailed" xml:space="preserve"><value>Voor het bijwerken van je database moet de app een back-up maken, maar dat is mislukt. De update is niet gestart en je gegevens zijn ongewijzigd. Controleer of de schijf niet vol is en probeer opnieuw.</value></data>
+  <data name="Startup_MigrationRestored" xml:space="preserve"><value>De database-update is mislukt. Je oorspronkelijke database is teruggezet vanuit de automatische back-up en is ongewijzigd. Meld dit probleem en gebruik deze app-versie voorlopig niet.</value></data>
+  <data name="Startup_MigrationManual" xml:space="preserve"><value>De database-update is mislukt en het automatisch terugzetten is niet gelukt. Je gegevens zitten veilig in het back-upbestand hieronder. Verwijder niets in de gegevensmap en vraag hulp.</value></data>
+  <data name="Settings_Appearance" xml:space="preserve"><value>Weergave</value></data>
+  <data name="Settings_Theme" xml:space="preserve"><value>Thema</value></data>
+  <data name="Settings_ThemeHint" xml:space="preserve"><value>"Systeem" volgt de lichte of donkere instelling van Windows.</value></data>
+  <data name="Theme_System" xml:space="preserve"><value>Systeem</value></data>
+  <data name="Theme_Light" xml:space="preserve"><value>Licht</value></data>
+  <data name="Theme_Dark" xml:space="preserve"><value>Donker</value></data>
+  <data name="Dashboard_Available" xml:space="preserve"><value>Beschikbaar op zichtrekeningen en cash</value></data>
+  <data name="Dashboard_BasedOnOpening" xml:space="preserve"><value>Op basis van openingssaldi</value></data>
+  <data name="Accounts_Subtitle" xml:space="preserve"><value>Je rekeningen en hun startsaldo</value></data>
+  <data name="Accounts_ListTitle" xml:space="preserve"><value>Alle rekeningen</value></data>
+</root>

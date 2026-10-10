@@ -1,0 +1,124 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.AccountsView"
+             x:DataType="vm:AccountsViewModel">
+  <StackPanel Spacing="18">
+    <Grid ColumnDefinitions="*,Auto">
+      <StackPanel Spacing="2">
+        <TextBlock Classes="largeTitle" Text="{l:T Accounts_Title}" />
+        <TextBlock Classes="secondary" Text="{l:T Accounts_Subtitle}" />
+      </StackPanel>
+      <Button Grid.Column="1" Classes="primary" Content="{l:T Accounts_Add}" VerticalAlignment="Center"
+              Command="{Binding OpenFormCommand}" IsVisible="{Binding !IsFormOpen}" HotKey="Ctrl+N" />
+    </Grid>
+
+    <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" />
+    </Border>
+
+    <!-- New account form -->
+    <Border Classes="glass strong" IsVisible="{Binding IsFormOpen}" Padding="26,24">
+      <StackPanel Spacing="18">
+        <TextBlock Classes="title" Text="{l:T Accounts_Add}" />
+
+        <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,16,Auto,16,Auto">
+          <StackPanel Grid.Row="0" Grid.Column="0">
+            <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Name}" />
+            <TextBox Text="{Binding NewName}" MaxLength="100" />
+          </StackPanel>
+          <StackPanel Grid.Row="0" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Type}" />
+            <ComboBox ItemsSource="{Binding TypeOptions}" SelectedItem="{Binding NewType}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:AccountTypeOption">
+                  <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+
+          <StackPanel Grid.Row="2" Grid.Column="0">
+            <TextBlock Classes="fieldLabel" Text="{Binding BalanceLabel}" />
+            <TextBox Text="{Binding NewBalanceText}" PlaceholderText="0,00" FontSize="16" />
+            <Border Classes="warning" Margin="0,8,0,0" IsVisible="{Binding AmountHint, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Text="{Binding AmountHint, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+            </Border>
+            <TextBlock Classes="caption" Margin="4,8,0,0" TextWrapping="Wrap"
+                       Text="{l:T Accounts_OutstandingHint}" IsVisible="{Binding IsCreditCard}" />
+          </StackPanel>
+          <StackPanel Grid.Row="2" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Accounts_OpeningDate}" />
+            <CalendarDatePicker SelectedDate="{Binding NewOpeningDate}" HorizontalAlignment="Stretch" />
+          </StackPanel>
+
+          <StackPanel Grid.Row="4" Grid.Column="0">
+            <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Share}" />
+            <TextBox Text="{Binding NewShareText}" Width="120" HorizontalAlignment="Left" />
+            <TextBlock Classes="caption" Margin="4,8,0,0" TextWrapping="Wrap" Text="{l:T Accounts_ShareHint}" />
+          </StackPanel>
+          <StackPanel Grid.Row="4" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Notes}" />
+            <TextBox Text="{Binding NewNotes}" MaxLength="1000" />
+          </StackPanel>
+        </Grid>
+
+        <Border Classes="error" IsVisible="{Binding FormError, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding FormError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+        </Border>
+
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Classes="primary" Content="{l:T Accounts_Save}" Command="{Binding SaveCommand}" IsDefault="True" />
+          <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelFormCommand}" IsCancel="True" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- Empty state -->
+    <Border Classes="glass" IsVisible="{Binding IsEmpty}" Padding="26,24">
+      <TextBlock Classes="secondary" Text="{l:T Accounts_Empty}" TextWrapping="Wrap" />
+    </Border>
+
+    <!-- Grouped list, iOS style: one glass card, rows separated by hairlines -->
+    <Border Classes="glass" Padding="6" IsVisible="{Binding !IsEmpty}">
+      <ItemsControl ItemsSource="{Binding Rows}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="vm:AccountRowViewModel">
+            <StackPanel>
+              <Grid ColumnDefinitions="Auto,*,Auto,Auto" Margin="14,12">
+                <Border Width="40" Height="40" CornerRadius="20" Background="{Binding IconBackground}" VerticalAlignment="Center">
+                  <Path Data="{Binding Icon}" Width="20" Height="20" Stretch="Uniform" Stroke="White"
+                        StrokeThickness="1.8" StrokeLineCap="Round" StrokeJoin="Round"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="1">
+                  <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Classes="headline" Text="{Binding Name}" />
+                    <Border Classes="badge" IsVisible="{Binding IsArchived}">
+                      <TextBlock Classes="caption" Text="{l:T Accounts_Archived}" />
+                    </Border>
+                  </StackPanel>
+                  <TextBlock Classes="secondary" FontSize="13" Text="{Binding TypeName}" />
+                  <TextBlock Classes="caption" Text="{Binding ShareText}" IsVisible="{Binding HasPartialShare}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="16,0">
+                  <TextBlock Classes="amount" Text="{Binding BalanceText}" HorizontalAlignment="Right"
+                             Classes.debt="{Binding IsLiability}" />
+                  <TextBlock Classes="caption" HorizontalAlignment="Right" Text="{Binding SinceText}" />
+                </StackPanel>
+                <Button Grid.Column="3" VerticalAlignment="Center" Content="{l:T Accounts_Archive}" Padding="14,6"
+                        FontSize="13" Command="{Binding ArchiveCommand}" IsVisible="{Binding !IsArchived}" />
+              </Grid>
+              <Border Classes="separator" Margin="68,0,14,0" IsVisible="{Binding !IsLast}" />
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </Border>
+
+    <Border Classes="glass" Padding="20,12">
+      <ToggleSwitch Content="{l:T Accounts_ShowArchived}" IsChecked="{Binding ShowArchived}" />
+    </Border>
+  </StackPanel>
+</UserControl>
