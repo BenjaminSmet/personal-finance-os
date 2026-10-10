@@ -485,4 +485,20 @@ screenshots/
 TestResults/
 publish/
 installer-output/
+
+# Personal financial data: never commit databases, bank exports or spreadsheets.
+# SQLite databases and their side files
 *.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+# Bank statement exports and spreadsheets
+*.csv
+*.xlsx
+*.xls
+# Exception: synthetic (fake) test fixtures only, e.g. for the CSV import tests.
+# Never put real bank data in this folder.
+!tests/**/Fixtures/**/*.csv
+!tests/**/Fixtures/**/*.xlsx
