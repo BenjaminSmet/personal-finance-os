@@ -149,3 +149,42 @@ the same payee rules Quick Add uses. Suggested transfers come from an own accoun
 the card), and payment words on a card statement; refunds from words like "terugbetaling". Rounding transfers and
 recurring items follow in phase 4.
 
+### D-020 · Credit-card settings per card, nothing hard-coded (2026-10-10)
+**Spec:** §10 names €1,500 and the 28th–27th period as known settings, both configurable.
+**Decision (Benjamin, 10 Oct):** the limit and the day a statement period starts are entered when a card is created
+and can be changed later (Accounts › Card settings); there are no built-in values. The debit day and the paying
+account are optional until known. A day past a short month's end means its last day (31 → 28 Feb), so periods never
+overlap or leave gaps. Settings live in `credit_card_profiles`; changing them only changes estimates.
+**Card figures** (§10 display): outstanding = the card balance; available credit = limit − outstanding (an estimate,
+never added to cash); the statement of the closed period = what was owed when it closed; payments recorded after
+the close are compared with it and a difference is shown, never adjusted. The current period's expected statement
+includes open planned card payments (subscriptions) by their date, so a subscription on the 28th belongs to the next
+period.
+
+### D-021 · Recurring items: rules plus decisions, confirmation links one transaction (2026-10-10)
+A recurring rule (income, payment or transfer; weekly, monthly, quarterly or yearly, counted from its first date so
+no day drifts) only plans. Open occurrences are calculated, not stored; only the user's decision is stored
+(`scheduled_items`: confirmed with its transaction, postponed with a new date, or skipped). Confirming creates the
+transaction and the link in one save, and goes through the ledger's checks, audit and undo. If that transaction is
+later removed, the occurrence is open again, so a planned and an actual item can never both count, and nothing is
+lost. A recorded line (for example from an import) with the same kind and account, within 5 days and 10% of the
+amount, is suggested for linking instead of adding a second one; each line can settle one occurrence (enforced by a
+unique index). Card statements are not separate rules: they are calculated from the card (D-020), so a planned
+transfer to the card is left out of forecasts to avoid counting it twice.
+
+### D-022 · Safe-to-spend and cash flow (2026-10-10)
+Safe-to-spend counts the personal current account(s) and cash only; joint, savings and investment accounts are not
+spendable unless a transfer from them is planned (§13). It runs until the day before the next expected income
+(30 days when none is planned) and subtracts open planned payments and outgoing transfers (overdue ones included),
+card statements due from a counted account, transactions already recorded with a later date, and the minimum buffer
+(Planning › Forecast settings, €0 until set). Expected income is never counted before it arrives. The breakdown and
+the reasons a figure is less certain (no income planned, card not set up, debit day or paying account unknown,
+overdue items) are always shown. Cash flow for 7, 30 and 90 days uses the same accounts and labels income as expected.
+
+### D-023 · Bank rounding on import (2026-10-10)
+Lines whose text says "afronding", "round up", "arrondi"… (at most €10) become a transfer to the savings account
+chosen in Planning › Forecast settings, or to the only savings account; on that savings account's own file they are
+the incoming side, so the duplicate check of D-018 recognises them and they are never added twice (§11). When the
+account is unclear or the amount too large, the line is flagged "looks like rounding" and left unticked for review.
+**Navigation:** the Forecasts item is called "Planning" and opens this phase's page; budgets stay in phase 5.
+

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PersonalFinanceOS.Application.Abstractions;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Cards;
 
 namespace PersonalFinanceOS.Infrastructure.Persistence;
 
@@ -31,10 +32,15 @@ public sealed class AccountRepository(Func<FinanceDbContext> contextFactory) : I
         return await db.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id, ct);
     }
 
-    public async Task AddAsync(Account account, CancellationToken ct = default)
+    public async Task AddAsync(Account account, CreditCardProfile? card = null, CancellationToken ct = default)
     {
         await using var db = contextFactory();
         db.Accounts.Add(account);
+        if (card is not null)
+        {
+            db.CreditCardProfiles.Add(card);
+        }
+
         await db.SaveChangesAsync(ct);
     }
 

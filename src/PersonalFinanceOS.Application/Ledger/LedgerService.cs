@@ -251,6 +251,20 @@ public sealed class LedgerService(
     /// <summary>For services that change the ledger without going through this class (reconciliation).</summary>
     internal void RaiseChanged() => Changed?.Invoke(this, EventArgs.Empty);
 
+    /// <summary>The same checks as <see cref="RecordAsync"/>, for services that save the line together with their own data.</summary>
+    internal Task ValidateNewAsync(TransactionRequest request, CancellationToken ct) => ValidateAsync(request, current: null, ct);
+
+    /// <summary>The same checks as <see cref="RecordTransferAsync"/>, for services that save the transfer together with their own data.</summary>
+    internal Task ValidateNewTransferAsync(TransferRequest request, CancellationToken ct) => ValidateTransferAsync(request, current: null, ct);
+
+    /// <summary>Audits lines another service saved after <see cref="ValidateNewAsync"/> and makes them undoable like any other.</summary>
+    internal async Task RecordedAsync(IReadOnlyList<Transaction> created, CancellationToken ct)
+    {
+        var first = created[0];
+        await audit.RecordAsync(first.IsTransfer ? "Transfer" : "Transaction", first.TransferId ?? first.Id, "Created", ct);
+        Done("created", [.. created.Select(t => new UndoChange(t.Id, null, t.Snapshot()))]);
+    }
+
     private void Done(string actionKey, IReadOnlyList<UndoChange> changes)
     {
         undo.Push(new UndoEntry(actionKey, changes));

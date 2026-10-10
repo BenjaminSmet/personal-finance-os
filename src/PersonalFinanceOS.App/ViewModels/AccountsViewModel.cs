@@ -4,11 +4,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PersonalFinanceOS.App.Localization;
 using PersonalFinanceOS.Application.Accounts;
+using PersonalFinanceOS.Application.Cards;
 using PersonalFinanceOS.Application.Ledger;
 using PersonalFinanceOS.Application.Parsing;
 using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Cards;
 using PersonalFinanceOS.Domain.Ledger;
 
 namespace PersonalFinanceOS.App.ViewModels;
@@ -24,8 +26,12 @@ public sealed partial class AccountRowViewModel(
     Money balance,
     ReconciliationRecord? lastReconciliation,
     Func<AccountRowViewModel, Task> archive,
-    Func<AccountRowViewModel, Task>? reconcile = null) : ViewModelBase
+    Func<AccountRowViewModel, Task>? reconcile = null,
+    CreditCardProfile? card = null,
+    Func<AccountRowViewModel, Task>? editCard = null) : ViewModelBase
 {
+    public CreditCardProfile? Card { get; } = card;
+
     public Account Account { get; } = account;
 
     /// <summary>Opening balance plus all recorded transactions (spec §5), from the ledger service.</summary>
@@ -67,6 +73,20 @@ public sealed partial class AccountRowViewModel(
 
     public bool CanReconcile => reconcile is not null && !IsArchived;
 
+    public bool CanEditCard => editCard is not null && IsLiability && !IsArchived;
+
+    /// <summary>The card's settings in words, or that they are missing (spec §10).</summary>
+    public string CardText => !IsLiability ? string.Empty
+        : Card is null ? Loc.T("Accounts_CardNotSetUp")
+        : CardSettingsText.Describe(Card);
+
+    public bool HasCardText => IsLiability;
+
+    public bool CardMissing => IsLiability && Card is null;
+
+    [RelayCommand]
+    private Task EditCard() => editCard?.Invoke(this) ?? Task.CompletedTask;
+
     [RelayCommand]
     private Task Archive() => archive(this);
 
@@ -80,6 +100,7 @@ public sealed partial class AccountsViewModel : PageViewModel
     private readonly AppSettingsService _settings;
     private readonly LedgerService _ledger;
     private readonly ReconciliationService _reconciliation;
+    private readonly CreditCardService _cards;
     private readonly IClock _clock;
     private bool _active;
 
@@ -88,12 +109,14 @@ public sealed partial class AccountsViewModel : PageViewModel
         AppSettingsService settings,
         LedgerService ledger,
         ReconciliationService reconciliation,
+        CreditCardService cards,
         IClock clock)
     {
         _accounts = accounts;
         _settings = settings;
         _ledger = ledger;
         _reconciliation = reconciliation;
+        _cards = cards;
         _clock = clock;
         ledger.Changed += (_, _) => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
         {
@@ -147,6 +170,35 @@ public sealed partial class AccountsViewModel : PageViewModel
     private string? _statusMessage;
 
     public bool IsEmpty => Rows.Count == 0;
+
+    // ===== Credit-card settings (spec §10): entered with the card, changeable later, never assumed =====
+
+    [ObservableProperty]
+    private string _cardLimitText = string.Empty;
+
+    [ObservableProperty]
+    private string _cardStartDayText = string.Empty;
+
+    [ObservableProperty]
+    private string _cardSettlementDayText = string.Empty;
+
+    [ObservableProperty]
+    private IReadOnlyList<AccountOption> _settlementOptions = [];
+
+    [ObservableProperty]
+    private AccountOption? _cardSettlementAccount;
+
+    /// <summary>The card whose settings are being changed (null: none, or a new card in the add form).</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsCardEditOpen), nameof(CardEditTitle))]
+    private AccountRowViewModel? _cardRow;
+
+    [ObservableProperty]
+    private string? _cardError;
+
+    public bool IsCardEditOpen => CardRow is not null;
+
+    public string CardEditTitle => CardRow is null ? string.Empty : Loc.Format("Card_EditTitle", CardRow.Name);
 
     public bool IsCreditCard => NewType.Type.IsLiability();
 
@@ -220,10 +272,12 @@ public sealed partial class AccountsViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private void OpenForm()
+    private async Task OpenForm()
     {
         ReconcileRow = null;
+        CardRow = null;
         ResetForm();
+        await LoadSettlementOptionsAsync(null);
         IsFormOpen = true;
     }
 
@@ -264,6 +318,12 @@ public sealed partial class AccountsViewModel : PageViewModel
         // For a credit card the user types what they owe; it is stored as a negative balance (a debt).
         var opening = IsCreditCard ? balance.Value.Abs().Negate() : balance.Value;
 
+        CardSettings? card = null;
+        if (IsCreditCard && !TryReadCard(out card, error => FormError = error))
+        {
+            return;
+        }
+
         try
         {
             await _accounts.CreateAsync(new CreateAccountRequest(
@@ -272,7 +332,8 @@ public sealed partial class AccountsViewModel : PageViewModel
                 DateOnly.FromDateTime(date),
                 opening,
                 new Share((int)share.Value.Cents),
-                NewNotes));
+                NewNotes,
+                card));
         }
         catch (DomainValidationException ex)
         {
@@ -291,9 +352,111 @@ public sealed partial class AccountsViewModel : PageViewModel
         await ReloadAsync();
     }
 
+    private async Task OpenCardAsync(AccountRowViewModel row)
+    {
+        IsFormOpen = false;
+        ReconcileRow = null;
+        StatusMessage = null;
+        CardError = null;
+        var profile = row.Card;
+        CardLimitText = profile is null ? string.Empty : profile.CreditLimit.ToEuros().ToString("0.##", Loc.Instance.Culture);
+        CardStartDayText = profile?.StatementStartDay.ToString(Loc.Instance.Culture) ?? string.Empty;
+        CardSettlementDayText = profile?.SettlementDay?.ToString(Loc.Instance.Culture) ?? string.Empty;
+        await LoadSettlementOptionsAsync(row.Account.Id);
+        CardSettlementAccount = SettlementOptions.FirstOrDefault(o => o.Id == (profile?.SettlementAccountId ?? Guid.Empty)) ?? SettlementOptions[0];
+        CardRow = row;
+    }
+
+    [RelayCommand]
+    private void CancelCard() => CardRow = null;
+
+    [RelayCommand]
+    private async Task SaveCardAsync()
+    {
+        CardError = null;
+        if (CardRow is not { } row || !TryReadCard(out var settings, error => CardError = error))
+        {
+            return;
+        }
+
+        try
+        {
+            await _cards.SaveSettingsAsync(row.Account.Id, settings!);
+        }
+        catch (DomainValidationException ex)
+        {
+            CardError = Loc.Error(ex.Code);
+            return;
+        }
+
+        CardRow = null;
+        StatusMessage = Loc.T("Card_Saved");
+        await ReloadAsync();
+    }
+
+    /// <summary>Reads the card fields. Limit and period start are required; the debit day and paying account may be unknown yet.</summary>
+    private bool TryReadCard(out CardSettings? settings, Action<string> fail)
+    {
+        settings = null;
+        var limit = AmountParser.Parse(CardLimitText);
+        if (string.IsNullOrWhiteSpace(CardLimitText) || !limit.Success || limit.Value.IsNegative)
+        {
+            fail(Loc.Error("card.limit.invalid"));
+            return false;
+        }
+
+        if (!TryDay(CardStartDayText, out var startDay) || startDay is null)
+        {
+            fail(Loc.Error("card.startDay.invalid"));
+            return false;
+        }
+
+        if (!TryDay(CardSettlementDayText, out var settlementDay))
+        {
+            fail(Loc.Error("card.settlementDay.invalid"));
+            return false;
+        }
+
+        var payer = CardSettlementAccount is { } option && option.Id != Guid.Empty ? option.Id : (Guid?)null;
+        settings = new CardSettings(limit.Value, startDay.Value, settlementDay, payer);
+        return true;
+    }
+
+    /// <summary>A day of the month, 1–31; empty means not known.</summary>
+    private static bool TryDay(string? text, out int? day)
+    {
+        day = null;
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return true;
+        }
+
+        if (int.TryParse(text.Trim().TrimEnd('e', 'E', '.'), System.Globalization.NumberStyles.None, Loc.Instance.Culture, out var value)
+            && value is >= CreditCardProfile.MinDay and <= CreditCardProfile.MaxDay)
+        {
+            day = value;
+            return true;
+        }
+
+        return false;
+    }
+
+    private async Task LoadSettlementOptionsAsync(Guid? cardId)
+    {
+        var list = await _accounts.ListAsync();
+        SettlementOptions =
+        [
+            new AccountOption(Guid.Empty, Loc.T("Card_NoSettlementAccount")),
+            .. list.Where(a => a.Id != cardId && !a.Type.IsLiability()).Select(a => new AccountOption(a.Id, a.Name)),
+        ];
+        CardSettlementAccount = SettlementOptions.FirstOrDefault(o => list.Any(a => a.Id == o.Id && a.Type == AccountType.PersonalCurrent))
+            ?? SettlementOptions[0];
+    }
+
     private Task OpenReconcileAsync(AccountRowViewModel row)
     {
         IsFormOpen = false;
+        CardRow = null;
         StatusMessage = null;
         ReconcileError = null;
         ReconcileReason = null;
@@ -390,11 +553,20 @@ public sealed partial class AccountsViewModel : PageViewModel
         var list = await _accounts.ListAsync(ShowArchived);
         var balances = await _ledger.GetBalancesAsync();
         var reconciled = await _reconciliation.LatestAsync();
+        var cards = new Dictionary<Guid, CreditCardProfile>();
+        foreach (var account in list.Where(a => a.Type.IsLiability()))
+        {
+            if (await _cards.GetSettingsAsync(account.Id) is { } profile)
+            {
+                cards[account.Id] = profile;
+            }
+        }
+
         Rows.Clear();
         for (var i = 0; i < list.Count; i++)
         {
             var account = list[i];
-            Rows.Add(new AccountRowViewModel(account, balances[account.Id], reconciled.GetValueOrDefault(account.Id), ArchiveAsync, OpenReconcileAsync)
+            Rows.Add(new AccountRowViewModel(account, balances[account.Id], reconciled.GetValueOrDefault(account.Id), ArchiveAsync, OpenReconcileAsync, cards.GetValueOrDefault(account.Id), OpenCardAsync)
             {
                 IsLast = i == list.Count - 1,
             });
@@ -413,6 +585,10 @@ public sealed partial class AccountsViewModel : PageViewModel
         NewNotes = null;
         FormError = null;
         AmountHint = null;
+        CardLimitText = string.Empty;
+        CardStartDayText = string.Empty;
+        CardSettlementDayText = string.Empty;
+        CardError = null;
     }
 
     protected override void OnLanguageChanged()
@@ -423,9 +599,22 @@ public sealed partial class AccountsViewModel : PageViewModel
         OnPropertyChanged(nameof(BalanceLabel));
         OnPropertyChanged(nameof(ReconcileTitle));
         OnPropertyChanged(nameof(ReconcileBalanceLabel));
+        OnPropertyChanged(nameof(CardEditTitle));
         StatusMessage = null;
         FormError = null;
         _ = ReloadAsync();
+    }
+}
+
+/// <summary>Card settings in words, shared by the account list and the planning page.</summary>
+internal static class CardSettingsText
+{
+    public static string Describe(CreditCardProfile card)
+    {
+        var culture = Loc.Instance.Culture;
+        var periodEnd = card.StatementStartDay == 1 ? Loc.T("Card_MonthEnd") : (card.StatementStartDay - 1).ToString(culture);
+        var text = Loc.Format("Accounts_CardSummary", card.CreditLimit.Format(culture), card.StatementStartDay, periodEnd);
+        return card.SettlementDay is { } day ? text + " · " + Loc.Format("Accounts_CardDebitDay", day) : text + " · " + Loc.T("Accounts_CardDebitDayUnknown");
     }
 }
 

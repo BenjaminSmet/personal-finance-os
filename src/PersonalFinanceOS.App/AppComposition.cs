@@ -3,9 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using PersonalFinanceOS.App.ViewModels;
 using PersonalFinanceOS.Application.Abstractions;
 using PersonalFinanceOS.Application.Accounts;
+using PersonalFinanceOS.Application.Cards;
 using PersonalFinanceOS.Application.Categories;
 using PersonalFinanceOS.Application.Import;
 using PersonalFinanceOS.Application.Ledger;
+using PersonalFinanceOS.Application.Planning;
 using PersonalFinanceOS.Application.QuickAdd;
 using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Domain;
@@ -47,6 +49,8 @@ public static class AppComposition
         services.AddSingleton<IPayeeRuleRepository, PayeeRuleRepository>();
         services.AddSingleton<IReconciliationRepository, ReconciliationRepository>();
         services.AddSingleton<IImportRepository, ImportRepository>();
+        services.AddSingleton<ICreditCardRepository, CreditCardRepository>();
+        services.AddSingleton<IRecurringRepository, RecurringRepository>();
         services.AddSingleton<AccountService>();
         services.AddSingleton<AppSettingsService>();
         services.AddSingleton<UndoHistory>();
@@ -55,12 +59,16 @@ public static class AppComposition
         services.AddSingleton<ReconciliationService>();
         services.AddSingleton<QuickAddService>();
         services.AddSingleton<ImportService>();
+        services.AddSingleton<RecurringService>();
+        services.AddSingleton<CreditCardService>();
+        services.AddSingleton<ForecastService>();
 
         services.AddSingleton<QuickAddViewModel>();
         services.AddSingleton<DashboardViewModel>();
         services.AddSingleton<TransactionsViewModel>();
         services.AddSingleton<AccountsViewModel>();
         services.AddSingleton<ImportViewModel>();
+        services.AddSingleton<PlanningViewModel>();
         services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
 

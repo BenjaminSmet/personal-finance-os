@@ -37,6 +37,12 @@ public enum ImportSuggestion
 
     /// <summary>Money arriving on a credit card that reads like a payment of the card.</summary>
     CardPayment,
+
+    /// <summary>A bank rounding transfer to savings (spec §11): a transfer, never spending.</summary>
+    Rounding,
+
+    /// <summary>Reads like a rounding transfer, but the savings account or the amount is unclear. Left unticked for review.</summary>
+    RoundingUncertain,
 }
 
 /// <summary>

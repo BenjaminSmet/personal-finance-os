@@ -1,5 +1,6 @@
 using PersonalFinanceOS.Application.Abstractions;
 using PersonalFinanceOS.Application.Ledger;
+using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
 using PersonalFinanceOS.Domain.Categories;
@@ -23,6 +24,7 @@ public sealed class ImportService(
     IPayeeRuleRepository payeeRules,
     IAuditLog audit,
     LedgerService ledger,
+    AppSettingsService settings,
     IClock clock)
 {
     /// <summary>How far apart a bank date and a typed-in or other-account date may be and still be the same money.</summary>
@@ -30,6 +32,12 @@ public sealed class ImportService(
 
     private static readonly string[] CardKeywords = ["visa", "kredietkaart", "credit card", "creditcard", "mastercard", "carte de credit"];
     private static readonly string[] RefundKeywords = ["terugbetaling", "terugstorting", "retour", "refund", "remboursement", "creditnota"];
+    /// <summary>Words banks use for automatic rounding transfers to savings (spec §11).</summary>
+    private static readonly string[] RoundingKeywords = ["afronding", "afrondingen", "afgerond", "round up", "roundup", "round-up", "rounding", "arrondi"];
+
+    /// <summary>A rounding transfer is at most a few euros; a bigger line with the same word is checked by the user.</summary>
+    public static readonly Money RoundingMaximum = Money.FromCents(1_000);
+
     private static readonly string[] CardPaymentKeywords = ["betaling", "aflossing", "afrekening", "overschrijving", "domiciliering", "storting", "payment", "repayment", "paiement"];
 
     public async Task<MappingSuggestion> SuggestMappingAsync(ImportFile file, CancellationToken ct = default)
@@ -76,7 +84,8 @@ public sealed class ImportService(
         await SuggestAsync(account, candidates, ct);
         foreach (var candidate in candidates)
         {
-            candidate.Include = candidate.Status == ImportRowStatus.New;
+            // An uncertain rounding line is left for the user to decide (spec §11: flag for review).
+            candidate.Include = candidate.Status == ImportRowStatus.New && candidate.Suggestion != ImportSuggestion.RoundingUncertain;
         }
 
         return new ImportPreview(account, file, mapping, candidates);
@@ -334,13 +343,13 @@ public sealed class ImportService(
         }
 
         // 3. Same amount within a few days: the second side of a transfer imported from the other
-        //    account's file (certain), or something typed in by hand before the bank booked it (possible).
+        //    account's file (certain), or something typed in or confirmed by hand before the bank booked it (possible).
         foreach (var c in checkable.Where(c => c.Status == ImportRowStatus.New))
         {
             var hit = pool
                 .Where(p => p.Transaction.IsActive && !claimed.Contains(p.Transaction.Id) && p.Transaction.Amount == c.Amount &&
                             Math.Abs(p.Transaction.Date.DayNumber - c.Date.DayNumber) <= MatchWindowDays)
-                .Where(p => IsGeneratedTransferLeg(p.Transaction, p.Batch, account) || p.Transaction.Source is TransactionSource.Manual or TransactionSource.QuickAdd)
+                .Where(p => IsGeneratedTransferLeg(p.Transaction, p.Batch, account) || p.Transaction.Source is TransactionSource.Manual or TransactionSource.QuickAdd or TransactionSource.Scheduled)
                 .OrderBy(p => Math.Abs(p.Transaction.Date.DayNumber - c.Date.DayNumber))
                 .FirstOrDefault();
             if (hit.Transaction is not null)
@@ -367,6 +376,7 @@ public sealed class ImportService(
         var card = others.FirstOrDefault(a => a.Type == AccountType.CreditCard);
         var payer = others.FirstOrDefault(a => a.Type == AccountType.PersonalCurrent) ?? others.FirstOrDefault(a => !a.Type.IsLiability());
         var liability = account.Type.IsLiability();
+        var rounding = await RoundingAccountAsync(ct);
 
         foreach (var c in candidates.Where(c => c.Status != ImportRowStatus.Invalid))
         {
@@ -375,6 +385,26 @@ public sealed class ImportService(
             // Money back is a refund, never income (spec §10); on a card any money in is.
             var refund = liability || RefundKeywords.Any(k => ImportText.ContainsWords(text, k));
             c.Type = positive ? (refund ? TransactionType.Refund : TransactionType.Income) : TransactionType.Expense;
+
+            // Bank rounding (spec §11): the app only records what the bank did, as a transfer to savings, never as spending.
+            if (!liability && RoundingKeywords.Any(k => ImportText.ContainsWords(text, ImportText.Normalize(k))))
+            {
+                var other = rounding is null ? null
+                    : !positive && rounding.Id != account.Id ? rounding
+                    : positive && rounding.Id == account.Id ? payer
+                    : null;
+                if (other is not null && c.Amount.Abs() <= RoundingMaximum)
+                {
+                    Suggest(c, TransactionType.Transfer, null, other.Id, ImportSuggestion.Rounding);
+                }
+                else
+                {
+                    c.Suggestion = ImportSuggestion.RoundingUncertain;
+                    c.SuggestedType = c.Type;
+                }
+
+                continue;
+            }
 
             var named = others.FirstOrDefault(a => ImportText.Normalize(a.Name) is { Length: >= 4 } n && ImportText.ContainsWords(text, n));
             if (!liability && named is null && !positive && card is not null && CardKeywords.Any(k => ImportText.ContainsWords(text, k)))
@@ -410,6 +440,19 @@ public sealed class ImportService(
 
             c.SuggestedType = c.Type;
         }
+    }
+
+    /// <summary>The savings account chosen for rounding transfers, or the only savings account when none is chosen.</summary>
+    private async Task<Account?> RoundingAccountAsync(CancellationToken ct)
+    {
+        var active = await accounts.ListAsync(includeArchived: false, ct);
+        if (await settings.GetRoundingAccountIdAsync(ct) is { } id && active.FirstOrDefault(a => a.Id == id) is { } chosen)
+        {
+            return chosen;
+        }
+
+        var savings = active.Where(a => a.Type == AccountType.Savings).ToList();
+        return savings.Count == 1 ? savings[0] : null;
     }
 
     private static void Suggest(ImportCandidate c, TransactionType type, Guid? category, Guid? transferAccount, ImportSuggestion why)

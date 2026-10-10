@@ -4,7 +4,7 @@ Nav_Dashboard	Dashboard	Dashboard
 Nav_Transactions	Transactions	Transacties
 Nav_Accounts	Accounts	Rekeningen
 Nav_Budgets	Budgets & Analysis	Budgetten & analyse
-Nav_Forecasts	Forecasts	Prognoses
+Nav_Forecasts	Planning	Planning
 Nav_Wishlist	Wishlist	Verlanglijst
 Nav_Assets	Assets & Investments	Bezittingen & beleggingen
 Nav_Assistant	Assistant	Assistent
@@ -314,3 +314,134 @@ Import_Columns_Hide	Hide	Verbergen
 Import_Columns_Edit	Change columns	Kolommen aanpassen
 Import_ConfirmOne	Import 1 line	1 regel importeren
 Import_ResultOne	1 line was added.	1 regel is toegevoegd.
+Dashboard_SafeUntil	Until {0}, after everything planned and your buffer. A forecast, not a balance.	Tot en met {0}, na alles wat gepland is en je buffer. Een prognose, geen saldo.
+Dashboard_ToConfirmOne	1 planned item is waiting to be confirmed	1 geplande post wacht op bevestiging
+Dashboard_ToConfirmMany	{0} planned items are waiting to be confirmed	{0} geplande posten wachten op bevestiging
+Dashboard_GoToPlanning	Open planning	Naar planning
+Accounts_EditCard	Card settings	Kaartinstellingen
+Accounts_CardNotSetUp	Card settings missing: add the limit and statement period	Kaartinstellingen ontbreken: vul de limiet en de afrekenperiode in
+Accounts_CardSummary	Limit {0} · period from the {1} to the {2}	Limiet {0} · periode van de {1}e tot de {2}e
+Accounts_CardDebitDay	debit on the {0}	afschrijving op de {0}e
+Accounts_CardDebitDayUnknown	debit day not set	afschrijvingsdag niet ingesteld
+Card_MonthEnd	end of the month	laatste dag van de maand
+Card_SettingsTitle	Card settings	Kaartinstellingen
+Card_SettingsIntro	Fill these in as they are on your card statement. You can change them later; recorded transactions never change.	Vul deze in zoals op je kaartafrekening. Je kunt ze later aanpassen; geregistreerde transacties veranderen nooit.
+Card_EditTitle	Settings for {0}	Instellingen voor {0}
+Card_EditIntro	A change only affects estimates: periods, the expected statement and available credit.	Een wijziging verandert alleen schattingen: periodes, de verwachte afrekening en het beschikbare krediet.
+Card_Limit_Label	Credit limit	Kredietlimiet
+Card_LimitPlaceholder	e.g. 1500	bv. 1500
+Card_StartDay	New period starts on day	Nieuwe periode begint op dag
+Card_StartDayPlaceholder	e.g. 28	bv. 28
+Card_StartDayHint	The period ends the day before. With 28: from the 28th through the 27th. In short months a later day means the last day.	De periode eindigt de dag ervoor. Met 28: van de 28e tot en met de 27e. In korte maanden betekent een latere dag de laatste dag.
+Card_SettlementDay	Debited on day (optional)	Afgeschreven op dag (optioneel)
+Card_SettlementDayPlaceholder	unknown	onbekend
+Card_SettlementDayHint	The first such day after the period ends. Leave empty if you do not know it yet.	De eerste zulke dag na het einde van de periode. Laat leeg als je het nog niet weet.
+Card_SettlementAccount	Paid automatically from	Automatisch betaald vanaf
+Card_NoSettlementAccount	Not set	Niet ingesteld
+Card_Saved	Card settings saved.	Kaartinstellingen bewaard.
+Card_NotSetUp	This card has no settings yet. Open Accounts › Card settings to add the limit and statement period.	Deze kaart heeft nog geen instellingen. Ga naar Rekeningen › Kaartinstellingen om de limiet en periode in te vullen.
+Card_Period	period {0} – {1}	periode {0} – {1}
+Card_Limit	limit {0}	limiet {0}
+Card_Outstanding	Outstanding	Openstaand
+Card_Available	Available credit (estimate)	Beschikbaar krediet (schatting)
+Card_PeriodSpending	Spent this period	Uitgegeven deze periode
+Card_Estimate	Expected statement for this period: {0}	Verwachte afrekening voor deze periode: {0}
+Card_EstimateWithPlanned	Expected statement for this period: {0} (including {1} planned)	Verwachte afrekening voor deze periode: {0} (waarvan {1} gepland)
+Card_NothingToPay	No statement to pay at the moment.	Op dit moment geen afrekening te betalen.
+Card_SettlementOn	Next debit: {0} on {1}	Volgende afschrijving: {0} op {1}
+Card_SettlementOverdue	Debit of {0} expected on {1}, not recorded yet	Afschrijving van {0} verwacht op {1}, nog niet geregistreerd
+Card_SettlementNoDate	Next debit: {0}, date not set	Volgende afschrijving: {0}, datum niet ingesteld
+Card_NotCash	Available credit is borrowing room, not money you have.	Beschikbaar krediet is leenruimte, geen geld dat je hebt.
+Card_PaidMore	The recorded payment is {0} more than the estimated statement ({1} expected, {2} paid). Check it against the real statement.	De geregistreerde betaling is {0} hoger dan de geschatte afrekening ({1} verwacht, {2} betaald). Vergelijk met de echte afrekening.
+Card_PaidLess	The recorded payment is {0} less than the estimated statement ({1} expected, {2} paid). Check it against the real statement.	De geregistreerde betaling is {0} lager dan de geschatte afrekening ({1} verwacht, {2} betaald). Vergelijk met de echte afrekening.
+Planning_Title	Planning	Planning
+Planning_Subtitle	What is expected: planned income and payments, card statements and what is safe to spend. Nothing here changes a balance until you confirm it.	Wat er verwacht wordt: gepland inkomen en betalingen, kaartafrekeningen en wat je veilig kunt uitgeven. Niets hier verandert een saldo tot je het bevestigt.
+Planning_SafeToSpend	Safe to spend	Veilig te besteden
+Planning_SafeUntilIncome	Until {0}, the day before {1} is expected ({2}).	Tot en met {0}, de dag voor {1} verwacht wordt ({2}).
+Planning_SafeUntil	For the coming days, until {0}.	Voor de komende dagen, tot en met {0}.
+Planning_SafeNoAccounts	Add a personal current account first; safe-to-spend is calculated from it.	Voeg eerst een persoonlijke zichtrekening toe; veilig te besteden wordt daarmee berekend.
+Forecast_Balance	Balance now ({0})	Saldo nu ({0})
+Forecast_RecordedLater	Already recorded with a later date	Al geregistreerd met een latere datum
+Forecast_Planned	{0} · {1}	{0} · {1}
+Forecast_CardSettlement	{0} statement · {1}	Afrekening {0} · {1}
+Forecast_Buffer	Minimum buffer	Minimumbuffer
+ForecastCaveat_NoIncomePlanned	No income is planned, so the next 30 days are used. Add your salary as a recurring item for a better estimate.	Er is geen inkomen gepland, dus de komende 30 dagen worden gebruikt. Voeg je loon toe als terugkerende post voor een betere schatting.
+ForecastCaveat_CardNotSetUp	A credit card has no settings yet; its statement is not counted.	Een kredietkaart heeft nog geen instellingen; de afrekening telt niet mee.
+ForecastCaveat_SettlementDateUnknown	A card's debit day is not set; its statement is counted as due right after the period ends.	De afschrijvingsdag van een kaart is niet ingesteld; de afrekening telt mee alsof ze meteen na de periode valt.
+ForecastCaveat_SettlementAccountUnknown	A card has no paying account set; its statement is not counted.	Voor een kaart is geen betalende rekening ingesteld; de afrekening telt niet mee.
+ForecastCaveat_OverdueItems	Some planned payments are past their date and not confirmed; they are still counted.	Sommige geplande betalingen zijn over datum en niet bevestigd; ze tellen nog mee.
+Planning_CashFlow	Expected cash flow	Verwachte kasstroom
+Planning_NextDays	Next {0} days	Komende {0} dagen
+Planning_CashFlowNote	Personal current account and cash. Expected income is a forecast, not guaranteed money. Card statements are included on their debit day.	Persoonlijke zichtrekening en cash. Verwacht inkomen is een prognose, geen zeker geld. Kaartafrekeningen tellen op hun afschrijvingsdag.
+Planning_ToConfirm	To confirm	Te bevestigen
+Planning_ToConfirmNote	Did it happen? Confirm it (adjust date or amount if needed), link it to a line that is already there, postpone it, or skip it this time.	Is het gebeurd? Bevestig het (pas datum of bedrag aan indien nodig), koppel het aan een regel die er al is, stel het uit of sla het deze keer over.
+Planning_NothingPlanned	Nothing planned in the coming 30 days.	Niets gepland in de komende 30 dagen.
+Planning_Due	Expected {0}	Verwacht {0}
+Planning_DueOverdue	Expected {0}, not confirmed yet	Verwacht {0}, nog niet bevestigd
+Planning_PostponedBadge	Postponed	Uitgesteld
+Planning_Match	Already in the ledger? {0} on {1} ({2})	Al geregistreerd? {0} op {1} ({2})
+Planning_LinkButton	Link	Koppelen
+Planning_Date	Date	Datum
+Planning_Amount	Amount	Bedrag
+Planning_ConfirmButton	Confirm	Bevestigen
+Planning_PostponeButton	Postpone to date	Uitstellen tot datum
+Planning_SkipButton	Skip	Overslaan
+Planning_PostponePickDate	Pick a later date first, then postpone.	Kies eerst een latere datum en stel dan uit.
+Planning_Confirmed	{0} confirmed and recorded.	{0} bevestigd en geregistreerd.
+Planning_Linked	{0} linked to the existing line.	{0} gekoppeld aan de bestaande regel.
+Planning_Postponed	{0} postponed to {1}.	{0} uitgesteld tot {1}.
+Planning_Skipped	{0} skipped this time.	{0} deze keer overgeslagen.
+Planning_Cards	Credit cards	Kredietkaarten
+Planning_Rules	Recurring items	Terugkerende posten
+Planning_RulesNote	Salary, rent, subscriptions, insurance, transfers to the joint account… They create expected items, never transactions by themselves. Card statements are calculated from the card itself.	Loon, huur, abonnementen, verzekeringen, overschrijvingen naar de gezamenlijke rekening… Ze maken verwachte posten aan, nooit zelf transacties. Kaartafrekeningen worden uit de kaart zelf berekend.
+Planning_AddRule	New recurring item	Nieuwe terugkerende post
+Planning_NoRules	No recurring items yet.	Nog geen terugkerende posten.
+Planning_RuleName	Name	Naam
+Planning_RuleNamePlaceholder	e.g. Salary, Netflix, Rent	bv. Loon, Netflix, Huur
+Planning_Kind	Kind	Soort
+Planning_Account	Account	Rekening
+Planning_FromAccount	From account	Van rekening
+Planning_ToAccount	To account	Naar rekening
+Planning_Frequency	Repeats	Herhaling
+Planning_StartDate	First date	Eerste datum
+Planning_StartDateHint	Later dates keep this day of the month (or the last day in shorter months).	Volgende datums houden deze dag van de maand (of de laatste dag in kortere maanden).
+Planning_EndDate	Last date (optional)	Laatste datum (optioneel)
+Planning_EndRule	Stop	Stoppen
+Planning_RuleSaved	Recurring item saved.	Terugkerende post bewaard.
+Planning_RuleEnded	{0} stopped. Earlier confirmations are kept.	{0} gestopt. Eerdere bevestigingen blijven bewaard.
+Planning_NextOn	Next: {0}	Volgende: {0}
+Planning_Settings	Forecast settings	Instellingen voor de prognose
+Planning_Buffer	Minimum buffer	Minimumbuffer
+Planning_BufferHint	Money that should always stay on your current account. Safe-to-spend never counts it.	Geld dat altijd op je zichtrekening moet blijven. Veilig te besteden telt het nooit mee.
+Planning_RoundingAccount	Bank rounding goes to	Afrondingen van de bank gaan naar
+Planning_RoundingNone	Automatic (only savings account)	Automatisch (enige spaarrekening)
+Planning_RoundingHint	Used when importing: rounding lines become a transfer to this account, never spending.	Gebruikt bij importeren: afrondingsregels worden een overschrijving naar deze rekening, nooit een uitgave.
+Planning_SettingsSaved	Saved.	Bewaard.
+RecurringKind_Income	Income (expected)	Inkomen (verwacht)
+RecurringKind_Expense	Payment	Betaling
+RecurringKind_Transfer	Transfer	Overschrijving
+Frequency_Weekly	Every week	Elke week
+Frequency_Monthly	Every month	Elke maand
+Frequency_Quarterly	Every quarter	Elk kwartaal
+Frequency_Yearly	Every year	Elk jaar
+Import_Suggestion_Rounding	Bank rounding to savings: a transfer, not spending	Afronding van de bank naar sparen: een overschrijving, geen uitgave
+Import_Suggestion_RoundingUncertain	Looks like bank rounding, but the savings account or amount is unclear. Check it and tick it yourself.	Lijkt een afronding van de bank, maar de spaarrekening of het bedrag is onduidelijk. Controleer en vink zelf aan.
+Error_card_settings_required	Fill in the card's limit and statement period.	Vul de limiet en de afrekenperiode van de kaart in.
+Error_card_limit_invalid	Enter the credit limit, for example 1500.	Vul de kredietlimiet in, bijvoorbeeld 1500.
+Error_card_limit_negative	The credit limit cannot be negative.	De kredietlimiet kan niet negatief zijn.
+Error_card_startDay_invalid	Enter the day the period starts: a number from 1 to 31.	Vul de dag in waarop de periode begint: een getal van 1 tot 31.
+Error_card_settlementDay_invalid	The debit day must be a number from 1 to 31, or empty.	De afschrijvingsdag moet een getal van 1 tot 31 zijn, of leeg.
+Error_card_settlementAccount_invalid	The card must be paid from another active account that holds money.	De kaart moet betaald worden vanaf een andere actieve rekening met geld.
+Error_card_notACard	These settings are only for credit cards.	Deze instellingen zijn alleen voor kredietkaarten.
+Error_recurring_name_required	Give the recurring item a name.	Geef de terugkerende post een naam.
+Error_recurring_name_tooLong	The name is too long (max 100 characters).	De naam is te lang (max. 100 tekens).
+Error_recurring_toAccount_required	Choose the account the transfer goes to.	Kies de rekening waar de overschrijving naartoe gaat.
+Error_recurring_endBeforeStart	The last date is before the first date.	De laatste datum ligt voor de eerste datum.
+Error_recurring_notFound	This recurring item no longer exists.	Deze terugkerende post bestaat niet meer.
+Error_scheduled_notFound	This planned item does not exist.	Deze geplande post bestaat niet.
+Error_scheduled_alreadyHandled	This item was already confirmed or skipped.	Deze post is al bevestigd of overgeslagen.
+Error_scheduled_postpone_beforeDue	Postpone to a date after the planned date.	Stel uit tot een datum na de geplande datum.
+Error_scheduled_link_invalid	That line does not fit this item (other account or kind).	Die regel past niet bij deze post (andere rekening of soort).
+Error_scheduled_link_taken	That line is already linked to another planned item.	Die regel is al gekoppeld aan een andere geplande post.
+Error_scheduled_reopen_confirmed	Remove the recorded transaction to undo a confirmation.	Verwijder de geregistreerde transactie om een bevestiging ongedaan te maken.
+Error_forecast_buffer_negative	The buffer cannot be negative.	De buffer kan niet negatief zijn.

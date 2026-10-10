@@ -11,7 +11,7 @@
   <data name="Nav_Transactions" xml:space="preserve"><value>Transactions</value></data>
   <data name="Nav_Accounts" xml:space="preserve"><value>Accounts</value></data>
   <data name="Nav_Budgets" xml:space="preserve"><value>Budgets &amp; Analysis</value></data>
-  <data name="Nav_Forecasts" xml:space="preserve"><value>Forecasts</value></data>
+  <data name="Nav_Forecasts" xml:space="preserve"><value>Planning</value></data>
   <data name="Nav_Wishlist" xml:space="preserve"><value>Wishlist</value></data>
   <data name="Nav_Assets" xml:space="preserve"><value>Assets &amp; Investments</value></data>
   <data name="Nav_Assistant" xml:space="preserve"><value>Assistant</value></data>
@@ -321,4 +321,135 @@
   <data name="Import_Columns_Edit" xml:space="preserve"><value>Change columns</value></data>
   <data name="Import_ConfirmOne" xml:space="preserve"><value>Import 1 line</value></data>
   <data name="Import_ResultOne" xml:space="preserve"><value>1 line was added.</value></data>
+  <data name="Dashboard_SafeUntil" xml:space="preserve"><value>Until {0}, after everything planned and your buffer. A forecast, not a balance.</value></data>
+  <data name="Dashboard_ToConfirmOne" xml:space="preserve"><value>1 planned item is waiting to be confirmed</value></data>
+  <data name="Dashboard_ToConfirmMany" xml:space="preserve"><value>{0} planned items are waiting to be confirmed</value></data>
+  <data name="Dashboard_GoToPlanning" xml:space="preserve"><value>Open planning</value></data>
+  <data name="Accounts_EditCard" xml:space="preserve"><value>Card settings</value></data>
+  <data name="Accounts_CardNotSetUp" xml:space="preserve"><value>Card settings missing: add the limit and statement period</value></data>
+  <data name="Accounts_CardSummary" xml:space="preserve"><value>Limit {0} · period from the {1} to the {2}</value></data>
+  <data name="Accounts_CardDebitDay" xml:space="preserve"><value>debit on the {0}</value></data>
+  <data name="Accounts_CardDebitDayUnknown" xml:space="preserve"><value>debit day not set</value></data>
+  <data name="Card_MonthEnd" xml:space="preserve"><value>end of the month</value></data>
+  <data name="Card_SettingsTitle" xml:space="preserve"><value>Card settings</value></data>
+  <data name="Card_SettingsIntro" xml:space="preserve"><value>Fill these in as they are on your card statement. You can change them later; recorded transactions never change.</value></data>
+  <data name="Card_EditTitle" xml:space="preserve"><value>Settings for {0}</value></data>
+  <data name="Card_EditIntro" xml:space="preserve"><value>A change only affects estimates: periods, the expected statement and available credit.</value></data>
+  <data name="Card_Limit_Label" xml:space="preserve"><value>Credit limit</value></data>
+  <data name="Card_LimitPlaceholder" xml:space="preserve"><value>e.g. 1500</value></data>
+  <data name="Card_StartDay" xml:space="preserve"><value>New period starts on day</value></data>
+  <data name="Card_StartDayPlaceholder" xml:space="preserve"><value>e.g. 28</value></data>
+  <data name="Card_StartDayHint" xml:space="preserve"><value>The period ends the day before. With 28: from the 28th through the 27th. In short months a later day means the last day.</value></data>
+  <data name="Card_SettlementDay" xml:space="preserve"><value>Debited on day (optional)</value></data>
+  <data name="Card_SettlementDayPlaceholder" xml:space="preserve"><value>unknown</value></data>
+  <data name="Card_SettlementDayHint" xml:space="preserve"><value>The first such day after the period ends. Leave empty if you do not know it yet.</value></data>
+  <data name="Card_SettlementAccount" xml:space="preserve"><value>Paid automatically from</value></data>
+  <data name="Card_NoSettlementAccount" xml:space="preserve"><value>Not set</value></data>
+  <data name="Card_Saved" xml:space="preserve"><value>Card settings saved.</value></data>
+  <data name="Card_NotSetUp" xml:space="preserve"><value>This card has no settings yet. Open Accounts › Card settings to add the limit and statement period.</value></data>
+  <data name="Card_Period" xml:space="preserve"><value>period {0} – {1}</value></data>
+  <data name="Card_Limit" xml:space="preserve"><value>limit {0}</value></data>
+  <data name="Card_Outstanding" xml:space="preserve"><value>Outstanding</value></data>
+  <data name="Card_Available" xml:space="preserve"><value>Available credit (estimate)</value></data>
+  <data name="Card_PeriodSpending" xml:space="preserve"><value>Spent this period</value></data>
+  <data name="Card_Estimate" xml:space="preserve"><value>Expected statement for this period: {0}</value></data>
+  <data name="Card_EstimateWithPlanned" xml:space="preserve"><value>Expected statement for this period: {0} (including {1} planned)</value></data>
+  <data name="Card_NothingToPay" xml:space="preserve"><value>No statement to pay at the moment.</value></data>
+  <data name="Card_SettlementOn" xml:space="preserve"><value>Next debit: {0} on {1}</value></data>
+  <data name="Card_SettlementOverdue" xml:space="preserve"><value>Debit of {0} expected on {1}, not recorded yet</value></data>
+  <data name="Card_SettlementNoDate" xml:space="preserve"><value>Next debit: {0}, date not set</value></data>
+  <data name="Card_NotCash" xml:space="preserve"><value>Available credit is borrowing room, not money you have.</value></data>
+  <data name="Card_PaidMore" xml:space="preserve"><value>The recorded payment is {0} more than the estimated statement ({1} expected, {2} paid). Check it against the real statement.</value></data>
+  <data name="Card_PaidLess" xml:space="preserve"><value>The recorded payment is {0} less than the estimated statement ({1} expected, {2} paid). Check it against the real statement.</value></data>
+  <data name="Planning_Title" xml:space="preserve"><value>Planning</value></data>
+  <data name="Planning_Subtitle" xml:space="preserve"><value>What is expected: planned income and payments, card statements and what is safe to spend. Nothing here changes a balance until you confirm it.</value></data>
+  <data name="Planning_SafeToSpend" xml:space="preserve"><value>Safe to spend</value></data>
+  <data name="Planning_SafeUntilIncome" xml:space="preserve"><value>Until {0}, the day before {1} is expected ({2}).</value></data>
+  <data name="Planning_SafeUntil" xml:space="preserve"><value>For the coming days, until {0}.</value></data>
+  <data name="Planning_SafeNoAccounts" xml:space="preserve"><value>Add a personal current account first; safe-to-spend is calculated from it.</value></data>
+  <data name="Forecast_Balance" xml:space="preserve"><value>Balance now ({0})</value></data>
+  <data name="Forecast_RecordedLater" xml:space="preserve"><value>Already recorded with a later date</value></data>
+  <data name="Forecast_Planned" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="Forecast_CardSettlement" xml:space="preserve"><value>{0} statement · {1}</value></data>
+  <data name="Forecast_Buffer" xml:space="preserve"><value>Minimum buffer</value></data>
+  <data name="ForecastCaveat_NoIncomePlanned" xml:space="preserve"><value>No income is planned, so the next 30 days are used. Add your salary as a recurring item for a better estimate.</value></data>
+  <data name="ForecastCaveat_CardNotSetUp" xml:space="preserve"><value>A credit card has no settings yet; its statement is not counted.</value></data>
+  <data name="ForecastCaveat_SettlementDateUnknown" xml:space="preserve"><value>A card's debit day is not set; its statement is counted as due right after the period ends.</value></data>
+  <data name="ForecastCaveat_SettlementAccountUnknown" xml:space="preserve"><value>A card has no paying account set; its statement is not counted.</value></data>
+  <data name="ForecastCaveat_OverdueItems" xml:space="preserve"><value>Some planned payments are past their date and not confirmed; they are still counted.</value></data>
+  <data name="Planning_CashFlow" xml:space="preserve"><value>Expected cash flow</value></data>
+  <data name="Planning_NextDays" xml:space="preserve"><value>Next {0} days</value></data>
+  <data name="Planning_CashFlowNote" xml:space="preserve"><value>Personal current account and cash. Expected income is a forecast, not guaranteed money. Card statements are included on their debit day.</value></data>
+  <data name="Planning_ToConfirm" xml:space="preserve"><value>To confirm</value></data>
+  <data name="Planning_ToConfirmNote" xml:space="preserve"><value>Did it happen? Confirm it (adjust date or amount if needed), link it to a line that is already there, postpone it, or skip it this time.</value></data>
+  <data name="Planning_NothingPlanned" xml:space="preserve"><value>Nothing planned in the coming 30 days.</value></data>
+  <data name="Planning_Due" xml:space="preserve"><value>Expected {0}</value></data>
+  <data name="Planning_DueOverdue" xml:space="preserve"><value>Expected {0}, not confirmed yet</value></data>
+  <data name="Planning_PostponedBadge" xml:space="preserve"><value>Postponed</value></data>
+  <data name="Planning_Match" xml:space="preserve"><value>Already in the ledger? {0} on {1} ({2})</value></data>
+  <data name="Planning_LinkButton" xml:space="preserve"><value>Link</value></data>
+  <data name="Planning_Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Planning_Amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="Planning_ConfirmButton" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Planning_PostponeButton" xml:space="preserve"><value>Postpone to date</value></data>
+  <data name="Planning_SkipButton" xml:space="preserve"><value>Skip</value></data>
+  <data name="Planning_PostponePickDate" xml:space="preserve"><value>Pick a later date first, then postpone.</value></data>
+  <data name="Planning_Confirmed" xml:space="preserve"><value>{0} confirmed and recorded.</value></data>
+  <data name="Planning_Linked" xml:space="preserve"><value>{0} linked to the existing line.</value></data>
+  <data name="Planning_Postponed" xml:space="preserve"><value>{0} postponed to {1}.</value></data>
+  <data name="Planning_Skipped" xml:space="preserve"><value>{0} skipped this time.</value></data>
+  <data name="Planning_Cards" xml:space="preserve"><value>Credit cards</value></data>
+  <data name="Planning_Rules" xml:space="preserve"><value>Recurring items</value></data>
+  <data name="Planning_RulesNote" xml:space="preserve"><value>Salary, rent, subscriptions, insurance, transfers to the joint account… They create expected items, never transactions by themselves. Card statements are calculated from the card itself.</value></data>
+  <data name="Planning_AddRule" xml:space="preserve"><value>New recurring item</value></data>
+  <data name="Planning_NoRules" xml:space="preserve"><value>No recurring items yet.</value></data>
+  <data name="Planning_RuleName" xml:space="preserve"><value>Name</value></data>
+  <data name="Planning_RuleNamePlaceholder" xml:space="preserve"><value>e.g. Salary, Netflix, Rent</value></data>
+  <data name="Planning_Kind" xml:space="preserve"><value>Kind</value></data>
+  <data name="Planning_Account" xml:space="preserve"><value>Account</value></data>
+  <data name="Planning_FromAccount" xml:space="preserve"><value>From account</value></data>
+  <data name="Planning_ToAccount" xml:space="preserve"><value>To account</value></data>
+  <data name="Planning_Frequency" xml:space="preserve"><value>Repeats</value></data>
+  <data name="Planning_StartDate" xml:space="preserve"><value>First date</value></data>
+  <data name="Planning_StartDateHint" xml:space="preserve"><value>Later dates keep this day of the month (or the last day in shorter months).</value></data>
+  <data name="Planning_EndDate" xml:space="preserve"><value>Last date (optional)</value></data>
+  <data name="Planning_EndRule" xml:space="preserve"><value>Stop</value></data>
+  <data name="Planning_RuleSaved" xml:space="preserve"><value>Recurring item saved.</value></data>
+  <data name="Planning_RuleEnded" xml:space="preserve"><value>{0} stopped. Earlier confirmations are kept.</value></data>
+  <data name="Planning_NextOn" xml:space="preserve"><value>Next: {0}</value></data>
+  <data name="Planning_Settings" xml:space="preserve"><value>Forecast settings</value></data>
+  <data name="Planning_Buffer" xml:space="preserve"><value>Minimum buffer</value></data>
+  <data name="Planning_BufferHint" xml:space="preserve"><value>Money that should always stay on your current account. Safe-to-spend never counts it.</value></data>
+  <data name="Planning_RoundingAccount" xml:space="preserve"><value>Bank rounding goes to</value></data>
+  <data name="Planning_RoundingNone" xml:space="preserve"><value>Automatic (only savings account)</value></data>
+  <data name="Planning_RoundingHint" xml:space="preserve"><value>Used when importing: rounding lines become a transfer to this account, never spending.</value></data>
+  <data name="Planning_SettingsSaved" xml:space="preserve"><value>Saved.</value></data>
+  <data name="RecurringKind_Income" xml:space="preserve"><value>Income (expected)</value></data>
+  <data name="RecurringKind_Expense" xml:space="preserve"><value>Payment</value></data>
+  <data name="RecurringKind_Transfer" xml:space="preserve"><value>Transfer</value></data>
+  <data name="Frequency_Weekly" xml:space="preserve"><value>Every week</value></data>
+  <data name="Frequency_Monthly" xml:space="preserve"><value>Every month</value></data>
+  <data name="Frequency_Quarterly" xml:space="preserve"><value>Every quarter</value></data>
+  <data name="Frequency_Yearly" xml:space="preserve"><value>Every year</value></data>
+  <data name="Import_Suggestion_Rounding" xml:space="preserve"><value>Bank rounding to savings: a transfer, not spending</value></data>
+  <data name="Import_Suggestion_RoundingUncertain" xml:space="preserve"><value>Looks like bank rounding, but the savings account or amount is unclear. Check it and tick it yourself.</value></data>
+  <data name="Error_card_settings_required" xml:space="preserve"><value>Fill in the card's limit and statement period.</value></data>
+  <data name="Error_card_limit_invalid" xml:space="preserve"><value>Enter the credit limit, for example 1500.</value></data>
+  <data name="Error_card_limit_negative" xml:space="preserve"><value>The credit limit cannot be negative.</value></data>
+  <data name="Error_card_startDay_invalid" xml:space="preserve"><value>Enter the day the period starts: a number from 1 to 31.</value></data>
+  <data name="Error_card_settlementDay_invalid" xml:space="preserve"><value>The debit day must be a number from 1 to 31, or empty.</value></data>
+  <data name="Error_card_settlementAccount_invalid" xml:space="preserve"><value>The card must be paid from another active account that holds money.</value></data>
+  <data name="Error_card_notACard" xml:space="preserve"><value>These settings are only for credit cards.</value></data>
+  <data name="Error_recurring_name_required" xml:space="preserve"><value>Give the recurring item a name.</value></data>
+  <data name="Error_recurring_name_tooLong" xml:space="preserve"><value>The name is too long (max 100 characters).</value></data>
+  <data name="Error_recurring_toAccount_required" xml:space="preserve"><value>Choose the account the transfer goes to.</value></data>
+  <data name="Error_recurring_endBeforeStart" xml:space="preserve"><value>The last date is before the first date.</value></data>
+  <data name="Error_recurring_notFound" xml:space="preserve"><value>This recurring item no longer exists.</value></data>
+  <data name="Error_scheduled_notFound" xml:space="preserve"><value>This planned item does not exist.</value></data>
+  <data name="Error_scheduled_alreadyHandled" xml:space="preserve"><value>This item was already confirmed or skipped.</value></data>
+  <data name="Error_scheduled_postpone_beforeDue" xml:space="preserve"><value>Postpone to a date after the planned date.</value></data>
+  <data name="Error_scheduled_link_invalid" xml:space="preserve"><value>That line does not fit this item (other account or kind).</value></data>
+  <data name="Error_scheduled_link_taken" xml:space="preserve"><value>That line is already linked to another planned item.</value></data>
+  <data name="Error_scheduled_reopen_confirmed" xml:space="preserve"><value>Remove the recorded transaction to undo a confirmation.</value></data>
+  <data name="Error_forecast_buffer_negative" xml:space="preserve"><value>The buffer cannot be negative.</value></data>
 </root>

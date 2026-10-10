@@ -1,0 +1,303 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.PlanningView"
+             x:DataType="vm:PlanningViewModel">
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="2">
+      <TextBlock Classes="largeTitle" Text="{l:T Planning_Title}" />
+      <TextBlock Classes="secondary" Text="{l:T Planning_Subtitle}" TextWrapping="Wrap" />
+    </StackPanel>
+
+    <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+    </Border>
+
+    <!-- Safe-to-spend (spec §13): a forecast with its calculation, never just the balance -->
+    <Border Classes="glass strong" Padding="28,24">
+      <StackPanel Spacing="14">
+        <StackPanel Spacing="4" IsVisible="{Binding CanCalculate}">
+          <TextBlock Classes="overline" Text="{l:T Planning_SafeToSpend}" />
+          <TextBlock Classes="bigAmount" Text="{Binding SafeAmountText}" Classes.debt="{Binding SafeIsNegative}" />
+          <TextBlock Classes="caption" Text="{Binding SafeUntilText}" TextWrapping="Wrap" />
+        </StackPanel>
+        <TextBlock Text="{l:T Planning_SafeNoAccounts}" TextWrapping="Wrap" IsVisible="{Binding !CanCalculate}" />
+        <ItemsControl ItemsSource="{Binding SafeLines}" IsVisible="{Binding CanCalculate}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:ForecastLineViewModel">
+              <Grid ColumnDefinitions="*,Auto" Margin="0,3">
+                <TextBlock Classes="secondary" Text="{Binding Label}" TextWrapping="Wrap" />
+                <TextBlock Grid.Column="1" Margin="16,0,0,0" Text="{Binding AmountText}" Classes.debt="{Binding IsNegative}" />
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding Caveats}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="x:String">
+              <Border Classes="warning" Margin="0,4,0,0">
+                <TextBlock Text="{Binding, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- Expected cash flow; income is a forecast, not a promise -->
+    <Border Classes="glass" Padding="24,20">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="title" Text="{l:T Planning_CashFlow}" />
+        <ItemsControl ItemsSource="{Binding CashFlows}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate><UniformGrid Rows="1" /></ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:CashFlowViewModel">
+              <StackPanel Spacing="3" Margin="0,0,12,0">
+                <TextBlock Classes="overline" Text="{Binding Title}" />
+                <TextBlock Classes="caption" Text="{Binding InText, StringFormat='＋ {0}'}" />
+                <TextBlock Classes="caption" Text="{Binding OutText, StringFormat='－ {0}'}" />
+                <TextBlock Classes="headline" Text="{Binding NetText}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <TextBlock Classes="caption" Text="{l:T Planning_CashFlowNote}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+
+    <!-- To confirm (spec §12): nothing counts as real money until confirmed -->
+    <Border Classes="glass" Padding="24,20">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="title" Text="{l:T Planning_ToConfirm}" />
+        <TextBlock Classes="secondary" Text="{l:T Planning_ToConfirmNote}" TextWrapping="Wrap" />
+        <TextBlock Classes="caption" Text="{l:T Planning_NothingPlanned}" IsVisible="{Binding !HasPlanned}" />
+        <ItemsControl ItemsSource="{Binding Planned}" IsVisible="{Binding HasPlanned}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:PlannedRowViewModel">
+              <StackPanel Spacing="8" Margin="0,8">
+                <Grid ColumnDefinitions="*,Auto">
+                  <StackPanel Spacing="1">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                      <TextBlock Classes="headline" Text="{Binding Name}" />
+                      <Border Classes="badge"><TextBlock Classes="caption" Text="{Binding KindText}" /></Border>
+                      <Border Classes="badge" IsVisible="{Binding IsPostponed}"><TextBlock Classes="caption" Text="{l:T Planning_PostponedBadge}" /></Border>
+                    </StackPanel>
+                    <TextBlock Classes="caption" Text="{Binding AccountText}" />
+                    <TextBlock Classes="caption" Text="{Binding DueText}" IsVisible="{Binding !IsOverdue}" />
+                    <TextBlock Classes="caption debt" Text="{Binding DueText, StringFormat='⚠ {0}'}" IsVisible="{Binding IsOverdue}" />
+                  </StackPanel>
+                  <TextBlock Grid.Column="1" Classes="headline" Text="{Binding AmountText}" VerticalAlignment="Top" />
+                </Grid>
+                <Border Classes="warning" IsVisible="{Binding HasMatch}">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Text="{Binding MatchText}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                    <Button Grid.Column="1" Margin="10,0,0,0" Padding="12,5" FontSize="13" Content="{l:T Planning_LinkButton}"
+                            Command="{Binding LinkCommand}" />
+                  </Grid>
+                </Border>
+                <WrapPanel ItemSpacing="8" LineSpacing="8">
+                  <CalendarDatePicker SelectedDate="{Binding Date}" Width="150" AutomationProperties.Name="{l:T Planning_Date}" />
+                  <TextBox Text="{Binding EditAmountText}" Width="110" AutomationProperties.Name="{l:T Planning_Amount}" />
+                  <Button Classes="primary" Padding="12,5" FontSize="13" Content="{l:T Planning_ConfirmButton}" Command="{Binding ConfirmCommand}" />
+                  <Button Padding="12,5" FontSize="13" Content="{l:T Planning_PostponeButton}" Command="{Binding PostponeCommand}" />
+                  <Button Padding="12,5" FontSize="13" Content="{l:T Planning_SkipButton}" Command="{Binding SkipCommand}" />
+                </WrapPanel>
+                <Border Classes="error" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}">
+                  <TextBlock Text="{Binding Error, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+                </Border>
+                <Border Classes="separator" IsVisible="{Binding !IsLast}" Margin="0,6,0,0" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- Credit cards (spec §10): estimates until reconciled; available credit is not cash -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasCards}">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="title" Text="{l:T Planning_Cards}" />
+        <ItemsControl ItemsSource="{Binding Cards}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:CardStatusViewModel">
+              <StackPanel Spacing="6" Margin="0,6">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <TextBlock Classes="headline" Text="{Binding Name}" />
+                  <TextBlock Classes="caption" Text="{Binding PeriodText}" VerticalAlignment="Center" />
+                </StackPanel>
+                <Border Classes="warning" IsVisible="{Binding !IsSetUp}">
+                  <TextBlock Text="{l:T Card_NotSetUp}" TextWrapping="Wrap" />
+                </Border>
+                <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" IsVisible="{Binding IsSetUp}">
+                  <StackPanel Spacing="1">
+                    <TextBlock Classes="overline" Text="{l:T Card_Outstanding}" />
+                    <TextBlock Classes="headline debt" Text="{Binding OutstandingText}" />
+                  </StackPanel>
+                  <StackPanel Grid.Column="1" Spacing="1">
+                    <TextBlock Classes="overline" Text="{l:T Card_Available}" />
+                    <TextBlock Classes="headline" Text="{Binding AvailableText}" Classes.debt="{Binding IsOverLimit}" />
+                    <TextBlock Classes="caption" Text="{Binding LimitText}" />
+                  </StackPanel>
+                  <StackPanel Grid.Column="2" Spacing="1">
+                    <TextBlock Classes="overline" Text="{l:T Card_PeriodSpending}" />
+                    <TextBlock Classes="headline" Text="{Binding SpendingText}" />
+                  </StackPanel>
+                  <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Spacing="2" Margin="0,10,0,0">
+                    <TextBlock Classes="caption" Text="{Binding EstimateText}" TextWrapping="Wrap" />
+                    <TextBlock Classes="caption" Text="{Binding NextSettlementText}" TextWrapping="Wrap" />
+                    <TextBlock Classes="caption" Text="{l:T Card_NotCash}" TextWrapping="Wrap" />
+                  </StackPanel>
+                </Grid>
+                <Border Classes="warning" IsVisible="{Binding HasDifference}">
+                  <TextBlock Text="{Binding DifferenceText, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+                </Border>
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- Recurring rules -->
+    <Border Classes="glass" Padding="24,20">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock Classes="title" Text="{l:T Planning_Rules}" VerticalAlignment="Center" />
+          <Button Grid.Column="1" Classes="primary" Content="{l:T Planning_AddRule}" Command="{Binding OpenRuleFormCommand}"
+                  IsVisible="{Binding !IsRuleFormOpen}" />
+        </Grid>
+        <TextBlock Classes="secondary" Text="{l:T Planning_RulesNote}" TextWrapping="Wrap" />
+
+        <Border Classes="glass row" Padding="18,16" IsVisible="{Binding IsRuleFormOpen}">
+          <StackPanel Spacing="14">
+            <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto,12,Auto,12,Auto">
+              <StackPanel>
+                <TextBlock Classes="fieldLabel" Text="{l:T Planning_RuleName}" />
+                <TextBox Text="{Binding NewName}" MaxLength="100" PlaceholderText="{l:T Planning_RuleNamePlaceholder}" />
+              </StackPanel>
+              <StackPanel Grid.Column="2">
+                <TextBlock Classes="fieldLabel" Text="{l:T Planning_Kind}" />
+                <ComboBox ItemsSource="{Binding KindOptions}" SelectedItem="{Binding NewKind}" HorizontalAlignment="Stretch">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="vm:KindOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </StackPanel>
+
+              <StackPanel Grid.Row="2">
+                <TextBlock Classes="fieldLabel" Text="{Binding AccountLabel}" />
+                <ComboBox ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding NewAccount}" HorizontalAlignment="Stretch">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </StackPanel>
+              <StackPanel Grid.Row="2" Grid.Column="2" IsVisible="{Binding IsTransfer}">
+                <TextBlock Classes="fieldLabel" Text="{l:T Planning_ToAccount}" />
+                <ComboBox ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding NewToAccount}" HorizontalAlignment="Stretch">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </StackPanel>
+              <StackPanel Grid.Row="2" Grid.Column="2" IsVisible="{Binding !IsTransfer}">
+                <TextBlock Classes="fieldLabel" Text="{l:T Editor_Category}" />
+                <ComboBox ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding NewCategory}" HorizontalAlignment="Stretch">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="vm:CategoryOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </StackPanel>
+
+              <StackPanel Grid.Row="4">
+                <TextBlock Classes="fieldLabel" Text="{l:T Planning_Amount}" />
+                <TextBox Text="{Binding NewAmountText}" PlaceholderText="0,00" />
+              </StackPanel>
+              <StackPanel Grid.Row="4" Grid.Column="2">
+                <TextBlock Classes="fieldLabel" Text="{l:T Planning_Frequency}" />
+                <ComboBox ItemsSource="{Binding FrequencyOptions}" SelectedItem="{Binding NewFrequency}" HorizontalAlignment="Stretch">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="vm:FrequencyOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </StackPanel>
+
+              <StackPanel Grid.Row="6">
+                <TextBlock Classes="fieldLabel" Text="{l:T Planning_StartDate}" />
+                <CalendarDatePicker SelectedDate="{Binding NewStartDate}" HorizontalAlignment="Stretch" />
+                <TextBlock Classes="caption" Margin="4,6,0,0" Text="{l:T Planning_StartDateHint}" TextWrapping="Wrap" />
+              </StackPanel>
+              <StackPanel Grid.Row="6" Grid.Column="2">
+                <TextBlock Classes="fieldLabel" Text="{l:T Planning_EndDate}" />
+                <CalendarDatePicker SelectedDate="{Binding NewEndDate}" HorizontalAlignment="Stretch" />
+              </StackPanel>
+            </Grid>
+            <Border Classes="error" IsVisible="{Binding RuleError, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Text="{Binding RuleError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+            </Border>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Button Classes="primary" Content="{l:T Accounts_Save}" Command="{Binding SaveRuleCommand}" />
+              <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelRuleFormCommand}" />
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <TextBlock Classes="caption" Text="{l:T Planning_NoRules}" IsVisible="{Binding !HasRules}" />
+        <ItemsControl ItemsSource="{Binding Rules}" IsVisible="{Binding HasRules}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:RuleRowViewModel">
+              <StackPanel>
+                <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,8">
+                  <StackPanel Spacing="1">
+                    <TextBlock Classes="headline" Text="{Binding Name}" />
+                    <TextBlock Classes="caption" Text="{Binding Detail}" TextWrapping="Wrap" />
+                    <TextBlock Classes="caption" Text="{Binding NextText}" IsVisible="{Binding NextText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                  </StackPanel>
+                  <TextBlock Grid.Column="1" Classes="headline" Text="{Binding AmountText}" VerticalAlignment="Center" Margin="12,0" />
+                  <Button Grid.Column="2" Padding="12,5" FontSize="13" Content="{l:T Planning_EndRule}" Command="{Binding EndCommand}"
+                          VerticalAlignment="Center" />
+                </Grid>
+                <Border Classes="separator" IsVisible="{Binding !IsLast}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- Settings the forecast and import use -->
+    <Border Classes="glass" Padding="24,20">
+      <StackPanel Spacing="14">
+        <TextBlock Classes="title" Text="{l:T Planning_Settings}" />
+        <Grid ColumnDefinitions="*,16,*">
+          <StackPanel Spacing="4">
+            <TextBlock Classes="fieldLabel" Text="{l:T Planning_Buffer}" />
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBox Text="{Binding BufferText}" Width="130" PlaceholderText="0,00" />
+              <Button Content="{l:T Accounts_Save}" Command="{Binding SaveBufferCommand}" />
+            </StackPanel>
+            <TextBlock Classes="caption" Text="{l:T Planning_BufferHint}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Column="2" Spacing="4">
+            <TextBlock Classes="fieldLabel" Text="{l:T Planning_RoundingAccount}" />
+            <ComboBox ItemsSource="{Binding RoundingOptions}" SelectedItem="{Binding RoundingAccount}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Classes="caption" Text="{l:T Planning_RoundingHint}" TextWrapping="Wrap" />
+          </StackPanel>
+        </Grid>
+        <Border Classes="success" IsVisible="{Binding SettingsMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding SettingsMessage, StringFormat='✓  {0}'}" />
+        </Border>
+        <Border Classes="error" IsVisible="{Binding SettingsError, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding SettingsError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+        </Border>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

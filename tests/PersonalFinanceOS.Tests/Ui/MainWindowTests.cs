@@ -60,7 +60,7 @@ public class MainWindowTests
         await service.CreateAsync(new CreateAccountRequest("Zichtrekening", AccountType.PersonalCurrent, date, Money.FromCents(184_235), Share.Full));
         await service.CreateAsync(new CreateAccountRequest("Gezamenlijke rekening", AccountType.JointCurrent, date, Money.FromCents(240_000), new Share(5000)));
         await service.CreateAsync(new CreateAccountRequest("Spaarrekening 1", AccountType.Savings, date, Money.FromCents(815_000), Share.Full));
-        await service.CreateAsync(new CreateAccountRequest("VISA", AccountType.CreditCard, date, Money.FromCents(-31_240), Share.Full));
+        await service.CreateAsync(new CreateAccountRequest("VISA", AccountType.CreditCard, date, Money.FromCents(-31_240), Share.Full, Card: new PersonalFinanceOS.Application.Cards.CardSettings(Money.FromCents(150_000), 28, null, null)));
     }
 
     [AvaloniaFact]
@@ -102,6 +102,8 @@ public class MainWindowTests
         accounts.OpenFormCommand.Execute(null);
         accounts.NewType = accounts.TypeOptions.Single(o => o.Type == AccountType.CreditCard);
         accounts.NewBalanceText = "1.234";
+        accounts.CardLimitText = "1500";
+        accounts.CardStartDayText = "28";
         HeadlessSetup.Pump();
         Assert.NotNull(accounts.AmountHint);
         Save(window, "04-add-account-form");
@@ -121,6 +123,15 @@ public class MainWindowTests
         accounts.NewName = "VISA";
         accounts.NewType = accounts.TypeOptions.Single(o => o.Type == AccountType.CreditCard);
         accounts.NewBalanceText = "312,40";
+
+        // The card's limit and statement period are entered, never assumed (spec §10).
+        await accounts.SaveCommand.ExecuteAsync(null);
+        Assert.NotNull(accounts.FormError);
+        Assert.Empty(accounts.Rows);
+
+        accounts.CardLimitText = "2.000";
+        accounts.CardStartDayText = "15";
+        accounts.CardSettlementDayText = "3";
         await accounts.SaveCommand.ExecuteAsync(null);
         HeadlessSetup.PumpUntil(() => accounts.Rows.Count == 1);
 
@@ -128,6 +139,19 @@ public class MainWindowTests
         Assert.Equal(Money.FromCents(-31_240), row.Account.OpeningBalance); // typed as owed, stored as debt
         Assert.Null(accounts.FormError);
         Assert.False(accounts.IsFormOpen);
+        Assert.NotNull(row.Card);
+        Assert.Equal(Money.FromCents(200_000), row.Card!.CreditLimit);
+        Assert.Equal(15, row.Card.StatementStartDay);
+        Assert.Equal(3, row.Card.SettlementDay);
+
+        // …and can be changed later.
+        await row.EditCardCommand.ExecuteAsync(null);
+        Assert.True(accounts.IsCardEditOpen);
+        Assert.Equal("15", accounts.CardStartDayText);
+        accounts.CardStartDayText = "28";
+        await accounts.SaveCardCommand.ExecuteAsync(null);
+        HeadlessSetup.PumpUntil(() => accounts.Rows.Count == 1 && accounts.Rows[0].Card?.StatementStartDay == 28);
+        Assert.False(accounts.IsCardEditOpen);
         window.Close();
     }
 
