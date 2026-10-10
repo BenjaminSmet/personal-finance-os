@@ -40,6 +40,10 @@ public class PersistenceTests
         Assert.Empty(context.Accounts.ToList());
         Assert.Empty(context.AppSettings.ToList());
         Assert.Empty(context.AuditLog.ToList());
+        Assert.Empty(context.Categories.ToList());
+        Assert.Empty(context.Transactions.ToList());
+        Assert.Empty(context.PayeeRules.ToList());
+        Assert.Empty(context.Reconciliations.ToList());
     }
 
     [Fact]

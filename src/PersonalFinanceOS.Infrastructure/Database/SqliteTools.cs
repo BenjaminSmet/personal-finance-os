@@ -75,7 +75,7 @@ internal static class SqliteTools
 /// Row counts per table plus key money totals. Compared before and after a migration and between a
 /// database and its backup. Contains numbers only in memory; it is never written to the log.
 /// </summary>
-internal sealed record DatabaseFingerprint(IReadOnlyDictionary<string, long> RowCounts, long OpeningBalanceTotalCents)
+internal sealed record DatabaseFingerprint(IReadOnlyDictionary<string, long> RowCounts, long OpeningBalanceTotalCents, long TransactionTotalCents)
 {
     public static DatabaseFingerprint Capture(SqliteConnection connection)
     {
@@ -89,7 +89,12 @@ internal sealed record DatabaseFingerprint(IReadOnlyDictionary<string, long> Row
             ? SqliteTools.Scalar(connection, "SELECT COALESCE(SUM(opening_balance_cents), 0) FROM accounts;")
             : 0;
 
-        return new DatabaseFingerprint(counts, openingTotal);
+        // Voided rows included: the fingerprint checks that nothing was lost, not what counts.
+        var transactionTotal = SqliteTools.TableExists(connection, "transactions")
+            ? SqliteTools.Scalar(connection, "SELECT COALESCE(SUM(amount_cents), 0) FROM transactions;")
+            : 0;
+
+        return new DatabaseFingerprint(counts, openingTotal, transactionTotal);
     }
 
     /// <summary>
@@ -111,11 +116,13 @@ internal sealed record DatabaseFingerprint(IReadOnlyDictionary<string, long> Row
             }
         }
 
-        return OpeningBalanceTotalCents == after.OpeningBalanceTotalCents;
+        return OpeningBalanceTotalCents == after.OpeningBalanceTotalCents &&
+               TransactionTotalCents == after.TransactionTotalCents;
     }
 
     public bool Matches(DatabaseFingerprint other) =>
         OpeningBalanceTotalCents == other.OpeningBalanceTotalCents &&
+        TransactionTotalCents == other.TransactionTotalCents &&
         RowCounts.Count == other.RowCounts.Count &&
         RowCounts.All(kv => other.RowCounts.TryGetValue(kv.Key, out var c) && c == kv.Value);
 }
