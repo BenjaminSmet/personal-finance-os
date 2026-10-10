@@ -1,0 +1,92 @@
+name: Build, test and package
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed only to publish a Release when a version tag is pushed
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Work out version
+        id: version
+        shell: pwsh
+        run: |
+          if ("${{ github.ref_type }}" -eq "tag") {
+            $v = "${{ github.ref_name }}".TrimStart('v')
+          } else {
+            [xml]$props = Get-Content Directory.Build.props
+            $base = $props.Project.PropertyGroup.Version
+            $v = "$base-build.${{ github.run_number }}"
+          }
+          "version=$v" >> $env:GITHUB_OUTPUT
+          "numeric=$($v.Split('-')[0]).0" >> $env:GITHUB_OUTPUT
+          "Version: $v"
+
+      - name: Restore
+        run: dotnet restore PersonalFinanceOS.slnx
+
+      - name: Build
+        run: dotnet build PersonalFinanceOS.slnx -c Release --no-restore -p:Version=${{ steps.version.outputs.version }}
+
+      - name: Test
+        env:
+          PFOS_SCREENSHOT_DIR: ${{ github.workspace }}\screenshots
+        run: dotnet test PersonalFinanceOS.slnx -c Release --no-build --logger "trx;LogFileName=results.trx" --results-directory TestResults
+
+      - name: Upload test results and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-and-screenshots
+          path: |
+            TestResults
+            screenshots
+
+      - name: Publish app (self-contained, no .NET install needed)
+        run: dotnet publish src/PersonalFinanceOS.App/PersonalFinanceOS.App.csproj -c Release -r win-x64 --self-contained true -p:Version=${{ steps.version.outputs.version }} -o publish
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) {
+            choco install innosetup --no-progress -y
+          }
+          & $iscc "/DAppVersion=${{ steps.version.outputs.version }}" "/DNumericVersion=${{ steps.version.outputs.numeric }}" "/DPublishDir=$PWD\publish" "/O$PWD\installer-output" installer\PersonalFinanceOS.iss
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: PersonalFinanceOS-Setup-${{ steps.version.outputs.version }}
+          path: installer-output/*.exe
+
+      - name: Publish GitHub Release (version tags only)
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $notes = "docs/releases/${{ github.ref_name }}.md"
+          if (Test-Path $notes) {
+            gh release create "${{ github.ref_name }}" installer-output/*.exe --title "Personal Finance OS ${{ steps.version.outputs.version }}" --notes-file $notes
+          } else {
+            gh release create "${{ github.ref_name }}" installer-output/*.exe --title "Personal Finance OS ${{ steps.version.outputs.version }}" --generate-notes
+          }
