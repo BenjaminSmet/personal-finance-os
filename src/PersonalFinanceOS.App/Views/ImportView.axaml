@@ -58,7 +58,7 @@
         <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,12,Auto,12,Auto,12,Auto,12,Auto,12,Auto" IsVisible="{Binding IsMappingOpen}">
           <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_HeaderRow}" />
-            <ComboBox ItemsSource="{Binding HeaderRowOptions}" SelectedItem="{Binding SelectedHeaderRow}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Import_HeaderRow}" ItemsSource="{Binding HeaderRowOptions}" SelectedItem="{Binding SelectedHeaderRow}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:HeaderRowOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>
@@ -66,7 +66,7 @@
           </StackPanel>
           <StackPanel Grid.Row="0" Grid.Column="2" IsVisible="{Binding IsCsv}">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_Delimiter}" />
-            <ComboBox ItemsSource="{Binding DelimiterOptions}" SelectedItem="{Binding Delimiter}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Import_Delimiter}" ItemsSource="{Binding DelimiterOptions}" SelectedItem="{Binding Delimiter}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:CharOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>
@@ -75,17 +75,17 @@
 
           <StackPanel Grid.Row="2" Grid.Column="0">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_DateColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DateColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_DateColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DateColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
           <StackPanel Grid.Row="2" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_DateFormat}" />
-            <ComboBox ItemsSource="{Binding DateFormats}" SelectedItem="{Binding DateFormat}" HorizontalAlignment="Stretch" />
+            <ComboBox AutomationProperties.Name="{l:T Import_DateFormat}" ItemsSource="{Binding DateFormats}" SelectedItem="{Binding DateFormat}" HorizontalAlignment="Stretch" />
           </StackPanel>
 
           <StackPanel Grid.Row="4" Grid.Column="0">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_Layout}" />
-            <ComboBox ItemsSource="{Binding LayoutOptions}" SelectedItem="{Binding SelectedLayout}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Import_Layout}" ItemsSource="{Binding LayoutOptions}" SelectedItem="{Binding SelectedLayout}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:LayoutOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>
@@ -93,7 +93,7 @@
           </StackPanel>
           <StackPanel Grid.Row="4" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_Decimal}" />
-            <ComboBox ItemsSource="{Binding DecimalOptions}" SelectedItem="{Binding DecimalSeparator}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Import_Decimal}" ItemsSource="{Binding DecimalOptions}" SelectedItem="{Binding DecimalSeparator}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:CharOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>
@@ -102,44 +102,44 @@
 
           <StackPanel Grid.Row="6" Grid.Column="0" IsVisible="{Binding ShowSignedAmount}">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_AmountColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding AmountColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_AmountColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding AmountColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
           <StackPanel Grid.Row="6" Grid.Column="2" IsVisible="{Binding ShowDirection}">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_DirectionColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DirectionColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_DirectionColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DirectionColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
           <StackPanel Grid.Row="6" Grid.Column="0" IsVisible="{Binding ShowDebitCredit}">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_DebitColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DebitColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_DebitColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DebitColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
           <StackPanel Grid.Row="6" Grid.Column="2" IsVisible="{Binding ShowDebitCredit}">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_CreditColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CreditColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_CreditColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CreditColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
 
           <StackPanel Grid.Row="8" Grid.Column="0">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_CounterpartyColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CounterpartyColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_CounterpartyColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CounterpartyColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
           <StackPanel Grid.Row="8" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_DescriptionColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DescriptionColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_DescriptionColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding DescriptionColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
 
           <StackPanel Grid.Row="10" Grid.Column="0">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_ReferenceColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding ReferenceColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_ReferenceColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding ReferenceColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
           <StackPanel Grid.Row="10" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Import_CurrencyColumn}" />
-            <ComboBox ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CurrencyColumn}" HorizontalAlignment="Stretch"
+            <ComboBox AutomationProperties.Name="{l:T Import_CurrencyColumn}" ItemsSource="{Binding ColumnOptions}" SelectedItem="{Binding CurrencyColumn}" HorizontalAlignment="Stretch"
                       ItemTemplate="{StaticResource ColumnTemplate}" />
           </StackPanel>
         </Grid>

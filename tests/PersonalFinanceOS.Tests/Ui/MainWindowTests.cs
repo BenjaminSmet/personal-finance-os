@@ -290,8 +290,8 @@ public class MainWindowTests
                 vm.SelectedItem = vm.NavItems.Single(n => n.Page is SettingsViewModel);
                 Save(window, $"{name}-4-settings");
 
-                vm.SelectedItem = vm.NavItems.First(n => n.Page is PlaceholderViewModel);
-                Save(window, $"{name}-5-coming-soon");
+                vm.SelectedItem = vm.NavItems.Single(n => n.Page is ReportsViewModel);
+                Save(window, $"{name}-5-reports");
                 window.Close();
             }
         }

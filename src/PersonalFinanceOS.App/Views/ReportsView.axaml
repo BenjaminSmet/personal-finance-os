@@ -1,0 +1,156 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:v="using:PersonalFinanceOS.App.Views"
+             xmlns:r="using:PersonalFinanceOS.Application.Reports"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.ReportsView"
+             x:DataType="vm:ReportsViewModel">
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="2">
+      <TextBlock Classes="largeTitle" Text="{l:T Reports_Title}" />
+      <TextBlock Classes="secondary" Text="{l:T Reports_Subtitle}" TextWrapping="Wrap" />
+    </StackPanel>
+
+    <!-- What to report on -->
+    <Border Classes="glass" Padding="26,22">
+      <StackPanel Spacing="14">
+        <Grid ColumnDefinitions="*,20,*">
+          <StackPanel>
+            <TextBlock Classes="fieldLabel" Text="{l:T Reports_Type}" />
+            <ComboBox ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" HorizontalAlignment="Stretch"
+                      AutomationProperties.Name="{l:T Reports_Type}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:ReportTypeOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Classes="caption" Margin="2,6,0,0" Text="{Binding TypeHelp}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Column="2" IsVisible="{Binding NeedsSingleAccount}">
+            <TextBlock Classes="fieldLabel" Text="{l:T Reports_Account}" />
+            <ComboBox ItemsSource="{Binding SingleAccounts}" SelectedItem="{Binding SelectedAccount}" HorizontalAlignment="Stretch"
+                      AutomationProperties.Name="{l:T Reports_Account}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:ReportChoice"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+        </Grid>
+
+        <StackPanel Spacing="8">
+          <TextBlock Classes="fieldLabel" Text="{l:T Reports_Period}" />
+          <ListBox Classes="segmented" ItemsSource="{Binding Periods}" SelectedItem="{Binding SelectedPeriod}" HorizontalAlignment="Left"
+                   AutomationProperties.Name="{l:T Reports_Period}">
+            <ListBox.ItemsPanel>
+              <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+              <DataTemplate DataType="vm:ReportPeriodOption">
+                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" MinWidth="90" TextAlignment="Center" />
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          <StackPanel Orientation="Horizontal" Spacing="12">
+            <StackPanel>
+              <TextBlock Classes="caption" Text="{l:T Reports_From}" />
+              <CalendarDatePicker SelectedDate="{Binding FromDate}" Width="160" AutomationProperties.Name="{l:T Reports_From}" />
+            </StackPanel>
+            <StackPanel>
+              <TextBlock Classes="caption" Text="{l:T Reports_To}" />
+              <CalendarDatePicker SelectedDate="{Binding ToDate}" Width="160" AutomationProperties.Name="{l:T Reports_To}" />
+            </StackPanel>
+          </StackPanel>
+        </StackPanel>
+
+        <Expander IsVisible="{Binding UsesAccountFilter}" Header="{l:T Reports_Accounts}" HorizontalAlignment="Stretch">
+          <StackPanel Spacing="6">
+            <TextBlock Classes="caption" Text="{l:T Reports_NoneMeansAll}" TextWrapping="Wrap" />
+            <ItemsControl ItemsSource="{Binding AccountChoices}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><WrapPanel ItemSpacing="14" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="vm:ReportChoice">
+                  <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Expander>
+
+        <Expander IsVisible="{Binding UsesCategoryFilter}" Header="{l:T Reports_Categories}" HorizontalAlignment="Stretch">
+          <StackPanel Spacing="6">
+            <TextBlock Classes="caption" Text="{l:T Reports_NoneMeansAll}" TextWrapping="Wrap" />
+            <ItemsControl ItemsSource="{Binding CategoryChoices}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><WrapPanel ItemSpacing="14" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="vm:ReportChoice">
+                  <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" />
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Expander>
+
+        <StackPanel Spacing="2" IsVisible="{Binding UsesPlanned}">
+          <ToggleSwitch Content="{l:T Reports_IncludePlanned}" IsChecked="{Binding IncludePlanned}" />
+          <TextBlock Classes="caption" Text="{l:T Reports_IncludePlannedHint}" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <Grid ColumnDefinitions="Auto,*,Auto,8,Auto">
+          <Button Classes="primary" Content="{l:T Reports_Generate}" Command="{Binding GenerateCommand}" />
+          <Button Grid.Column="2" Content="{l:T Reports_SavePdf}" Click="OnSavePdf" IsEnabled="{Binding HasReport}" />
+          <Button Grid.Column="4" Content="{l:T Reports_SaveCsv}" Click="OnSaveCsv" IsEnabled="{Binding HasReport}" />
+        </Grid>
+        <TextBlock Classes="caption" Text="{l:T Reports_Privacy}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+
+    <Border Classes="error" IsVisible="{Binding Error, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding Error, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+    </Border>
+    <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" TextWrapping="Wrap" VerticalAlignment="Center" />
+        <Button Grid.Column="1" Content="{l:T Reports_OpenPdf}" Command="{Binding OpenFileCommand}" IsVisible="{Binding CanOpenSaved}" />
+      </Grid>
+    </Border>
+    <Border Classes="warning" IsVisible="{Binding IsOutdated}">
+      <TextBlock Text="{l:T Reports_Outdated}" TextWrapping="Wrap" />
+    </Border>
+
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding !HasReport}">
+      <TextBlock Classes="secondary" Text="{l:T Reports_Start}" TextWrapping="Wrap" />
+    </Border>
+
+    <!-- The report itself: the print preview, the same text the PDF and CSV contain -->
+    <Border Classes="glass strong" Padding="28,24" IsVisible="{Binding HasReport}">
+      <StackPanel Spacing="18" DataContext="{Binding Formatted}" x:DataType="r:FormattedReport">
+        <StackPanel Spacing="4">
+          <TextBlock Classes="largeTitle" Text="{Binding Title}" TextWrapping="Wrap" />
+          <TextBlock Classes="headline" Text="{Binding Period}" />
+          <TextBlock Classes="caption" Text="{Binding Generated}" />
+        </StackPanel>
+        <ItemsControl ItemsSource="{Binding Notes}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="x:String">
+              <TextBlock Classes="secondary" Margin="0,2" Text="{Binding StringFormat='ℹ  {0}'}" TextWrapping="Wrap" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding Tables}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate><StackPanel Spacing="28" /></ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="r:FormattedTable">
+              <v:ReportTableView />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

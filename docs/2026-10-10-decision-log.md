@@ -315,3 +315,70 @@ answer text only names them. Rules applied:
   income); otherwise it is a one-off cost of N today on the first current account, stated as an assumption. The
   result is an unsaved scenario; **Save as scenario** saves it only when clicked.
 - "Category room" checks both the category's budget and safe-to-spend; without a budget it says so.
+
+### D-036 · Reports (2026-10-11)
+The reports of §18 are built by one service from the ledger, forecast, card, budget and net worth services. The
+screen, the PDF and the CSV are all made from one formatted report, so their values cannot differ (§23). Choices made
+where the spec is open:
+- **Months shown:** only months from the first account's opening date up to today. A note names what was left out.
+  The monthly summary compares with up to three complete months before the period, as the analysis page does.
+- **Planned items:** only when "Include planned items" is on. They are shown in separate tables marked as estimates
+  and never added to totals. Budget, joint, card and net worth reports have no forecast part, so the option is hidden
+  for them.
+- **Cash flow:**
+  - actual money in and out per account up to today, transfers included (it is cash movement, not spending);
+  - with planned items, the expected closing balance from the forecast timeline, with card statements on their
+    debit day;
+  - cards have no projected balance of their own.
+- **Card report:**
+  - one line per statement period from the card's own settings;
+  - a closed period's statement is what was owed at its end, and "paid" is the transfers to the card in the
+    following period;
+  - the running period shows the estimated statement, marked as an estimate.
+- **Joint report:** the full amounts and your part at each line's date, so a share that changed during the period
+  is applied correctly.
+- **Exports:**
+  - no new dependency;
+  - the PDF is written directly with the standard Helvetica fonts (WinAnsi covers € and Dutch accents) on A4, landscape
+    when a table is too wide, with page numbers and the title on every page;
+  - the CSV uses `;` with decimal commas in Dutch and `,` with decimal points in English, ISO dates, numbers without
+    a currency symbol, and neutralised formula-like text;
+  - the on-screen report serves as the print preview; printing is done from the saved PDF;
+  - file names are "<report> <from> - <to>", and the user picks the folder.
+
+### D-037 · Manual backup and restore (2026-10-11)
+- **The backup file:** one `.zip` with `finance.db`, `profile.json` and `manifest.json`. The manifest holds the
+  format, the app and schema versions, the row counts and a SHA-256 of the database.
+- **Settings:** all settings live in the database, so they are included. Logs are not.
+- **Success:** the backup is reported only after the zip was written to a temporary name, read back, its checksum,
+  integrity and schema version checked, and then renamed.
+- **Same drive:** the drive is compared with the data folder's drive. A warning is shown after saving there, and a
+  note is always visible.
+- **Reminder:** never, or every 7, 14, 30 or 90 days; 30 is the default. The dashboard shows it once at least one
+  account exists.
+- **Restore:**
+  1. The file is inspected, which changes nothing.
+  2. The user gives an explicit confirmation.
+  3. A verified copy of the current database is made in `backups\` (labelled `before-restore`). If that fails,
+     nothing is replaced.
+  4. The database is replaced and the app reopens through the normal startup, which upgrades an older schema with
+     its own pre-upgrade backup.
+  5. If replacing fails, the previous database is copied back.
+- **Newer backups:** a backup with a newer schema than the app is refused.
+
+### D-038 · Release hardening (2026-10-11)
+- **Tests that read the source tree:**
+  - every UI text has English and Dutch with the same placeholders;
+  - every key used in code, markup and reports exists, every error code has a text, and every enum value shown to
+    the user has a text;
+  - no network API appears anywhere in `src`, and no telemetry package is referenced;
+  - every text box, list and date field has an accessible name. Missing names were added; most come from the
+    field's label.
+- **Installer test in CI:**
+  - a silent install, then the installed exe runs `--self-check <folder>`, which opens or creates a database through
+    the normal startup without a window;
+  - a second install over the top, then a silent uninstall;
+  - the data folder must survive every step.
+- **Version:** 1.0.0. A `v1.0.0` tag publishes the release with `docs/releases/v1.0.0.md`. The tag is only pushed when
+  Benjamin asks.
+- **Placeholder page removed:** every navigation item now leads to a real page.

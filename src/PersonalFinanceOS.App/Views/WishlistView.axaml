@@ -71,15 +71,15 @@
         <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto,12,Auto,12,Auto">
           <StackPanel>
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Name}" />
-            <TextBox Text="{Binding FormName}" MaxLength="100" PlaceholderText="{l:T Wishlist_NamePlaceholder}" />
+            <TextBox AutomationProperties.Name="{l:T Accounts_Name}" Text="{Binding FormName}" MaxLength="100" PlaceholderText="{l:T Wishlist_NamePlaceholder}" />
           </StackPanel>
           <StackPanel Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_Price}" />
-            <TextBox Text="{Binding FormPriceText}" PlaceholderText="0,00" />
+            <TextBox AutomationProperties.Name="{l:T Wishlist_Price}" Text="{Binding FormPriceText}" PlaceholderText="0,00" />
           </StackPanel>
           <StackPanel Grid.Row="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_Priority}" />
-            <ComboBox ItemsSource="{Binding PriorityOptions}" SelectedItem="{Binding FormPriority}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Wishlist_Priority}" ItemsSource="{Binding PriorityOptions}" SelectedItem="{Binding FormPriority}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:PriorityOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>
@@ -87,24 +87,24 @@
           </StackPanel>
           <StackPanel Grid.Row="2" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_TargetDate}" />
-            <CalendarDatePicker SelectedDate="{Binding FormTargetDate}" HorizontalAlignment="Stretch" />
+            <CalendarDatePicker AutomationProperties.Name="{l:T Wishlist_TargetDate}" SelectedDate="{Binding FormTargetDate}" HorizontalAlignment="Stretch" />
           </StackPanel>
           <StackPanel Grid.Row="4">
             <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_MonthlySaving}" />
-            <TextBox Text="{Binding FormSavingText}" PlaceholderText="0,00" />
+            <TextBox AutomationProperties.Name="{l:T Wishlist_MonthlySaving}" Text="{Binding FormSavingText}" PlaceholderText="0,00" />
             <TextBlock Classes="caption" Margin="4,6,0,0" Text="{l:T Wishlist_MonthlySavingHint}" TextWrapping="Wrap" />
           </StackPanel>
           <StackPanel Grid.Row="4" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_Url}" />
-            <TextBox Text="{Binding FormUrl}" MaxLength="500" />
+            <TextBox AutomationProperties.Name="{l:T Wishlist_Url}" Text="{Binding FormUrl}" MaxLength="500" />
           </StackPanel>
           <StackPanel Grid.Row="6">
             <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_Alternative}" />
-            <TextBox Text="{Binding FormAlternative}" MaxLength="200" PlaceholderText="{l:T Wishlist_AlternativePlaceholder}" />
+            <TextBox AutomationProperties.Name="{l:T Wishlist_Alternative}" Text="{Binding FormAlternative}" MaxLength="200" PlaceholderText="{l:T Wishlist_AlternativePlaceholder}" />
           </StackPanel>
           <StackPanel Grid.Row="6" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Notes}" />
-            <TextBox Text="{Binding FormNote}" MaxLength="1000" />
+            <TextBox AutomationProperties.Name="{l:T Accounts_Notes}" Text="{Binding FormNote}" MaxLength="1000" />
           </StackPanel>
         </Grid>
         <Border Classes="error" IsVisible="{Binding FormError, Converter={x:Static ObjectConverters.IsNotNull}}">
@@ -202,7 +202,7 @@
             <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto">
               <StackPanel IsVisible="{Binding RecordTransaction}">
                 <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_PaidWith}" />
-                <ComboBox ItemsSource="{Binding PurchaseAccounts}" SelectedItem="{Binding PurchaseAccount}" HorizontalAlignment="Stretch">
+                <ComboBox AutomationProperties.Name="{l:T Wishlist_PaidWith}" ItemsSource="{Binding PurchaseAccounts}" SelectedItem="{Binding PurchaseAccount}" HorizontalAlignment="Stretch">
                   <ComboBox.ItemTemplate>
                     <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                   </ComboBox.ItemTemplate>
@@ -210,7 +210,7 @@
               </StackPanel>
               <StackPanel Grid.Column="2" IsVisible="{Binding RecordTransaction}">
                 <TextBlock Classes="fieldLabel" Text="{l:T Editor_Category}" />
-                <ComboBox ItemsSource="{Binding PurchaseCategories}" SelectedItem="{Binding PurchaseCategory}" HorizontalAlignment="Stretch">
+                <ComboBox AutomationProperties.Name="{l:T Editor_Category}" ItemsSource="{Binding PurchaseCategories}" SelectedItem="{Binding PurchaseCategory}" HorizontalAlignment="Stretch">
                   <ComboBox.ItemTemplate>
                     <DataTemplate DataType="vm:CategoryOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                   </ComboBox.ItemTemplate>
@@ -218,11 +218,11 @@
               </StackPanel>
               <StackPanel Grid.Row="2">
                 <TextBlock Classes="fieldLabel" Text="{l:T Editor_Date}" />
-                <CalendarDatePicker SelectedDate="{Binding PurchaseDate}" HorizontalAlignment="Stretch" />
+                <CalendarDatePicker AutomationProperties.Name="{l:T Editor_Date}" SelectedDate="{Binding PurchaseDate}" HorizontalAlignment="Stretch" />
               </StackPanel>
               <StackPanel Grid.Row="2" Grid.Column="2">
                 <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_PaidAmount}" />
-                <TextBox Text="{Binding PurchaseAmountText}" PlaceholderText="0,00" />
+                <TextBox AutomationProperties.Name="{l:T Wishlist_PaidAmount}" Text="{Binding PurchaseAmountText}" PlaceholderText="0,00" />
               </StackPanel>
             </Grid>
             <Border Classes="error" IsVisible="{Binding PurchaseError, Converter={x:Static ObjectConverters.IsNotNull}}">

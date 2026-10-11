@@ -17,8 +17,6 @@
   <data name="Nav_Assistant" xml:space="preserve"><value>Assistent</value></data>
   <data name="Nav_Reports" xml:space="preserve"><value>Rapporten</value></data>
   <data name="Nav_Settings" xml:space="preserve"><value>Instellingen &amp; back-up</value></data>
-  <data name="Placeholder_Title" xml:space="preserve"><value>Binnenkort</value></data>
-  <data name="Placeholder_Body" xml:space="preserve"><value>Dit onderdeel wordt gebouwd in fase {0}.</value></data>
   <data name="Dashboard_Welcome" xml:space="preserve"><value>Welkom</value></data>
   <data name="Dashboard_Intro" xml:space="preserve"><value>Dit is de basis van je financiële app. Begin met je rekeningen toe te voegen, met hun huidige saldo.</value></data>
   <data name="Dashboard_AccountsSummary" xml:space="preserve"><value>{0} actieve rekeningen</value></data>
@@ -65,7 +63,6 @@
   <data name="Settings_Version" xml:space="preserve"><value>App-versie</value></data>
   <data name="Settings_Schema" xml:space="preserve"><value>Versie databaseschema</value></data>
   <data name="Settings_Offline" xml:space="preserve"><value>Deze app maakt geen internetverbindingen.</value></data>
-  <data name="Settings_BackupComing" xml:space="preserve"><value>Handmatige back-up en herstel komen in fase 8. Vóór elke database-upgrade wordt nu al automatisch een gecontroleerde back-up gemaakt.</value></data>
   <data name="Language_Dutch" xml:space="preserve"><value>Nederlands</value></data>
   <data name="Language_English" xml:space="preserve"><value>English</value></data>
   <data name="Error_account_name_required" xml:space="preserve"><value>Vul een naam in.</value></data>
@@ -947,4 +944,234 @@
   <data name="Error_scenario_planned_required" xml:space="preserve"><value>Kies een geplande post.</value></data>
   <data name="Error_scenario_account_required" xml:space="preserve"><value>Kies een zicht-, gezamenlijke, spaar- of cashrekening.</value></data>
   <data name="Error_scenario_notFound" xml:space="preserve"><value>Dit scenario bestaat niet meer.</value></data>
+  <data name="ReportType_MonthlySummary" xml:space="preserve"><value>Maandoverzicht</value></data>
+  <data name="ReportType_CashFlow" xml:space="preserve"><value>Kasstroom</value></data>
+  <data name="ReportType_Account" xml:space="preserve"><value>Rekeningrapport</value></data>
+  <data name="ReportType_Budget" xml:space="preserve"><value>Budget tegenover werkelijk</value></data>
+  <data name="ReportType_JointFinance" xml:space="preserve"><value>Gezamenlijke financiën</value></data>
+  <data name="ReportType_CreditCard" xml:space="preserve"><value>Kredietkaart</value></data>
+  <data name="ReportType_NetWorth" xml:space="preserve"><value>Vermogen</value></data>
+  <data name="ReportType_AnnualOverview" xml:space="preserve"><value>Jaaroverzicht</value></data>
+  <data name="ReportTypeHelp_MonthlySummary" xml:space="preserve"><value>Inkomsten, uitgaven en netto per maand, per categorie, vergeleken met eerdere maanden.</value></data>
+  <data name="ReportTypeHelp_CashFlow" xml:space="preserve"><value>Beginsaldi, geld in en uit, en met geplande posten de verwachte eindsaldi.</value></data>
+  <data name="ReportTypeHelp_Account" xml:space="preserve"><value>Alle transacties van één rekening met het lopende saldo en de afstemmingen.</value></data>
+  <data name="ReportTypeHelp_Budget" xml:space="preserve"><value>Budget, werkelijke uitgaven en wat overblijft per categorie.</value></data>
+  <data name="ReportTypeHelp_JointFinance" xml:space="preserve"><value>Volledige activiteit van gedeelde rekeningen en jouw deel, duidelijk gescheiden.</value></data>
+  <data name="ReportTypeHelp_CreditCard" xml:space="preserve"><value>Afrekenperiodes, aankopen, terugbetalingen, afrekeningen, betalingen en wat overblijft.</value></data>
+  <data name="ReportTypeHelp_NetWorth" xml:space="preserve"><value>Bezittingen, schulden en aandelen met hun waarderingsdatum, en de evolutie.</value></data>
+  <data name="ReportTypeHelp_AnnualOverview" xml:space="preserve"><value>Elke maand met gegevens in het jaar, met totalen en gemiddelden.</value></data>
+  <data name="Report_Title_Account" xml:space="preserve"><value>Rekeningrapport: {0}</value></data>
+  <data name="Report_Total" xml:space="preserve"><value>Totaal</value></data>
+  <data name="Report_TotalAssets" xml:space="preserve"><value>Totaal bezittingen</value></data>
+  <data name="Report_TotalLiabilities" xml:space="preserve"><value>Totaal schulden</value></data>
+  <data name="Report_TotalBudgeted" xml:space="preserve"><value>Totaal met budget</value></data>
+  <data name="Report_TotalUnbudgeted" xml:space="preserve"><value>Uitgaven zonder budget</value></data>
+  <data name="Report_NetWorth" xml:space="preserve"><value>Vermogen</value></data>
+  <data name="Report_Asset" xml:space="preserve"><value>Bezit</value></data>
+  <data name="Report_Liability" xml:space="preserve"><value>Schuld</value></data>
+  <data name="Report_OpeningBalance" xml:space="preserve"><value>Beginsaldo</value></data>
+  <data name="Report_ClosingBalance" xml:space="preserve"><value>Eindsaldo</value></data>
+  <data name="Report_CreditLimit" xml:space="preserve"><value>Kredietlimiet</value></data>
+  <data name="Report_Outstanding" xml:space="preserve"><value>Openstaand</value></data>
+  <data name="Report_AvailableCredit" xml:space="preserve"><value>Beschikbaar krediet</value></data>
+  <data name="Report_Uncategorised" xml:space="preserve"><value>Zonder categorie</value></data>
+  <data name="Report_NoBudget" xml:space="preserve"><value>Geen budget</value></data>
+  <data name="Report_Over" xml:space="preserve"><value>{0} te veel</value></data>
+  <data name="Report_Used" xml:space="preserve"><value>{0} gebruikt</value></data>
+  <data name="Report_Overdue" xml:space="preserve"><value>Achterstallig</value></data>
+  <data name="Report_Incomplete" xml:space="preserve"><value>Onvolledig</value></data>
+  <data name="Report_Period" xml:space="preserve"><value>{0} tot {1}</value></data>
+  <data name="Report_UntilToday" xml:space="preserve"><value>Tot {0}</value></data>
+  <data name="Report_FromDate" xml:space="preserve"><value>Vanaf {0}</value></data>
+  <data name="Report_YearTotal" xml:space="preserve"><value>Totaal {0}</value></data>
+  <data name="Report_MonthAverage" xml:space="preserve"><value>Gemiddelde per maand ({0} maanden)</value></data>
+  <data name="Report_Basis_Actual" xml:space="preserve"><value>Werkelijk</value></data>
+  <data name="Report_Basis_Estimate" xml:space="preserve"><value>Schatting</value></data>
+  <data name="Report_Rec_Matched" xml:space="preserve"><value>Klopt</value></data>
+  <data name="Report_Rec_Adjusted" xml:space="preserve"><value>Gecorrigeerd</value></data>
+  <data name="Report_Rec_Difference" xml:space="preserve"><value>Verschil</value></data>
+  <data name="Report_Event_RecordedLater" xml:space="preserve"><value>Geboekt, latere datum</value></data>
+  <data name="Report_Event_Planned" xml:space="preserve"><value>Gepland</value></data>
+  <data name="Report_Event_PlannedIn" xml:space="preserve"><value>Geplande overschrijving in</value></data>
+  <data name="Report_Event_Income" xml:space="preserve"><value>Verwacht inkomen</value></data>
+  <data name="Report_Event_CardSettlement" xml:space="preserve"><value>Kaartafrekening</value></data>
+  <data name="Report_Event_Purchase" xml:space="preserve"><value>Aankoop</value></data>
+  <data name="Report_Event_Scenario" xml:space="preserve"><value>Scenario</value></data>
+  <data name="Report_Col_Month" xml:space="preserve"><value>Maand</value></data>
+  <data name="Report_Col_Income" xml:space="preserve"><value>Inkomsten</value></data>
+  <data name="Report_Col_Spending" xml:space="preserve"><value>Uitgaven</value></data>
+  <data name="Report_Col_Net" xml:space="preserve"><value>Netto</value></data>
+  <data name="Report_Col_Remark" xml:space="preserve"><value>Opmerking</value></data>
+  <data name="Report_Col_Item" xml:space="preserve"><value>Post</value></data>
+  <data name="Report_Col_Category" xml:space="preserve"><value>Categorie</value></data>
+  <data name="Report_Col_Amount" xml:space="preserve"><value>Bedrag</value></data>
+  <data name="Report_Col_PerMonth" xml:space="preserve"><value>Per maand</value></data>
+  <data name="Report_Col_PerMonthPeriod" xml:space="preserve"><value>Per maand, deze periode</value></data>
+  <data name="Report_Col_PerMonthBefore" xml:space="preserve"><value>Per maand, ervoor</value></data>
+  <data name="Report_Col_Difference" xml:space="preserve"><value>Verschil</value></data>
+  <data name="Report_Col_Account" xml:space="preserve"><value>Rekening</value></data>
+  <data name="Report_Col_Opening" xml:space="preserve"><value>Begin</value></data>
+  <data name="Report_Col_In" xml:space="preserve"><value>Geld in</value></data>
+  <data name="Report_Col_Out" xml:space="preserve"><value>Geld uit</value></data>
+  <data name="Report_Col_Closing" xml:space="preserve"><value>Einde</value></data>
+  <data name="Report_Col_Today" xml:space="preserve"><value>Vandaag</value></data>
+  <data name="Report_Col_PlannedIn" xml:space="preserve"><value>Gepland in</value></data>
+  <data name="Report_Col_PlannedOut" xml:space="preserve"><value>Gepland uit</value></data>
+  <data name="Report_Col_CardStatements" xml:space="preserve"><value>Kaartafrekeningen</value></data>
+  <data name="Report_Col_ProjectedClosing" xml:space="preserve"><value>Verwacht einde</value></data>
+  <data name="Report_Col_Date" xml:space="preserve"><value>Datum</value></data>
+  <data name="Report_Col_Kind" xml:space="preserve"><value>Soort</value></data>
+  <data name="Report_Col_Description" xml:space="preserve"><value>Omschrijving</value></data>
+  <data name="Report_Col_Balance" xml:space="preserve"><value>Saldo</value></data>
+  <data name="Report_Col_StatementDate" xml:space="preserve"><value>Uittrekseldatum</value></data>
+  <data name="Report_Col_BankBalance" xml:space="preserve"><value>Saldo bank</value></data>
+  <data name="Report_Col_AppBalance" xml:space="preserve"><value>Saldo in app</value></data>
+  <data name="Report_Col_Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Report_Col_Budget" xml:space="preserve"><value>Budget</value></data>
+  <data name="Report_Col_Actual" xml:space="preserve"><value>Werkelijk</value></data>
+  <data name="Report_Col_Left" xml:space="preserve"><value>Over</value></data>
+  <data name="Report_Col_Full" xml:space="preserve"><value>Volledig bedrag</value></data>
+  <data name="Report_Col_Share" xml:space="preserve"><value>Jouw aandeel</value></data>
+  <data name="Report_Col_YourPart" xml:space="preserve"><value>Jouw deel</value></data>
+  <data name="Report_Col_Period" xml:space="preserve"><value>Periode</value></data>
+  <data name="Report_Col_Purchases" xml:space="preserve"><value>Aankopen</value></data>
+  <data name="Report_Col_Refunds" xml:space="preserve"><value>Terugbetalingen</value></data>
+  <data name="Report_Col_Statement" xml:space="preserve"><value>Afrekening</value></data>
+  <data name="Report_Col_Basis" xml:space="preserve"><value>Basis</value></data>
+  <data name="Report_Col_Paid" xml:space="preserve"><value>Betaald</value></data>
+  <data name="Report_Col_Remaining" xml:space="preserve"><value>Resterend</value></data>
+  <data name="Report_Col_DebitDate" xml:space="preserve"><value>Debetdatum</value></data>
+  <data name="Report_Col_Source" xml:space="preserve"><value>Waarde uit</value></data>
+  <data name="Report_Col_ValuedOn" xml:space="preserve"><value>Gewaardeerd op</value></data>
+  <data name="Report_Col_NetWorth" xml:space="preserve"><value>Vermogen</value></data>
+  <data name="Report_Col_Change" xml:space="preserve"><value>Verschil</value></data>
+  <data name="Report_Table_PerMonth" xml:space="preserve"><value>Per maand</value></data>
+  <data name="Report_Table_SpendingByCategory" xml:space="preserve"><value>Uitgaven per categorie</value></data>
+  <data name="Report_Table_SpendingByCategoryYear" xml:space="preserve"><value>Uitgaven per categorie in {0}</value></data>
+  <data name="Report_Table_IncomeByCategory" xml:space="preserve"><value>Inkomsten per categorie</value></data>
+  <data name="Report_Table_Comparison" xml:space="preserve"><value>Vergeleken met de {0} volledige maanden ervoor</value></data>
+  <data name="Report_Table_CashPerAccount" xml:space="preserve"><value>Werkelijke kasstroom per rekening, tot {0}</value></data>
+  <data name="Report_Table_Projection" xml:space="preserve"><value>Verwachte saldi op {0} (schatting)</value></data>
+  <data name="Report_Table_Commitments" xml:space="preserve"><value>Geplande verplichtingen (schatting)</value></data>
+  <data name="Report_Table_Summary" xml:space="preserve"><value>Samenvatting</value></data>
+  <data name="Report_Table_Transactions" xml:space="preserve"><value>Transacties ({0})</value></data>
+  <data name="Report_Table_Reconciliation" xml:space="preserve"><value>Afstemmingen</value></data>
+  <data name="Report_Table_BudgetVsActual" xml:space="preserve"><value>Budget tegenover werkelijk</value></data>
+  <data name="Report_Table_JointSummary" xml:space="preserve"><value>{0}: volledig bedrag en jouw deel</value></data>
+  <data name="Report_Table_JointActivity" xml:space="preserve"><value>{0}: alle activiteit</value></data>
+  <data name="Report_Table_Statements" xml:space="preserve"><value>{0}: afrekenperiodes</value></data>
+  <data name="Report_Table_CardNow" xml:space="preserve"><value>{0}: vandaag</value></data>
+  <data name="Report_Table_CardLines" xml:space="preserve"><value>{0}: aankopen en terugbetalingen</value></data>
+  <data name="Report_Table_NetWorthOn" xml:space="preserve"><value>Vermogen op {0}</value></data>
+  <data name="Report_Table_NetWorthHistory" xml:space="preserve"><value>Vermogen doorheen de tijd</value></data>
+  <data name="Report_Table_Year" xml:space="preserve"><value>{0} per maand</value></data>
+  <data name="Report_Table_Planned" xml:space="preserve"><value>Geplande posten (schatting, niet in de totalen)</value></data>
+  <data name="Report_Note_CategoryFilter" xml:space="preserve"><value>Alleen {0} gekozen categorieën zijn meegeteld.</value></data>
+  <data name="Report_Note_AccountFilter" xml:space="preserve"><value>Alleen deze rekeningen zijn meegeteld: {0}.</value></data>
+  <data name="Report_Note_BeforeHistory" xml:space="preserve"><value>Maanden vóór {0}, de eerste saldodatum, hebben geen gegevens en zijn weggelaten.</value></data>
+  <data name="Report_Note_NoAccounts" xml:space="preserve"><value>Er zijn nog geen rekeningen, dus er is niets te rapporteren.</value></data>
+  <data name="Report_Note_FutureMonths" xml:space="preserve"><value>Maanden na vandaag hebben geen werkelijke cijfers en zijn weggelaten.</value></data>
+  <data name="Report_Note_NoComparison" xml:space="preserve"><value>Er zijn geen volledige eerdere maanden om mee te vergelijken.</value></data>
+  <data name="Report_Note_PlannedExcluded" xml:space="preserve"><value>Geplande posten zijn niet meegeteld. Zet "Geplande posten tonen" aan om ze apart te zien.</value></data>
+  <data name="Report_Note_PlannedSeparate" xml:space="preserve"><value>Deze posten zijn nog niet gebeurd. Ze worden nooit bij de werkelijke cijfers hierboven geteld.</value></data>
+  <data name="Report_Note_CashFlowActual" xml:space="preserve"><value>Werkelijke cijfers komen uit geboekte transacties. Overschrijvingen tussen je rekeningen tellen als geld in en uit.</value></data>
+  <data name="Report_Note_TransfersIncluded" xml:space="preserve"><value>Geld in en uit bevatten overschrijvingen tussen je eigen rekeningen.</value></data>
+  <data name="Report_Note_Projection" xml:space="preserve"><value>Verwachte saldi zijn schattingen op basis van geplande posten en kaartafrekeningen. Verwacht inkomen is nooit zeker.</value></data>
+  <data name="Report_Note_Estimates" xml:space="preserve"><value>Alle bedragen in deze tabel zijn schattingen.</value></data>
+  <data name="Report_Note_CardsNotProjected" xml:space="preserve"><value>Kredietkaarten hebben geen verwacht saldo; hun afrekeningen tellen op de rekening die ze betaalt.</value></data>
+  <data name="Report_Note_FutureWithoutPlanned" xml:space="preserve"><value>De periode loopt na vandaag. Zet "Geplande posten tonen" aan om verwachte saldi te zien.</value></data>
+  <data name="Report_Note_InOutVsIncome" xml:space="preserve"><value>Geld in en uit bevatten overschrijvingen; inkomsten en uitgaven niet.</value></data>
+  <data name="Report_Note_NotReconciled" xml:space="preserve"><value>Deze rekening is nog nooit afgestemd met een uittreksel.</value></data>
+  <data name="Report_Note_ReconciledOn" xml:space="preserve"><value>Laatst afgestemd op {0}: het saldo klopte.</value></data>
+  <data name="Report_Note_ReconciledDifference" xml:space="preserve"><value>Laatst afgestemd op {0} met een verschil van {1}.</value></data>
+  <data name="Report_Note_CardBalance" xml:space="preserve"><value>Een negatief saldo is wat je op de kaart verschuldigd bent.</value></data>
+  <data name="Report_Note_OpenedOn" xml:space="preserve"><value>De rekening is geopend op {0}; het beginsaldo is van die datum.</value></data>
+  <data name="Report_Note_Budget" xml:space="preserve"><value>Uitgaven tellen alleen in maanden met een budget voor die categorie. Geplande posten zijn niet meegeteld.</value></data>
+  <data name="Report_Note_Joint" xml:space="preserve"><value>Volledige bedragen zijn de hele rekening. Jouw deel gebruikt je eigendomsaandeel op elke datum.</value></data>
+  <data name="Report_Note_NoJoint" xml:space="preserve"><value>Er zijn geen gedeelde rekeningen in de selectie.</value></data>
+  <data name="Report_Note_ShareOn" xml:space="preserve"><value>Jouw aandeel op {1}: {0}.</value></data>
+  <data name="Report_Note_CardNoDoubleCount" xml:space="preserve"><value>Een kaartaankoop telt één keer, op de aankoopdatum. De afrekening betalen is een overschrijving en telt niet opnieuw.</value></data>
+  <data name="Report_Note_NoCards" xml:space="preserve"><value>Er zijn geen kredietkaarten in de selectie.</value></data>
+  <data name="Report_Note_CardNotSetUp" xml:space="preserve"><value>{0} heeft nog geen afrekeninstellingen, dus de periodes kunnen niet getoond worden.</value></data>
+  <data name="Report_Note_StatementEstimate" xml:space="preserve"><value>De afrekening van de lopende periode is een schatting tot de periode afsluit.</value></data>
+  <data name="Report_Note_CreditNotCash" xml:space="preserve"><value>Beschikbaar krediet is niet jouw geld en telt niet als cash.</value></data>
+  <data name="Report_Note_CardLines" xml:space="preserve"><value>Aankopen zijn positief, terugbetalingen negatief.</value></data>
+  <data name="Report_Note_NetWorthLines" xml:space="preserve"><value>Grijze lijnen hebben een onzekere waarde: geen waardering, of een oude.</value></data>
+  <data name="Report_Note_NetWorthIncomplete" xml:space="preserve"><value>Sommige posten hebben geen waardering en tellen als nul.</value></data>
+  <data name="Report_Note_StaleValues" xml:space="preserve"><value>Sommige waarderingen zijn ouder dan {0} dagen.</value></data>
+  <data name="Report_Note_NoCreditLimit" xml:space="preserve"><value>Ongebruikte kredietlimieten tellen nooit als bezit.</value></data>
+  <data name="ValueSource_Ledger" xml:space="preserve"><value>Boekingen</value></data>
+  <data name="ValueSource_Valuation" xml:space="preserve"><value>Waardering</value></data>
+  <data name="ValueSource_ValuationPlusLedger" xml:space="preserve"><value>Waardering + latere boekingen</value></data>
+  <data name="ValueSource_LedgerWithoutValuation" xml:space="preserve"><value>Stortingen, geen waardering</value></data>
+  <data name="ValueSource_NoValuation" xml:space="preserve"><value>Geen waardering</value></data>
+  <data name="Report_PeriodLabel" xml:space="preserve"><value>Periode: {0} tot {1}</value></data>
+  <data name="Report_Generated" xml:space="preserve"><value>Gemaakt op {0} om {1}</value></data>
+  <data name="Report_Page" xml:space="preserve"><value>Pagina {0} van {1}</value></data>
+  <data name="Report_Empty" xml:space="preserve"><value>Geen gegevens in deze periode.</value></data>
+  <data name="Reports_Title" xml:space="preserve"><value>Rapporten</value></data>
+  <data name="Reports_Subtitle" xml:space="preserve"><value>Kies een rapport en een periode. Wat je hier ziet, is precies wat als PDF of CSV wordt bewaard.</value></data>
+  <data name="Reports_Type" xml:space="preserve"><value>Rapport</value></data>
+  <data name="Reports_Account" xml:space="preserve"><value>Rekening</value></data>
+  <data name="Reports_Period" xml:space="preserve"><value>Periode</value></data>
+  <data name="Reports_Period_ThisMonth" xml:space="preserve"><value>Deze maand</value></data>
+  <data name="Reports_Period_LastMonth" xml:space="preserve"><value>Vorige maand</value></data>
+  <data name="Reports_Period_ThisYear" xml:space="preserve"><value>Dit jaar</value></data>
+  <data name="Reports_Period_LastYear" xml:space="preserve"><value>Vorig jaar</value></data>
+  <data name="Reports_Period_Last12Months" xml:space="preserve"><value>Laatste 12 maanden</value></data>
+  <data name="Reports_Period_Custom" xml:space="preserve"><value>Zelf kiezen</value></data>
+  <data name="Reports_From" xml:space="preserve"><value>Van</value></data>
+  <data name="Reports_To" xml:space="preserve"><value>Tot en met</value></data>
+  <data name="Reports_Accounts" xml:space="preserve"><value>Rekeningen</value></data>
+  <data name="Reports_Categories" xml:space="preserve"><value>Categorieën</value></data>
+  <data name="Reports_NoneMeansAll" xml:space="preserve"><value>Niets aangevinkt betekent alles.</value></data>
+  <data name="Reports_IncludePlanned" xml:space="preserve"><value>Geplande posten tonen</value></data>
+  <data name="Reports_IncludePlannedHint" xml:space="preserve"><value>Geplande posten en verwachte saldi staan in eigen tabellen, gemarkeerd als schatting. Ze worden nooit bij werkelijke totalen geteld.</value></data>
+  <data name="Reports_Generate" xml:space="preserve"><value>Rapport maken</value></data>
+  <data name="Reports_SavePdf" xml:space="preserve"><value>Bewaren als PDF</value></data>
+  <data name="Reports_SaveCsv" xml:space="preserve"><value>Bewaren als CSV</value></data>
+  <data name="Reports_PdfType" xml:space="preserve"><value>PDF-document</value></data>
+  <data name="Reports_CsvType" xml:space="preserve"><value>CSV-bestand</value></data>
+  <data name="Reports_Saved" xml:space="preserve"><value>Bewaard als {0}.</value></data>
+  <data name="Reports_OpenPdf" xml:space="preserve"><value>PDF openen</value></data>
+  <data name="Reports_Privacy" xml:space="preserve"><value>Rapporten worden alleen op deze computer gemaakt. Er wordt niets verzonden; je kiest zelf waar een bestand komt.</value></data>
+  <data name="Reports_Outdated" xml:space="preserve"><value>Je hebt de keuzes gewijzigd. Maak het rapport opnieuw om ze te zien; bewaren bewaart nu het rapport hieronder.</value></data>
+  <data name="Reports_Start" xml:space="preserve"><value>Kies een rapport en klik op Rapport maken.</value></data>
+  <data name="Error_report_period_invalid" xml:space="preserve"><value>Kies een begindatum op of vóór de einddatum.</value></data>
+  <data name="Error_report_period_tooLong" xml:space="preserve"><value>Een rapport beslaat hoogstens 10 jaar.</value></data>
+  <data name="Error_report_account_required" xml:space="preserve"><value>Kies de rekening voor dit rapport.</value></data>
+  <data name="Error_report_save_failed" xml:space="preserve"><value>Het bestand kon niet worden bewaard. Kies een andere plaats of sluit het bestand als het in een ander programma openstaat.</value></data>
+  <data name="Backup_Title" xml:space="preserve"><value>Back-up en herstel</value></data>
+  <data name="Backup_Explain" xml:space="preserve"><value>Een back-up is één bestand met al je rekeningen, transacties, planning en instellingen. Bewaar het op een USB-stick of een andere schijf.</value></data>
+  <data name="Backup_Last" xml:space="preserve"><value>Laatste back-up: {0}</value></data>
+  <data name="Backup_Never" xml:space="preserve"><value>Nog geen back-up gemaakt</value></data>
+  <data name="Backup_Due" xml:space="preserve"><value>Tijd voor een nieuwe back-up.</value></data>
+  <data name="Backup_Make" xml:space="preserve"><value>Back-up maken</value></data>
+  <data name="Backup_Reminder" xml:space="preserve"><value>Herinner me</value></data>
+  <data name="Backup_ReminderOff" xml:space="preserve"><value>Nooit</value></data>
+  <data name="Backup_ReminderDays" xml:space="preserve"><value>Elke {0} dagen</value></data>
+  <data name="Backup_Done" xml:space="preserve"><value>Back-up {0} gemaakt en gecontroleerd: {1} transacties.</value></data>
+  <data name="Backup_SameDrive" xml:space="preserve"><value>Deze back-up staat op dezelfde schijf als je gegevens. Hij beschermt je niet als deze schijf kapotgaat. Kopieer hem ook naar een USB-stick of een andere schijf.</value></data>
+  <data name="Backup_DriveNote" xml:space="preserve"><value>Een back-up telt pas als hij gecontroleerd is. Een back-up op dezelfde schijf als de app overleeft geen defecte schijf.</value></data>
+  <data name="Backup_RestoreTitle" xml:space="preserve"><value>Een back-up terugzetten</value></data>
+  <data name="Backup_RestoreExplain" xml:space="preserve"><value>Vervangt alle huidige gegevens door de back-up. Eerst wordt een kopie van de huidige gegevens bewaard.</value></data>
+  <data name="Backup_Choose" xml:space="preserve"><value>Back-up kiezen…</value></data>
+  <data name="Backup_FileType" xml:space="preserve"><value>Personal Finance OS-back-up</value></data>
+  <data name="Backup_ConfirmTitle" xml:space="preserve"><value>Deze back-up terugzetten?</value></data>
+  <data name="Backup_RestoreSummary" xml:space="preserve"><value>{0}, gemaakt op {1} met versie {4}: {2} rekeningen en {3} transacties.</value></data>
+  <data name="Backup_ConfirmExplain" xml:space="preserve"><value>Alle huidige gegevens worden vervangen door deze back-up. Eerst wordt een gecontroleerde kopie van de huidige gegevens in de map backups bewaard, daarna opent de app opnieuw met de teruggezette gegevens.</value></data>
+  <data name="Backup_ConfirmRestore" xml:space="preserve"><value>Mijn gegevens vervangen door deze back-up</value></data>
+  <data name="Backup_Restored" xml:space="preserve"><value>De back-up is teruggezet.</value></data>
+  <data name="Dashboard_BackupNever" xml:space="preserve"><value>Je hebt nog geen back-up gemaakt.</value></data>
+  <data name="Dashboard_BackupDue" xml:space="preserve"><value>Je laatste back-up is van {0}. Tijd voor een nieuwe.</value></data>
+  <data name="Error_backup_verifyFailed" xml:space="preserve"><value>De back-up kon niet worden gecontroleerd en is daarom niet bewaard. Probeer een andere plaats.</value></data>
+  <data name="Error_backup_noAccess" xml:space="preserve"><value>De app mag niet schrijven op die plaats. Kies een andere map.</value></data>
+  <data name="Error_backup_writeFailed" xml:space="preserve"><value>De back-up kon niet worden geschreven. Controleer of er genoeg ruimte is en probeer opnieuw.</value></data>
+  <data name="Error_backup_notABackup" xml:space="preserve"><value>Dit bestand is geen back-up van Personal Finance OS.</value></data>
+  <data name="Error_backup_tooNew" xml:space="preserve"><value>Deze back-up is gemaakt met een nieuwere versie van de app. Werk de app eerst bij.</value></data>
+  <data name="Error_backup_damaged" xml:space="preserve"><value>Deze back-up is beschadigd en kan niet worden teruggezet.</value></data>
+  <data name="Error_backup_preRestoreFailed" xml:space="preserve"><value>Er kon geen kopie van de huidige gegevens worden gemaakt, dus er is niets vervangen.</value></data>
+  <data name="Error_backup_restoreFailed" xml:space="preserve"><value>Terugzetten is mislukt. Je vorige gegevens zijn teruggezet.</value></data>
+  <data name="Error_backup_reminder_invalid" xml:space="preserve"><value>Kies een van de herinneringsopties.</value></data>
+  <data name="Settings_CategoryKind" xml:space="preserve"><value>Soort categorie</value></data>
 </root>

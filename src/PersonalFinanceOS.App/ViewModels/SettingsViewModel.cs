@@ -79,9 +79,10 @@ public sealed partial class SettingsViewModel : PageViewModel
     private bool _loading;
     private CategoryRowViewModel? _renaming;
 
-    public SettingsViewModel(AppSettingsService settings, CategoryService categories, AppDataPaths paths, AppRuntimeInfo runtime)
+    public SettingsViewModel(AppSettingsService settings, CategoryService categories, AppDataPaths paths, AppRuntimeInfo runtime, BackupViewModel backup)
     {
         _settings = settings;
+        Backup = backup;
         _categories = categories;
         CategoryKinds = CategoryKindOptions();
         _newCategoryKind = CategoryKinds[0];
@@ -102,6 +103,9 @@ public sealed partial class SettingsViewModel : PageViewModel
     public IReadOnlyList<ThemeOption> Themes { get; }
 
     public string DataFolder { get; }
+
+    /// <summary>Manual backup and restore (spec §4).</summary>
+    public BackupViewModel Backup { get; }
     public string AppVersion { get; }
     public int SchemaVersion { get; }
 
@@ -160,6 +164,7 @@ public sealed partial class SettingsViewModel : PageViewModel
         SelectedLanguage = Languages.First(l => l.Language == Loc.Instance.Language);
         SelectedTheme = Themes.First(t => t.Theme == ThemeManager.Current);
         _loading = false;
+        await Backup.LoadAsync();
         await ReloadCategoriesAsync();
     }
 
@@ -296,6 +301,7 @@ public sealed partial class SettingsViewModel : PageViewModel
 
     protected override void OnLanguageChanged()
     {
+        Backup.OnLanguageChanged();
         var kind = NewCategoryKind.Kind;
         CategoryKinds = CategoryKindOptions();
         NewCategoryKind = CategoryKinds.First(k => k.Kind == kind);

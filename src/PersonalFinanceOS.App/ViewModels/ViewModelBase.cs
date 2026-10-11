@@ -23,19 +23,3 @@ public abstract class PageViewModel : ViewModelBase
     {
     }
 }
-
-/// <summary>Sections that are scheduled for a later phase (spec §24).</summary>
-public sealed class PlaceholderViewModel(string titleKey, int phase) : PageViewModel
-{
-    public string TitleKey { get; } = titleKey;
-    public int Phase { get; } = phase;
-
-    public string Title => Loc.T(TitleKey);
-    public string Body => Loc.Format("Placeholder_Body", Phase);
-
-    protected override void OnLanguageChanged()
-    {
-        OnPropertyChanged(nameof(Title));
-        OnPropertyChanged(nameof(Body));
-    }
-}

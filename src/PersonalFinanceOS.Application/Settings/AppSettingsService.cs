@@ -25,6 +25,13 @@ public sealed class AppSettingsService(ISettingsStore store)
     public const string ThemeKey = "ui.theme";
     public const string MinimumBufferKey = "forecast.minimumBufferCents";
     public const string RoundingAccountKey = "import.roundingAccountId";
+    public const string BackupReminderDaysKey = "backup.reminderDays";
+    public const string LastBackupKey = "backup.lastAt";
+
+    /// <summary>The reminder choices for manual backups, in days; 0 is off.</summary>
+    public static readonly IReadOnlyList<int> BackupReminderChoices = [0, 7, 14, 30, 90];
+
+    public const int DefaultBackupReminderDays = 30;
 
     public async Task<AppTheme> GetThemeAsync(CancellationToken ct = default) =>
         await store.GetAsync(ThemeKey, ct) switch
@@ -89,4 +96,37 @@ public sealed class AppSettingsService(ISettingsStore store)
 
     public Task SetRoundingAccountIdAsync(Guid? accountId, CancellationToken ct = default) =>
         store.SetAsync(RoundingAccountKey, accountId?.ToString("D") ?? string.Empty, ct);
+
+    /// <summary>How many days after the last manual backup the dashboard reminds the user; 0 is off. 30 until changed.</summary>
+    public async Task<int> GetBackupReminderDaysAsync(CancellationToken ct = default) =>
+        int.TryParse(await store.GetAsync(BackupReminderDaysKey, ct), System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var days)
+            && BackupReminderChoices.Contains(days)
+            ? days
+            : DefaultBackupReminderDays;
+
+    public Task SetBackupReminderDaysAsync(int days, CancellationToken ct = default)
+    {
+        if (!BackupReminderChoices.Contains(days))
+        {
+            throw new DomainValidationException("backup.reminder.invalid");
+        }
+
+        return store.SetAsync(BackupReminderDaysKey, days.ToString(System.Globalization.CultureInfo.InvariantCulture), ct);
+    }
+
+    /// <summary>When the last verified manual backup was made; null when never.</summary>
+    public async Task<DateTimeOffset?> GetLastBackupAsync(CancellationToken ct = default) =>
+        DateTimeOffset.TryParse(await store.GetAsync(LastBackupKey, ct), System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind, out var at)
+            ? at
+            : null;
+
+    public Task SetLastBackupAsync(DateTimeOffset at, CancellationToken ct = default) =>
+        store.SetAsync(LastBackupKey, at.ToString("O", System.Globalization.CultureInfo.InvariantCulture), ct);
+
+    /// <summary>True when a reminder is due: it is on, and there is no backup yet or the last one is older than the interval.</summary>
+    public async Task<bool> IsBackupDueAsync(DateTimeOffset now, CancellationToken ct = default)
+    {
+        var days = await GetBackupReminderDaysAsync(ct);
+        return days > 0 && (await GetLastBackupAsync(ct) is not { } last || (now - last).TotalDays >= days);
+    }
 }

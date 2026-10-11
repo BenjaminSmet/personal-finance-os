@@ -17,8 +17,6 @@
   <data name="Nav_Assistant" xml:space="preserve"><value>Assistant</value></data>
   <data name="Nav_Reports" xml:space="preserve"><value>Reports</value></data>
   <data name="Nav_Settings" xml:space="preserve"><value>Settings &amp; Backup</value></data>
-  <data name="Placeholder_Title" xml:space="preserve"><value>Coming soon</value></data>
-  <data name="Placeholder_Body" xml:space="preserve"><value>This part of the app is built in phase {0}.</value></data>
   <data name="Dashboard_Welcome" xml:space="preserve"><value>Welcome</value></data>
   <data name="Dashboard_Intro" xml:space="preserve"><value>This is the foundation of your finance app. Start by adding your accounts with their current balance.</value></data>
   <data name="Dashboard_AccountsSummary" xml:space="preserve"><value>{0} active accounts</value></data>
@@ -65,7 +63,6 @@
   <data name="Settings_Version" xml:space="preserve"><value>App version</value></data>
   <data name="Settings_Schema" xml:space="preserve"><value>Database schema version</value></data>
   <data name="Settings_Offline" xml:space="preserve"><value>This app makes no internet connections.</value></data>
-  <data name="Settings_BackupComing" xml:space="preserve"><value>Manual backup and restore are added in phase 8. Automatic verified backups are already made before every database upgrade.</value></data>
   <data name="Language_Dutch" xml:space="preserve"><value>Nederlands</value></data>
   <data name="Language_English" xml:space="preserve"><value>English</value></data>
   <data name="Error_account_name_required" xml:space="preserve"><value>Please enter a name.</value></data>
@@ -947,4 +944,234 @@
   <data name="Error_scenario_planned_required" xml:space="preserve"><value>Choose a planned item.</value></data>
   <data name="Error_scenario_account_required" xml:space="preserve"><value>Choose a current, joint, savings or cash account.</value></data>
   <data name="Error_scenario_notFound" xml:space="preserve"><value>This scenario no longer exists.</value></data>
+  <data name="ReportType_MonthlySummary" xml:space="preserve"><value>Monthly summary</value></data>
+  <data name="ReportType_CashFlow" xml:space="preserve"><value>Cash flow</value></data>
+  <data name="ReportType_Account" xml:space="preserve"><value>Account report</value></data>
+  <data name="ReportType_Budget" xml:space="preserve"><value>Budget versus actual</value></data>
+  <data name="ReportType_JointFinance" xml:space="preserve"><value>Joint finances</value></data>
+  <data name="ReportType_CreditCard" xml:space="preserve"><value>Credit card</value></data>
+  <data name="ReportType_NetWorth" xml:space="preserve"><value>Net worth</value></data>
+  <data name="ReportType_AnnualOverview" xml:space="preserve"><value>Annual overview</value></data>
+  <data name="ReportTypeHelp_MonthlySummary" xml:space="preserve"><value>Income, spending and net per month, by category, compared with earlier months.</value></data>
+  <data name="ReportTypeHelp_CashFlow" xml:space="preserve"><value>Opening balances, money in and out, and with planned items the expected closing balances.</value></data>
+  <data name="ReportTypeHelp_Account" xml:space="preserve"><value>All transactions of one account with the running balance and the reconciliations.</value></data>
+  <data name="ReportTypeHelp_Budget" xml:space="preserve"><value>Budget, actual spending and what is left per category.</value></data>
+  <data name="ReportTypeHelp_JointFinance" xml:space="preserve"><value>Full activity of shared accounts and your part, clearly separated.</value></data>
+  <data name="ReportTypeHelp_CreditCard" xml:space="preserve"><value>Statement periods, purchases, refunds, statements, payments and what remains.</value></data>
+  <data name="ReportTypeHelp_NetWorth" xml:space="preserve"><value>Assets, liabilities and shares with their valuation dates, and the change over time.</value></data>
+  <data name="ReportTypeHelp_AnnualOverview" xml:space="preserve"><value>Every month with data in the year, with totals and averages.</value></data>
+  <data name="Report_Title_Account" xml:space="preserve"><value>Account report: {0}</value></data>
+  <data name="Report_Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Report_TotalAssets" xml:space="preserve"><value>Total assets</value></data>
+  <data name="Report_TotalLiabilities" xml:space="preserve"><value>Total liabilities</value></data>
+  <data name="Report_TotalBudgeted" xml:space="preserve"><value>Total with a budget</value></data>
+  <data name="Report_TotalUnbudgeted" xml:space="preserve"><value>Spending without a budget</value></data>
+  <data name="Report_NetWorth" xml:space="preserve"><value>Net worth</value></data>
+  <data name="Report_Asset" xml:space="preserve"><value>Asset</value></data>
+  <data name="Report_Liability" xml:space="preserve"><value>Liability</value></data>
+  <data name="Report_OpeningBalance" xml:space="preserve"><value>Opening balance</value></data>
+  <data name="Report_ClosingBalance" xml:space="preserve"><value>Closing balance</value></data>
+  <data name="Report_CreditLimit" xml:space="preserve"><value>Credit limit</value></data>
+  <data name="Report_Outstanding" xml:space="preserve"><value>Outstanding</value></data>
+  <data name="Report_AvailableCredit" xml:space="preserve"><value>Available credit</value></data>
+  <data name="Report_Uncategorised" xml:space="preserve"><value>Uncategorised</value></data>
+  <data name="Report_NoBudget" xml:space="preserve"><value>No budget</value></data>
+  <data name="Report_Over" xml:space="preserve"><value>{0} over</value></data>
+  <data name="Report_Used" xml:space="preserve"><value>{0} used</value></data>
+  <data name="Report_Overdue" xml:space="preserve"><value>Overdue</value></data>
+  <data name="Report_Incomplete" xml:space="preserve"><value>Incomplete</value></data>
+  <data name="Report_Period" xml:space="preserve"><value>{0} to {1}</value></data>
+  <data name="Report_UntilToday" xml:space="preserve"><value>Up to {0}</value></data>
+  <data name="Report_FromDate" xml:space="preserve"><value>From {0}</value></data>
+  <data name="Report_YearTotal" xml:space="preserve"><value>Total {0}</value></data>
+  <data name="Report_MonthAverage" xml:space="preserve"><value>Average per month ({0} months)</value></data>
+  <data name="Report_Basis_Actual" xml:space="preserve"><value>Actual</value></data>
+  <data name="Report_Basis_Estimate" xml:space="preserve"><value>Estimate</value></data>
+  <data name="Report_Rec_Matched" xml:space="preserve"><value>Matched</value></data>
+  <data name="Report_Rec_Adjusted" xml:space="preserve"><value>Corrected</value></data>
+  <data name="Report_Rec_Difference" xml:space="preserve"><value>Difference</value></data>
+  <data name="Report_Event_RecordedLater" xml:space="preserve"><value>Recorded, later date</value></data>
+  <data name="Report_Event_Planned" xml:space="preserve"><value>Planned</value></data>
+  <data name="Report_Event_PlannedIn" xml:space="preserve"><value>Planned transfer in</value></data>
+  <data name="Report_Event_Income" xml:space="preserve"><value>Expected income</value></data>
+  <data name="Report_Event_CardSettlement" xml:space="preserve"><value>Card statement</value></data>
+  <data name="Report_Event_Purchase" xml:space="preserve"><value>Purchase</value></data>
+  <data name="Report_Event_Scenario" xml:space="preserve"><value>Scenario</value></data>
+  <data name="Report_Col_Month" xml:space="preserve"><value>Month</value></data>
+  <data name="Report_Col_Income" xml:space="preserve"><value>Income</value></data>
+  <data name="Report_Col_Spending" xml:space="preserve"><value>Spending</value></data>
+  <data name="Report_Col_Net" xml:space="preserve"><value>Net</value></data>
+  <data name="Report_Col_Remark" xml:space="preserve"><value>Remark</value></data>
+  <data name="Report_Col_Item" xml:space="preserve"><value>Item</value></data>
+  <data name="Report_Col_Category" xml:space="preserve"><value>Category</value></data>
+  <data name="Report_Col_Amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="Report_Col_PerMonth" xml:space="preserve"><value>Per month</value></data>
+  <data name="Report_Col_PerMonthPeriod" xml:space="preserve"><value>Per month, this period</value></data>
+  <data name="Report_Col_PerMonthBefore" xml:space="preserve"><value>Per month, before</value></data>
+  <data name="Report_Col_Difference" xml:space="preserve"><value>Difference</value></data>
+  <data name="Report_Col_Account" xml:space="preserve"><value>Account</value></data>
+  <data name="Report_Col_Opening" xml:space="preserve"><value>Opening</value></data>
+  <data name="Report_Col_In" xml:space="preserve"><value>Money in</value></data>
+  <data name="Report_Col_Out" xml:space="preserve"><value>Money out</value></data>
+  <data name="Report_Col_Closing" xml:space="preserve"><value>Closing</value></data>
+  <data name="Report_Col_Today" xml:space="preserve"><value>Today</value></data>
+  <data name="Report_Col_PlannedIn" xml:space="preserve"><value>Planned in</value></data>
+  <data name="Report_Col_PlannedOut" xml:space="preserve"><value>Planned out</value></data>
+  <data name="Report_Col_CardStatements" xml:space="preserve"><value>Card statements</value></data>
+  <data name="Report_Col_ProjectedClosing" xml:space="preserve"><value>Expected closing</value></data>
+  <data name="Report_Col_Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Report_Col_Kind" xml:space="preserve"><value>Kind</value></data>
+  <data name="Report_Col_Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Report_Col_Balance" xml:space="preserve"><value>Balance</value></data>
+  <data name="Report_Col_StatementDate" xml:space="preserve"><value>Statement date</value></data>
+  <data name="Report_Col_BankBalance" xml:space="preserve"><value>Bank balance</value></data>
+  <data name="Report_Col_AppBalance" xml:space="preserve"><value>Balance in app</value></data>
+  <data name="Report_Col_Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Report_Col_Budget" xml:space="preserve"><value>Budget</value></data>
+  <data name="Report_Col_Actual" xml:space="preserve"><value>Actual</value></data>
+  <data name="Report_Col_Left" xml:space="preserve"><value>Left</value></data>
+  <data name="Report_Col_Full" xml:space="preserve"><value>Full amount</value></data>
+  <data name="Report_Col_Share" xml:space="preserve"><value>Your share</value></data>
+  <data name="Report_Col_YourPart" xml:space="preserve"><value>Your part</value></data>
+  <data name="Report_Col_Period" xml:space="preserve"><value>Period</value></data>
+  <data name="Report_Col_Purchases" xml:space="preserve"><value>Purchases</value></data>
+  <data name="Report_Col_Refunds" xml:space="preserve"><value>Refunds</value></data>
+  <data name="Report_Col_Statement" xml:space="preserve"><value>Statement</value></data>
+  <data name="Report_Col_Basis" xml:space="preserve"><value>Basis</value></data>
+  <data name="Report_Col_Paid" xml:space="preserve"><value>Paid</value></data>
+  <data name="Report_Col_Remaining" xml:space="preserve"><value>Remaining</value></data>
+  <data name="Report_Col_DebitDate" xml:space="preserve"><value>Debit date</value></data>
+  <data name="Report_Col_Source" xml:space="preserve"><value>Value from</value></data>
+  <data name="Report_Col_ValuedOn" xml:space="preserve"><value>Valued on</value></data>
+  <data name="Report_Col_NetWorth" xml:space="preserve"><value>Net worth</value></data>
+  <data name="Report_Col_Change" xml:space="preserve"><value>Change</value></data>
+  <data name="Report_Table_PerMonth" xml:space="preserve"><value>Per month</value></data>
+  <data name="Report_Table_SpendingByCategory" xml:space="preserve"><value>Spending by category</value></data>
+  <data name="Report_Table_SpendingByCategoryYear" xml:space="preserve"><value>Spending by category in {0}</value></data>
+  <data name="Report_Table_IncomeByCategory" xml:space="preserve"><value>Income by category</value></data>
+  <data name="Report_Table_Comparison" xml:space="preserve"><value>Compared with the {0} complete months before</value></data>
+  <data name="Report_Table_CashPerAccount" xml:space="preserve"><value>Actual cash flow per account, up to {0}</value></data>
+  <data name="Report_Table_Projection" xml:space="preserve"><value>Expected balances on {0} (estimate)</value></data>
+  <data name="Report_Table_Commitments" xml:space="preserve"><value>Planned commitments (estimate)</value></data>
+  <data name="Report_Table_Summary" xml:space="preserve"><value>Summary</value></data>
+  <data name="Report_Table_Transactions" xml:space="preserve"><value>Transactions ({0})</value></data>
+  <data name="Report_Table_Reconciliation" xml:space="preserve"><value>Reconciliations</value></data>
+  <data name="Report_Table_BudgetVsActual" xml:space="preserve"><value>Budget versus actual</value></data>
+  <data name="Report_Table_JointSummary" xml:space="preserve"><value>{0}: full amount and your part</value></data>
+  <data name="Report_Table_JointActivity" xml:space="preserve"><value>{0}: all activity</value></data>
+  <data name="Report_Table_Statements" xml:space="preserve"><value>{0}: statement periods</value></data>
+  <data name="Report_Table_CardNow" xml:space="preserve"><value>{0}: today</value></data>
+  <data name="Report_Table_CardLines" xml:space="preserve"><value>{0}: purchases and refunds</value></data>
+  <data name="Report_Table_NetWorthOn" xml:space="preserve"><value>Net worth on {0}</value></data>
+  <data name="Report_Table_NetWorthHistory" xml:space="preserve"><value>Net worth over time</value></data>
+  <data name="Report_Table_Year" xml:space="preserve"><value>{0} per month</value></data>
+  <data name="Report_Table_Planned" xml:space="preserve"><value>Planned items (estimate, not in the totals)</value></data>
+  <data name="Report_Note_CategoryFilter" xml:space="preserve"><value>Only {0} selected categories are included.</value></data>
+  <data name="Report_Note_AccountFilter" xml:space="preserve"><value>Only these accounts are included: {0}.</value></data>
+  <data name="Report_Note_BeforeHistory" xml:space="preserve"><value>Months before {0}, the first balance date, have no data and are left out.</value></data>
+  <data name="Report_Note_NoAccounts" xml:space="preserve"><value>There are no accounts yet, so there is nothing to report.</value></data>
+  <data name="Report_Note_FutureMonths" xml:space="preserve"><value>Months after today have no actual figures and are left out.</value></data>
+  <data name="Report_Note_NoComparison" xml:space="preserve"><value>There are no complete earlier months to compare with.</value></data>
+  <data name="Report_Note_PlannedExcluded" xml:space="preserve"><value>Planned items are not included. Turn on "Include planned items" to see them separately.</value></data>
+  <data name="Report_Note_PlannedSeparate" xml:space="preserve"><value>These items have not happened yet. They are never added to the actual figures above.</value></data>
+  <data name="Report_Note_CashFlowActual" xml:space="preserve"><value>Actual figures come from recorded transactions. Transfers between your accounts are included as money in and out.</value></data>
+  <data name="Report_Note_TransfersIncluded" xml:space="preserve"><value>Money in and out include transfers between your own accounts.</value></data>
+  <data name="Report_Note_Projection" xml:space="preserve"><value>Expected balances are estimates based on planned items and card statements. Expected income is never guaranteed.</value></data>
+  <data name="Report_Note_Estimates" xml:space="preserve"><value>All amounts in this table are estimates.</value></data>
+  <data name="Report_Note_CardsNotProjected" xml:space="preserve"><value>Credit cards have no projected balance; their statements are counted on the account that pays them.</value></data>
+  <data name="Report_Note_FutureWithoutPlanned" xml:space="preserve"><value>The period runs past today. Turn on "Include planned items" to see expected balances.</value></data>
+  <data name="Report_Note_InOutVsIncome" xml:space="preserve"><value>Money in and out include transfers; income and spending do not.</value></data>
+  <data name="Report_Note_NotReconciled" xml:space="preserve"><value>This account has never been reconciled with a bank statement.</value></data>
+  <data name="Report_Note_ReconciledOn" xml:space="preserve"><value>Last reconciled on {0}: the balance matched.</value></data>
+  <data name="Report_Note_ReconciledDifference" xml:space="preserve"><value>Last reconciled on {0} with a difference of {1}.</value></data>
+  <data name="Report_Note_CardBalance" xml:space="preserve"><value>A negative balance is what you owe on the card.</value></data>
+  <data name="Report_Note_OpenedOn" xml:space="preserve"><value>The account was opened on {0}; the opening balance is from that date.</value></data>
+  <data name="Report_Note_Budget" xml:space="preserve"><value>Spending counts only in months with a budget for that category. Planned items are not included.</value></data>
+  <data name="Report_Note_Joint" xml:space="preserve"><value>Full amounts are the whole account. Your part uses your ownership share on each date.</value></data>
+  <data name="Report_Note_NoJoint" xml:space="preserve"><value>There are no shared accounts in the selection.</value></data>
+  <data name="Report_Note_ShareOn" xml:space="preserve"><value>Your share on {1}: {0}.</value></data>
+  <data name="Report_Note_CardNoDoubleCount" xml:space="preserve"><value>A card purchase counts once, on its purchase date. Paying the statement is a transfer and is not counted again.</value></data>
+  <data name="Report_Note_NoCards" xml:space="preserve"><value>There are no credit cards in the selection.</value></data>
+  <data name="Report_Note_CardNotSetUp" xml:space="preserve"><value>{0} has no statement settings yet, so its periods cannot be shown.</value></data>
+  <data name="Report_Note_StatementEstimate" xml:space="preserve"><value>The statement of the running period is an estimate until the period closes.</value></data>
+  <data name="Report_Note_CreditNotCash" xml:space="preserve"><value>Available credit is not your money and is not counted as cash.</value></data>
+  <data name="Report_Note_CardLines" xml:space="preserve"><value>Purchases are positive, refunds negative.</value></data>
+  <data name="Report_Note_NetWorthLines" xml:space="preserve"><value>Grey lines have an uncertain value: no valuation, or an old one.</value></data>
+  <data name="Report_Note_NetWorthIncomplete" xml:space="preserve"><value>Some items have no valuation and count as zero.</value></data>
+  <data name="Report_Note_StaleValues" xml:space="preserve"><value>Some valuations are older than {0} days.</value></data>
+  <data name="Report_Note_NoCreditLimit" xml:space="preserve"><value>Unused credit limits are never counted as an asset.</value></data>
+  <data name="ValueSource_Ledger" xml:space="preserve"><value>Ledger</value></data>
+  <data name="ValueSource_Valuation" xml:space="preserve"><value>Valuation</value></data>
+  <data name="ValueSource_ValuationPlusLedger" xml:space="preserve"><value>Valuation + later entries</value></data>
+  <data name="ValueSource_LedgerWithoutValuation" xml:space="preserve"><value>Deposits, no valuation</value></data>
+  <data name="ValueSource_NoValuation" xml:space="preserve"><value>No valuation</value></data>
+  <data name="Report_PeriodLabel" xml:space="preserve"><value>Period: {0} to {1}</value></data>
+  <data name="Report_Generated" xml:space="preserve"><value>Generated on {0} at {1}</value></data>
+  <data name="Report_Page" xml:space="preserve"><value>Page {0} of {1}</value></data>
+  <data name="Report_Empty" xml:space="preserve"><value>No data in this period.</value></data>
+  <data name="Reports_Title" xml:space="preserve"><value>Reports</value></data>
+  <data name="Reports_Subtitle" xml:space="preserve"><value>Choose a report and a period. What you see here is exactly what is saved as PDF or CSV.</value></data>
+  <data name="Reports_Type" xml:space="preserve"><value>Report</value></data>
+  <data name="Reports_Account" xml:space="preserve"><value>Account</value></data>
+  <data name="Reports_Period" xml:space="preserve"><value>Period</value></data>
+  <data name="Reports_Period_ThisMonth" xml:space="preserve"><value>This month</value></data>
+  <data name="Reports_Period_LastMonth" xml:space="preserve"><value>Last month</value></data>
+  <data name="Reports_Period_ThisYear" xml:space="preserve"><value>This year</value></data>
+  <data name="Reports_Period_LastYear" xml:space="preserve"><value>Last year</value></data>
+  <data name="Reports_Period_Last12Months" xml:space="preserve"><value>Last 12 months</value></data>
+  <data name="Reports_Period_Custom" xml:space="preserve"><value>Custom</value></data>
+  <data name="Reports_From" xml:space="preserve"><value>From</value></data>
+  <data name="Reports_To" xml:space="preserve"><value>To</value></data>
+  <data name="Reports_Accounts" xml:space="preserve"><value>Accounts</value></data>
+  <data name="Reports_Categories" xml:space="preserve"><value>Categories</value></data>
+  <data name="Reports_NoneMeansAll" xml:space="preserve"><value>Nothing ticked means everything.</value></data>
+  <data name="Reports_IncludePlanned" xml:space="preserve"><value>Include planned items</value></data>
+  <data name="Reports_IncludePlannedHint" xml:space="preserve"><value>Planned items and expected balances are shown in their own tables, marked as estimates. They are never added to actual totals.</value></data>
+  <data name="Reports_Generate" xml:space="preserve"><value>Make report</value></data>
+  <data name="Reports_SavePdf" xml:space="preserve"><value>Save as PDF</value></data>
+  <data name="Reports_SaveCsv" xml:space="preserve"><value>Save as CSV</value></data>
+  <data name="Reports_PdfType" xml:space="preserve"><value>PDF document</value></data>
+  <data name="Reports_CsvType" xml:space="preserve"><value>CSV file</value></data>
+  <data name="Reports_Saved" xml:space="preserve"><value>Saved as {0}.</value></data>
+  <data name="Reports_OpenPdf" xml:space="preserve"><value>Open PDF</value></data>
+  <data name="Reports_Privacy" xml:space="preserve"><value>Reports are made on this computer only. Nothing is sent anywhere; you choose where a file is saved.</value></data>
+  <data name="Reports_Outdated" xml:space="preserve"><value>You changed the choices. Make the report again to see them; saving now saves the report shown below.</value></data>
+  <data name="Reports_Start" xml:space="preserve"><value>Choose a report and click Make report.</value></data>
+  <data name="Error_report_period_invalid" xml:space="preserve"><value>Choose a start date on or before the end date.</value></data>
+  <data name="Error_report_period_tooLong" xml:space="preserve"><value>A report covers at most 10 years.</value></data>
+  <data name="Error_report_account_required" xml:space="preserve"><value>Choose the account for this report.</value></data>
+  <data name="Error_report_save_failed" xml:space="preserve"><value>The file could not be saved. Choose another place or close the file if it is open in another program.</value></data>
+  <data name="Backup_Title" xml:space="preserve"><value>Backup and restore</value></data>
+  <data name="Backup_Explain" xml:space="preserve"><value>A backup is one file with all your accounts, transactions, plans and settings. Keep it on a USB stick or another drive.</value></data>
+  <data name="Backup_Last" xml:space="preserve"><value>Last backup: {0}</value></data>
+  <data name="Backup_Never" xml:space="preserve"><value>No backup made yet</value></data>
+  <data name="Backup_Due" xml:space="preserve"><value>Time for a new backup.</value></data>
+  <data name="Backup_Make" xml:space="preserve"><value>Make backup</value></data>
+  <data name="Backup_Reminder" xml:space="preserve"><value>Remind me</value></data>
+  <data name="Backup_ReminderOff" xml:space="preserve"><value>Never</value></data>
+  <data name="Backup_ReminderDays" xml:space="preserve"><value>Every {0} days</value></data>
+  <data name="Backup_Done" xml:space="preserve"><value>Backup {0} made and checked: {1} transactions.</value></data>
+  <data name="Backup_SameDrive" xml:space="preserve"><value>This backup is on the same drive as your data. It does not protect you if this disk breaks. Copy it to a USB stick or another drive as well.</value></data>
+  <data name="Backup_DriveNote" xml:space="preserve"><value>A backup only counts once it has been checked. A backup on the same disk as the app does not survive a disk failure.</value></data>
+  <data name="Backup_RestoreTitle" xml:space="preserve"><value>Restore a backup</value></data>
+  <data name="Backup_RestoreExplain" xml:space="preserve"><value>Replaces all current data with the backup. A copy of the current data is kept first.</value></data>
+  <data name="Backup_Choose" xml:space="preserve"><value>Choose backup…</value></data>
+  <data name="Backup_FileType" xml:space="preserve"><value>Personal Finance OS backup</value></data>
+  <data name="Backup_ConfirmTitle" xml:space="preserve"><value>Restore this backup?</value></data>
+  <data name="Backup_RestoreSummary" xml:space="preserve"><value>{0}, made on {1} with version {4}: {2} accounts and {3} transactions.</value></data>
+  <data name="Backup_ConfirmExplain" xml:space="preserve"><value>All current data is replaced by this backup. A checked copy of the current data is saved in the backups folder first, and the app reopens on the restored data.</value></data>
+  <data name="Backup_ConfirmRestore" xml:space="preserve"><value>Replace my data with this backup</value></data>
+  <data name="Backup_Restored" xml:space="preserve"><value>The backup was restored.</value></data>
+  <data name="Dashboard_BackupNever" xml:space="preserve"><value>You have not made a backup yet.</value></data>
+  <data name="Dashboard_BackupDue" xml:space="preserve"><value>Your last backup is from {0}. Time for a new one.</value></data>
+  <data name="Error_backup_verifyFailed" xml:space="preserve"><value>The backup could not be checked, so it was not kept. Try another place.</value></data>
+  <data name="Error_backup_noAccess" xml:space="preserve"><value>The app may not write to that place. Choose another folder.</value></data>
+  <data name="Error_backup_writeFailed" xml:space="preserve"><value>The backup could not be written. Check that there is enough space and try again.</value></data>
+  <data name="Error_backup_notABackup" xml:space="preserve"><value>This file is not a Personal Finance OS backup.</value></data>
+  <data name="Error_backup_tooNew" xml:space="preserve"><value>This backup was made by a newer version of the app. Update the app first.</value></data>
+  <data name="Error_backup_damaged" xml:space="preserve"><value>This backup is damaged and cannot be restored.</value></data>
+  <data name="Error_backup_preRestoreFailed" xml:space="preserve"><value>A copy of the current data could not be made, so nothing was replaced.</value></data>
+  <data name="Error_backup_restoreFailed" xml:space="preserve"><value>Restoring failed. Your previous data was put back.</value></data>
+  <data name="Error_backup_reminder_invalid" xml:space="preserve"><value>Choose one of the reminder options.</value></data>
+  <data name="Settings_CategoryKind" xml:space="preserve"><value>Category kind</value></data>
 </root>

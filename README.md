@@ -20,11 +20,35 @@ Each Windows user gets their own separate database. Updating or uninstalling nev
 | File / folder | Purpose |
 |---|---|
 | `finance.db` | Your financial database (SQLite). **Not encrypted** — protect your Windows account with a password. |
-| `backups\` | Verified backups, made automatically before every database upgrade. |
+| `backups\` | Verified copies made automatically before every database upgrade and before every restore. |
 | `logs\app.log` | Technical log. Never contains amounts, names or payees. |
 | `profile.json` | Marker that prevents an empty database from silently replacing a missing one. |
 
-A backup on the same disk does not protect against disk failure; copy backups to an external drive.
+All settings are stored inside `finance.db`, so one backup holds everything.
+
+### Backup and restore
+
+**Settings → Backup and restore**:
+
+- **Make backup** writes one `.zip` file to a place you choose. It holds the database, the profile marker and a
+  manifest with the app version, the schema version, row counts and a checksum. The app reads the file back and
+  checks it before it reports success.
+- A backup on the same disk does not protect against disk failure. The app warns you when you save one there. Copy
+  backups to a USB stick or an external drive.
+- **Remind me** sets how often the dashboard asks for a new backup: never, or every 7, 14, 30 (the default) or 90 days.
+- **Choose backup…** shows what the file holds (date, version, number of accounts and transactions) and changes
+  nothing yet.
+- **Replace my data with this backup** is the explicit confirmation. The app first keeps a checked copy of the
+  current data in `backups\`. It then replaces the database and reopens through the normal startup checks, which also
+  upgrade a backup made by an older version. If anything fails, the previous data is put back.
+- A backup made by a newer version than the installed app is refused.
+
+### Privacy and offline use
+
+The app makes no network connections. There are no updates checks, analytics, crash reports or online fonts, and a
+test fails the build if network code is added. Reports and backups are written only where you choose. The database
+is **not encrypted**: anyone who can sign in to your Windows account can read it. Use a Windows password, and
+BitLocker if your edition has it.
 
 ## Project structure
 
@@ -55,9 +79,19 @@ python3 tools/gen_resx.py docs/strings.tsv src/PersonalFinanceOS.App/Resources
 Database changes: add a new `src/PersonalFinanceOS.Infrastructure/Database/Migrations/NNNN_name.sql`.
 Never edit a migration that has been released.
 
+### Releasing
+
+1. Set `<Version>` in `Directory.Build.props` and write `docs/releases/vX.Y.Z.md`.
+2. Push a tag `vX.Y.Z`. CI then:
+   - builds and runs all tests;
+   - builds the installer;
+   - tests the installer: install, open a database with `PersonalFinanceOS.exe --self-check <folder>`, install again
+     over the top, uninstall, and check that the data folder is kept;
+   - publishes a GitHub Release with the release notes.
+
 ## Status
 
-Phase 7 (assistant and what-if scenarios) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
+All 8 phases are built (version 1.0.0). See `docs/2026-10-10-decision-log.md` and the product specification.
 
 Quick Add sits above every page (Ctrl+K). Type a line and press Enter, for example:
 
@@ -164,3 +198,28 @@ Export your transactions from your bank's website as CSV (or XLSX) and open **Im
   is only suggested when its statement can be paid on its debit day. When a missing value matters, it asks one
   question; a what-if is only saved as a scenario when you click **Save as scenario**. It runs on this computer with
   fixed rules and never changes your data.
+
+### Reports
+
+**Reports** has eight reports: monthly summary, cash flow, account, budget versus actual, joint finances, credit card,
+net worth and annual overview. For each one you choose:
+
+- a period: this month, last month, this year, last year, the last 12 months, or your own dates;
+- the accounts and categories, where they apply (nothing ticked means all);
+- whether planned items are included.
+
+What you see on screen is the print preview. **Save as PDF** and **Save as CSV** write exactly that report to a place
+you choose, and nothing else.
+
+- Every total comes from the same ledger rules as the rest of the app. A card purchase counts once; paying the card
+  is a transfer.
+- Planned items and expected balances are only shown when you ask for them. They appear in their own grey tables,
+  marked as estimates, and are never added to actual totals.
+- Months before your first balance date and months after today are left out, and a note says so. A comparison is
+  only made with complete earlier months.
+- Every report shows the period and when it was made.
+- A PDF is A4 and turns to landscape for wide tables. It uses only the standard PDF fonts, so no library or download
+  is needed.
+- A CSV opens directly in Excel. In Dutch it uses `;` and decimal commas, in English `,` and decimal points. Numbers
+  have no currency symbol. Text that a spreadsheet would run as a formula is neutralised.
+- Making a report never changes your data; a test checks every report type for this.

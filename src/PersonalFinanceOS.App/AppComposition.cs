@@ -13,6 +13,7 @@ using PersonalFinanceOS.Application.Import;
 using PersonalFinanceOS.Application.Ledger;
 using PersonalFinanceOS.Application.Planning;
 using PersonalFinanceOS.Application.QuickAdd;
+using PersonalFinanceOS.Application.Reports;
 using PersonalFinanceOS.Application.Scenarios;
 using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Application.Wishlist;
@@ -46,6 +47,7 @@ public static class AppComposition
         services.AddSingleton(clock ?? new SystemClock());
         services.AddSingleton(new AppRuntimeInfo(AppVersion, startup.SchemaVersion));
         services.AddSingleton<Func<FinanceDbContext>>(() => new FinanceDbContext(options));
+        services.AddSingleton(sp => new BackupArchive(paths, sp.GetRequiredService<SafeLog>(), AppVersion, new EmbeddedMigrationSource().GetMigrations().Count));
 
         services.AddSingleton<IAccountRepository, AccountRepository>();
         services.AddSingleton<ISettingsStore, SettingsStore>();
@@ -82,6 +84,7 @@ public static class AppComposition
         services.AddSingleton<WishlistService>();
         services.AddSingleton<ScenarioService>();
         services.AddSingleton<AssistantService>();
+        services.AddSingleton<ReportService>();
 
         services.AddSingleton<QuickAddViewModel>();
         services.AddSingleton<DashboardViewModel>();
@@ -95,6 +98,8 @@ public static class AppComposition
         services.AddSingleton<WishlistViewModel>();
         services.AddSingleton<AssetsViewModel>();
         services.AddSingleton<AssistantViewModel>();
+        services.AddSingleton<ReportsViewModel>();
+        services.AddSingleton<BackupViewModel>();
         services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
 

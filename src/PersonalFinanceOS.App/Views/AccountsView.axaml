@@ -26,11 +26,11 @@
         <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,16,Auto,16,Auto">
           <StackPanel Grid.Row="0" Grid.Column="0">
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Name}" />
-            <TextBox Text="{Binding NewName}" MaxLength="100" />
+            <TextBox AutomationProperties.Name="{l:T Accounts_Name}" Text="{Binding NewName}" MaxLength="100" />
           </StackPanel>
           <StackPanel Grid.Row="0" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Type}" />
-            <ComboBox ItemsSource="{Binding TypeOptions}" SelectedItem="{Binding NewType}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Accounts_Type}" ItemsSource="{Binding TypeOptions}" SelectedItem="{Binding NewType}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:AccountTypeOption">
                   <TextBlock Text="{Binding Name}" />
@@ -41,7 +41,7 @@
 
           <StackPanel Grid.Row="2" Grid.Column="0">
             <TextBlock Classes="fieldLabel" Text="{Binding BalanceLabel}" />
-            <TextBox Text="{Binding NewBalanceText}" PlaceholderText="0,00" FontSize="16" />
+            <TextBox AutomationProperties.Name="{Binding BalanceLabel}" Text="{Binding NewBalanceText}" PlaceholderText="0,00" FontSize="16" />
             <Border Classes="warning" Margin="0,8,0,0" IsVisible="{Binding AmountHint, Converter={x:Static ObjectConverters.IsNotNull}}">
               <TextBlock Text="{Binding AmountHint, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
             </Border>
@@ -50,17 +50,17 @@
           </StackPanel>
           <StackPanel Grid.Row="2" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_OpeningDate}" />
-            <CalendarDatePicker SelectedDate="{Binding NewOpeningDate}" HorizontalAlignment="Stretch" />
+            <CalendarDatePicker AutomationProperties.Name="{l:T Accounts_OpeningDate}" SelectedDate="{Binding NewOpeningDate}" HorizontalAlignment="Stretch" />
           </StackPanel>
 
           <StackPanel Grid.Row="4" Grid.Column="0">
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Share}" />
-            <TextBox Text="{Binding NewShareText}" Width="120" HorizontalAlignment="Left" />
+            <TextBox AutomationProperties.Name="{l:T Accounts_Share}" Text="{Binding NewShareText}" Width="120" HorizontalAlignment="Left" />
             <TextBlock Classes="caption" Margin="4,8,0,0" TextWrapping="Wrap" Text="{l:T Accounts_ShareHint}" />
           </StackPanel>
           <StackPanel Grid.Row="4" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Notes}" />
-            <TextBox Text="{Binding NewNotes}" MaxLength="1000" />
+            <TextBox AutomationProperties.Name="{l:T Accounts_Notes}" Text="{Binding NewNotes}" MaxLength="1000" />
           </StackPanel>
         </Grid>
 
@@ -72,21 +72,21 @@
           <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,16,Auto">
           <StackPanel>
             <TextBlock Classes="fieldLabel" Text="{l:T Card_Limit_Label}" />
-            <TextBox Text="{Binding CardLimitText}" PlaceholderText="{l:T Card_LimitPlaceholder}" />
+            <TextBox AutomationProperties.Name="{l:T Card_Limit_Label}" Text="{Binding CardLimitText}" PlaceholderText="{l:T Card_LimitPlaceholder}" />
           </StackPanel>
           <StackPanel Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Card_StartDay}" />
-            <TextBox Text="{Binding CardStartDayText}" PlaceholderText="{l:T Card_StartDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
+            <TextBox AutomationProperties.Name="{l:T Card_StartDay}" Text="{Binding CardStartDayText}" PlaceholderText="{l:T Card_StartDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
             <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Card_StartDayHint}" TextWrapping="Wrap" />
           </StackPanel>
           <StackPanel Grid.Row="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Card_SettlementDay}" />
-            <TextBox Text="{Binding CardSettlementDayText}" PlaceholderText="{l:T Card_SettlementDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
+            <TextBox AutomationProperties.Name="{l:T Card_SettlementDay}" Text="{Binding CardSettlementDayText}" PlaceholderText="{l:T Card_SettlementDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
             <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Card_SettlementDayHint}" TextWrapping="Wrap" />
           </StackPanel>
           <StackPanel Grid.Row="2" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Card_SettlementAccount}" />
-            <ComboBox ItemsSource="{Binding SettlementOptions}" SelectedItem="{Binding CardSettlementAccount}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Card_SettlementAccount}" ItemsSource="{Binding SettlementOptions}" SelectedItem="{Binding CardSettlementAccount}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>
@@ -114,21 +114,21 @@
         <Grid ColumnDefinitions="*,20,*" RowDefinitions="Auto,16,Auto">
           <StackPanel>
             <TextBlock Classes="fieldLabel" Text="{l:T Card_Limit_Label}" />
-            <TextBox Text="{Binding CardLimitText}" PlaceholderText="{l:T Card_LimitPlaceholder}" />
+            <TextBox AutomationProperties.Name="{l:T Card_Limit_Label}" Text="{Binding CardLimitText}" PlaceholderText="{l:T Card_LimitPlaceholder}" />
           </StackPanel>
           <StackPanel Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Card_StartDay}" />
-            <TextBox Text="{Binding CardStartDayText}" PlaceholderText="{l:T Card_StartDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
+            <TextBox AutomationProperties.Name="{l:T Card_StartDay}" Text="{Binding CardStartDayText}" PlaceholderText="{l:T Card_StartDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
             <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Card_StartDayHint}" TextWrapping="Wrap" />
           </StackPanel>
           <StackPanel Grid.Row="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Card_SettlementDay}" />
-            <TextBox Text="{Binding CardSettlementDayText}" PlaceholderText="{l:T Card_SettlementDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
+            <TextBox AutomationProperties.Name="{l:T Card_SettlementDay}" Text="{Binding CardSettlementDayText}" PlaceholderText="{l:T Card_SettlementDayPlaceholder}" Width="120" HorizontalAlignment="Left" />
             <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Card_SettlementDayHint}" TextWrapping="Wrap" />
           </StackPanel>
           <StackPanel Grid.Row="2" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Card_SettlementAccount}" />
-            <ComboBox ItemsSource="{Binding SettlementOptions}" SelectedItem="{Binding CardSettlementAccount}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Card_SettlementAccount}" ItemsSource="{Binding SettlementOptions}" SelectedItem="{Binding CardSettlementAccount}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>
@@ -153,11 +153,11 @@
         <Grid ColumnDefinitions="*,20,*">
           <StackPanel>
             <TextBlock Classes="fieldLabel" Text="{l:T Reconcile_Date}" />
-            <CalendarDatePicker SelectedDate="{Binding ReconcileDate}" HorizontalAlignment="Stretch" />
+            <CalendarDatePicker AutomationProperties.Name="{l:T Reconcile_Date}" SelectedDate="{Binding ReconcileDate}" HorizontalAlignment="Stretch" />
           </StackPanel>
           <StackPanel Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{Binding ReconcileBalanceLabel}" />
-            <TextBox Text="{Binding ReconcileBalanceText}" PlaceholderText="0,00" FontSize="16" />
+            <TextBox AutomationProperties.Name="{Binding ReconcileBalanceLabel}" Text="{Binding ReconcileBalanceText}" PlaceholderText="0,00" FontSize="16" />
           </StackPanel>
         </Grid>
 
@@ -176,7 +176,7 @@
           </Border>
           <StackPanel>
             <TextBlock Classes="fieldLabel" Text="{l:T Reconcile_Reason}" />
-            <TextBox Text="{Binding ReconcileReason}" MaxLength="200" PlaceholderText="{l:T Reconcile_ReasonPlaceholder}" />
+            <TextBox AutomationProperties.Name="{l:T Reconcile_Reason}" Text="{Binding ReconcileReason}" MaxLength="200" PlaceholderText="{l:T Reconcile_ReasonPlaceholder}" />
             <TextBlock Classes="caption" Margin="4,8,0,0" Text="{l:T Reconcile_AdjustmentHint}" TextWrapping="Wrap" />
           </StackPanel>
         </StackPanel>
