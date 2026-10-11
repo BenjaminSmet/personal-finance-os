@@ -71,6 +71,22 @@ public class LedgerUiTests
     internal static T Navigate<T>(MainWindowViewModel vm)
         where T : PageViewModel
     {
+        // Planning and scenarios are the two tabs of the Planning page.
+        if (typeof(T) == typeof(PlanningViewModel) || typeof(T) == typeof(ScenariosViewModel))
+        {
+            var forecasts = Navigate<ForecastsViewModel>(vm);
+            if (typeof(T) == typeof(PlanningViewModel))
+            {
+                forecasts.ShowPlanning();
+            }
+            else
+            {
+                forecasts.ShowScenarios();
+            }
+
+            return (T)forecasts.Current;
+        }
+
         vm.SelectedItem = vm.NavItems.Single(n => n.Page is T);
         return (T)vm.CurrentPage;
     }

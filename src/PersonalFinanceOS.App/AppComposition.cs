@@ -5,6 +5,7 @@ using PersonalFinanceOS.Application.Abstractions;
 using PersonalFinanceOS.Application.Accounts;
 using PersonalFinanceOS.Application.Analysis;
 using PersonalFinanceOS.Application.Assets;
+using PersonalFinanceOS.Application.Assistant;
 using PersonalFinanceOS.Application.Budgets;
 using PersonalFinanceOS.Application.Cards;
 using PersonalFinanceOS.Application.Categories;
@@ -12,6 +13,7 @@ using PersonalFinanceOS.Application.Import;
 using PersonalFinanceOS.Application.Ledger;
 using PersonalFinanceOS.Application.Planning;
 using PersonalFinanceOS.Application.QuickAdd;
+using PersonalFinanceOS.Application.Scenarios;
 using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Application.Wishlist;
 using PersonalFinanceOS.Domain;
@@ -60,6 +62,7 @@ public static class AppComposition
         services.AddSingleton<IValuationRepository, ValuationRepository>();
         services.AddSingleton<IOwnershipRepository, OwnershipRepository>();
         services.AddSingleton<IWishlistRepository, WishlistRepository>();
+        services.AddSingleton<IScenarioRepository, ScenarioRepository>();
         services.AddSingleton<AccountService>();
         services.AddSingleton<AppSettingsService>();
         services.AddSingleton<UndoHistory>();
@@ -77,6 +80,8 @@ public static class AppComposition
         services.AddSingleton<NetWorthService>();
         services.AddSingleton<AffordabilityService>();
         services.AddSingleton<WishlistService>();
+        services.AddSingleton<ScenarioService>();
+        services.AddSingleton<AssistantService>();
 
         services.AddSingleton<QuickAddViewModel>();
         services.AddSingleton<DashboardViewModel>();
@@ -84,9 +89,12 @@ public static class AppComposition
         services.AddSingleton<AccountsViewModel>();
         services.AddSingleton<ImportViewModel>();
         services.AddSingleton<PlanningViewModel>();
+        services.AddSingleton<ScenariosViewModel>();
+        services.AddSingleton<ForecastsViewModel>();
         services.AddSingleton<BudgetsViewModel>();
         services.AddSingleton<WishlistViewModel>();
         services.AddSingleton<AssetsViewModel>();
+        services.AddSingleton<AssistantViewModel>();
         services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
 

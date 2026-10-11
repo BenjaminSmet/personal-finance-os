@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using PersonalFinanceOS.App.Localization;
+using PersonalFinanceOS.Application.Assistant;
 
 namespace PersonalFinanceOS.App.ViewModels;
 
@@ -36,10 +37,11 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         TransactionsViewModel transactions,
         AccountsViewModel accounts,
         ImportViewModel import,
-        PlanningViewModel planning,
+        ForecastsViewModel forecasts,
         BudgetsViewModel budgets,
         WishlistViewModel wishlist,
         AssetsViewModel assets,
+        AssistantViewModel assistant,
         SettingsViewModel settings,
         QuickAddViewModel quickAdd)
     {
@@ -51,19 +53,51 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             new NavItem("Nav_Accounts", Icons.Accounts, accounts),
             new NavItem("Nav_Import", Icons.Import, import),
             new NavItem("Nav_Budgets", Icons.Budgets, budgets),
-            new NavItem("Nav_Forecasts", Icons.Forecasts, planning),
+            new NavItem("Nav_Forecasts", Icons.Forecasts, forecasts),
             new NavItem("Nav_Wishlist", Icons.Wishlist, wishlist),
             new NavItem("Nav_Assets", Icons.Assets, assets),
-            new NavItem("Nav_Assistant", Icons.Assistant, new PlaceholderViewModel("Nav_Assistant", 7)),
+            new NavItem("Nav_Assistant", Icons.Assistant, assistant),
             new NavItem("Nav_Reports", Icons.Reports, new PlaceholderViewModel("Nav_Reports", 8)),
             new NavItem("Nav_Settings", Icons.Settings, settings),
         ];
 
         dashboard.NavigateToAccounts = () => SelectedItem = NavItems[2];
-        dashboard.NavigateToPlanning = () => SelectedItem = NavItems.First(n => n.Page == planning);
+        dashboard.NavigateToPlanning = () =>
+        {
+            forecasts.ShowPlanning();
+            SelectedItem = NavItems.First(n => n.Page == forecasts);
+        };
         dashboard.NavigateToBudgets = () => SelectedItem = NavItems.First(n => n.Page == budgets);
         dashboard.NavigateToAssets = () => SelectedItem = NavItems.First(n => n.Page == assets);
         dashboard.NavigateToWishlist = () => SelectedItem = NavItems.First(n => n.Page == wishlist);
+        assistant.Navigate = async (action, scenarioId) =>
+        {
+            switch (action)
+            {
+                case AssistantAction.OpenForecasts:
+                    forecasts.ShowPlanning();
+                    SelectedItem = NavItems.First(n => n.Page == forecasts);
+                    break;
+                case AssistantAction.OpenScenarios:
+                    forecasts.ShowScenarios();
+                    SelectedItem = NavItems.First(n => n.Page == forecasts);
+                    if (scenarioId is { } id)
+                    {
+                        await forecasts.Scenarios.SelectAsync(id);
+                    }
+
+                    break;
+                case AssistantAction.OpenWishlist:
+                    SelectedItem = NavItems.First(n => n.Page == wishlist);
+                    break;
+                case AssistantAction.OpenBudgets:
+                    SelectedItem = NavItems.First(n => n.Page == budgets);
+                    break;
+                case AssistantAction.OpenAccounts:
+                    SelectedItem = NavItems[2];
+                    break;
+            }
+        };
         _selectedItem = NavItems[0];
     }
 

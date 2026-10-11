@@ -16,6 +16,9 @@
     <DataTemplate DataType="vm:BudgetsViewModel"><v:BudgetsView /></DataTemplate>
     <DataTemplate DataType="vm:WishlistViewModel"><v:WishlistView /></DataTemplate>
     <DataTemplate DataType="vm:AssetsViewModel"><v:AssetsView /></DataTemplate>
+    <DataTemplate DataType="vm:ForecastsViewModel"><v:ForecastsView /></DataTemplate>
+    <DataTemplate DataType="vm:ScenariosViewModel"><v:ScenariosView /></DataTemplate>
+    <DataTemplate DataType="vm:AssistantViewModel"><v:AssistantView /></DataTemplate>
     <DataTemplate DataType="vm:SettingsViewModel"><v:SettingsView /></DataTemplate>
     <DataTemplate DataType="vm:PlaceholderViewModel"><v:PlaceholderView /></DataTemplate>
   </Application.DataTemplates>

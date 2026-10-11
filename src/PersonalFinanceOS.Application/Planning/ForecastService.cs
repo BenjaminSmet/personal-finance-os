@@ -4,6 +4,7 @@ using PersonalFinanceOS.Application.Ledger;
 using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
+using PersonalFinanceOS.Domain.Cards;
 using PersonalFinanceOS.Domain.Planning;
 
 namespace PersonalFinanceOS.Application.Planning;
@@ -239,60 +240,144 @@ public sealed class ForecastService(
     /// transactions, open planned items (overdue ones today, overdue income left out) and card statements on the
     /// day they are expected. Used to check purchases (spec §14); like every forecast it never changes data.
     /// </summary>
-    public async Task<CashProjection> ProjectAsync(int days, CancellationToken ct = default)
+    public async Task<CashProjection> ProjectAsync(int days, CancellationToken ct = default) =>
+        (await TimelineAsync(clock.Today.AddDays(days), ct)).Spendable();
+
+    /// <summary>
+    /// The expected balance of every money account (current, joint, savings, cash, other) up to <paramref name="until"/>
+    /// (spec §16): today's balance, recorded later transactions, open planned items on each side of a transfer, and card
+    /// statements on the account that pays them. Cards and valued accounts (pension, investments) are not projected.
+    /// </summary>
+    public async Task<ForecastTimeline> TimelineAsync(DateOnly until, CancellationToken ct = default)
     {
         var today = clock.Today;
-        var until = today.AddDays(days);
+        if (until < today)
+        {
+            until = today;
+        }
+
         var all = await accounts.ListAsync(includeArchived: false, ct);
-        var counted = all.Where(Counts).ToList();
-        var ids = counted.Select(a => a.Id).ToHashSet();
+        var projected = all.Where(Projects).ToList();
+        var ids = projected.Select(a => a.Id).ToHashSet();
+        var counted = projected.Where(Counts).Select(a => a.Id).ToHashSet();
         var cardIds = all.Where(a => a.Type.IsLiability()).Select(a => a.Id).ToHashSet();
         var buffer = await settings.GetMinimumBufferAsync(ct);
         var caveats = new List<ForecastCaveat>();
-        var events = new List<CashEvent>();
-        if (counted.Count == 0)
+        var events = new List<AccountEvent>();
+        var balances = await ledger.GetBalancesAsync(today, ct);
+        var start = projected.ToDictionary(a => a.Id, a => balances.TryGetValue(a.Id, out var b) ? b : Money.Zero);
+        var statuses = await cards.ListStatusesAsync(ct);
+        var profiles = statuses.Where(s => s.Profile is not null).ToDictionary(s => s.Card.Id, s => s.Profile!);
+        var open = await recurring.ListOpenAsync(until, withMatches: false, ct);
+        if (projected.Count == 0)
         {
-            return new CashProjection(today, until, Money.Zero, buffer, counted, events, caveats);
+            return new ForecastTimeline(today, until, buffer, projected, counted, start, events, caveats, open, profiles);
         }
 
-        var balances = await ledger.GetBalancesAsync(today, ct);
-        var start = Money.Sum(counted.Select(a => balances[a.Id]));
         var later = await ledger.ListEntriesAsync(new TransactionQuery(From: today.AddDays(1), To: until), ct);
         foreach (var e in later.Where(e => ids.Contains(e.Transaction.AccountId)))
         {
-            events.Add(new CashEvent(e.Transaction.Date, e.Transaction.Amount, CashEventKind.RecordedLater, e.Transaction.Description));
+            events.Add(new AccountEvent(e.Transaction.AccountId, e.Transaction.Date, e.Transaction.Amount, CashEventKind.RecordedLater, e.Transaction.Description));
         }
 
-        var open = await recurring.ListOpenAsync(until, withMatches: false, ct);
         foreach (var o in open.Where(o => o.DueDate <= until))
         {
-            var change = Effect(o, ids, cardIds);
             var income = o.Rule.Kind == RecurringKind.Income;
-            if (change.IsZero || (income && o.IsOverdue))
+            if (income && o.IsOverdue)
+            {
+                // Overdue income is not counted: it may still come, but it is not money yet.
+                continue;
+            }
+
+            var legs = Legs(o, ids, cardIds).ToList();
+            if (legs.Count == 0)
             {
                 continue;
             }
 
-            if (o.IsOverdue && !caveats.Contains(ForecastCaveat.OverdueItems))
+            if (o.IsOverdue && !Effect(o, counted, cardIds).IsZero && !caveats.Contains(ForecastCaveat.OverdueItems))
             {
                 caveats.Add(ForecastCaveat.OverdueItems);
             }
 
-            var kind = income ? CashEventKind.Income : change.IsNegative ? CashEventKind.Planned : CashEventKind.PlannedIn;
-            events.Add(new CashEvent(o.DueDate < today ? today : o.DueDate, change, kind, o.Rule.Name));
+            var date = o.DueDate < today ? today : o.DueDate;
+            foreach (var (account, amount) in legs)
+            {
+                var kind = income ? CashEventKind.Income : amount.IsNegative ? CashEventKind.Planned : CashEventKind.PlannedIn;
+                events.Add(new AccountEvent(account, date, amount, kind, o.Rule.Name, o.Rule.Id));
+            }
         }
 
-        foreach (var (name, amount, due) in await CardOutflowsAsync(caveats, ids, until, ct))
+        if (statuses.Any(s => !s.IsSetUp))
         {
-            events.Add(new CashEvent(due, amount, CashEventKind.CardSettlement, name));
+            caveats.Add(ForecastCaveat.CardNotSetUp);
         }
 
-        if (!events.Any(e => e.Kind == CashEventKind.Income && e.Date > today))
+        foreach (var s in await cards.ListSettlementsAsync(until, ct))
+        {
+            if (s.FromAccountId is not { } from)
+            {
+                if (!caveats.Contains(ForecastCaveat.SettlementAccountUnknown))
+                {
+                    caveats.Add(ForecastCaveat.SettlementAccountUnknown);
+                }
+
+                continue;
+            }
+
+            if (!ids.Contains(from))
+            {
+                continue;
+            }
+
+            if (s.Date is null && counted.Contains(from) && !caveats.Contains(ForecastCaveat.SettlementDateUnknown))
+            {
+                caveats.Add(ForecastCaveat.SettlementDateUnknown);
+            }
+
+            events.Add(new AccountEvent(from, CardMath.Due(profiles[s.Card.Id], s.Period, today), s.Amount.Negate(), CashEventKind.CardSettlement, s.Card.Name, CardId: s.Card.Id));
+        }
+
+        if (!events.Any(e => e.Kind == CashEventKind.Income && e.Date > today && counted.Contains(e.AccountId)))
         {
             caveats.Add(ForecastCaveat.NoIncomePlanned);
         }
 
-        return new CashProjection(today, until, start, buffer, counted, events, caveats);
+        return new ForecastTimeline(today, until, buffer, projected, counted, start, events, caveats, open, profiles);
+    }
+
+    /// <summary>The accounts a timeline projects: those whose balance comes from the ledger and holds money.</summary>
+    public static bool Projects(Account account) =>
+        account.Status == AccountStatus.Active && !account.Type.IsLiability() && !account.Type.IsManuallyValued();
+
+    /// <summary>
+    /// Where an occurrence moves money among the projected accounts. Planned payments to a credit card are left out:
+    /// the card's statement is calculated from the card itself, and counting both would count the same money twice.
+    /// </summary>
+    private static IEnumerable<(Guid Account, Money Amount)> Legs(PlannedOccurrence o, HashSet<Guid> ids, HashSet<Guid> cardIds)
+    {
+        var rule = o.Rule;
+        switch (rule.Kind)
+        {
+            case RecurringKind.Income when ids.Contains(rule.AccountId):
+                yield return (rule.AccountId, o.Amount);
+                break;
+            case RecurringKind.Expense when ids.Contains(rule.AccountId):
+                yield return (rule.AccountId, o.Amount.Negate());
+                break;
+            case RecurringKind.Transfer when !cardIds.Contains(rule.ToAccountId!.Value):
+                if (ids.Contains(rule.AccountId))
+                {
+                    yield return (rule.AccountId, o.Amount.Negate());
+                }
+
+                if (ids.Contains(rule.ToAccountId!.Value))
+                {
+                    yield return (rule.ToAccountId!.Value, o.Amount);
+                }
+
+                break;
+        }
     }
 
     /// <summary>
@@ -337,6 +422,93 @@ public enum CashEventKind
 
     /// <summary>A purchase being considered; only exists in a what-if copy.</summary>
     Purchase,
+
+    /// <summary>A change from a what-if scenario; never in the ledger.</summary>
+    Scenario,
+}
+
+/// <summary>One expected change of one projected account. <see cref="Amount"/> is signed: money out is negative.</summary>
+public sealed record AccountEvent(
+    Guid AccountId,
+    DateOnly Date,
+    Money Amount,
+    CashEventKind Kind,
+    string? Name,
+
+    /// <summary>The recurring rule of a planned item.</summary>
+    Guid? RuleId = null,
+
+    /// <summary>The card of a statement payment.</summary>
+    Guid? CardId = null);
+
+/// <summary>
+/// The expected balance of each money account from today to <see cref="Until"/> (spec §16). A forecast: it never
+/// changes data. <see cref="With"/> gives a what-if copy and leaves this one unchanged.
+/// </summary>
+public sealed class ForecastTimeline(
+    DateOnly today,
+    DateOnly until,
+    Money buffer,
+    IReadOnlyList<Account> accounts,
+    IReadOnlySet<Guid> counted,
+    IReadOnlyDictionary<Guid, Money> start,
+    IReadOnlyList<AccountEvent> events,
+    IReadOnlyList<ForecastCaveat> caveats,
+    IReadOnlyList<PlannedOccurrence> open,
+    IReadOnlyDictionary<Guid, CreditCardProfile> cardProfiles)
+{
+    public DateOnly Today { get; } = today;
+    public DateOnly Until { get; } = until;
+
+    /// <summary>The minimum buffer for the spendable accounts.</summary>
+    public Money Buffer { get; } = buffer;
+
+    /// <summary>The projected accounts, in the user's order.</summary>
+    public IReadOnlyList<Account> Accounts { get; } = accounts;
+
+    /// <summary>The spendable accounts among them (personal current account and cash).</summary>
+    public IReadOnlySet<Guid> Counted { get; } = counted;
+
+    /// <summary>Each account's balance today.</summary>
+    public IReadOnlyDictionary<Guid, Money> Start { get; } = start;
+
+    public IReadOnlyList<AccountEvent> Events { get; } = events.OrderBy(e => e.Date).ToList();
+
+    /// <summary>Caveats of the spendable forecast.</summary>
+    public IReadOnlyList<ForecastCaveat> Caveats { get; } = caveats;
+
+    /// <summary>The open planned items the forecast used, cards included.</summary>
+    public IReadOnlyList<PlannedOccurrence> Open { get; } = open;
+
+    public IReadOnlyDictionary<Guid, CreditCardProfile> CardProfiles { get; } = cardProfiles;
+
+    public bool CanCalculate => Counted.Count > 0;
+
+    /// <summary>The spendable accounts together, as safe-to-spend and affordability see them.</summary>
+    public CashProjection Spendable() => new(
+        Today,
+        Until,
+        Money.Sum(Accounts.Where(a => Counted.Contains(a.Id)).Select(a => Start[a.Id])),
+        Buffer,
+        Accounts.Where(a => Counted.Contains(a.Id)).ToList(),
+        Events.Where(e => Counted.Contains(e.AccountId)).Select(ToCash).ToList(),
+        Caveats);
+
+    /// <summary>One account on its own. The minimum buffer only applies to the spendable accounts together.</summary>
+    public CashProjection ForAccount(Guid accountId) => new(
+        Today,
+        Until,
+        Start.GetValueOrDefault(accountId),
+        Money.Zero,
+        Accounts.Where(a => a.Id == accountId).ToList(),
+        Events.Where(e => e.AccountId == accountId).Select(ToCash).ToList(),
+        []);
+
+    /// <summary>A copy with other events, for a what-if scenario.</summary>
+    public ForecastTimeline With(IEnumerable<AccountEvent> replaced) =>
+        new(Today, Until, Buffer, Accounts, Counted, Start, replaced.ToList(), Caveats, Open, CardProfiles);
+
+    private static CashEvent ToCash(AccountEvent e) => new(e.Date, e.Amount, e.Kind, e.Name);
 }
 
 /// <summary>One expected change of the counted accounts. <see cref="Amount"/> is signed: money out is negative.</summary>

@@ -1,0 +1,124 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.AssistantView"
+             x:DataType="vm:AssistantViewModel">
+  <UserControl.Resources>
+    <DataTemplate x:Key="Choice" DataType="vm:ChoiceViewModel">
+      <Button Padding="12,5" FontSize="13" Content="{Binding Text}" Command="{Binding Command}" Classes.primary="{Binding IsPrimary}" />
+    </DataTemplate>
+  </UserControl.Resources>
+
+  <StackPanel Spacing="18">
+    <Grid ColumnDefinitions="*,Auto">
+      <StackPanel Spacing="2">
+        <TextBlock Classes="largeTitle" Text="{l:T Assistant_Title}" />
+        <TextBlock Classes="secondary" Text="{l:T Assistant_Subtitle}" TextWrapping="Wrap" />
+      </StackPanel>
+      <Button Grid.Column="1" VerticalAlignment="Center" Content="{l:T Assistant_Clear}" Command="{Binding ClearCommand}" IsVisible="{Binding HasMessages}" />
+    </Grid>
+
+    <!-- Examples before the first question -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding !HasMessages}">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="title" Text="{l:T Assistant_ExamplesTitle}" />
+        <ItemsControl ItemsSource="{Binding Examples}" ItemTemplate="{StaticResource Choice}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate><WrapPanel ItemSpacing="8" LineSpacing="8" /></ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <TextBlock Classes="caption" Text="{l:T Assistant_Privacy}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+
+    <!-- The conversation -->
+    <ItemsControl ItemsSource="{Binding Messages}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate><StackPanel Spacing="12" /></ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.DataTemplates>
+        <DataTemplate DataType="vm:UserMessageViewModel">
+          <Border Classes="glass row" HorizontalAlignment="Right" MaxWidth="640" Padding="16,10">
+            <SelectableTextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+          </Border>
+        </DataTemplate>
+        <DataTemplate DataType="vm:AnswerMessageViewModel">
+          <Border Classes="glass" Padding="24,18" MaxWidth="860" HorizontalAlignment="Left">
+            <StackPanel Spacing="10">
+              <Border Classes="badge" HorizontalAlignment="Left" IsVisible="{Binding KindText, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <TextBlock Classes="caption" Text="{Binding KindText}" />
+              </Border>
+              <SelectableTextBlock Classes="headline" Text="{Binding Headline}" TextWrapping="Wrap" />
+
+              <ItemsControl ItemsSource="{Binding Figures}" IsVisible="{Binding HasFigures}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate DataType="vm:FigureViewModel">
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,2">
+                      <TextBlock Classes="secondary" Text="{Binding Label}" TextWrapping="Wrap" />
+                      <TextBlock Grid.Column="1" Margin="16,0,0,0" Text="{Binding Value}" TextWrapping="Wrap" MaxWidth="460" TextAlignment="Right" />
+                    </Grid>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+
+              <StackPanel Spacing="3" IsVisible="{Binding HasConsidered}">
+                <TextBlock Classes="overline" Text="{l:T Assistant_Considered}" />
+                <ItemsControl ItemsSource="{Binding Considered}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                      <TextBlock Classes="caption" Text="{Binding, StringFormat='•  {0}'}" TextWrapping="Wrap" Margin="0,1" />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+
+              <StackPanel Spacing="3" IsVisible="{Binding HasAssumptions}">
+                <TextBlock Classes="overline" Text="{l:T Assistant_Assumptions}" />
+                <ItemsControl ItemsSource="{Binding Assumptions}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                      <TextBlock Classes="caption" Text="{Binding, StringFormat='•  {0}'}" TextWrapping="Wrap" Margin="0,1" />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+
+              <TextBlock Classes="caption" Text="{Binding Explanation}" TextWrapping="Wrap"
+                         IsVisible="{Binding Explanation, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+              <Border Classes="success" IsVisible="{Binding SavedText, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <TextBlock Text="{Binding SavedText, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+              </Border>
+
+              <ItemsControl ItemsSource="{Binding Suggestions}" ItemTemplate="{StaticResource Choice}" IsVisible="{Binding HasSuggestions}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate><WrapPanel ItemSpacing="8" LineSpacing="8" /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+              </ItemsControl>
+              <ItemsControl ItemsSource="{Binding Actions}" ItemTemplate="{StaticResource Choice}" IsVisible="{Binding HasActions}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate><WrapPanel ItemSpacing="8" LineSpacing="8" /></ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+              </ItemsControl>
+            </StackPanel>
+          </Border>
+        </DataTemplate>
+      </ItemsControl.DataTemplates>
+    </ItemsControl>
+
+    <!-- Ask -->
+    <Border Classes="glass strong" Padding="20,16">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBox x:Name="QuestionBox" Text="{Binding Question}" PlaceholderText="{l:T Assistant_Placeholder}" MaxLength="300"
+                 AutomationProperties.Name="{l:T Assistant_Placeholder}">
+          <TextBox.KeyBindings>
+            <KeyBinding Gesture="Enter" Command="{Binding AskCommand}" />
+          </TextBox.KeyBindings>
+        </TextBox>
+        <Button Grid.Column="1" Classes="primary" Margin="12,0,0,0" Content="{l:T Assistant_Ask}" Command="{Binding AskCommand}" />
+      </Grid>
+    </Border>
+    <TextBlock Classes="caption" Text="{l:T Assistant_Footer}" TextWrapping="Wrap" />
+  </StackPanel>
+</UserControl>

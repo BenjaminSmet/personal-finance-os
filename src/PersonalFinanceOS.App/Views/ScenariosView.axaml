@@ -1,0 +1,301 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.ScenariosView"
+             x:DataType="vm:ScenariosViewModel">
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="2">
+      <TextBlock Classes="largeTitle" Text="{l:T Scenario_Title}" />
+      <TextBlock Classes="secondary" Text="{l:T Scenario_Subtitle}" TextWrapping="Wrap" />
+    </StackPanel>
+
+    <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+    </Border>
+
+    <!-- Choose or make a scenario -->
+    <Border Classes="glass" Padding="24,18">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="Auto,*,Auto">
+          <TextBlock Classes="headline" Text="{l:T Scenario_Compare}" VerticalAlignment="Center" Margin="0,0,12,0" />
+          <ComboBox Grid.Column="1" ItemsSource="{Binding ScenarioOptions}" SelectedItem="{Binding SelectedScenario}" HorizontalAlignment="Stretch"
+                    AutomationProperties.Name="{l:T Scenario_Compare}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate DataType="vm:ScenarioOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+          <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" Margin="12,0,0,0">
+            <Button Classes="primary" Content="{l:T Scenario_New}" Command="{Binding OpenNewCommand}" />
+            <Button Content="{l:T Scenario_Rename}" Command="{Binding OpenRenameCommand}" IsVisible="{Binding HasScenario}" />
+            <Button Content="{l:T Scenario_Delete}" Command="{Binding AskDeleteCommand}" IsVisible="{Binding HasScenario}" />
+          </StackPanel>
+        </Grid>
+        <TextBlock Classes="caption" Text="{Binding ScenarioNote}" TextWrapping="Wrap"
+                   IsVisible="{Binding ScenarioNote, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+        <Border Classes="warning" IsVisible="{Binding IsDeleteConfirmOpen}">
+          <Grid ColumnDefinitions="*,Auto,Auto">
+            <TextBlock Text="{l:T Scenario_DeleteConfirm}" TextWrapping="Wrap" VerticalAlignment="Center" />
+            <Button Grid.Column="1" Margin="10,0,0,0" Content="{l:T Scenario_Delete}" Command="{Binding ConfirmDeleteCommand}" />
+            <Button Grid.Column="2" Margin="8,0,0,0" Content="{l:T Accounts_Cancel}" Command="{Binding CancelDeleteCommand}" />
+          </Grid>
+        </Border>
+
+        <!-- Name form -->
+        <StackPanel Spacing="10" IsVisible="{Binding IsNameFormOpen}">
+          <Border Classes="separator" />
+          <TextBlock Classes="title" Text="{Binding NameFormTitle}" />
+          <Grid ColumnDefinitions="*,16,2*">
+            <StackPanel>
+              <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Name}" />
+              <TextBox Text="{Binding FormName}" MaxLength="100" PlaceholderText="{l:T Scenario_NamePlaceholder}" />
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+              <TextBlock Classes="fieldLabel" Text="{l:T Scenario_Note}" />
+              <TextBox Text="{Binding FormNote}" MaxLength="500" />
+            </StackPanel>
+          </Grid>
+          <Border Classes="error" IsVisible="{Binding NameError, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <TextBlock Text="{Binding NameError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+          </Border>
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Classes="primary" Content="{l:T Editor_Save}" Command="{Binding SaveNameCommand}" />
+            <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelNameCommand}" />
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- The changes of the selected scenario -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasScenario}">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock Classes="title" Text="{l:T Scenario_Changes}" VerticalAlignment="Center" />
+          <Button Grid.Column="1" Content="{l:T Scenario_AddChange}" Command="{Binding OpenChangeFormCommand}" IsVisible="{Binding !IsChangeFormOpen}" />
+        </Grid>
+        <TextBlock Classes="caption" Text="{l:T Scenario_NoChanges}" TextWrapping="Wrap" IsVisible="{Binding !HasChanges}" />
+        <ItemsControl ItemsSource="{Binding Changes}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:ScenarioChangeRowViewModel">
+              <StackPanel>
+                <Grid ColumnDefinitions="*,Auto" Margin="0,8">
+                  <StackPanel Spacing="2">
+                    <TextBlock Classes="headline" Text="{Binding Title}" TextWrapping="Wrap" />
+                    <TextBlock Classes="secondary" Text="{Binding Detail}" TextWrapping="Wrap" />
+                    <TextBlock Classes="caption" Text="{Binding Effect}" TextWrapping="Wrap"
+                               IsVisible="{Binding Effect, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                    <Border Classes="warning" Margin="0,4,0,0" IsVisible="{Binding Note, Converter={x:Static ObjectConverters.IsNotNull}}">
+                      <TextBlock Text="{Binding Note, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+                    </Border>
+                  </StackPanel>
+                  <Button Grid.Column="1" Padding="12,5" FontSize="13" VerticalAlignment="Top" Content="{l:T Scenario_RemoveChange}"
+                          Command="{Binding RemoveCommand}" />
+                </Grid>
+                <Border Classes="separator" IsVisible="{Binding !IsLast}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Add a change -->
+        <StackPanel Spacing="12" IsVisible="{Binding IsChangeFormOpen}">
+          <Border Classes="separator" />
+          <TextBlock Classes="title" Text="{l:T Scenario_AddChange}" />
+          <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto,12,Auto">
+            <StackPanel>
+              <TextBlock Classes="fieldLabel" Text="{l:T Scenario_Kind}" />
+              <ComboBox ItemsSource="{Binding ChangeKinds}" SelectedItem="{Binding ChangeKind}" HorizontalAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate DataType="vm:ChangeKindOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Column="2" IsVisible="{Binding IsPurchase}">
+              <TextBlock Classes="fieldLabel" Text="{l:T Scenario_WishlistItem}" />
+              <ComboBox ItemsSource="{Binding WishlistItems}" SelectedItem="{Binding ChangeItem}" HorizontalAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate DataType="vm:ScenarioItemOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Column="2" IsVisible="{Binding IsAmountChange}">
+              <TextBlock Classes="fieldLabel" Text="{l:T Scenario_Direction}" />
+              <ComboBox ItemsSource="{Binding Directions}" SelectedItem="{Binding Direction}" HorizontalAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate DataType="vm:DirectionOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Column="2" IsVisible="{Binding IsPlanned}">
+              <TextBlock Classes="fieldLabel" Text="{l:T Scenario_PlannedItem}" />
+              <ComboBox ItemsSource="{Binding PlannedItems}" SelectedItem="{Binding ChangeRule}" HorizontalAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" IsVisible="{Binding NeedsName}">
+              <TextBlock Classes="fieldLabel" Text="{l:T Scenario_ChangeName}" />
+              <TextBox Text="{Binding ChangeName}" MaxLength="100" PlaceholderText="{l:T Scenario_ChangeNamePlaceholder}" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="2">
+              <TextBlock Classes="fieldLabel" Text="{Binding AmountLabel}" />
+              <TextBox Text="{Binding ChangeAmountText}" PlaceholderText="0,00" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" IsVisible="{Binding IsPlanned}">
+              <TextBlock Classes="fieldLabel" Text="{l:T Scenario_PlannedHint}" />
+              <TextBlock Classes="caption" Text="{l:T Scenario_PlannedHintText}" TextWrapping="Wrap" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="4">
+              <TextBlock Classes="fieldLabel" Text="{Binding DateLabel}" />
+              <CalendarDatePicker SelectedDate="{Binding ChangeDate}" HorizontalAlignment="Stretch" />
+            </StackPanel>
+            <StackPanel Grid.Row="4" Grid.Column="2" IsVisible="{Binding IsAmountChange}">
+              <TextBlock Classes="fieldLabel" Text="{l:T Planning_Account}" />
+              <ComboBox ItemsSource="{Binding MoneyAccounts}" SelectedItem="{Binding ChangeAccount}" HorizontalAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Grid.Column="2" IsVisible="{Binding IsPurchase}">
+              <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_PaidWith}" />
+              <ComboBox ItemsSource="{Binding PayOptions}" SelectedItem="{Binding ChangePay}" HorizontalAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+            </StackPanel>
+          </Grid>
+          <StackPanel IsVisible="{Binding IsMonthly}" Width="320" HorizontalAlignment="Left">
+            <TextBlock Classes="fieldLabel" Text="{l:T Scenario_Until}" />
+            <CalendarDatePicker SelectedDate="{Binding ChangeEndDate}" HorizontalAlignment="Stretch" />
+          </StackPanel>
+          <Border Classes="error" IsVisible="{Binding ChangeError, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <TextBlock Text="{Binding ChangeError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+          </Border>
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Classes="primary" Content="{l:T Scenario_AddChange}" Command="{Binding SaveChangeCommand}" />
+            <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelChangeCommand}" />
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <TextBlock Text="{l:T Planning_SafeNoAccounts}" TextWrapping="Wrap" IsVisible="{Binding !CanCalculate}" />
+
+    <!-- 7, 30 and 90 days (spec §16) -->
+    <Border Classes="glass strong" Padding="24,20" IsVisible="{Binding CanCalculate}">
+      <StackPanel Spacing="12">
+        <TextBlock Classes="title" Text="{l:T Scenario_Horizons}" />
+        <ItemsControl ItemsSource="{Binding Horizons}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate><UniformGrid Rows="1" /></ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:HorizonViewModel">
+              <StackPanel Spacing="3" Margin="0,0,12,0">
+                <TextBlock Classes="overline" Text="{Binding Title}" />
+                <TextBlock Classes="headline" Text="{Binding Baseline}" IsVisible="{Binding !HasScenario}" />
+                <StackPanel Spacing="1" IsVisible="{Binding HasScenario}">
+                  <TextBlock Classes="caption" Text="{Binding BaselineCaption}" />
+                  <TextBlock Classes="headline" Text="{Binding Scenario}" />
+                  <TextBlock Classes="caption" Text="{Binding Difference}" Classes.debt="{Binding DifferenceIsNegative}" />
+                </StackPanel>
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <TextBlock Classes="caption" Text="{l:T Scenario_HorizonNote}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+
+    <!-- Shortfall warnings -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding CanCalculate}">
+      <StackPanel Spacing="10">
+        <TextBlock Classes="title" Text="{l:T Scenario_Warnings}" />
+        <TextBlock Classes="secondary" Text="{l:T Scenario_NoWarnings}" TextWrapping="Wrap" IsVisible="{Binding !HasWarnings}" />
+        <ItemsControl ItemsSource="{Binding Warnings}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="x:String">
+              <Border Classes="warning" Margin="0,3">
+                <TextBlock Text="{Binding, StringFormat='⚠  {0}'}" TextWrapping="Wrap" />
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- Month by month for a year -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding CanCalculate}">
+      <StackPanel Spacing="12">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock Classes="title" Text="{Binding MonthsTitle}" VerticalAlignment="Center" TextWrapping="Wrap" />
+          <ComboBox Grid.Column="1" MinWidth="220" ItemsSource="{Binding Projections}" SelectedItem="{Binding SelectedProjection}"
+                    AutomationProperties.Name="{l:T Planning_Account}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate DataType="vm:ProjectionOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </Grid>
+        <Grid ColumnDefinitions="1.2*,*,*,*,*,1.3*" Margin="0,4,0,0">
+          <TextBlock Classes="overline" Text="{l:T Scenario_Month}" />
+          <TextBlock Grid.Column="1" Classes="overline" Text="{l:T Scenario_ColBaseline}" HorizontalAlignment="Right" />
+          <TextBlock Grid.Column="2" Classes="overline" Text="{l:T Scenario_ColScenario}" HorizontalAlignment="Right" IsVisible="{Binding HasScenario}" />
+          <TextBlock Grid.Column="3" Classes="overline" Text="{l:T Scenario_ColDifference}" HorizontalAlignment="Right" IsVisible="{Binding HasScenario}" />
+          <TextBlock Grid.Column="4" Classes="overline" Text="{l:T Scenario_ColLowest}" HorizontalAlignment="Right" />
+        </Grid>
+        <ItemsControl ItemsSource="{Binding Months}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:MonthRowViewModel">
+              <Grid ColumnDefinitions="1.2*,*,*,*,*,1.3*" Margin="0,4">
+                <TextBlock Text="{Binding Month}" />
+                <TextBlock Grid.Column="1" Text="{Binding Baseline}" HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="2" Text="{Binding Scenario}" HorizontalAlignment="Right"
+                           IsVisible="{Binding HasScenario}" />
+                <TextBlock Grid.Column="3" Text="{Binding Difference}" HorizontalAlignment="Right" Classes.debt="{Binding DifferenceIsNegative}"
+                           IsVisible="{Binding HasScenario}" />
+                <TextBlock Grid.Column="4" Text="{Binding Lowest}" HorizontalAlignment="Right" Classes.debt="{Binding LowestIsBad}" />
+                <TextBlock Grid.Column="5" Classes="caption debt" Text="{Binding Warning}" Margin="12,0,0,0" TextWrapping="Wrap"
+                           IsVisible="{Binding Warning, Converter={x:Static ObjectConverters.IsNotNull}}" />
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <TextBlock Classes="caption" Text="{l:T Scenario_MonthsNote}" TextWrapping="Wrap" />
+      </StackPanel>
+    </Border>
+
+    <!-- Effect on the wishlist -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasWishlistEffects}">
+      <StackPanel Spacing="8">
+        <TextBlock Classes="title" Text="{l:T Scenario_Wishlist}" />
+        <ItemsControl ItemsSource="{Binding WishlistEffects}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="x:String">
+              <TextBlock Classes="secondary" Text="{Binding, StringFormat='•  {0}'}" TextWrapping="Wrap" Margin="0,2" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!-- Assumptions -->
+    <Border Classes="glass" Padding="24,20">
+      <StackPanel Spacing="8">
+        <TextBlock Classes="title" Text="{l:T Scenario_Assumptions}" />
+        <ItemsControl ItemsSource="{Binding Assumptions}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="x:String">
+              <TextBlock Classes="caption" Text="{Binding, StringFormat='•  {0}'}" TextWrapping="Wrap" Margin="0,2" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>
