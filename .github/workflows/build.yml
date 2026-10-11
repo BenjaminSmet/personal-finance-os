@@ -6,9 +6,14 @@ on:
     tags: ['v*']
   pull_request:
   workflow_dispatch:
+    inputs:
+      release:
+        description: 'Publish a GitHub Release for the version in Directory.Build.props (main only)'
+        type: boolean
+        default: false
 
 permissions:
-  contents: write   # needed only to publish a Release when a version tag is pushed
+  contents: write   # needed only to publish a Release
 
 env:
   DOTNET_NOLOGO: true
@@ -28,14 +33,21 @@ jobs:
         id: version
         shell: pwsh
         run: |
+          [xml]$props = Get-Content Directory.Build.props
+          $base = $props.Project.PropertyGroup.Version
+          $tag = ''
           if ("${{ github.ref_type }}" -eq "tag") {
             $v = "${{ github.ref_name }}".TrimStart('v')
+            $tag = "${{ github.ref_name }}"
+          } elseif ("${{ github.event_name }}" -eq "workflow_dispatch" -and "${{ inputs.release }}" -eq "true") {
+            if ("${{ github.ref }}" -ne "refs/heads/main") { throw 'A release can only be published from main.' }
+            $v = $base
+            $tag = "v$base"
           } else {
-            [xml]$props = Get-Content Directory.Build.props
-            $base = $props.Project.PropertyGroup.Version
             $v = "$base-build.${{ github.run_number }}"
           }
           "version=$v" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
           "numeric=$($v.Split('-')[0]).0" >> $env:GITHUB_OUTPUT
           "Version: $v"
 
@@ -117,15 +129,18 @@ jobs:
           name: PersonalFinanceOS-Setup-${{ steps.version.outputs.version }}
           path: installer-output/*.exe
 
-      - name: Publish GitHub Release (version tags only)
-        if: github.ref_type == 'tag'
+      # Runs for a pushed v* tag, or for a manual run on main with "release" ticked; that run creates the tag on the
+      # commit it just built and tested, so a release can be made from the GitHub website alone.
+      - name: Publish GitHub Release
+        if: steps.version.outputs.tag != ''
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $notes = "docs/releases/${{ github.ref_name }}.md"
-          if (Test-Path $notes) {
-            gh release create "${{ github.ref_name }}" installer-output/*.exe --title "Personal Finance OS ${{ steps.version.outputs.version }}" --notes-file $notes
-          } else {
-            gh release create "${{ github.ref_name }}" installer-output/*.exe --title "Personal Finance OS ${{ steps.version.outputs.version }}" --generate-notes
-          }
+          $tag = "${{ steps.version.outputs.tag }}"
+          $setup = (Get-ChildItem installer-output\*.exe | Select-Object -First 1).FullName
+          $notes = "docs/releases/$tag.md"
+          $ghArgs = @($tag, $setup, '--target', '${{ github.sha }}', '--title', "Personal Finance OS ${{ steps.version.outputs.version }}")
+          if (Test-Path $notes) { $ghArgs += @('--notes-file', $notes) } else { $ghArgs += '--generate-notes' }
+          gh release create @ghArgs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

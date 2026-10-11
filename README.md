@@ -82,12 +82,14 @@ Never edit a migration that has been released.
 ### Releasing
 
 1. Set `<Version>` in `Directory.Build.props` and write `docs/releases/vX.Y.Z.md`.
-2. Push a tag `vX.Y.Z`. CI then:
+2. Start the release from the GitHub website: **Actions → Build, test and package → Run workflow**, keep the branch
+   on `main`, tick **release** and click **Run workflow**. (Pushing a tag `vX.Y.Z` does the same.) CI then:
    - builds and runs all tests;
    - builds the installer;
    - tests the installer: install, open a database with `PersonalFinanceOS.exe --self-check <folder>`, install again
      over the top, uninstall, and check that the data folder is kept;
-   - publishes a GitHub Release with the release notes.
+   - creates the tag `vX.Y.Z` on the tested commit and publishes a GitHub Release with the installer and the release
+     notes.
 
 ## Status
 
