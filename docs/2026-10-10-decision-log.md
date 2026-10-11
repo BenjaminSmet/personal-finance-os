@@ -275,3 +275,43 @@ ledger. One expense can belong to one item only, and a bought item cannot be bou
 expense puts it back on the list. Only an item marked bought without an expense can be reopened by hand.
 **Dashboard**: net worth with assets and liabilities, savings and investments at their valued amount, and attention
 items for missing or out-of-date values; pension and investment tiles show their valued amount.
+
+### D-033 · One forecast timeline per account (2026-10-11)
+Safe-to-spend, affordability and scenarios now share one timeline: the expected balance of every money account
+(current, joint, savings, cash) from today's balance, recorded later transactions, open planned items on both sides
+of a transfer and card statements on the paying account's debit day. "Spendable" stays the personal current account
+and cash (D-022, D-031); the joint and savings accounts are projected but never counted as spendable. Cards and valued
+accounts (pension, investments) are not projected. A planned payment to a card is left out, because the statement is
+calculated from the card itself.
+
+### D-034 · What-if scenarios (2026-10-11)
+A scenario is a saved list of changes laid over that timeline (§16); evaluating it never writes anything. Changes:
+a one-off amount, a monthly amount (optional end), a planned item at a new amount from a date (zero removes it), and a
+purchase from an account or by card. Choices made where the spec is open:
+- A date in the past counts from today and says so. A change outside the twelve months shown says so.
+- A planned **card** expense changes each statement it falls in, paid on that statement's debit day. Changing a
+  planned payment *to* a card changes nothing (the statement is what is forecast) and says so.
+- A card purchase over the available credit is still calculated but flagged: the limit is not money.
+- Horizons 7/30/90 days; months: the current month (from today) plus eleven. The forecast itself runs a year plus the
+  affordability look-ahead so wishlist dates (D-031) match the wishlist page.
+- Shortfalls: the first day spendable money goes below the buffer and below zero, and the first day any account goes
+  below zero. Warnings that only appear with the scenario are marked as such.
+- Effect on the wishlist: each open item's earliest comfortable date with and without the scenario; an item bought in
+  the scenario is left out.
+
+### D-035 · The assistant (2026-10-11)
+The assistant (§15) is local and rule-based: keyword rules in Dutch and English recognise the ten initial questions
+and read an amount (€, "euro", "5k", 5.000/5,000; counts of days or months and percentages are not amounts), a
+category (its name, plural or a starter-category word in either language), a wishlist item, a planned item and a
+period. Every figure in an answer comes from the existing services (forecast, affordability, analysis, scenarios); the
+answer text only names them. Rules applied:
+- Expected income is always listed as an assumption; savings and the joint account are not spendable; card credit is
+  never money and the card is only suggested when the purchase is prudent with its statement on its debit day.
+- A missing value that changes the answer (amount, category, wishlist item) gets one question; a short reply ("€250",
+  "Laptop") completes the original question. Unclear questions get the example questions instead of a guess.
+- "What changed versus last month" compares the last two **complete** months (September with August on 11 October),
+  so a half month is never compared with a full one.
+- "What if X costs €N more": a planned item named in the question changes by N (salary when the question is about
+  income); otherwise it is a one-off cost of N today on the first current account, stated as an assumption. The
+  result is an unsaved scenario; **Save as scenario** saves it only when clicked.
+- "Category room" checks both the category's budget and safe-to-spend; without a budget it says so.

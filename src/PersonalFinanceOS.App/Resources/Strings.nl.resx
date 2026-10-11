@@ -709,4 +709,242 @@
   <data name="Error_wishlist_alreadyPurchased" xml:space="preserve"><value>Dit item is al gekocht. Maak eerst de uitgave ongedaan om het te wijzigen.</value></data>
   <data name="Error_wishlist_purchase_future" xml:space="preserve"><value>Een aankoop zonder uitgave kan niet in de toekomst gedateerd zijn.</value></data>
   <data name="Error_wishlist_notFound" xml:space="preserve"><value>Dit item bestaat niet meer.</value></data>
+  <data name="Forecasts_TabPlanning" xml:space="preserve"><value>Planning</value></data>
+  <data name="Forecasts_TabScenarios" xml:space="preserve"><value>Scenario's</value></data>
+  <data name="Assistant_Title" xml:space="preserve"><value>Assistent</value></data>
+  <data name="Assistant_Subtitle" xml:space="preserve"><value>Stel je vraag over je geld in het Nederlands of Engels. Elk getal komt uit dezelfde berekeningen als de rest van de app, en de assistent wijzigt nooit je gegevens.</value></data>
+  <data name="Assistant_ExamplesTitle" xml:space="preserve"><value>Probeer een vraag</value></data>
+  <data name="Assistant_Privacy" xml:space="preserve"><value>Antwoorden worden op deze computer berekend uit je eigen gegevens. Er wordt niets verstuurd en er wordt geen AI-dienst gebruikt.</value></data>
+  <data name="Assistant_Placeholder" xml:space="preserve"><value>Stel een vraag, bijvoorbeeld: kan ik €250 betalen?</value></data>
+  <data name="Assistant_Ask" xml:space="preserve"><value>Vraag</value></data>
+  <data name="Assistant_Clear" xml:space="preserve"><value>Opnieuw beginnen</value></data>
+  <data name="Assistant_Considered" xml:space="preserve"><value>Meegeteld</value></data>
+  <data name="Assistant_Assumptions" xml:space="preserve"><value>Aannames en ontbrekende informatie</value></data>
+  <data name="Assistant_Footer" xml:space="preserve"><value>De assistent herkent veelgestelde vragen met vaste regels. Begrijpt hij iets niet, dan zegt hij dat in plaats van te gokken.</value></data>
+  <data name="Ask_Example_Afford" xml:space="preserve"><value>Kan ik €250 betalen?</value></data>
+  <data name="Ask_Example_Category" xml:space="preserve"><value>Kan ik deze maand nog €100 uitgeven aan boodschappen?</value></data>
+  <data name="Ask_Example_Safe" xml:space="preserve"><value>Hoeveel kan ik veilig uitgeven tot mijn loon?</value></data>
+  <data name="Ask_Example_Upcoming" xml:space="preserve"><value>Welke betalingen komen eraan?</value></data>
+  <data name="Ask_Example_Lower" xml:space="preserve"><value>Waarom is mijn saldo volgende maand lager?</value></data>
+  <data name="Ask_Example_WhatIf" xml:space="preserve"><value>Wat als de renovatie €5.000 duurder wordt?</value></data>
+  <data name="Ask_Example_When" xml:space="preserve"><value>Wanneer kan ik een item van mijn verlanglijst kopen?</value></data>
+  <data name="Ask_Example_Spent" xml:space="preserve"><value>Hoeveel heb ik uitgegeven aan abonnementen?</value></data>
+  <data name="Ask_Example_Changed" xml:space="preserve"><value>Wat is er veranderd tegenover vorige maand?</value></data>
+  <data name="Ask_Example_Card" xml:space="preserve"><value>Moet ik met VISA betalen of wachten?</value></data>
+  <data name="Ask_Help" xml:space="preserve"><value>Stel je vraag over je geld in je eigen woorden. Bijvoorbeeld:</value></data>
+  <data name="Ask_NotUnderstood" xml:space="preserve"><value>Die vraag begreep ik niet. Deze vragen kan ik wel beantwoorden, bijvoorbeeld:</value></data>
+  <data name="Ask_Kind_Qualified" xml:space="preserve"><value>Antwoord onder voorbehoud</value></data>
+  <data name="Ask_Kind_Question" xml:space="preserve"><value>Vraag</value></data>
+  <data name="Ask_NoAccount" xml:space="preserve"><value>Dit kan ik nog niet berekenen.</value></data>
+  <data name="Ask_More" xml:space="preserve"><value>en nog {0}</value></data>
+  <data name="Ask_What_Amount" xml:space="preserve"><value>{0}</value></data>
+  <data name="Ask_What_Item" xml:space="preserve"><value>{0} ({1})</value></data>
+  <data name="Ask_V_FromTo" xml:space="preserve"><value>{0} → {1}</value></data>
+  <data name="Ask_V_NoBudget" xml:space="preserve"><value>geen</value></data>
+  <data name="Ask_V_Option" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="Ask_ScenarioSaved" xml:space="preserve"><value>Bewaard als scenario “{0}”.</value></data>
+  <data name="Ask_Action_OpenForecasts" xml:space="preserve"><value>Open Planning</value></data>
+  <data name="Ask_Action_OpenScenarios" xml:space="preserve"><value>Open scenario's</value></data>
+  <data name="Ask_Action_OpenWishlist" xml:space="preserve"><value>Open de verlanglijst</value></data>
+  <data name="Ask_Action_OpenBudgets" xml:space="preserve"><value>Open Budgetten &amp; analyse</value></data>
+  <data name="Ask_Action_OpenAccounts" xml:space="preserve"><value>Open Rekeningen</value></data>
+  <data name="Ask_Action_SaveScenario" xml:space="preserve"><value>Bewaar als scenario</value></data>
+  <data name="Ask_Action_OpenSaved" xml:space="preserve"><value>Open het scenario</value></data>
+  <data name="Ask_Q_Amount" xml:space="preserve"><value>Hoeveel kost het? Typ het bedrag, bijvoorbeeld 250.</value></data>
+  <data name="Ask_Q_Category" xml:space="preserve"><value>Welke categorie bedoel je?</value></data>
+  <data name="Ask_Q_Item" xml:space="preserve"><value>Welk item van je verlanglijst bedoel je? Je kunt ook een bedrag typen.</value></data>
+  <data name="Ask_Q_WhatIfAmount" xml:space="preserve"><value>Met hoeveel zou het veranderen? Typ het bedrag, bijvoorbeeld 5000.</value></data>
+  <data name="Ask_Afford_Prudent" xml:space="preserve"><value>Ja. {0} is comfortabel betaalbaar: je saldo blijft de komende {2} dagen boven je minimumbuffer van {1}.</value></data>
+  <data name="Ask_Afford_Technical" xml:space="preserve"><value>Technisch wel, maar niet comfortabel. Met {0} zakt je saldo op {2} tot {1}, onder je minimumbuffer van {3}.</value></data>
+  <data name="Ask_Afford_No" xml:space="preserve"><value>Nee, nu niet. {0} is meer dan de {1} op je zichtrekening en in cash.</value></data>
+  <data name="Ask_Explain_Prudent" xml:space="preserve"><value>Comfortabel betekent: het laagste verwachte saldo blijft op of boven je minimumbuffer, met alle geplande rekeningen, kaartafrekeningen en verwacht inkomen meegeteld.</value></data>
+  <data name="Ask_Earliest" xml:space="preserve"><value>Het wordt comfortabel vanaf {0}, als alles loopt zoals gepland.</value></data>
+  <data name="Ask_Earliest_None" xml:space="preserve"><value>Met wat nu gepland is, wordt het binnen een jaar niet comfortabel.</value></data>
+  <data name="Ask_Assume_LookAhead" xml:space="preserve"><value>Gecontroleerd over de komende {0} dagen.</value></data>
+  <data name="Ask_Room_No" xml:space="preserve"><value>Nee. {0} past niet: er is maar {1} veilig te besteden tot {2}.</value></data>
+  <data name="Ask_Room_NoBudget" xml:space="preserve"><value>{0} past in wat veilig te besteden is ({2} tot {3}). {1} heeft deze maand geen budget, dus er is geen budget om te controleren.</value></data>
+  <data name="Ask_Room_Yes" xml:space="preserve"><value>Ja. {0} past in je budget voor {1} (nog {2} over) en in wat veilig te besteden is ({3}).</value></data>
+  <data name="Ask_Room_OverBudget" xml:space="preserve"><value>{0} past in wat veilig te besteden is, maar je budget voor {1} zou met {2} overschreden worden.</value></data>
+  <data name="Ask_F_SpentThisMonth" xml:space="preserve"><value>Deze maand uitgegeven aan {0}</value></data>
+  <data name="Ask_F_Budget" xml:space="preserve"><value>Budget deze maand</value></data>
+  <data name="Ask_F_BudgetLeft" xml:space="preserve"><value>Over in het budget</value></data>
+  <data name="Ask_F_SafeUntil" xml:space="preserve"><value>Veilig te besteden tot {0}</value></data>
+  <data name="Ask_Explain_Room" xml:space="preserve"><value>Er worden twee dingen gecontroleerd: je eigen budget voor de categorie, en wat veilig te besteden is, zodat alle geplande rekeningen, kaartafrekeningen en je buffer gedekt blijven tot je volgende inkomen.</value></data>
+  <data name="Ask_Safe" xml:space="preserve"><value>Je kunt tot {1} veilig {0} uitgeven.</value></data>
+  <data name="Ask_Safe_Short" xml:space="preserve"><value>Tot {1} is er niets veilig te besteden: je komt {0} tekort om alles wat gepland is en je buffer te dekken.</value></data>
+  <data name="Ask_F_Balance" xml:space="preserve"><value>Zichtrekening en cash nu</value></data>
+  <data name="Ask_F_PlannedOut" xml:space="preserve"><value>Geplande betalingen</value></data>
+  <data name="Ask_F_PlannedIn" xml:space="preserve"><value>Gepland geld in</value></data>
+  <data name="Ask_F_CardStatements" xml:space="preserve"><value>Kaartafrekeningen</value></data>
+  <data name="Ask_Explain_Safe" xml:space="preserve"><value>Veilig te besteden is je zichtrekening en cash, min alles wat gepland is en de kaartafrekeningen voor je volgende verwachte inkomen, min je minimumbuffer.</value></data>
+  <data name="Ask_Explain_SafeNoIncome" xml:space="preserve"><value>Er is geen inkomen gepland, dus de komende {0} dagen worden geteld.</value></data>
+  <data name="Ask_Event_Out" xml:space="preserve"><value>{0}: {1} op {2}</value></data>
+  <data name="Ask_Event_In" xml:space="preserve"><value>{0}: +{1} op {2}</value></data>
+  <data name="Ask_Event_Income" xml:space="preserve"><value>{0}: {1} verwacht op {2}</value></data>
+  <data name="Ask_Event_Card" xml:space="preserve"><value>Afrekening {0}: {1} op {2}</value></data>
+  <data name="Ask_Event_Rare" xml:space="preserve"><value>{0}: {1} op {2} (niet elke maand)</value></data>
+  <data name="Ask_Event_OutFrom" xml:space="preserve"><value>{0}: {1} op {2} van {3}</value></data>
+  <data name="Ask_Event_CardFrom" xml:space="preserve"><value>Afrekening {0}: {1} op {2} van {3}</value></data>
+  <data name="Ask_Upcoming" xml:space="preserve"><value>{0} betalingen in de komende {2} dagen, samen {1}.</value></data>
+  <data name="Ask_Upcoming_None" xml:space="preserve"><value>Er zijn de komende {0} dagen geen betalingen gepland.</value></data>
+  <data name="Ask_F_TotalOut" xml:space="preserve"><value>Gaat eruit de komende {0} dagen</value></data>
+  <data name="Ask_F_ExpectedIn" xml:space="preserve"><value>Verwacht inkomen de komende {0} dagen</value></data>
+  <data name="Ask_Explain_Upcoming" xml:space="preserve"><value>Geplande posten, kaartafrekeningen en transacties die al met een latere datum geregistreerd zijn, op alle rekeningen. Niets telt als betaald tot je het bevestigt.</value></data>
+  <data name="Ask_Lower_Yes" xml:space="preserve"><value>Je besteedbaar saldo gaat naar verwachting van {0} eind deze maand naar {1} eind {4}: in {4} gaat er naar verwachting {2} uit en komt er {3} binnen.</value></data>
+  <data name="Ask_Lower_No" xml:space="preserve"><value>Het wordt naar verwachting niet lager: {0} eind deze maand en {1} eind {2}.</value></data>
+  <data name="Ask_F_EndOfMonth" xml:space="preserve"><value>Eind {0}</value></data>
+  <data name="Ask_F_InMonth" xml:space="preserve"><value>Verwacht binnen, {0}</value></data>
+  <data name="Ask_F_OutMonth" xml:space="preserve"><value>Verwacht uit, {0}</value></data>
+  <data name="Ask_F_LowestMonth" xml:space="preserve"><value>Laagste in {0}</value></data>
+  <data name="Ask_Assume_NoIncomeMonth" xml:space="preserve"><value>In {0} is geen inkomen gepland; als je loon komt, ligt het saldo hoger.</value></data>
+  <data name="Ask_Explain_Lower" xml:space="preserve"><value>De grootste betalingen van die maand staan eerst. Betalingen die niet elke maand terugkomen, zijn meestal de reden dat een maand lager uitvalt.</value></data>
+  <data name="Ask_WhatIf_NoIncome" xml:space="preserve"><value>Er is nog geen loon gepland, dus er valt niets te wijzigen. Voeg je loon eerst toe als terugkerende post onder Planning.</value></data>
+  <data name="Ask_Change_Planned" xml:space="preserve"><value>{0}: {2} in plaats van {1} vanaf vandaag</value></data>
+  <data name="Ask_Change_MonthlyOut" xml:space="preserve"><value>Elke maand {0} extra uit van {1}</value></data>
+  <data name="Ask_Change_MonthlyIn" xml:space="preserve"><value>Elke maand {0} extra op {1}</value></data>
+  <data name="Ask_Change_OneOffOut" xml:space="preserve"><value>Eén extra betaling van {0} van {1}</value></data>
+  <data name="Ask_Change_OneOffIn" xml:space="preserve"><value>{0} minder te betalen, geteld als geld terug op {1}</value></data>
+  <data name="Ask_Assume_Today" xml:space="preserve"><value>Verondersteld dat het vandaag betaald wordt; onder Planning › Scenario's kun je de echte datum instellen.</value></data>
+  <data name="Ask_WhatIf_BelowZero" xml:space="preserve"><value>Dan zou je besteedbaar geld op {0} onder nul gaan ({1}).</value></data>
+  <data name="Ask_WhatIf_BelowBuffer" xml:space="preserve"><value>Dan zou je besteedbaar geld op {0} onder je minimumbuffer van {2} zakken ({1}).</value></data>
+  <data name="Ask_WhatIf_Ok" xml:space="preserve"><value>Je buffer blijft intact. Het laagste verwachte besteedbare saldo in de komende 12 maanden wordt {0} op {1} (nu {2}).</value></data>
+  <data name="Ask_F_LowestYear" xml:space="preserve"><value>Laagste in de komende 12 maanden</value></data>
+  <data name="Ask_F_InDays" xml:space="preserve"><value>Over {0} dagen</value></data>
+  <data name="Ask_F_AccountBelowZero" xml:space="preserve"><value>{0} onder nul</value></data>
+  <data name="Ask_Explain_WhatIf" xml:space="preserve"><value>Berekend als een scenario: er verandert niets aan je transacties of plannen. Bewaar het om het per maand te vergelijken onder Planning › Scenario's.</value></data>
+  <data name="Ask_When_Never" xml:space="preserve"><value>Niet binnen een jaar: met wat nu gepland is, wordt {0} niet comfortabel betaalbaar.</value></data>
+  <data name="Ask_When_Now" xml:space="preserve"><value>Nu al: {0} is vandaag comfortabel betaalbaar.</value></data>
+  <data name="Ask_When_Date" xml:space="preserve"><value>Vanaf {1}: dan wordt {0} comfortabel betaalbaar, als alles loopt zoals gepland.</value></data>
+  <data name="Ask_When_BeforeTarget" xml:space="preserve"><value>Dat is voor je streefdatum van {0}.</value></data>
+  <data name="Ask_When_AfterTarget" xml:space="preserve"><value>Dat is na je streefdatum van {0}.</value></data>
+  <data name="Ask_When_Saving" xml:space="preserve"><value>Je spaarplan van {0} per maand is een plan; het verplaatst zelf geen geld.</value></data>
+  <data name="Ask_Assume_NothingElse" xml:space="preserve"><value>Verondersteld dat je eerst niets anders koopt.</value></data>
+  <data name="Ask_Explain_When" xml:space="preserve"><value>De vroegste dag vanaf wanneer je saldo na de aankoop de {0} dagen daarna boven je minimumbuffer blijft.</value></data>
+  <data name="Ask_Spent" xml:space="preserve"><value>Je gaf {2} {0} uit aan {1}.</value></data>
+  <data name="Ask_Received" xml:space="preserve"><value>Je ontving {2} {0} als {1}.</value></data>
+  <data name="Ask_Period_ThisMonth" xml:space="preserve"><value>deze maand</value></data>
+  <data name="Ask_Period_Month" xml:space="preserve"><value>in {0}</value></data>
+  <data name="Ask_Period_ThisYear" xml:space="preserve"><value>in {0}</value></data>
+  <data name="Ask_Period_LastMonths" xml:space="preserve"><value>de afgelopen {0} maanden</value></data>
+  <data name="Ask_F_Month" xml:space="preserve"><value>{0}</value></data>
+  <data name="Ask_F_Average" xml:space="preserve"><value>Gemiddeld per maand</value></data>
+  <data name="Ask_Assume_History" xml:space="preserve"><value>Je gegevens beginnen op {0}, dus eerdere bedragen ontbreken.</value></data>
+  <data name="Ask_Assume_SoFar" xml:space="preserve"><value>Tot en met {0}; de maand is nog niet voorbij.</value></data>
+  <data name="Ask_Assume_Refunds" xml:space="preserve"><value>Terugbetalingen verlagen de uitgaven; overschrijvingen en kaartbetalingen tellen nooit als uitgave.</value></data>
+  <data name="Ask_Changed_NoHistory" xml:space="preserve"><value>Er is te weinig geschiedenis om {0} met {1} te vergelijken: je gegevens beginnen op {2}.</value></data>
+  <data name="Ask_Changed_More" xml:space="preserve"><value>In {0} gaf je {1} meer uit dan in {2}.</value></data>
+  <data name="Ask_Changed_Less" xml:space="preserve"><value>In {0} gaf je {1} minder uit dan in {2}.</value></data>
+  <data name="Ask_Changed_Same" xml:space="preserve"><value>In {0} gaf je evenveel uit als in {1}.</value></data>
+  <data name="Ask_F_Income" xml:space="preserve"><value>Inkomsten</value></data>
+  <data name="Ask_F_Spending" xml:space="preserve"><value>Uitgaven</value></data>
+  <data name="Ask_F_Net" xml:space="preserve"><value>Netto</value></data>
+  <data name="Ask_Cat_Up" xml:space="preserve"><value>{0}: {1} meer ({2} → {3})</value></data>
+  <data name="Ask_Cat_Down" xml:space="preserve"><value>{0}: {1} minder ({2} → {3})</value></data>
+  <data name="Ask_Cat_UpUncategorised" xml:space="preserve"><value>Zonder categorie: {0} meer ({1} → {2})</value></data>
+  <data name="Ask_Cat_DownUncategorised" xml:space="preserve"><value>Zonder categorie: {0} minder ({1} → {2})</value></data>
+  <data name="Ask_Assume_CompleteMonths" xml:space="preserve"><value>{0} is nog niet voorbij, dus de laatste twee volledige maanden worden vergeleken.</value></data>
+  <data name="Ask_Card_PayNow" xml:space="preserve"><value>Betaal {0} van je zichtrekening: het is nu comfortabel betaalbaar, dus de kaart helpt niet.</value></data>
+  <data name="Ask_Card_UseCard" xml:space="preserve"><value>Betalen met {1} kan: {0} wordt betaald met de afrekening van {3} op {2}, en je saldo blijft boven je minimumbuffer.</value></data>
+  <data name="Ask_Card_Wait" xml:space="preserve"><value>Wacht beter tot {1}. Nu is het niet comfortabel, en met de kaart zou de afrekening niet betaald kunnen worden zonder je buffer aan te spreken.</value></data>
+  <data name="Ask_Card_WaitNoCard" xml:space="preserve"><value>Wacht beter tot {1}: {0} is nu niet comfortabel, en er is geen kredietkaart om mee te vergelijken.</value></data>
+  <data name="Ask_Card_None" xml:space="preserve"><value>Nu niet en met de kaart ook niet comfortabel, en met wat nu gepland is, wordt het binnen een jaar niet comfortabel.</value></data>
+  <data name="Ask_Assume_Credit" xml:space="preserve"><value>Een kredietlimiet is geen geld: de kaart helpt alleen als de afrekening op de afschrijvingsdag betaald kan worden.</value></data>
+  <data name="Ask_Explain_Card" xml:space="preserve"><value>Elke manier van betalen wordt op dezelfde manier gecontroleerd: het laagste verwachte saldo moet boven je minimumbuffer blijven, met de kaartafrekening op de afschrijvingsdag.</value></data>
+  <data name="Ask_Assume_Income" xml:space="preserve"><value>Verwacht inkomen op {0} telt als verwacht, niet als zeker.</value></data>
+  <data name="Ask_Assume_NotSpendable" xml:space="preserve"><value>Spaargeld en de gezamenlijke rekening tellen niet als besteedbaar: geld gaat alleen tussen rekeningen als er een overschrijving gepland is.</value></data>
+  <data name="Scenario_Title" xml:space="preserve"><value>Scenario's</value></data>
+  <data name="Scenario_Subtitle" xml:space="preserve"><value>Wat als een kost stijgt, je loon verandert of je iets later koopt? Een scenario wordt over de prognose gelegd en ermee vergeleken. Het wijzigt nooit je transacties of plannen.</value></data>
+  <data name="Scenario_Compare" xml:space="preserve"><value>Vergelijk</value></data>
+  <data name="Scenario_BaselineOnly" xml:space="preserve"><value>Alleen de prognose (geen scenario)</value></data>
+  <data name="Scenario_New" xml:space="preserve"><value>Nieuw scenario</value></data>
+  <data name="Scenario_Rename" xml:space="preserve"><value>Naam wijzigen</value></data>
+  <data name="Scenario_Delete" xml:space="preserve"><value>Verwijderen</value></data>
+  <data name="Scenario_DeleteConfirm" xml:space="preserve"><value>Dit scenario en zijn wijzigingen verwijderen? Je transacties en plannen blijven zoals ze zijn.</value></data>
+  <data name="Scenario_NamePlaceholder" xml:space="preserve"><value>bv. Renovatie duurder</value></data>
+  <data name="Scenario_Note" xml:space="preserve"><value>Notitie (optioneel)</value></data>
+  <data name="Scenario_Saved" xml:space="preserve"><value>Scenario “{0}” bewaard.</value></data>
+  <data name="Scenario_Removed" xml:space="preserve"><value>Scenario “{0}” verwijderd.</value></data>
+  <data name="Scenario_Changes" xml:space="preserve"><value>Wijzigingen in dit scenario</value></data>
+  <data name="Scenario_AddChange" xml:space="preserve"><value>Wijziging toevoegen</value></data>
+  <data name="Scenario_NoChanges" xml:space="preserve"><value>Nog geen wijzigingen: voeg een kost, een aankoop of een ander bedrag voor een geplande post toe.</value></data>
+  <data name="Scenario_RemoveChange" xml:space="preserve"><value>Verwijderen</value></data>
+  <data name="Scenario_Kind" xml:space="preserve"><value>Wat verandert</value></data>
+  <data name="ScenarioKind_OneOff" xml:space="preserve"><value>Eenmalig bedrag</value></data>
+  <data name="ScenarioKind_Monthly" xml:space="preserve"><value>Maandelijks bedrag</value></data>
+  <data name="ScenarioKind_ChangePlanned" xml:space="preserve"><value>Ander bedrag voor een geplande post</value></data>
+  <data name="ScenarioKind_Purchase" xml:space="preserve"><value>Aankoop</value></data>
+  <data name="ScenarioKindTitle_OneOff" xml:space="preserve"><value>{0}</value></data>
+  <data name="ScenarioKindTitle_Monthly" xml:space="preserve"><value>{0} · elke maand</value></data>
+  <data name="ScenarioKindTitle_ChangePlanned" xml:space="preserve"><value>{0} · nieuw bedrag</value></data>
+  <data name="ScenarioKindTitle_Purchase" xml:space="preserve"><value>{0} · aankoop</value></data>
+  <data name="Scenario_Direction" xml:space="preserve"><value>Richting</value></data>
+  <data name="Scenario_DirectionOut" xml:space="preserve"><value>Geld uit (een kost)</value></data>
+  <data name="Scenario_DirectionIn" xml:space="preserve"><value>Geld in</value></data>
+  <data name="Scenario_WishlistItem" xml:space="preserve"><value>Van je verlanglijst</value></data>
+  <data name="Scenario_OtherPurchase" xml:space="preserve"><value>Iets anders</value></data>
+  <data name="Scenario_PlannedItem" xml:space="preserve"><value>Geplande post</value></data>
+  <data name="Scenario_PlannedOption" xml:space="preserve"><value>{0} · {1} · {2}</value></data>
+  <data name="Scenario_ChangeName" xml:space="preserve"><value>Naam</value></data>
+  <data name="Scenario_ChangeNamePlaceholder" xml:space="preserve"><value>bv. Renovatie extra</value></data>
+  <data name="Scenario_Amount" xml:space="preserve"><value>Bedrag</value></data>
+  <data name="Scenario_NewAmount" xml:space="preserve"><value>Nieuw bedrag per keer (0 = stopt)</value></data>
+  <data name="Scenario_PlannedHint" xml:space="preserve"><value>Hoe het werkt</value></data>
+  <data name="Scenario_PlannedHintText" xml:space="preserve"><value>Vanaf de gekozen datum telt elke keer van deze post aan het nieuwe bedrag: een loon, de huur of de overschrijving naar de gezamenlijke rekening.</value></data>
+  <data name="Scenario_Date" xml:space="preserve"><value>Datum</value></data>
+  <data name="Scenario_From" xml:space="preserve"><value>Vanaf</value></data>
+  <data name="Scenario_Until" xml:space="preserve"><value>Tot (optioneel)</value></data>
+  <data name="Scenario_Change_OneOffOut" xml:space="preserve"><value>{0} van {1} op {2}</value></data>
+  <data name="Scenario_Change_OneOffIn" xml:space="preserve"><value>{0} naar {1} op {2}</value></data>
+  <data name="Scenario_Change_MonthlyOut" xml:space="preserve"><value>{0} per maand van {1} vanaf {2}</value></data>
+  <data name="Scenario_Change_MonthlyIn" xml:space="preserve"><value>{0} per maand naar {1} vanaf {2}</value></data>
+  <data name="Scenario_Change_Until" xml:space="preserve"><value>tot {0}</value></data>
+  <data name="Scenario_Change_Planned" xml:space="preserve"><value>{0} in plaats van {1} vanaf {2}</value></data>
+  <data name="Scenario_Change_PlannedStops" xml:space="preserve"><value>Stopt vanaf {0}</value></data>
+  <data name="Scenario_Change_PurchaseAccount" xml:space="preserve"><value>{0} van {1} op {2}</value></data>
+  <data name="Scenario_Change_PurchaseCard" xml:space="preserve"><value>{0} met {1} op {2}, betaald met de afrekening op {3}</value></data>
+  <data name="Scenario_Effect" xml:space="preserve"><value>Besteedbaar geld over de 12 maanden: {0}</value></data>
+  <data name="Scenario_EffectOther" xml:space="preserve"><value>andere rekeningen: {0}</value></data>
+  <data name="ScenarioNote_DatePassed" xml:space="preserve"><value>De datum is voorbij; het telt vanaf vandaag.</value></data>
+  <data name="ScenarioNote_AccountNotForecast" xml:space="preserve"><value>Deze rekening is gearchiveerd, een kaart of wordt met de hand gewaardeerd, dus ze zit niet in de prognose.</value></data>
+  <data name="ScenarioNote_PlannedItemGone" xml:space="preserve"><value>Deze geplande post bestaat niet meer of is beëindigd.</value></data>
+  <data name="ScenarioNote_PaymentToCard" xml:space="preserve"><value>Dit is een geplande betaling naar een kaart. De afrekening van de kaart wordt al voorspeld, dus deze betaling wijzigen verandert hier niets.</value></data>
+  <data name="ScenarioNote_CardNotSetUp" xml:space="preserve"><value>De kaart heeft nog geen instellingen, dus de afrekening kan niet voorspeld worden.</value></data>
+  <data name="ScenarioNote_SettlementAccountUnknown" xml:space="preserve"><value>De kaart heeft geen betalende rekening, dus de afrekening kan niet ingepland worden.</value></data>
+  <data name="ScenarioNote_OverLimit" xml:space="preserve"><value>Dit is meer dan het beschikbare krediet van de kaart nu.</value></data>
+  <data name="ScenarioNote_OutsideForecast" xml:space="preserve"><value>Hiervan valt niets binnen de komende 12 maanden.</value></data>
+  <data name="Scenario_Horizons" xml:space="preserve"><value>Besteedbaar geld vooruit</value></data>
+  <data name="Scenario_InDays" xml:space="preserve"><value>Over {0} dagen ({1})</value></data>
+  <data name="Scenario_BaselineValue" xml:space="preserve"><value>Zonder scenario: {0}</value></data>
+  <data name="Scenario_HorizonNote" xml:space="preserve"><value>Persoonlijke zichtrekening en cash, met alles wat gepland is, kaartafrekeningen op hun afschrijvingsdag en verwacht inkomen. Een prognose, geen saldo.</value></data>
+  <data name="Scenario_Warnings" xml:space="preserve"><value>Waarschuwingen</value></data>
+  <data name="Scenario_NoWarnings" xml:space="preserve"><value>Geen tekorten verwacht in de komende 12 maanden.</value></data>
+  <data name="Scenario_ShortBuffer" xml:space="preserve"><value>Je besteedbaar geld zakt op {0} onder je minimumbuffer van {2} ({1}).</value></data>
+  <data name="Scenario_ShortZero" xml:space="preserve"><value>Je besteedbaar geld gaat op {0} onder nul ({1}).</value></data>
+  <data name="Scenario_ShortAccount" xml:space="preserve"><value>{0} gaat op {1} onder nul ({2}).</value></data>
+  <data name="Scenario_OnlyInScenario" xml:space="preserve"><value>(alleen met dit scenario)</value></data>
+  <data name="Scenario_MonthsTitle" xml:space="preserve"><value>Per maand, {0} maanden</value></data>
+  <data name="Scenario_Spendable" xml:space="preserve"><value>Besteedbaar geld (zichtrekening en cash)</value></data>
+  <data name="Scenario_Month" xml:space="preserve"><value>Maand</value></data>
+  <data name="Scenario_ColBaseline" xml:space="preserve"><value>Prognose</value></data>
+  <data name="Scenario_ColScenario" xml:space="preserve"><value>Met scenario</value></data>
+  <data name="Scenario_ColDifference" xml:space="preserve"><value>Verschil</value></data>
+  <data name="Scenario_ColLowest" xml:space="preserve"><value>Laagste</value></data>
+  <data name="Scenario_BelowZero" xml:space="preserve"><value>onder nul</value></data>
+  <data name="Scenario_BelowBuffer" xml:space="preserve"><value>onder buffer</value></data>
+  <data name="Scenario_MonthsNote" xml:space="preserve"><value>Saldo op het einde van elke maand (deze maand vanaf vandaag) en het laagste saldo binnen de maand. Geld gaat alleen tussen rekeningen als er een overschrijving gepland is.</value></data>
+  <data name="Scenario_Wishlist" xml:space="preserve"><value>Je verlanglijst</value></data>
+  <data name="Scenario_WishFrom" xml:space="preserve"><value>{0}: comfortabel vanaf {1}</value></data>
+  <data name="Scenario_Assumptions" xml:space="preserve"><value>Aannames</value></data>
+  <data name="Scenario_Assume_NotLedger" xml:space="preserve"><value>Een scenario wijzigt nooit je transacties, geplande posten of verlanglijst.</value></data>
+  <data name="Scenario_Assume_Income" xml:space="preserve"><value>Verwacht inkomen telt op de verwachte datum; het is niet gegarandeerd.</value></data>
+  <data name="Scenario_Assume_Transfers" xml:space="preserve"><value>Geld gaat alleen tussen rekeningen als er een overschrijving gepland is. Een overschrijving verandert saldi van rekeningen, niet je vermogen.</value></data>
+  <data name="Error_scenario_name_required" xml:space="preserve"><value>Vul een naam in.</value></data>
+  <data name="Error_scenario_name_tooLong" xml:space="preserve"><value>De naam is te lang (maximaal 100 tekens).</value></data>
+  <data name="Error_scenario_note_tooLong" xml:space="preserve"><value>De notitie is te lang (maximaal 500 tekens).</value></data>
+  <data name="Error_scenario_change_name_required" xml:space="preserve"><value>Vul een naam in voor de wijziging.</value></data>
+  <data name="Error_scenario_amount_negative" xml:space="preserve"><value>Vul een bedrag van nul of meer in.</value></data>
+  <data name="Error_scenario_payment_required" xml:space="preserve"><value>Kies hoe de aankoop betaald wordt.</value></data>
+  <data name="Error_scenario_planned_required" xml:space="preserve"><value>Kies een geplande post.</value></data>
+  <data name="Error_scenario_account_required" xml:space="preserve"><value>Kies een zicht-, gezamenlijke, spaar- of cashrekening.</value></data>
+  <data name="Error_scenario_notFound" xml:space="preserve"><value>Dit scenario bestaat niet meer.</value></data>
 </root>

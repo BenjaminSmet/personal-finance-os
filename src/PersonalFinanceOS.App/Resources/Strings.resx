@@ -709,4 +709,242 @@
   <data name="Error_wishlist_alreadyPurchased" xml:space="preserve"><value>This item is already bought. Void its expense first to change it.</value></data>
   <data name="Error_wishlist_purchase_future" xml:space="preserve"><value>A purchase without an expense cannot be dated in the future.</value></data>
   <data name="Error_wishlist_notFound" xml:space="preserve"><value>This item no longer exists.</value></data>
+  <data name="Forecasts_TabPlanning" xml:space="preserve"><value>Planning</value></data>
+  <data name="Forecasts_TabScenarios" xml:space="preserve"><value>Scenarios</value></data>
+  <data name="Assistant_Title" xml:space="preserve"><value>Assistant</value></data>
+  <data name="Assistant_Subtitle" xml:space="preserve"><value>Ask about your money in Dutch or English. Every number comes from the same calculations as the rest of the app, and the assistant never changes your data.</value></data>
+  <data name="Assistant_ExamplesTitle" xml:space="preserve"><value>Try a question</value></data>
+  <data name="Assistant_Privacy" xml:space="preserve"><value>Answers are worked out on this computer from your own data. Nothing is sent anywhere and no AI service is used.</value></data>
+  <data name="Assistant_Placeholder" xml:space="preserve"><value>Ask a question, for example: can I afford €250?</value></data>
+  <data name="Assistant_Ask" xml:space="preserve"><value>Ask</value></data>
+  <data name="Assistant_Clear" xml:space="preserve"><value>Start over</value></data>
+  <data name="Assistant_Considered" xml:space="preserve"><value>Taken into account</value></data>
+  <data name="Assistant_Assumptions" xml:space="preserve"><value>Assumptions and missing information</value></data>
+  <data name="Assistant_Footer" xml:space="preserve"><value>The assistant recognises common questions with fixed rules. When it does not understand something, it says so instead of guessing.</value></data>
+  <data name="Ask_Example_Afford" xml:space="preserve"><value>Can I afford €250?</value></data>
+  <data name="Ask_Example_Category" xml:space="preserve"><value>Can I spend another €100 on groceries this month?</value></data>
+  <data name="Ask_Example_Safe" xml:space="preserve"><value>How much can I safely spend before payday?</value></data>
+  <data name="Ask_Example_Upcoming" xml:space="preserve"><value>What payments are coming up?</value></data>
+  <data name="Ask_Example_Lower" xml:space="preserve"><value>Why will my balance be lower next month?</value></data>
+  <data name="Ask_Example_WhatIf" xml:space="preserve"><value>What if renovation costs increase by €5,000?</value></data>
+  <data name="Ask_Example_When" xml:space="preserve"><value>When can I afford a wishlist item?</value></data>
+  <data name="Ask_Example_Spent" xml:space="preserve"><value>How much did I spend on subscriptions?</value></data>
+  <data name="Ask_Example_Changed" xml:space="preserve"><value>What changed versus last month?</value></data>
+  <data name="Ask_Example_Card" xml:space="preserve"><value>Should I use VISA or wait?</value></data>
+  <data name="Ask_Help" xml:space="preserve"><value>Ask me about your money in your own words. For example:</value></data>
+  <data name="Ask_NotUnderstood" xml:space="preserve"><value>I did not understand that question. These are questions I can answer, for example:</value></data>
+  <data name="Ask_Kind_Qualified" xml:space="preserve"><value>Answer with conditions</value></data>
+  <data name="Ask_Kind_Question" xml:space="preserve"><value>Question</value></data>
+  <data name="Ask_NoAccount" xml:space="preserve"><value>I cannot calculate this yet.</value></data>
+  <data name="Ask_More" xml:space="preserve"><value>and {0} more</value></data>
+  <data name="Ask_What_Amount" xml:space="preserve"><value>{0}</value></data>
+  <data name="Ask_What_Item" xml:space="preserve"><value>{0} ({1})</value></data>
+  <data name="Ask_V_FromTo" xml:space="preserve"><value>{0} → {1}</value></data>
+  <data name="Ask_V_NoBudget" xml:space="preserve"><value>none</value></data>
+  <data name="Ask_V_Option" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="Ask_ScenarioSaved" xml:space="preserve"><value>Saved as scenario “{0}”.</value></data>
+  <data name="Ask_Action_OpenForecasts" xml:space="preserve"><value>Open Planning</value></data>
+  <data name="Ask_Action_OpenScenarios" xml:space="preserve"><value>Open Scenarios</value></data>
+  <data name="Ask_Action_OpenWishlist" xml:space="preserve"><value>Open the wishlist</value></data>
+  <data name="Ask_Action_OpenBudgets" xml:space="preserve"><value>Open Budgets &amp; Analysis</value></data>
+  <data name="Ask_Action_OpenAccounts" xml:space="preserve"><value>Open Accounts</value></data>
+  <data name="Ask_Action_SaveScenario" xml:space="preserve"><value>Save as scenario</value></data>
+  <data name="Ask_Action_OpenSaved" xml:space="preserve"><value>Open the scenario</value></data>
+  <data name="Ask_Q_Amount" xml:space="preserve"><value>How much is it? Type the amount, for example 250.</value></data>
+  <data name="Ask_Q_Category" xml:space="preserve"><value>Which category do you mean?</value></data>
+  <data name="Ask_Q_Item" xml:space="preserve"><value>Which item from your wishlist do you mean? You can also type an amount.</value></data>
+  <data name="Ask_Q_WhatIfAmount" xml:space="preserve"><value>By how much would it change? Type the amount, for example 5000.</value></data>
+  <data name="Ask_Afford_Prudent" xml:space="preserve"><value>Yes. {0} is comfortably affordable: your balance stays above your minimum buffer of {1} for the next {2} days.</value></data>
+  <data name="Ask_Afford_Technical" xml:space="preserve"><value>Technically yes, but not comfortably. With {0} your balance would drop to {1} on {2}, below your minimum buffer of {3}.</value></data>
+  <data name="Ask_Afford_No" xml:space="preserve"><value>No, not now. {0} is more than the {1} on your current account and in cash.</value></data>
+  <data name="Ask_Explain_Prudent" xml:space="preserve"><value>Comfortable means the lowest expected balance stays at or above your minimum buffer, with every planned bill, card statement and expected income counted.</value></data>
+  <data name="Ask_Earliest" xml:space="preserve"><value>It becomes comfortable from {0}, if everything goes as planned.</value></data>
+  <data name="Ask_Earliest_None" xml:space="preserve"><value>With what is planned now, it does not become comfortable within a year.</value></data>
+  <data name="Ask_Assume_LookAhead" xml:space="preserve"><value>Checked over the next {0} days.</value></data>
+  <data name="Ask_Room_No" xml:space="preserve"><value>No. {0} does not fit: only {1} is safe to spend until {2}.</value></data>
+  <data name="Ask_Room_NoBudget" xml:space="preserve"><value>{0} fits in what is safe to spend ({2} until {3}). {1} has no budget this month, so there is no budget to check.</value></data>
+  <data name="Ask_Room_Yes" xml:space="preserve"><value>Yes. {0} fits in your budget for {1} ({2} left) and in what is safe to spend ({3}).</value></data>
+  <data name="Ask_Room_OverBudget" xml:space="preserve"><value>{0} fits in what is safe to spend, but your budget for {1} would be exceeded by {2}.</value></data>
+  <data name="Ask_F_SpentThisMonth" xml:space="preserve"><value>Spent on {0} this month</value></data>
+  <data name="Ask_F_Budget" xml:space="preserve"><value>Budget this month</value></data>
+  <data name="Ask_F_BudgetLeft" xml:space="preserve"><value>Left in the budget</value></data>
+  <data name="Ask_F_SafeUntil" xml:space="preserve"><value>Safe to spend until {0}</value></data>
+  <data name="Ask_Explain_Room" xml:space="preserve"><value>Two things are checked: your own budget for the category, and safe-to-spend, which keeps every planned bill, card statement and your buffer covered until your next income.</value></data>
+  <data name="Ask_Safe" xml:space="preserve"><value>You can safely spend {0} until {1}.</value></data>
+  <data name="Ask_Safe_Short" xml:space="preserve"><value>Nothing is safe to spend until {1}: you are {0} short of covering everything planned and your buffer.</value></data>
+  <data name="Ask_F_Balance" xml:space="preserve"><value>Current account and cash now</value></data>
+  <data name="Ask_F_PlannedOut" xml:space="preserve"><value>Planned payments</value></data>
+  <data name="Ask_F_PlannedIn" xml:space="preserve"><value>Planned money in</value></data>
+  <data name="Ask_F_CardStatements" xml:space="preserve"><value>Card statements</value></data>
+  <data name="Ask_Explain_Safe" xml:space="preserve"><value>Safe to spend is your current account and cash, minus everything planned and the card statements due before your next expected income, minus your minimum buffer.</value></data>
+  <data name="Ask_Explain_SafeNoIncome" xml:space="preserve"><value>No income is planned, so the next {0} days are counted.</value></data>
+  <data name="Ask_Event_Out" xml:space="preserve"><value>{0}: {1} on {2}</value></data>
+  <data name="Ask_Event_In" xml:space="preserve"><value>{0}: +{1} on {2}</value></data>
+  <data name="Ask_Event_Income" xml:space="preserve"><value>{0}: {1} expected on {2}</value></data>
+  <data name="Ask_Event_Card" xml:space="preserve"><value>{0} statement: {1} on {2}</value></data>
+  <data name="Ask_Event_Rare" xml:space="preserve"><value>{0}: {1} on {2} (not every month)</value></data>
+  <data name="Ask_Event_OutFrom" xml:space="preserve"><value>{0}: {1} on {2} from {3}</value></data>
+  <data name="Ask_Event_CardFrom" xml:space="preserve"><value>{0} statement: {1} on {2} from {3}</value></data>
+  <data name="Ask_Upcoming" xml:space="preserve"><value>{0} payments in the next {2} days, {1} in total.</value></data>
+  <data name="Ask_Upcoming_None" xml:space="preserve"><value>No payments are planned in the next {0} days.</value></data>
+  <data name="Ask_F_TotalOut" xml:space="preserve"><value>Going out in the next {0} days</value></data>
+  <data name="Ask_F_ExpectedIn" xml:space="preserve"><value>Income expected in the next {0} days</value></data>
+  <data name="Ask_Explain_Upcoming" xml:space="preserve"><value>Planned items, card statements and transactions already recorded with a later date, on every account. Nothing counts as paid until you confirm it.</value></data>
+  <data name="Ask_Lower_Yes" xml:space="preserve"><value>Your spendable balance is expected to go from {0} at the end of this month to {1} at the end of {4}: in {4}, {2} is expected to go out and {3} to come in.</value></data>
+  <data name="Ask_Lower_No" xml:space="preserve"><value>It is not expected to be lower: {0} at the end of this month and {1} at the end of {2}.</value></data>
+  <data name="Ask_F_EndOfMonth" xml:space="preserve"><value>End of {0}</value></data>
+  <data name="Ask_F_InMonth" xml:space="preserve"><value>Expected in, {0}</value></data>
+  <data name="Ask_F_OutMonth" xml:space="preserve"><value>Expected out, {0}</value></data>
+  <data name="Ask_F_LowestMonth" xml:space="preserve"><value>Lowest in {0}</value></data>
+  <data name="Ask_Assume_NoIncomeMonth" xml:space="preserve"><value>No income is planned in {0}; when your salary comes, the balance will be higher.</value></data>
+  <data name="Ask_Explain_Lower" xml:space="preserve"><value>The biggest payments of that month are listed first. Payments that do not come every month are the usual reason a month is lower.</value></data>
+  <data name="Ask_WhatIf_NoIncome" xml:space="preserve"><value>No salary is planned yet, so there is nothing to change. Add your salary as a recurring item under Planning first.</value></data>
+  <data name="Ask_Change_Planned" xml:space="preserve"><value>{0}: {2} instead of {1} from today</value></data>
+  <data name="Ask_Change_MonthlyOut" xml:space="preserve"><value>{0} extra going out every month from {1}</value></data>
+  <data name="Ask_Change_MonthlyIn" xml:space="preserve"><value>{0} extra every month on {1}</value></data>
+  <data name="Ask_Change_OneOffOut" xml:space="preserve"><value>One extra payment of {0} from {1}</value></data>
+  <data name="Ask_Change_OneOffIn" xml:space="preserve"><value>{0} less to pay, counted as money back on {1}</value></data>
+  <data name="Ask_Assume_Today" xml:space="preserve"><value>Assumed to be paid today; under Planning › Scenarios you can set the real date.</value></data>
+  <data name="Ask_WhatIf_BelowZero" xml:space="preserve"><value>Then your spendable money would go below zero on {0} ({1}).</value></data>
+  <data name="Ask_WhatIf_BelowBuffer" xml:space="preserve"><value>Then your spendable money would drop below your minimum buffer of {2} on {0} ({1}).</value></data>
+  <data name="Ask_WhatIf_Ok" xml:space="preserve"><value>Your buffer stays intact. The lowest expected spendable balance in the coming 12 months becomes {0} on {1} (now {2}).</value></data>
+  <data name="Ask_F_LowestYear" xml:space="preserve"><value>Lowest in the coming 12 months</value></data>
+  <data name="Ask_F_InDays" xml:space="preserve"><value>In {0} days</value></data>
+  <data name="Ask_F_AccountBelowZero" xml:space="preserve"><value>{0} below zero</value></data>
+  <data name="Ask_Explain_WhatIf" xml:space="preserve"><value>Calculated like a scenario: nothing in your transactions or plans changes. Save it to compare it month by month under Planning › Scenarios.</value></data>
+  <data name="Ask_When_Never" xml:space="preserve"><value>Not within a year: with what is planned now, {0} does not become comfortably affordable.</value></data>
+  <data name="Ask_When_Now" xml:space="preserve"><value>Now: {0} is comfortably affordable today.</value></data>
+  <data name="Ask_When_Date" xml:space="preserve"><value>From {1}: then {0} becomes comfortably affordable, if everything goes as planned.</value></data>
+  <data name="Ask_When_BeforeTarget" xml:space="preserve"><value>That is before your target date of {0}.</value></data>
+  <data name="Ask_When_AfterTarget" xml:space="preserve"><value>That is after your target date of {0}.</value></data>
+  <data name="Ask_When_Saving" xml:space="preserve"><value>Your saving plan of {0} a month is a plan; it moves no money by itself.</value></data>
+  <data name="Ask_Assume_NothingElse" xml:space="preserve"><value>Assumes you buy nothing else first.</value></data>
+  <data name="Ask_Explain_When" xml:space="preserve"><value>The earliest day from which buying it keeps your balance above your minimum buffer for the following {0} days.</value></data>
+  <data name="Ask_Spent" xml:space="preserve"><value>You spent {0} on {1} {2}.</value></data>
+  <data name="Ask_Received" xml:space="preserve"><value>You received {0} as {1} {2}.</value></data>
+  <data name="Ask_Period_ThisMonth" xml:space="preserve"><value>this month</value></data>
+  <data name="Ask_Period_Month" xml:space="preserve"><value>in {0}</value></data>
+  <data name="Ask_Period_ThisYear" xml:space="preserve"><value>in {0}</value></data>
+  <data name="Ask_Period_LastMonths" xml:space="preserve"><value>in the last {0} months</value></data>
+  <data name="Ask_F_Month" xml:space="preserve"><value>{0}</value></data>
+  <data name="Ask_F_Average" xml:space="preserve"><value>Average per month</value></data>
+  <data name="Ask_Assume_History" xml:space="preserve"><value>Your records start on {0}, so earlier amounts are missing.</value></data>
+  <data name="Ask_Assume_SoFar" xml:space="preserve"><value>Up to and including {0}; the month is not over yet.</value></data>
+  <data name="Ask_Assume_Refunds" xml:space="preserve"><value>Refunds lower the spending; transfers and card payments are never counted as spending.</value></data>
+  <data name="Ask_Changed_NoHistory" xml:space="preserve"><value>There is not enough history to compare {0} with {1}: your records start on {2}.</value></data>
+  <data name="Ask_Changed_More" xml:space="preserve"><value>In {0} you spent {1} more than in {2}.</value></data>
+  <data name="Ask_Changed_Less" xml:space="preserve"><value>In {0} you spent {1} less than in {2}.</value></data>
+  <data name="Ask_Changed_Same" xml:space="preserve"><value>In {0} you spent as much as in {1}.</value></data>
+  <data name="Ask_F_Income" xml:space="preserve"><value>Income</value></data>
+  <data name="Ask_F_Spending" xml:space="preserve"><value>Spending</value></data>
+  <data name="Ask_F_Net" xml:space="preserve"><value>Net</value></data>
+  <data name="Ask_Cat_Up" xml:space="preserve"><value>{0}: {1} more ({2} → {3})</value></data>
+  <data name="Ask_Cat_Down" xml:space="preserve"><value>{0}: {1} less ({2} → {3})</value></data>
+  <data name="Ask_Cat_UpUncategorised" xml:space="preserve"><value>Without category: {0} more ({1} → {2})</value></data>
+  <data name="Ask_Cat_DownUncategorised" xml:space="preserve"><value>Without category: {0} less ({1} → {2})</value></data>
+  <data name="Ask_Assume_CompleteMonths" xml:space="preserve"><value>{0} is not over yet, so the last two complete months are compared.</value></data>
+  <data name="Ask_Card_PayNow" xml:space="preserve"><value>Pay {0} from your current account: it is comfortably affordable now, so using the card does not help.</value></data>
+  <data name="Ask_Card_UseCard" xml:space="preserve"><value>Paying {0} with {1} works: it is paid with the statement of {3} on {2}, and your balance stays above your minimum buffer.</value></data>
+  <data name="Ask_Card_Wait" xml:space="preserve"><value>Better wait until {1}. Now is not comfortable, and with the card its statement could not be paid without breaking your buffer.</value></data>
+  <data name="Ask_Card_WaitNoCard" xml:space="preserve"><value>Better wait until {1}: {0} is not comfortable now, and there is no credit card to compare with.</value></data>
+  <data name="Ask_Card_None" xml:space="preserve"><value>Neither now nor by card is comfortable, and with what is planned now it does not become comfortable within a year.</value></data>
+  <data name="Ask_Assume_Credit" xml:space="preserve"><value>A credit limit is not money: the card only helps when its statement can be paid on its debit day.</value></data>
+  <data name="Ask_Explain_Card" xml:space="preserve"><value>Every way to pay is checked the same way: the lowest expected balance must stay above your minimum buffer, with the card statement on its debit day.</value></data>
+  <data name="Ask_Assume_Income" xml:space="preserve"><value>Expected income on {0} is counted as expected, not as certain.</value></data>
+  <data name="Ask_Assume_NotSpendable" xml:space="preserve"><value>Savings and the joint account are not counted as spendable: money only moves between accounts when a transfer is planned.</value></data>
+  <data name="Scenario_Title" xml:space="preserve"><value>Scenarios</value></data>
+  <data name="Scenario_Subtitle" xml:space="preserve"><value>What if a cost goes up, your salary changes or you buy something later? A scenario is laid over the forecast and compared with it. It never changes your transactions or plans.</value></data>
+  <data name="Scenario_Compare" xml:space="preserve"><value>Compare</value></data>
+  <data name="Scenario_BaselineOnly" xml:space="preserve"><value>Forecast only (no scenario)</value></data>
+  <data name="Scenario_New" xml:space="preserve"><value>New scenario</value></data>
+  <data name="Scenario_Rename" xml:space="preserve"><value>Rename</value></data>
+  <data name="Scenario_Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Scenario_DeleteConfirm" xml:space="preserve"><value>Delete this scenario and its changes? Your transactions and plans stay as they are.</value></data>
+  <data name="Scenario_NamePlaceholder" xml:space="preserve"><value>e.g. Renovation more expensive</value></data>
+  <data name="Scenario_Note" xml:space="preserve"><value>Note (optional)</value></data>
+  <data name="Scenario_Saved" xml:space="preserve"><value>Scenario “{0}” saved.</value></data>
+  <data name="Scenario_Removed" xml:space="preserve"><value>Scenario “{0}” deleted.</value></data>
+  <data name="Scenario_Changes" xml:space="preserve"><value>Changes in this scenario</value></data>
+  <data name="Scenario_AddChange" xml:space="preserve"><value>Add change</value></data>
+  <data name="Scenario_NoChanges" xml:space="preserve"><value>No changes yet: add a cost, a purchase or a different amount for a planned item.</value></data>
+  <data name="Scenario_RemoveChange" xml:space="preserve"><value>Remove</value></data>
+  <data name="Scenario_Kind" xml:space="preserve"><value>What changes</value></data>
+  <data name="ScenarioKind_OneOff" xml:space="preserve"><value>One-off amount</value></data>
+  <data name="ScenarioKind_Monthly" xml:space="preserve"><value>Monthly amount</value></data>
+  <data name="ScenarioKind_ChangePlanned" xml:space="preserve"><value>Different amount for a planned item</value></data>
+  <data name="ScenarioKind_Purchase" xml:space="preserve"><value>Purchase</value></data>
+  <data name="ScenarioKindTitle_OneOff" xml:space="preserve"><value>{0}</value></data>
+  <data name="ScenarioKindTitle_Monthly" xml:space="preserve"><value>{0} · every month</value></data>
+  <data name="ScenarioKindTitle_ChangePlanned" xml:space="preserve"><value>{0} · new amount</value></data>
+  <data name="ScenarioKindTitle_Purchase" xml:space="preserve"><value>{0} · purchase</value></data>
+  <data name="Scenario_Direction" xml:space="preserve"><value>Direction</value></data>
+  <data name="Scenario_DirectionOut" xml:space="preserve"><value>Money out (a cost)</value></data>
+  <data name="Scenario_DirectionIn" xml:space="preserve"><value>Money in</value></data>
+  <data name="Scenario_WishlistItem" xml:space="preserve"><value>From your wishlist</value></data>
+  <data name="Scenario_OtherPurchase" xml:space="preserve"><value>Something else</value></data>
+  <data name="Scenario_PlannedItem" xml:space="preserve"><value>Planned item</value></data>
+  <data name="Scenario_PlannedOption" xml:space="preserve"><value>{0} · {1} · {2}</value></data>
+  <data name="Scenario_ChangeName" xml:space="preserve"><value>Name</value></data>
+  <data name="Scenario_ChangeNamePlaceholder" xml:space="preserve"><value>e.g. Renovation extra</value></data>
+  <data name="Scenario_Amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="Scenario_NewAmount" xml:space="preserve"><value>New amount each time (0 = stops)</value></data>
+  <data name="Scenario_PlannedHint" xml:space="preserve"><value>How it works</value></data>
+  <data name="Scenario_PlannedHintText" xml:space="preserve"><value>From the chosen date on, every occurrence of this item counts at the new amount: a salary, the rent or the transfer to the joint account.</value></data>
+  <data name="Scenario_Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Scenario_From" xml:space="preserve"><value>From</value></data>
+  <data name="Scenario_Until" xml:space="preserve"><value>Until (optional)</value></data>
+  <data name="Scenario_Change_OneOffOut" xml:space="preserve"><value>{0} out of {1} on {2}</value></data>
+  <data name="Scenario_Change_OneOffIn" xml:space="preserve"><value>{0} into {1} on {2}</value></data>
+  <data name="Scenario_Change_MonthlyOut" xml:space="preserve"><value>{0} a month out of {1} from {2}</value></data>
+  <data name="Scenario_Change_MonthlyIn" xml:space="preserve"><value>{0} a month into {1} from {2}</value></data>
+  <data name="Scenario_Change_Until" xml:space="preserve"><value>until {0}</value></data>
+  <data name="Scenario_Change_Planned" xml:space="preserve"><value>{0} instead of {1} from {2}</value></data>
+  <data name="Scenario_Change_PlannedStops" xml:space="preserve"><value>Stops from {0}</value></data>
+  <data name="Scenario_Change_PurchaseAccount" xml:space="preserve"><value>{0} from {1} on {2}</value></data>
+  <data name="Scenario_Change_PurchaseCard" xml:space="preserve"><value>{0} with {1} on {2}, paid with the statement on {3}</value></data>
+  <data name="Scenario_Effect" xml:space="preserve"><value>Spendable money over the 12 months: {0}</value></data>
+  <data name="Scenario_EffectOther" xml:space="preserve"><value>other accounts: {0}</value></data>
+  <data name="ScenarioNote_DatePassed" xml:space="preserve"><value>The date has passed; it is counted from today.</value></data>
+  <data name="ScenarioNote_AccountNotForecast" xml:space="preserve"><value>This account is archived, a card or valued by hand, so it is not in the forecast.</value></data>
+  <data name="ScenarioNote_PlannedItemGone" xml:space="preserve"><value>This planned item no longer exists or has ended.</value></data>
+  <data name="ScenarioNote_PaymentToCard" xml:space="preserve"><value>This is a planned payment to a card. The card's statement is forecast instead, so changing this payment changes nothing here.</value></data>
+  <data name="ScenarioNote_CardNotSetUp" xml:space="preserve"><value>The card has no settings yet, so its statement cannot be forecast.</value></data>
+  <data name="ScenarioNote_SettlementAccountUnknown" xml:space="preserve"><value>The card has no paying account, so its statement cannot be placed.</value></data>
+  <data name="ScenarioNote_OverLimit" xml:space="preserve"><value>This is more than the card's available credit now.</value></data>
+  <data name="ScenarioNote_OutsideForecast" xml:space="preserve"><value>Nothing of this falls within the coming 12 months.</value></data>
+  <data name="Scenario_Horizons" xml:space="preserve"><value>Spendable money ahead</value></data>
+  <data name="Scenario_InDays" xml:space="preserve"><value>In {0} days ({1})</value></data>
+  <data name="Scenario_BaselineValue" xml:space="preserve"><value>Without scenario: {0}</value></data>
+  <data name="Scenario_HorizonNote" xml:space="preserve"><value>Personal current account and cash, with everything planned, card statements on their debit day and expected income. A forecast, not a balance.</value></data>
+  <data name="Scenario_Warnings" xml:space="preserve"><value>Warnings</value></data>
+  <data name="Scenario_NoWarnings" xml:space="preserve"><value>No shortfalls expected in the coming 12 months.</value></data>
+  <data name="Scenario_ShortBuffer" xml:space="preserve"><value>Your spendable money drops below your minimum buffer of {2} on {0} ({1}).</value></data>
+  <data name="Scenario_ShortZero" xml:space="preserve"><value>Your spendable money goes below zero on {0} ({1}).</value></data>
+  <data name="Scenario_ShortAccount" xml:space="preserve"><value>{0} goes below zero on {1} ({2}).</value></data>
+  <data name="Scenario_OnlyInScenario" xml:space="preserve"><value>(only with this scenario)</value></data>
+  <data name="Scenario_MonthsTitle" xml:space="preserve"><value>Month by month, {0} months</value></data>
+  <data name="Scenario_Spendable" xml:space="preserve"><value>Spendable money (current account and cash)</value></data>
+  <data name="Scenario_Month" xml:space="preserve"><value>Month</value></data>
+  <data name="Scenario_ColBaseline" xml:space="preserve"><value>Forecast</value></data>
+  <data name="Scenario_ColScenario" xml:space="preserve"><value>With scenario</value></data>
+  <data name="Scenario_ColDifference" xml:space="preserve"><value>Difference</value></data>
+  <data name="Scenario_ColLowest" xml:space="preserve"><value>Lowest</value></data>
+  <data name="Scenario_BelowZero" xml:space="preserve"><value>below zero</value></data>
+  <data name="Scenario_BelowBuffer" xml:space="preserve"><value>below buffer</value></data>
+  <data name="Scenario_MonthsNote" xml:space="preserve"><value>Balance at the end of each month (this month from today) and the lowest balance within the month. Money only moves between accounts when a transfer is planned.</value></data>
+  <data name="Scenario_Wishlist" xml:space="preserve"><value>Your wishlist</value></data>
+  <data name="Scenario_WishFrom" xml:space="preserve"><value>{0}: comfortable from {1}</value></data>
+  <data name="Scenario_Assumptions" xml:space="preserve"><value>Assumptions</value></data>
+  <data name="Scenario_Assume_NotLedger" xml:space="preserve"><value>A scenario never changes your transactions, planned items or wishlist.</value></data>
+  <data name="Scenario_Assume_Income" xml:space="preserve"><value>Expected income counts on its expected date; it is not guaranteed.</value></data>
+  <data name="Scenario_Assume_Transfers" xml:space="preserve"><value>Money only moves between accounts when a transfer is planned. A transfer changes account balances, not your net worth.</value></data>
+  <data name="Error_scenario_name_required" xml:space="preserve"><value>Enter a name.</value></data>
+  <data name="Error_scenario_name_tooLong" xml:space="preserve"><value>The name is too long (maximum 100 characters).</value></data>
+  <data name="Error_scenario_note_tooLong" xml:space="preserve"><value>The note is too long (maximum 500 characters).</value></data>
+  <data name="Error_scenario_change_name_required" xml:space="preserve"><value>Enter a name for the change.</value></data>
+  <data name="Error_scenario_amount_negative" xml:space="preserve"><value>Enter an amount of zero or more.</value></data>
+  <data name="Error_scenario_payment_required" xml:space="preserve"><value>Choose how the purchase is paid.</value></data>
+  <data name="Error_scenario_planned_required" xml:space="preserve"><value>Choose a planned item.</value></data>
+  <data name="Error_scenario_account_required" xml:space="preserve"><value>Choose a current, joint, savings or cash account.</value></data>
+  <data name="Error_scenario_notFound" xml:space="preserve"><value>This scenario no longer exists.</value></data>
 </root>

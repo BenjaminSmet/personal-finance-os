@@ -702,3 +702,241 @@ Error_wishlist_status_invalid	Use "Bought it" to mark an item as bought.	Gebruik
 Error_wishlist_alreadyPurchased	This item is already bought. Void its expense first to change it.	Dit item is al gekocht. Maak eerst de uitgave ongedaan om het te wijzigen.
 Error_wishlist_purchase_future	A purchase without an expense cannot be dated in the future.	Een aankoop zonder uitgave kan niet in de toekomst gedateerd zijn.
 Error_wishlist_notFound	This item no longer exists.	Dit item bestaat niet meer.
+Forecasts_TabPlanning	Planning	Planning
+Forecasts_TabScenarios	Scenarios	Scenario's
+Assistant_Title	Assistant	Assistent
+Assistant_Subtitle	Ask about your money in Dutch or English. Every number comes from the same calculations as the rest of the app, and the assistant never changes your data.	Stel je vraag over je geld in het Nederlands of Engels. Elk getal komt uit dezelfde berekeningen als de rest van de app, en de assistent wijzigt nooit je gegevens.
+Assistant_ExamplesTitle	Try a question	Probeer een vraag
+Assistant_Privacy	Answers are worked out on this computer from your own data. Nothing is sent anywhere and no AI service is used.	Antwoorden worden op deze computer berekend uit je eigen gegevens. Er wordt niets verstuurd en er wordt geen AI-dienst gebruikt.
+Assistant_Placeholder	Ask a question, for example: can I afford €250?	Stel een vraag, bijvoorbeeld: kan ik €250 betalen?
+Assistant_Ask	Ask	Vraag
+Assistant_Clear	Start over	Opnieuw beginnen
+Assistant_Considered	Taken into account	Meegeteld
+Assistant_Assumptions	Assumptions and missing information	Aannames en ontbrekende informatie
+Assistant_Footer	The assistant recognises common questions with fixed rules. When it does not understand something, it says so instead of guessing.	De assistent herkent veelgestelde vragen met vaste regels. Begrijpt hij iets niet, dan zegt hij dat in plaats van te gokken.
+Ask_Example_Afford	Can I afford €250?	Kan ik €250 betalen?
+Ask_Example_Category	Can I spend another €100 on groceries this month?	Kan ik deze maand nog €100 uitgeven aan boodschappen?
+Ask_Example_Safe	How much can I safely spend before payday?	Hoeveel kan ik veilig uitgeven tot mijn loon?
+Ask_Example_Upcoming	What payments are coming up?	Welke betalingen komen eraan?
+Ask_Example_Lower	Why will my balance be lower next month?	Waarom is mijn saldo volgende maand lager?
+Ask_Example_WhatIf	What if renovation costs increase by €5,000?	Wat als de renovatie €5.000 duurder wordt?
+Ask_Example_When	When can I afford a wishlist item?	Wanneer kan ik een item van mijn verlanglijst kopen?
+Ask_Example_Spent	How much did I spend on subscriptions?	Hoeveel heb ik uitgegeven aan abonnementen?
+Ask_Example_Changed	What changed versus last month?	Wat is er veranderd tegenover vorige maand?
+Ask_Example_Card	Should I use VISA or wait?	Moet ik met VISA betalen of wachten?
+Ask_Help	Ask me about your money in your own words. For example:	Stel je vraag over je geld in je eigen woorden. Bijvoorbeeld:
+Ask_NotUnderstood	I did not understand that question. These are questions I can answer, for example:	Die vraag begreep ik niet. Deze vragen kan ik wel beantwoorden, bijvoorbeeld:
+Ask_Kind_Qualified	Answer with conditions	Antwoord onder voorbehoud
+Ask_Kind_Question	Question	Vraag
+Ask_NoAccount	I cannot calculate this yet.	Dit kan ik nog niet berekenen.
+Ask_More	and {0} more	en nog {0}
+Ask_What_Amount	{0}	{0}
+Ask_What_Item	{0} ({1})	{0} ({1})
+Ask_V_FromTo	{0} → {1}	{0} → {1}
+Ask_V_NoBudget	none	geen
+Ask_V_Option	{0} · {1}	{0} · {1}
+Ask_ScenarioSaved	Saved as scenario “{0}”.	Bewaard als scenario “{0}”.
+Ask_Action_OpenForecasts	Open Planning	Open Planning
+Ask_Action_OpenScenarios	Open Scenarios	Open scenario's
+Ask_Action_OpenWishlist	Open the wishlist	Open de verlanglijst
+Ask_Action_OpenBudgets	Open Budgets & Analysis	Open Budgetten & analyse
+Ask_Action_OpenAccounts	Open Accounts	Open Rekeningen
+Ask_Action_SaveScenario	Save as scenario	Bewaar als scenario
+Ask_Action_OpenSaved	Open the scenario	Open het scenario
+Ask_Q_Amount	How much is it? Type the amount, for example 250.	Hoeveel kost het? Typ het bedrag, bijvoorbeeld 250.
+Ask_Q_Category	Which category do you mean?	Welke categorie bedoel je?
+Ask_Q_Item	Which item from your wishlist do you mean? You can also type an amount.	Welk item van je verlanglijst bedoel je? Je kunt ook een bedrag typen.
+Ask_Q_WhatIfAmount	By how much would it change? Type the amount, for example 5000.	Met hoeveel zou het veranderen? Typ het bedrag, bijvoorbeeld 5000.
+Ask_Afford_Prudent	Yes. {0} is comfortably affordable: your balance stays above your minimum buffer of {1} for the next {2} days.	Ja. {0} is comfortabel betaalbaar: je saldo blijft de komende {2} dagen boven je minimumbuffer van {1}.
+Ask_Afford_Technical	Technically yes, but not comfortably. With {0} your balance would drop to {1} on {2}, below your minimum buffer of {3}.	Technisch wel, maar niet comfortabel. Met {0} zakt je saldo op {2} tot {1}, onder je minimumbuffer van {3}.
+Ask_Afford_No	No, not now. {0} is more than the {1} on your current account and in cash.	Nee, nu niet. {0} is meer dan de {1} op je zichtrekening en in cash.
+Ask_Explain_Prudent	Comfortable means the lowest expected balance stays at or above your minimum buffer, with every planned bill, card statement and expected income counted.	Comfortabel betekent: het laagste verwachte saldo blijft op of boven je minimumbuffer, met alle geplande rekeningen, kaartafrekeningen en verwacht inkomen meegeteld.
+Ask_Earliest	It becomes comfortable from {0}, if everything goes as planned.	Het wordt comfortabel vanaf {0}, als alles loopt zoals gepland.
+Ask_Earliest_None	With what is planned now, it does not become comfortable within a year.	Met wat nu gepland is, wordt het binnen een jaar niet comfortabel.
+Ask_Assume_LookAhead	Checked over the next {0} days.	Gecontroleerd over de komende {0} dagen.
+Ask_Room_No	No. {0} does not fit: only {1} is safe to spend until {2}.	Nee. {0} past niet: er is maar {1} veilig te besteden tot {2}.
+Ask_Room_NoBudget	{0} fits in what is safe to spend ({2} until {3}). {1} has no budget this month, so there is no budget to check.	{0} past in wat veilig te besteden is ({2} tot {3}). {1} heeft deze maand geen budget, dus er is geen budget om te controleren.
+Ask_Room_Yes	Yes. {0} fits in your budget for {1} ({2} left) and in what is safe to spend ({3}).	Ja. {0} past in je budget voor {1} (nog {2} over) en in wat veilig te besteden is ({3}).
+Ask_Room_OverBudget	{0} fits in what is safe to spend, but your budget for {1} would be exceeded by {2}.	{0} past in wat veilig te besteden is, maar je budget voor {1} zou met {2} overschreden worden.
+Ask_F_SpentThisMonth	Spent on {0} this month	Deze maand uitgegeven aan {0}
+Ask_F_Budget	Budget this month	Budget deze maand
+Ask_F_BudgetLeft	Left in the budget	Over in het budget
+Ask_F_SafeUntil	Safe to spend until {0}	Veilig te besteden tot {0}
+Ask_Explain_Room	Two things are checked: your own budget for the category, and safe-to-spend, which keeps every planned bill, card statement and your buffer covered until your next income.	Er worden twee dingen gecontroleerd: je eigen budget voor de categorie, en wat veilig te besteden is, zodat alle geplande rekeningen, kaartafrekeningen en je buffer gedekt blijven tot je volgende inkomen.
+Ask_Safe	You can safely spend {0} until {1}.	Je kunt tot {1} veilig {0} uitgeven.
+Ask_Safe_Short	Nothing is safe to spend until {1}: you are {0} short of covering everything planned and your buffer.	Tot {1} is er niets veilig te besteden: je komt {0} tekort om alles wat gepland is en je buffer te dekken.
+Ask_F_Balance	Current account and cash now	Zichtrekening en cash nu
+Ask_F_PlannedOut	Planned payments	Geplande betalingen
+Ask_F_PlannedIn	Planned money in	Gepland geld in
+Ask_F_CardStatements	Card statements	Kaartafrekeningen
+Ask_Explain_Safe	Safe to spend is your current account and cash, minus everything planned and the card statements due before your next expected income, minus your minimum buffer.	Veilig te besteden is je zichtrekening en cash, min alles wat gepland is en de kaartafrekeningen voor je volgende verwachte inkomen, min je minimumbuffer.
+Ask_Explain_SafeNoIncome	No income is planned, so the next {0} days are counted.	Er is geen inkomen gepland, dus de komende {0} dagen worden geteld.
+Ask_Event_Out	{0}: {1} on {2}	{0}: {1} op {2}
+Ask_Event_In	{0}: +{1} on {2}	{0}: +{1} op {2}
+Ask_Event_Income	{0}: {1} expected on {2}	{0}: {1} verwacht op {2}
+Ask_Event_Card	{0} statement: {1} on {2}	Afrekening {0}: {1} op {2}
+Ask_Event_Rare	{0}: {1} on {2} (not every month)	{0}: {1} op {2} (niet elke maand)
+Ask_Event_OutFrom	{0}: {1} on {2} from {3}	{0}: {1} op {2} van {3}
+Ask_Event_CardFrom	{0} statement: {1} on {2} from {3}	Afrekening {0}: {1} op {2} van {3}
+Ask_Upcoming	{0} payments in the next {2} days, {1} in total.	{0} betalingen in de komende {2} dagen, samen {1}.
+Ask_Upcoming_None	No payments are planned in the next {0} days.	Er zijn de komende {0} dagen geen betalingen gepland.
+Ask_F_TotalOut	Going out in the next {0} days	Gaat eruit de komende {0} dagen
+Ask_F_ExpectedIn	Income expected in the next {0} days	Verwacht inkomen de komende {0} dagen
+Ask_Explain_Upcoming	Planned items, card statements and transactions already recorded with a later date, on every account. Nothing counts as paid until you confirm it.	Geplande posten, kaartafrekeningen en transacties die al met een latere datum geregistreerd zijn, op alle rekeningen. Niets telt als betaald tot je het bevestigt.
+Ask_Lower_Yes	Your spendable balance is expected to go from {0} at the end of this month to {1} at the end of {4}: in {4}, {2} is expected to go out and {3} to come in.	Je besteedbaar saldo gaat naar verwachting van {0} eind deze maand naar {1} eind {4}: in {4} gaat er naar verwachting {2} uit en komt er {3} binnen.
+Ask_Lower_No	It is not expected to be lower: {0} at the end of this month and {1} at the end of {2}.	Het wordt naar verwachting niet lager: {0} eind deze maand en {1} eind {2}.
+Ask_F_EndOfMonth	End of {0}	Eind {0}
+Ask_F_InMonth	Expected in, {0}	Verwacht binnen, {0}
+Ask_F_OutMonth	Expected out, {0}	Verwacht uit, {0}
+Ask_F_LowestMonth	Lowest in {0}	Laagste in {0}
+Ask_Assume_NoIncomeMonth	No income is planned in {0}; when your salary comes, the balance will be higher.	In {0} is geen inkomen gepland; als je loon komt, ligt het saldo hoger.
+Ask_Explain_Lower	The biggest payments of that month are listed first. Payments that do not come every month are the usual reason a month is lower.	De grootste betalingen van die maand staan eerst. Betalingen die niet elke maand terugkomen, zijn meestal de reden dat een maand lager uitvalt.
+Ask_WhatIf_NoIncome	No salary is planned yet, so there is nothing to change. Add your salary as a recurring item under Planning first.	Er is nog geen loon gepland, dus er valt niets te wijzigen. Voeg je loon eerst toe als terugkerende post onder Planning.
+Ask_Change_Planned	{0}: {2} instead of {1} from today	{0}: {2} in plaats van {1} vanaf vandaag
+Ask_Change_MonthlyOut	{0} extra going out every month from {1}	Elke maand {0} extra uit van {1}
+Ask_Change_MonthlyIn	{0} extra every month on {1}	Elke maand {0} extra op {1}
+Ask_Change_OneOffOut	One extra payment of {0} from {1}	Eén extra betaling van {0} van {1}
+Ask_Change_OneOffIn	{0} less to pay, counted as money back on {1}	{0} minder te betalen, geteld als geld terug op {1}
+Ask_Assume_Today	Assumed to be paid today; under Planning › Scenarios you can set the real date.	Verondersteld dat het vandaag betaald wordt; onder Planning › Scenario's kun je de echte datum instellen.
+Ask_WhatIf_BelowZero	Then your spendable money would go below zero on {0} ({1}).	Dan zou je besteedbaar geld op {0} onder nul gaan ({1}).
+Ask_WhatIf_BelowBuffer	Then your spendable money would drop below your minimum buffer of {2} on {0} ({1}).	Dan zou je besteedbaar geld op {0} onder je minimumbuffer van {2} zakken ({1}).
+Ask_WhatIf_Ok	Your buffer stays intact. The lowest expected spendable balance in the coming 12 months becomes {0} on {1} (now {2}).	Je buffer blijft intact. Het laagste verwachte besteedbare saldo in de komende 12 maanden wordt {0} op {1} (nu {2}).
+Ask_F_LowestYear	Lowest in the coming 12 months	Laagste in de komende 12 maanden
+Ask_F_InDays	In {0} days	Over {0} dagen
+Ask_F_AccountBelowZero	{0} below zero	{0} onder nul
+Ask_Explain_WhatIf	Calculated like a scenario: nothing in your transactions or plans changes. Save it to compare it month by month under Planning › Scenarios.	Berekend als een scenario: er verandert niets aan je transacties of plannen. Bewaar het om het per maand te vergelijken onder Planning › Scenario's.
+Ask_When_Never	Not within a year: with what is planned now, {0} does not become comfortably affordable.	Niet binnen een jaar: met wat nu gepland is, wordt {0} niet comfortabel betaalbaar.
+Ask_When_Now	Now: {0} is comfortably affordable today.	Nu al: {0} is vandaag comfortabel betaalbaar.
+Ask_When_Date	From {1}: then {0} becomes comfortably affordable, if everything goes as planned.	Vanaf {1}: dan wordt {0} comfortabel betaalbaar, als alles loopt zoals gepland.
+Ask_When_BeforeTarget	That is before your target date of {0}.	Dat is voor je streefdatum van {0}.
+Ask_When_AfterTarget	That is after your target date of {0}.	Dat is na je streefdatum van {0}.
+Ask_When_Saving	Your saving plan of {0} a month is a plan; it moves no money by itself.	Je spaarplan van {0} per maand is een plan; het verplaatst zelf geen geld.
+Ask_Assume_NothingElse	Assumes you buy nothing else first.	Verondersteld dat je eerst niets anders koopt.
+Ask_Explain_When	The earliest day from which buying it keeps your balance above your minimum buffer for the following {0} days.	De vroegste dag vanaf wanneer je saldo na de aankoop de {0} dagen daarna boven je minimumbuffer blijft.
+Ask_Spent	You spent {0} on {1} {2}.	Je gaf {2} {0} uit aan {1}.
+Ask_Received	You received {0} as {1} {2}.	Je ontving {2} {0} als {1}.
+Ask_Period_ThisMonth	this month	deze maand
+Ask_Period_Month	in {0}	in {0}
+Ask_Period_ThisYear	in {0}	in {0}
+Ask_Period_LastMonths	in the last {0} months	de afgelopen {0} maanden
+Ask_F_Month	{0}	{0}
+Ask_F_Average	Average per month	Gemiddeld per maand
+Ask_Assume_History	Your records start on {0}, so earlier amounts are missing.	Je gegevens beginnen op {0}, dus eerdere bedragen ontbreken.
+Ask_Assume_SoFar	Up to and including {0}; the month is not over yet.	Tot en met {0}; de maand is nog niet voorbij.
+Ask_Assume_Refunds	Refunds lower the spending; transfers and card payments are never counted as spending.	Terugbetalingen verlagen de uitgaven; overschrijvingen en kaartbetalingen tellen nooit als uitgave.
+Ask_Changed_NoHistory	There is not enough history to compare {0} with {1}: your records start on {2}.	Er is te weinig geschiedenis om {0} met {1} te vergelijken: je gegevens beginnen op {2}.
+Ask_Changed_More	In {0} you spent {1} more than in {2}.	In {0} gaf je {1} meer uit dan in {2}.
+Ask_Changed_Less	In {0} you spent {1} less than in {2}.	In {0} gaf je {1} minder uit dan in {2}.
+Ask_Changed_Same	In {0} you spent as much as in {1}.	In {0} gaf je evenveel uit als in {1}.
+Ask_F_Income	Income	Inkomsten
+Ask_F_Spending	Spending	Uitgaven
+Ask_F_Net	Net	Netto
+Ask_Cat_Up	{0}: {1} more ({2} → {3})	{0}: {1} meer ({2} → {3})
+Ask_Cat_Down	{0}: {1} less ({2} → {3})	{0}: {1} minder ({2} → {3})
+Ask_Cat_UpUncategorised	Without category: {0} more ({1} → {2})	Zonder categorie: {0} meer ({1} → {2})
+Ask_Cat_DownUncategorised	Without category: {0} less ({1} → {2})	Zonder categorie: {0} minder ({1} → {2})
+Ask_Assume_CompleteMonths	{0} is not over yet, so the last two complete months are compared.	{0} is nog niet voorbij, dus de laatste twee volledige maanden worden vergeleken.
+Ask_Card_PayNow	Pay {0} from your current account: it is comfortably affordable now, so using the card does not help.	Betaal {0} van je zichtrekening: het is nu comfortabel betaalbaar, dus de kaart helpt niet.
+Ask_Card_UseCard	Paying {0} with {1} works: it is paid with the statement of {3} on {2}, and your balance stays above your minimum buffer.	Betalen met {1} kan: {0} wordt betaald met de afrekening van {3} op {2}, en je saldo blijft boven je minimumbuffer.
+Ask_Card_Wait	Better wait until {1}. Now is not comfortable, and with the card its statement could not be paid without breaking your buffer.	Wacht beter tot {1}. Nu is het niet comfortabel, en met de kaart zou de afrekening niet betaald kunnen worden zonder je buffer aan te spreken.
+Ask_Card_WaitNoCard	Better wait until {1}: {0} is not comfortable now, and there is no credit card to compare with.	Wacht beter tot {1}: {0} is nu niet comfortabel, en er is geen kredietkaart om mee te vergelijken.
+Ask_Card_None	Neither now nor by card is comfortable, and with what is planned now it does not become comfortable within a year.	Nu niet en met de kaart ook niet comfortabel, en met wat nu gepland is, wordt het binnen een jaar niet comfortabel.
+Ask_Assume_Credit	A credit limit is not money: the card only helps when its statement can be paid on its debit day.	Een kredietlimiet is geen geld: de kaart helpt alleen als de afrekening op de afschrijvingsdag betaald kan worden.
+Ask_Explain_Card	Every way to pay is checked the same way: the lowest expected balance must stay above your minimum buffer, with the card statement on its debit day.	Elke manier van betalen wordt op dezelfde manier gecontroleerd: het laagste verwachte saldo moet boven je minimumbuffer blijven, met de kaartafrekening op de afschrijvingsdag.
+Ask_Assume_Income	Expected income on {0} is counted as expected, not as certain.	Verwacht inkomen op {0} telt als verwacht, niet als zeker.
+Ask_Assume_NotSpendable	Savings and the joint account are not counted as spendable: money only moves between accounts when a transfer is planned.	Spaargeld en de gezamenlijke rekening tellen niet als besteedbaar: geld gaat alleen tussen rekeningen als er een overschrijving gepland is.
+Scenario_Title	Scenarios	Scenario's
+Scenario_Subtitle	What if a cost goes up, your salary changes or you buy something later? A scenario is laid over the forecast and compared with it. It never changes your transactions or plans.	Wat als een kost stijgt, je loon verandert of je iets later koopt? Een scenario wordt over de prognose gelegd en ermee vergeleken. Het wijzigt nooit je transacties of plannen.
+Scenario_Compare	Compare	Vergelijk
+Scenario_BaselineOnly	Forecast only (no scenario)	Alleen de prognose (geen scenario)
+Scenario_New	New scenario	Nieuw scenario
+Scenario_Rename	Rename	Naam wijzigen
+Scenario_Delete	Delete	Verwijderen
+Scenario_DeleteConfirm	Delete this scenario and its changes? Your transactions and plans stay as they are.	Dit scenario en zijn wijzigingen verwijderen? Je transacties en plannen blijven zoals ze zijn.
+Scenario_NamePlaceholder	e.g. Renovation more expensive	bv. Renovatie duurder
+Scenario_Note	Note (optional)	Notitie (optioneel)
+Scenario_Saved	Scenario “{0}” saved.	Scenario “{0}” bewaard.
+Scenario_Removed	Scenario “{0}” deleted.	Scenario “{0}” verwijderd.
+Scenario_Changes	Changes in this scenario	Wijzigingen in dit scenario
+Scenario_AddChange	Add change	Wijziging toevoegen
+Scenario_NoChanges	No changes yet: add a cost, a purchase or a different amount for a planned item.	Nog geen wijzigingen: voeg een kost, een aankoop of een ander bedrag voor een geplande post toe.
+Scenario_RemoveChange	Remove	Verwijderen
+Scenario_Kind	What changes	Wat verandert
+ScenarioKind_OneOff	One-off amount	Eenmalig bedrag
+ScenarioKind_Monthly	Monthly amount	Maandelijks bedrag
+ScenarioKind_ChangePlanned	Different amount for a planned item	Ander bedrag voor een geplande post
+ScenarioKind_Purchase	Purchase	Aankoop
+ScenarioKindTitle_OneOff	{0}	{0}
+ScenarioKindTitle_Monthly	{0} · every month	{0} · elke maand
+ScenarioKindTitle_ChangePlanned	{0} · new amount	{0} · nieuw bedrag
+ScenarioKindTitle_Purchase	{0} · purchase	{0} · aankoop
+Scenario_Direction	Direction	Richting
+Scenario_DirectionOut	Money out (a cost)	Geld uit (een kost)
+Scenario_DirectionIn	Money in	Geld in
+Scenario_WishlistItem	From your wishlist	Van je verlanglijst
+Scenario_OtherPurchase	Something else	Iets anders
+Scenario_PlannedItem	Planned item	Geplande post
+Scenario_PlannedOption	{0} · {1} · {2}	{0} · {1} · {2}
+Scenario_ChangeName	Name	Naam
+Scenario_ChangeNamePlaceholder	e.g. Renovation extra	bv. Renovatie extra
+Scenario_Amount	Amount	Bedrag
+Scenario_NewAmount	New amount each time (0 = stops)	Nieuw bedrag per keer (0 = stopt)
+Scenario_PlannedHint	How it works	Hoe het werkt
+Scenario_PlannedHintText	From the chosen date on, every occurrence of this item counts at the new amount: a salary, the rent or the transfer to the joint account.	Vanaf de gekozen datum telt elke keer van deze post aan het nieuwe bedrag: een loon, de huur of de overschrijving naar de gezamenlijke rekening.
+Scenario_Date	Date	Datum
+Scenario_From	From	Vanaf
+Scenario_Until	Until (optional)	Tot (optioneel)
+Scenario_Change_OneOffOut	{0} out of {1} on {2}	{0} van {1} op {2}
+Scenario_Change_OneOffIn	{0} into {1} on {2}	{0} naar {1} op {2}
+Scenario_Change_MonthlyOut	{0} a month out of {1} from {2}	{0} per maand van {1} vanaf {2}
+Scenario_Change_MonthlyIn	{0} a month into {1} from {2}	{0} per maand naar {1} vanaf {2}
+Scenario_Change_Until	until {0}	tot {0}
+Scenario_Change_Planned	{0} instead of {1} from {2}	{0} in plaats van {1} vanaf {2}
+Scenario_Change_PlannedStops	Stops from {0}	Stopt vanaf {0}
+Scenario_Change_PurchaseAccount	{0} from {1} on {2}	{0} van {1} op {2}
+Scenario_Change_PurchaseCard	{0} with {1} on {2}, paid with the statement on {3}	{0} met {1} op {2}, betaald met de afrekening op {3}
+Scenario_Effect	Spendable money over the 12 months: {0}	Besteedbaar geld over de 12 maanden: {0}
+Scenario_EffectOther	other accounts: {0}	andere rekeningen: {0}
+ScenarioNote_DatePassed	The date has passed; it is counted from today.	De datum is voorbij; het telt vanaf vandaag.
+ScenarioNote_AccountNotForecast	This account is archived, a card or valued by hand, so it is not in the forecast.	Deze rekening is gearchiveerd, een kaart of wordt met de hand gewaardeerd, dus ze zit niet in de prognose.
+ScenarioNote_PlannedItemGone	This planned item no longer exists or has ended.	Deze geplande post bestaat niet meer of is beëindigd.
+ScenarioNote_PaymentToCard	This is a planned payment to a card. The card's statement is forecast instead, so changing this payment changes nothing here.	Dit is een geplande betaling naar een kaart. De afrekening van de kaart wordt al voorspeld, dus deze betaling wijzigen verandert hier niets.
+ScenarioNote_CardNotSetUp	The card has no settings yet, so its statement cannot be forecast.	De kaart heeft nog geen instellingen, dus de afrekening kan niet voorspeld worden.
+ScenarioNote_SettlementAccountUnknown	The card has no paying account, so its statement cannot be placed.	De kaart heeft geen betalende rekening, dus de afrekening kan niet ingepland worden.
+ScenarioNote_OverLimit	This is more than the card's available credit now.	Dit is meer dan het beschikbare krediet van de kaart nu.
+ScenarioNote_OutsideForecast	Nothing of this falls within the coming 12 months.	Hiervan valt niets binnen de komende 12 maanden.
+Scenario_Horizons	Spendable money ahead	Besteedbaar geld vooruit
+Scenario_InDays	In {0} days ({1})	Over {0} dagen ({1})
+Scenario_BaselineValue	Without scenario: {0}	Zonder scenario: {0}
+Scenario_HorizonNote	Personal current account and cash, with everything planned, card statements on their debit day and expected income. A forecast, not a balance.	Persoonlijke zichtrekening en cash, met alles wat gepland is, kaartafrekeningen op hun afschrijvingsdag en verwacht inkomen. Een prognose, geen saldo.
+Scenario_Warnings	Warnings	Waarschuwingen
+Scenario_NoWarnings	No shortfalls expected in the coming 12 months.	Geen tekorten verwacht in de komende 12 maanden.
+Scenario_ShortBuffer	Your spendable money drops below your minimum buffer of {2} on {0} ({1}).	Je besteedbaar geld zakt op {0} onder je minimumbuffer van {2} ({1}).
+Scenario_ShortZero	Your spendable money goes below zero on {0} ({1}).	Je besteedbaar geld gaat op {0} onder nul ({1}).
+Scenario_ShortAccount	{0} goes below zero on {1} ({2}).	{0} gaat op {1} onder nul ({2}).
+Scenario_OnlyInScenario	(only with this scenario)	(alleen met dit scenario)
+Scenario_MonthsTitle	Month by month, {0} months	Per maand, {0} maanden
+Scenario_Spendable	Spendable money (current account and cash)	Besteedbaar geld (zichtrekening en cash)
+Scenario_Month	Month	Maand
+Scenario_ColBaseline	Forecast	Prognose
+Scenario_ColScenario	With scenario	Met scenario
+Scenario_ColDifference	Difference	Verschil
+Scenario_ColLowest	Lowest	Laagste
+Scenario_BelowZero	below zero	onder nul
+Scenario_BelowBuffer	below buffer	onder buffer
+Scenario_MonthsNote	Balance at the end of each month (this month from today) and the lowest balance within the month. Money only moves between accounts when a transfer is planned.	Saldo op het einde van elke maand (deze maand vanaf vandaag) en het laagste saldo binnen de maand. Geld gaat alleen tussen rekeningen als er een overschrijving gepland is.
+Scenario_Wishlist	Your wishlist	Je verlanglijst
+Scenario_WishFrom	{0}: comfortable from {1}	{0}: comfortabel vanaf {1}
+Scenario_Assumptions	Assumptions	Aannames
+Scenario_Assume_NotLedger	A scenario never changes your transactions, planned items or wishlist.	Een scenario wijzigt nooit je transacties, geplande posten of verlanglijst.
+Scenario_Assume_Income	Expected income counts on its expected date; it is not guaranteed.	Verwacht inkomen telt op de verwachte datum; het is niet gegarandeerd.
+Scenario_Assume_Transfers	Money only moves between accounts when a transfer is planned. A transfer changes account balances, not your net worth.	Geld gaat alleen tussen rekeningen als er een overschrijving gepland is. Een overschrijving verandert saldi van rekeningen, niet je vermogen.
+Error_scenario_name_required	Enter a name.	Vul een naam in.
+Error_scenario_name_tooLong	The name is too long (maximum 100 characters).	De naam is te lang (maximaal 100 tekens).
+Error_scenario_note_tooLong	The note is too long (maximum 500 characters).	De notitie is te lang (maximaal 500 tekens).
+Error_scenario_change_name_required	Enter a name for the change.	Vul een naam in voor de wijziging.
+Error_scenario_amount_negative	Enter an amount of zero or more.	Vul een bedrag van nul of meer in.
+Error_scenario_payment_required	Choose how the purchase is paid.	Kies hoe de aankoop betaald wordt.
+Error_scenario_planned_required	Choose a planned item.	Kies een geplande post.
+Error_scenario_account_required	Choose a current, joint, savings or cash account.	Kies een zicht-, gezamenlijke, spaar- of cashrekening.
+Error_scenario_notFound	This scenario no longer exists.	Dit scenario bestaat niet meer.

@@ -8,6 +8,7 @@ using PersonalFinanceOS.Domain.Ledger;
 using PersonalFinanceOS.Domain.Ownership;
 using PersonalFinanceOS.Domain.Planning;
 using PersonalFinanceOS.Domain.Transactions;
+using PersonalFinanceOS.Domain.Scenarios;
 using PersonalFinanceOS.Domain.Wishlist;
 
 namespace PersonalFinanceOS.Application.Abstractions;
@@ -230,3 +231,27 @@ public interface IWishlistRepository
     /// <summary>Saves the purchased item and, when given, its new expense in one database transaction: all or nothing.</summary>
     Task SavePurchaseAsync(WishlistItem item, Transaction? created, CancellationToken ct = default);
 }
+
+public interface IScenarioRepository
+{
+    /// <summary>By name.</summary>
+    Task<IReadOnlyList<Scenario>> ListAsync(CancellationToken ct = default);
+
+    Task<Scenario?> FindAsync(Guid id, CancellationToken ct = default);
+
+    /// <summary>In the order they were added.</summary>
+    Task<IReadOnlyList<ScenarioChange>> ListChangesAsync(Guid scenarioId, CancellationToken ct = default);
+
+    /// <summary>Saves a new scenario with its first changes in one database transaction.</summary>
+    Task AddAsync(Scenario scenario, IReadOnlyCollection<ScenarioChange> changes, CancellationToken ct = default);
+
+    Task UpdateAsync(Scenario scenario, CancellationToken ct = default);
+
+    /// <summary>Removes the scenario and its changes.</summary>
+    Task RemoveAsync(Guid id, CancellationToken ct = default);
+
+    Task AddChangeAsync(ScenarioChange change, CancellationToken ct = default);
+
+    Task RemoveChangeAsync(Guid changeId, CancellationToken ct = default);
+}
+

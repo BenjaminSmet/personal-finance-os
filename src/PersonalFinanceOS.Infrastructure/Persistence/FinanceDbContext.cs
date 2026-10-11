@@ -11,6 +11,7 @@ using PersonalFinanceOS.Domain.Imports;
 using PersonalFinanceOS.Domain.Ledger;
 using PersonalFinanceOS.Domain.Ownership;
 using PersonalFinanceOS.Domain.Planning;
+using PersonalFinanceOS.Domain.Scenarios;
 using PersonalFinanceOS.Domain.Transactions;
 using PersonalFinanceOS.Domain.Wishlist;
 using PersonalFinanceOS.Infrastructure.Database;
@@ -42,6 +43,8 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
     public DbSet<Valuation> Valuations => Set<Valuation>();
     public DbSet<OwnershipChange> OwnershipChanges => Set<OwnershipChange>();
     public DbSet<WishlistItem> WishlistItems => Set<WishlistItem>();
+    public DbSet<Scenario> Scenarios => Set<Scenario>();
+    public DbSet<ScenarioChange> ScenarioChanges => Set<ScenarioChange>();
 
     public static DbContextOptions<FinanceDbContext> OptionsFor(string databaseFile) =>
         new DbContextOptionsBuilder<FinanceDbContext>()
@@ -367,6 +370,41 @@ public sealed class FinanceDbContext(DbContextOptions<FinanceDbContext> options)
             e.Property(w => w.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
             e.Property(w => w.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
             e.HasOne<Transaction>().WithMany().HasForeignKey(w => w.PurchaseTransactionId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Scenario>(e =>
+        {
+            e.ToTable("scenarios");
+            e.HasKey(s => s.Id);
+            e.Property(s => s.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(s => s.Name).HasColumnName("name").HasMaxLength(Scenario.MaxNameLength);
+            e.Property(s => s.Note).HasColumnName("note").HasMaxLength(Scenario.MaxNoteLength);
+            e.Property(s => s.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.Property(s => s.UpdatedAt).HasColumnName("updated_at").HasConversion(timestamp);
+        });
+
+        modelBuilder.Entity<ScenarioChange>(e =>
+        {
+            e.ToTable("scenario_changes");
+            e.HasKey(c => c.Id);
+            e.Property(c => c.Id).HasColumnName("id").HasConversion(guid);
+            e.Property(c => c.ScenarioId).HasColumnName("scenario_id").HasConversion(guid);
+            e.Property(c => c.Kind).HasColumnName("kind").HasConversion<string>();
+            e.Property(c => c.Name).HasColumnName("name").HasMaxLength(ScenarioChange.MaxNameLength);
+            e.Property(c => c.IsIncome).HasColumnName("is_income");
+            e.Property(c => c.Amount).HasColumnName("amount_cents").HasConversion(money);
+            e.Property(c => c.Date).HasColumnName("date").HasConversion(date);
+            e.Property(c => c.EndDate).HasColumnName("end_date").HasConversion(optionalDate);
+            e.Property(c => c.AccountId).HasColumnName("account_id").HasConversion(optionalGuid);
+            e.Property(c => c.CardId).HasColumnName("card_id").HasConversion(optionalGuid);
+            e.Property(c => c.RuleId).HasColumnName("rule_id").HasConversion(optionalGuid);
+            e.Property(c => c.WishlistItemId).HasColumnName("wishlist_item_id").HasConversion(optionalGuid);
+            e.Property(c => c.CreatedAt).HasColumnName("created_at").HasConversion(timestamp);
+            e.HasOne<Scenario>().WithMany().HasForeignKey(c => c.ScenarioId).OnDelete(DeleteBehavior.Cascade);
+            e.HasOne<Account>().WithMany().HasForeignKey(c => c.AccountId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<Account>().WithMany().HasForeignKey(c => c.CardId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<RecurringRule>().WithMany().HasForeignKey(c => c.RuleId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne<WishlistItem>().WithMany().HasForeignKey(c => c.WishlistItemId).OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

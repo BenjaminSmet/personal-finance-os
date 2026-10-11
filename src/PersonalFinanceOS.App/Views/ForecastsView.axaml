@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             x:Class="PersonalFinanceOS.App.Views.ForecastsView"
+             x:DataType="vm:ForecastsViewModel">
+  <StackPanel Spacing="18">
+    <ListBox Classes="segmented" ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}" HorizontalAlignment="Left"
+             AutomationProperties.Name="Planning">
+      <ListBox.ItemTemplate>
+        <DataTemplate DataType="vm:ForecastsTab">
+          <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" MinWidth="110" TextAlignment="Center" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <ContentControl Content="{Binding Current}" />
+  </StackPanel>
+</UserControl>

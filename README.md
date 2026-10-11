@@ -57,7 +57,7 @@ Never edit a migration that has been released.
 
 ## Status
 
-Phase 6 (assets, joint ownership, wishlist) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
+Phase 7 (assistant and what-if scenarios) of 8 — see `docs/2026-10-10-decision-log.md` and the product specification.
 
 Quick Add sits above every page (Ctrl+K). Type a line and press Enter, for example:
 
@@ -142,3 +142,25 @@ Export your transactions from your bank's website as CSV (or XLSX) and open **Im
   delays your other wishes. **Can I afford this amount?** gives the same answer for any amount.
 - **Bought it** records one expense on the account or card you choose (or only marks it bought when the expense is
   already in your transactions). Undoing that expense puts the item back on the list.
+
+### Scenarios and the assistant
+
+- **Planning › Scenarios** lays changes over the forecast without touching your transactions, planned items or
+  wishlist: an extra or lower one-off amount, a new monthly amount (with an optional last month), a planned item at
+  a new amount from a date (salary, rent, a subscription, the transfer to the joint account; zero stops it), or a
+  purchase paid from an account or by card (paid when the statement is debited). A wishlist item fills in its name
+  and price.
+- Every scenario is shown next to the baseline: spendable money 7, 30 and 90 days ahead, month by month for twelve
+  months (also per account, for example the joint account), warnings when money falls below your buffer or below
+  zero, what it does to your wishes, and the assumptions it makes. Scenarios are saved so you can compare them again.
+- **Assistant**: ask in Dutch or English, for example *Kan ik €500 uitgeven?*, *Kan ik deze maand nog €100 uitgeven
+  aan boodschappen?*, *Hoeveel kan ik veilig uitgeven tot mijn loon?*, *Welke betalingen komen eraan?*, *Waarom is
+  mijn saldo volgende maand lager?*, *Wat als de renovatie €5.000 meer kost?*, *Wanneer kan ik de laptop kopen?*,
+  *Hoeveel heb ik de afgelopen 3 maanden uitgegeven aan abonnementen?*, *Wat is er veranderd ten opzichte van vorige
+  maand?* or *Moet ik de laptop met VISA betalen of wachten?*
+- Each answer says whether it is a direct answer or one with conditions, and shows the key figures, what was taken
+  into account, the assumptions and what is missing, and a next step. Every figure comes from the same calculations
+  as the rest of the app. Expected salary is never treated as certain, a credit limit is never money, and the card
+  is only suggested when its statement can be paid on its debit day. When a missing value matters, it asks one
+  question; a what-if is only saved as a scenario when you click **Save as scenario**. It runs on this computer with
+  fixed rules and never changes your data.
