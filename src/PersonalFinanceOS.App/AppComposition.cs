@@ -4,6 +4,7 @@ using PersonalFinanceOS.App.ViewModels;
 using PersonalFinanceOS.Application.Abstractions;
 using PersonalFinanceOS.Application.Accounts;
 using PersonalFinanceOS.Application.Analysis;
+using PersonalFinanceOS.Application.Assets;
 using PersonalFinanceOS.Application.Budgets;
 using PersonalFinanceOS.Application.Cards;
 using PersonalFinanceOS.Application.Categories;
@@ -12,6 +13,7 @@ using PersonalFinanceOS.Application.Ledger;
 using PersonalFinanceOS.Application.Planning;
 using PersonalFinanceOS.Application.QuickAdd;
 using PersonalFinanceOS.Application.Settings;
+using PersonalFinanceOS.Application.Wishlist;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Infrastructure;
 using PersonalFinanceOS.Infrastructure.Database;
@@ -54,6 +56,10 @@ public static class AppComposition
         services.AddSingleton<ICreditCardRepository, CreditCardRepository>();
         services.AddSingleton<IRecurringRepository, RecurringRepository>();
         services.AddSingleton<IBudgetRepository, BudgetRepository>();
+        services.AddSingleton<IAssetRepository, AssetRepository>();
+        services.AddSingleton<IValuationRepository, ValuationRepository>();
+        services.AddSingleton<IOwnershipRepository, OwnershipRepository>();
+        services.AddSingleton<IWishlistRepository, WishlistRepository>();
         services.AddSingleton<AccountService>();
         services.AddSingleton<AppSettingsService>();
         services.AddSingleton<UndoHistory>();
@@ -67,6 +73,10 @@ public static class AppComposition
         services.AddSingleton<ForecastService>();
         services.AddSingleton<BudgetService>();
         services.AddSingleton<AnalysisService>();
+        services.AddSingleton<AssetService>();
+        services.AddSingleton<NetWorthService>();
+        services.AddSingleton<AffordabilityService>();
+        services.AddSingleton<WishlistService>();
 
         services.AddSingleton<QuickAddViewModel>();
         services.AddSingleton<DashboardViewModel>();
@@ -75,6 +85,8 @@ public static class AppComposition
         services.AddSingleton<ImportViewModel>();
         services.AddSingleton<PlanningViewModel>();
         services.AddSingleton<BudgetsViewModel>();
+        services.AddSingleton<WishlistViewModel>();
+        services.AddSingleton<AssetsViewModel>();
         services.AddSingleton<SettingsViewModel>();
         services.AddSingleton<MainWindowViewModel>();
 

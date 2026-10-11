@@ -187,7 +187,17 @@ public sealed class ForecastService(
 
     private async Task AddCardsAsync(List<ForecastLine> lines, List<ForecastCaveat> caveats, HashSet<Guid> ids, DateOnly until, CancellationToken ct)
     {
+        foreach (var (name, amount, due) in await CardOutflowsAsync(caveats, ids, until, ct))
+        {
+            lines.Add(new ForecastLine(ForecastLineKind.CardSettlement, amount, name, due));
+        }
+    }
+
+    /// <summary>Card statements paid from a counted account up to <paramref name="until"/>, as money out on the day they are expected.</summary>
+    private async Task<List<(string Name, Money Amount, DateOnly Due)>> CardOutflowsAsync(List<ForecastCaveat> caveats, HashSet<Guid> ids, DateOnly until, CancellationToken ct)
+    {
         var today = clock.Today;
+        var result = new List<(string, Money, DateOnly)>();
         var statuses = await cards.ListStatusesAsync(ct);
         if (statuses.Any(s => !s.IsSetUp))
         {
@@ -218,8 +228,71 @@ public sealed class ForecastService(
             }
 
             var profile = statuses.First(c => c.Card.Id == s.Card.Id).Profile!;
-            lines.Add(new ForecastLine(ForecastLineKind.CardSettlement, s.Amount.Negate(), s.Card.Name, CardMath.Due(profile, s.Period, today)));
+            result.Add((s.Card.Name, s.Amount.Negate(), CardMath.Due(profile, s.Period, today)));
         }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Day-by-day balance of the counted accounts for the coming <paramref name="days"/> days: recorded later
+    /// transactions, open planned items (overdue ones today, overdue income left out) and card statements on the
+    /// day they are expected. Used to check purchases (spec §14); like every forecast it never changes data.
+    /// </summary>
+    public async Task<CashProjection> ProjectAsync(int days, CancellationToken ct = default)
+    {
+        var today = clock.Today;
+        var until = today.AddDays(days);
+        var all = await accounts.ListAsync(includeArchived: false, ct);
+        var counted = all.Where(Counts).ToList();
+        var ids = counted.Select(a => a.Id).ToHashSet();
+        var cardIds = all.Where(a => a.Type.IsLiability()).Select(a => a.Id).ToHashSet();
+        var buffer = await settings.GetMinimumBufferAsync(ct);
+        var caveats = new List<ForecastCaveat>();
+        var events = new List<CashEvent>();
+        if (counted.Count == 0)
+        {
+            return new CashProjection(today, until, Money.Zero, buffer, counted, events, caveats);
+        }
+
+        var balances = await ledger.GetBalancesAsync(today, ct);
+        var start = Money.Sum(counted.Select(a => balances[a.Id]));
+        var later = await ledger.ListEntriesAsync(new TransactionQuery(From: today.AddDays(1), To: until), ct);
+        foreach (var e in later.Where(e => ids.Contains(e.Transaction.AccountId)))
+        {
+            events.Add(new CashEvent(e.Transaction.Date, e.Transaction.Amount, CashEventKind.RecordedLater, e.Transaction.Description));
+        }
+
+        var open = await recurring.ListOpenAsync(until, withMatches: false, ct);
+        foreach (var o in open.Where(o => o.DueDate <= until))
+        {
+            var change = Effect(o, ids, cardIds);
+            var income = o.Rule.Kind == RecurringKind.Income;
+            if (change.IsZero || (income && o.IsOverdue))
+            {
+                continue;
+            }
+
+            if (o.IsOverdue && !caveats.Contains(ForecastCaveat.OverdueItems))
+            {
+                caveats.Add(ForecastCaveat.OverdueItems);
+            }
+
+            var kind = income ? CashEventKind.Income : change.IsNegative ? CashEventKind.Planned : CashEventKind.PlannedIn;
+            events.Add(new CashEvent(o.DueDate < today ? today : o.DueDate, change, kind, o.Rule.Name));
+        }
+
+        foreach (var (name, amount, due) in await CardOutflowsAsync(caveats, ids, until, ct))
+        {
+            events.Add(new CashEvent(due, amount, CashEventKind.CardSettlement, name));
+        }
+
+        if (!events.Any(e => e.Kind == CashEventKind.Income && e.Date > today))
+        {
+            caveats.Add(ForecastCaveat.NoIncomePlanned);
+        }
+
+        return new CashProjection(today, until, start, buffer, counted, events, caveats);
     }
 
     /// <summary>
@@ -249,4 +322,105 @@ public sealed class ForecastService(
             },
         };
     }
+}
+
+/// <summary>What moves money on the counted accounts in a <see cref="CashProjection"/>.</summary>
+public enum CashEventKind
+{
+    RecordedLater,
+    Planned,
+    PlannedIn,
+
+    /// <summary>Expected income: never guaranteed, always labelled as expected.</summary>
+    Income,
+    CardSettlement,
+
+    /// <summary>A purchase being considered; only exists in a what-if copy.</summary>
+    Purchase,
+}
+
+/// <summary>One expected change of the counted accounts. <see cref="Amount"/> is signed: money out is negative.</summary>
+public sealed record CashEvent(DateOnly Date, Money Amount, CashEventKind Kind, string? Name);
+
+/// <summary>
+/// The expected balance of the counted accounts for every day from today to <see cref="Until"/>. A what-if purchase
+/// is added with <see cref="With"/>, which returns a new projection and leaves this one unchanged.
+/// </summary>
+public sealed class CashProjection
+{
+    private readonly long[] _daily;
+
+    public CashProjection(DateOnly today, DateOnly until, Money start, Money buffer, IReadOnlyList<Account> accounts, IReadOnlyList<CashEvent> events, IReadOnlyList<ForecastCaveat> caveats)
+    {
+        Today = today;
+        Until = until;
+        Start = start;
+        Buffer = buffer;
+        Accounts = accounts;
+        Events = events.OrderBy(e => e.Date).ToList();
+        Caveats = caveats;
+        IncomeDates = Events.Where(e => e.Kind == CashEventKind.Income).Select(e => e.Date).Distinct().ToList();
+        _daily = new long[until.DayNumber - today.DayNumber + 1];
+        var running = start.Cents;
+        var index = 0;
+        for (var day = 0; day < _daily.Length; day++)
+        {
+            var date = today.AddDays(day);
+            while (index < Events.Count && Events[index].Date <= date)
+            {
+                running += Events[index].Amount.Cents;
+                index++;
+            }
+
+            _daily[day] = running;
+        }
+    }
+
+    public DateOnly Today { get; }
+    public DateOnly Until { get; }
+
+    /// <summary>Balance of the counted accounts today.</summary>
+    public Money Start { get; }
+
+    /// <summary>The minimum buffer the user wants to keep.</summary>
+    public Money Buffer { get; }
+
+    public IReadOnlyList<Account> Accounts { get; }
+    public IReadOnlyList<CashEvent> Events { get; }
+    public IReadOnlyList<ForecastCaveat> Caveats { get; }
+
+    /// <summary>Days with expected income, in order.</summary>
+    public IReadOnlyList<DateOnly> IncomeDates { get; }
+
+    public bool CanCalculate => Accounts.Count > 0;
+
+    public bool HasIncome => IncomeDates.Any(d => d > Today);
+
+    /// <summary>The expected balance at the end of <paramref name="date"/> (clamped to the projected days).</summary>
+    public Money BalanceOn(DateOnly date) => Money.FromCents(_daily[Index(date)]);
+
+    /// <summary>The lowest expected end-of-day balance between two dates, both included, and the first day it occurs.</summary>
+    public (Money Balance, DateOnly Date) Lowest(DateOnly from, DateOnly to)
+    {
+        var start = Index(from);
+        var end = Index(to);
+        var best = start;
+        for (var i = start + 1; i <= end; i++)
+        {
+            if (_daily[i] < _daily[best])
+            {
+                best = i;
+            }
+        }
+
+        return (Money.FromCents(_daily[best]), Today.AddDays(best));
+    }
+
+    public DateOnly? NextIncomeAfter(DateOnly date) => IncomeDates.Cast<DateOnly?>().FirstOrDefault(d => d > date);
+
+    /// <summary>A copy with one more change, for example a purchase being considered.</summary>
+    public CashProjection With(CashEvent change) =>
+        new(Today, Until, Start, Buffer, Accounts, [.. Events, change], Caveats);
+
+    private int Index(DateOnly date) => Math.Clamp(date.DayNumber - Today.DayNumber, 0, _daily.Length - 1);
 }

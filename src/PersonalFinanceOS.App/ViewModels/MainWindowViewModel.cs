@@ -38,6 +38,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         ImportViewModel import,
         PlanningViewModel planning,
         BudgetsViewModel budgets,
+        WishlistViewModel wishlist,
+        AssetsViewModel assets,
         SettingsViewModel settings,
         QuickAddViewModel quickAdd)
     {
@@ -50,8 +52,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             new NavItem("Nav_Import", Icons.Import, import),
             new NavItem("Nav_Budgets", Icons.Budgets, budgets),
             new NavItem("Nav_Forecasts", Icons.Forecasts, planning),
-            new NavItem("Nav_Wishlist", Icons.Wishlist, new PlaceholderViewModel("Nav_Wishlist", 6)),
-            new NavItem("Nav_Assets", Icons.Assets, new PlaceholderViewModel("Nav_Assets", 6)),
+            new NavItem("Nav_Wishlist", Icons.Wishlist, wishlist),
+            new NavItem("Nav_Assets", Icons.Assets, assets),
             new NavItem("Nav_Assistant", Icons.Assistant, new PlaceholderViewModel("Nav_Assistant", 7)),
             new NavItem("Nav_Reports", Icons.Reports, new PlaceholderViewModel("Nav_Reports", 8)),
             new NavItem("Nav_Settings", Icons.Settings, settings),
@@ -60,6 +62,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         dashboard.NavigateToAccounts = () => SelectedItem = NavItems[2];
         dashboard.NavigateToPlanning = () => SelectedItem = NavItems.First(n => n.Page == planning);
         dashboard.NavigateToBudgets = () => SelectedItem = NavItems.First(n => n.Page == budgets);
+        dashboard.NavigateToAssets = () => SelectedItem = NavItems.First(n => n.Page == assets);
+        dashboard.NavigateToWishlist = () => SelectedItem = NavItems.First(n => n.Page == wishlist);
         _selectedItem = NavItems[0];
     }
 

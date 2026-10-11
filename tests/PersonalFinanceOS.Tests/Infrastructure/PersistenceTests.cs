@@ -50,6 +50,11 @@ public class PersistenceTests
         Assert.Empty(context.CreditCardProfiles.ToList());
         Assert.Empty(context.RecurringRules.ToList());
         Assert.Empty(context.ScheduledItems.ToList());
+        Assert.Empty(context.Budgets.ToList());
+        Assert.Empty(context.Assets.ToList());
+        Assert.Empty(context.Valuations.ToList());
+        Assert.Empty(context.OwnershipChanges.ToList());
+        Assert.Empty(context.WishlistItems.ToList());
     }
 
     [Fact]

@@ -294,7 +294,7 @@ public sealed partial class BudgetsViewModel : PageViewModel
         SharedLines.Clear();
         foreach (var s in a.Shared)
         {
-            SharedLines.Add(Loc.Format("Budgets_SharedLine", s.Account.Name, LedgerText.Amount(s.Spending), s.Account.OwnershipShare.Format(Loc.Instance.Culture), LedgerText.Amount(s.PersonalPart)));
+            SharedLines.Add(Loc.Format("Budgets_SharedLine", s.Account.Name, LedgerText.Amount(s.Spending), s.Share.Format(Loc.Instance.Culture), LedgerText.Amount(s.PersonalPart)));
         }
 
         Trend.Clear();

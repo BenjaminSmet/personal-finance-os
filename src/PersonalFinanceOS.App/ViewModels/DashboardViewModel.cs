@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using PersonalFinanceOS.App.Localization;
 using PersonalFinanceOS.Application.Accounts;
 using PersonalFinanceOS.Application.Analysis;
+using PersonalFinanceOS.Application.Assets;
 using PersonalFinanceOS.Application.Budgets;
 using PersonalFinanceOS.Application.Cards;
 using PersonalFinanceOS.Application.Ledger;
@@ -22,6 +23,7 @@ public enum DashboardTarget
     Accounts,
     Planning,
     Budgets,
+    Assets,
 }
 
 /// <summary>Something that needs the user (spec §13 "items needing attention"), with a way to go and look.</summary>
@@ -60,6 +62,7 @@ public sealed partial class DashboardViewModel : PageViewModel
     private readonly AnalysisService _analysis;
     private readonly CreditCardService _cards;
     private readonly ReconciliationService _reconciliation;
+    private readonly NetWorthService _netWorth;
     private readonly IClock _clock;
     private bool _active;
 
@@ -72,6 +75,8 @@ public sealed partial class DashboardViewModel : PageViewModel
         CreditCardService cards,
         ReconciliationService reconciliation,
         BudgetService budgets,
+        NetWorthService netWorth,
+        AssetService assets,
         IClock clock)
     {
         _accounts = accounts;
@@ -81,6 +86,7 @@ public sealed partial class DashboardViewModel : PageViewModel
         _analysis = analysis;
         _cards = cards;
         _reconciliation = reconciliation;
+        _netWorth = netWorth;
         _clock = clock;
         void Refresh(object? sender, EventArgs e) => Dispatcher.UIThread.Post(() =>
         {
@@ -93,6 +99,7 @@ public sealed partial class DashboardViewModel : PageViewModel
         recurring.Changed += Refresh;
         cards.Changed += Refresh;
         budgets.Changed += Refresh;
+        assets.Changed += Refresh;
     }
 
     public Action? NavigateToAccounts { get; set; }
@@ -100,6 +107,10 @@ public sealed partial class DashboardViewModel : PageViewModel
     public Action? NavigateToPlanning { get; set; }
 
     public Action? NavigateToBudgets { get; set; }
+
+    public Action? NavigateToAssets { get; set; }
+
+    public Action? NavigateToWishlist { get; set; }
 
     public ObservableCollection<AttentionItemViewModel> Attention { get; } = [];
 
@@ -129,6 +140,19 @@ public sealed partial class DashboardViewModel : PageViewModel
 
     [ObservableProperty]
     private bool _hasSavings;
+
+    [ObservableProperty]
+    private string _netWorthText = string.Empty;
+
+    [ObservableProperty]
+    private bool _netWorthIsNegative;
+
+    [ObservableProperty]
+    private string _netWorthDetail = string.Empty;
+
+    /// <summary>Why the net worth is not the full picture: missing values (spec §17).</summary>
+    [ObservableProperty]
+    private string? _netWorthNote;
 
     [ObservableProperty]
     private bool _hasSafeToSpend;
@@ -183,24 +207,33 @@ public sealed partial class DashboardViewModel : PageViewModel
         MonthTotals = await _ledger.GetTotalsAsync(monthStart, monthStart.AddMonths(1).AddDays(-1));
         ActiveAccountCount = list.Count;
 
-        // Full balances of liquid accounts. Personal shares and net worth arrive in phase 6.
+        // Full balances of liquid accounts (household view); the personal view with shares is net worth below.
         LiquidTotal = Money.Sum(list.Where(a => a.Type.IsLiquid()).Select(a => balances[a.Id]));
         Tiles.Clear();
-        foreach (var account in list)
-        {
-            Tiles.Add(new AccountRowViewModel(account, balances[account.Id], null, _ => Task.CompletedTask));
-        }
-
         var safe = await _forecast.SafeToSpendAsync();
         HasSafeToSpend = safe.CanCalculate;
         SafeToSpendText = safe.Amount.Format(Loc.Instance.Culture);
         SafeIsNegative = safe.Amount.IsNegative;
         SafeCaption = Loc.Format("Dashboard_SafeUntil", LedgerText.Date(safe.Until, today));
 
-        // Savings, pension and investments: not spendable, so never part of the figures above (spec §13).
-        var saved = list.Where(a => a.Type is AccountType.Savings or AccountType.Pension or AccountType.Investment).ToList();
+        // Savings, pension and investments: not spendable, so never part of the figures above (spec §13). Pension and
+        // investments use their latest valuation, like net worth.
+        var worth = await _netWorth.CalculateAsync();
+        var saved = worth.Lines.Where(l => l.Account is { Status: AccountStatus.Active } a && a.Type is AccountType.Savings or AccountType.Pension or AccountType.Investment).ToList();
         HasSavings = saved.Count > 0;
-        SavingsText = LedgerText.Amount(Money.Sum(saved.Select(a => balances[a.Id])));
+        SavingsText = LedgerText.Amount(Money.Sum(saved.Select(l => l.FullValue)));
+        NetWorthText = LedgerText.Amount(worth.Total);
+        NetWorthIsNegative = worth.Total.IsNegative;
+        NetWorthDetail = Loc.Format("Dashboard_NetWorthDetail", LedgerText.Amount(worth.Assets), LedgerText.Amount(worth.Liabilities));
+        NetWorthNote = worth.IsComplete ? null : Loc.T("Dashboard_NetWorthIncomplete");
+
+        // Pension and investment tiles show their valued amount, other accounts their balance.
+        var values = worth.Lines.Where(l => l.Account is not null).ToDictionary(l => l.Account!.Id, l => l);
+        foreach (var account in list)
+        {
+            var value = account.Type.IsManuallyValued() && values.TryGetValue(account.Id, out var line) ? line.FullValue : balances[account.Id];
+            Tiles.Add(new AccountRowViewModel(account, value, null, _ => Task.CompletedTask));
+        }
 
         var open = await _recurring.ListOpenAsync(today.AddDays(UpcomingDays), withMatches: false);
         var due = open.Count(o => o.DueDate <= today);
@@ -221,7 +254,7 @@ public sealed partial class DashboardViewModel : PageViewModel
         }
 
         LoadUpcoming(open, statuses, today, list);
-        await LoadAttentionAsync(month, statuses, list);
+        await LoadAttentionAsync(month, statuses, list, worth);
 
         CashFlows.Clear();
         foreach (var f in await _forecast.CashFlowAsync(CashFlowDays))
@@ -273,7 +306,7 @@ public sealed partial class DashboardViewModel : PageViewModel
         OnPropertyChanged(nameof(HasUpcoming));
     }
 
-    private async Task LoadAttentionAsync(MonthAnalysis month, IReadOnlyList<CardStatus> statuses, IReadOnlyList<Account> accounts)
+    private async Task LoadAttentionAsync(MonthAnalysis month, IReadOnlyList<CardStatus> statuses, IReadOnlyList<Account> accounts, NetWorth worth)
     {
         Attention.Clear();
         if (AttentionText is { } toConfirm)
@@ -314,6 +347,21 @@ public sealed partial class DashboardViewModel : PageViewModel
             }
         }
 
+        // Manual values that are missing or old (spec §13: stale valuations).
+        var today = _clock.Today;
+        foreach (var line in worth.Lines)
+        {
+            if (line.IsStale)
+            {
+                Attention.Add(new AttentionItemViewModel(
+                    Loc.Format("Dashboard_ValuationStale", line.Name, LedgerText.Date(line.ValuedOn!.Value, today)), DashboardTarget.Assets, Open));
+            }
+            else if (line.IsUncertain)
+            {
+                Attention.Add(new AttentionItemViewModel(Loc.Format("Dashboard_ValuationMissing", line.Name), DashboardTarget.Assets, Open));
+            }
+        }
+
         OnPropertyChanged(nameof(HasAttention));
     }
 
@@ -323,6 +371,7 @@ public sealed partial class DashboardViewModel : PageViewModel
         {
             DashboardTarget.Accounts => NavigateToAccounts,
             DashboardTarget.Budgets => NavigateToBudgets,
+            DashboardTarget.Assets => NavigateToAssets,
             _ => NavigateToPlanning,
         };
         navigate?.Invoke();
@@ -333,6 +382,12 @@ public sealed partial class DashboardViewModel : PageViewModel
 
     [RelayCommand]
     private void GoToAccounts() => NavigateToAccounts?.Invoke();
+
+    [RelayCommand]
+    private void GoToAssets() => NavigateToAssets?.Invoke();
+
+    [RelayCommand]
+    private void GoToWishlist() => NavigateToWishlist?.Invoke();
 
     [RelayCommand]
     private void GoToPlanning() => NavigateToPlanning?.Invoke();

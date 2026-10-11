@@ -1,0 +1,256 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PersonalFinanceOS.App.ViewModels"
+             xmlns:l="using:PersonalFinanceOS.App.Localization"
+             x:Class="PersonalFinanceOS.App.Views.WishlistView"
+             x:DataType="vm:WishlistViewModel">
+  <UserControl.Resources>
+    <DataTemplate x:Key="WishlistRow" DataType="vm:WishlistRowViewModel">
+      <StackPanel>
+        <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,8">
+          <StackPanel Spacing="2" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+              <TextBlock Classes="headline" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+              <Border Classes="badge"><TextBlock Classes="caption" Text="{Binding PriorityText}" /></Border>
+              <Border Classes="badge"><TextBlock Classes="caption" Text="{Binding StatusText}" /></Border>
+              <Border Classes="badge" IsVisible="{Binding IsAffordable}">
+                <TextBlock Classes="caption" Text="{l:T Wishlist_AffordableBadge}" />
+              </Border>
+            </StackPanel>
+            <TextBlock Classes="caption" Text="{Binding VerdictText}" TextWrapping="Wrap"
+                       IsVisible="{Binding VerdictText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            <TextBlock Classes="caption" Text="{Binding DetailText}" TextWrapping="Wrap"
+                       IsVisible="{Binding DetailText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            <TextBlock Classes="caption" Text="{Binding LinkText}" TextTrimming="CharacterEllipsis"
+                       IsVisible="{Binding LinkText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+          </StackPanel>
+          <TextBlock Grid.Column="1" Classes="headline" Text="{Binding PriceText}" VerticalAlignment="Center" Margin="16,0" />
+          <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+            <Button Padding="12,5" FontSize="13" Classes.primary="{Binding IsSelected}" Content="{l:T Wishlist_Check}" Command="{Binding OpenCommand}" />
+            <Button Padding="12,5" FontSize="13" Content="{l:T Wishlist_Edit}" Command="{Binding EditCommand}" IsVisible="{Binding IsOpen}" />
+          </StackPanel>
+        </Grid>
+        <Border Classes="separator" IsVisible="{Binding !IsLast}" />
+      </StackPanel>
+    </DataTemplate>
+  </UserControl.Resources>
+
+  <StackPanel Spacing="18">
+    <Grid ColumnDefinitions="*,Auto">
+      <StackPanel Spacing="2">
+        <TextBlock Classes="largeTitle" Text="{l:T Wishlist_Title}" />
+        <TextBlock Classes="secondary" Text="{l:T Wishlist_Subtitle}" TextWrapping="Wrap" />
+      </StackPanel>
+      <Button Grid.Column="1" Classes="primary" Content="{l:T Wishlist_Add}" Command="{Binding OpenNewCommand}" VerticalAlignment="Center"
+              IsVisible="{Binding !IsFormOpen}" />
+    </Grid>
+
+    <Border Classes="success" IsVisible="{Binding StatusMessage, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Text="{Binding StatusMessage, StringFormat='✓  {0}'}" TextWrapping="Wrap" />
+    </Border>
+
+    <!-- Quick question: can I afford this amount? -->
+    <Border Classes="glass" Padding="24,18">
+      <StackPanel Spacing="8">
+        <Grid ColumnDefinitions="*,Auto,Auto">
+          <TextBlock Classes="headline" Text="{l:T Wishlist_QuickQuestion}" VerticalAlignment="Center" TextWrapping="Wrap" />
+          <TextBox Grid.Column="1" Width="140" Margin="12,0" Text="{Binding QuickPriceText}" PlaceholderText="0,00"
+                   AutomationProperties.Name="{l:T Wishlist_Price}" />
+          <Button Grid.Column="2" Content="{l:T Wishlist_Check}" Command="{Binding QuickCheckCommand}" />
+        </Grid>
+        <Border Classes="error" IsVisible="{Binding QuickError, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding QuickError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+        </Border>
+      </StackPanel>
+    </Border>
+
+    <!-- New or changed item -->
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding IsFormOpen}">
+      <StackPanel Spacing="14">
+        <TextBlock Classes="title" Text="{Binding FormTitle}" />
+        <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto,12,Auto,12,Auto">
+          <StackPanel>
+            <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Name}" />
+            <TextBox Text="{Binding FormName}" MaxLength="100" PlaceholderText="{l:T Wishlist_NamePlaceholder}" />
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_Price}" />
+            <TextBox Text="{Binding FormPriceText}" PlaceholderText="0,00" />
+          </StackPanel>
+          <StackPanel Grid.Row="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_Priority}" />
+            <ComboBox ItemsSource="{Binding PriorityOptions}" SelectedItem="{Binding FormPriority}" HorizontalAlignment="Stretch">
+              <ComboBox.ItemTemplate>
+                <DataTemplate DataType="vm:PriorityOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+          <StackPanel Grid.Row="2" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_TargetDate}" />
+            <CalendarDatePicker SelectedDate="{Binding FormTargetDate}" HorizontalAlignment="Stretch" />
+          </StackPanel>
+          <StackPanel Grid.Row="4">
+            <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_MonthlySaving}" />
+            <TextBox Text="{Binding FormSavingText}" PlaceholderText="0,00" />
+            <TextBlock Classes="caption" Margin="4,6,0,0" Text="{l:T Wishlist_MonthlySavingHint}" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Grid.Row="4" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_Url}" />
+            <TextBox Text="{Binding FormUrl}" MaxLength="500" />
+          </StackPanel>
+          <StackPanel Grid.Row="6">
+            <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_Alternative}" />
+            <TextBox Text="{Binding FormAlternative}" MaxLength="200" PlaceholderText="{l:T Wishlist_AlternativePlaceholder}" />
+          </StackPanel>
+          <StackPanel Grid.Row="6" Grid.Column="2">
+            <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Notes}" />
+            <TextBox Text="{Binding FormNote}" MaxLength="1000" />
+          </StackPanel>
+        </Grid>
+        <Border Classes="error" IsVisible="{Binding FormError, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <TextBlock Text="{Binding FormError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+        </Border>
+        <StackPanel Orientation="Horizontal" Spacing="10">
+          <Button Classes="primary" Content="{l:T Editor_Save}" Command="{Binding SaveItemCommand}" />
+          <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelFormCommand}" />
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- The answer: technically affordable versus prudent, the numbers behind it, and the ways to pay -->
+    <Border Classes="glass strong" Padding="26,22" IsVisible="{Binding HasCheck}">
+      <StackPanel Spacing="14">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Spacing="2">
+            <TextBlock Classes="overline" Text="{Binding CheckTitle}" />
+            <TextBlock Classes="title" Classes.debt="{Binding VerdictIsBad}" Text="{Binding VerdictTitle}" TextWrapping="Wrap" />
+            <TextBlock Classes="secondary" Text="{Binding VerdictExplanation}" TextWrapping="Wrap" />
+          </StackPanel>
+          <Button Grid.Column="1" Padding="12,5" FontSize="13" Content="{l:T Wishlist_Close}" Command="{Binding CloseCheckCommand}" VerticalAlignment="Top" />
+        </Grid>
+
+        <ItemsControl ItemsSource="{Binding CheckLines}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="vm:CheckLineViewModel">
+              <Grid ColumnDefinitions="*,Auto,24" Margin="0,3">
+                <TextBlock Classes="secondary" Text="{Binding Label}" TextWrapping="Wrap" />
+                <TextBlock Grid.Column="1" Classes="headline" Classes.debt="{Binding IsBad}" Margin="12,0,0,0" Text="{Binding Value}" />
+                <TextBlock Grid.Column="2" Classes="headline" Classes.debt="{Binding IsBad}" HorizontalAlignment="Right" Text="{Binding Mark}" />
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <TextBlock Classes="caption" Text="{Binding SavingPlanText}" TextWrapping="Wrap"
+                   IsVisible="{Binding SavingPlanText, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+        <StackPanel Spacing="6" IsVisible="{Binding HasOptions}">
+          <TextBlock Classes="headline" Text="{l:T Wishlist_HowToPay}" />
+          <ItemsControl ItemsSource="{Binding PaymentOptions}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate DataType="vm:PaymentOptionViewModel">
+                <Border Classes="glass row" Margin="0,3" Padding="16,10">
+                  <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Spacing="2">
+                      <TextBlock Classes="headline" Text="{Binding Title}" />
+                      <TextBlock Classes="caption" Text="{Binding Detail}" TextWrapping="Wrap"
+                                 IsVisible="{Binding Detail, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Margin="12,0,0,0" Classes="headline" Classes.debt="{Binding IsBad}" Text="{Binding VerdictText}"
+                               VerticalAlignment="Center" />
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+
+        <StackPanel Spacing="4" IsVisible="{Binding HasEffects}">
+          <TextBlock Classes="headline" Text="{l:T Wishlist_Effects}" />
+          <ItemsControl ItemsSource="{Binding Effects}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="x:String"><TextBlock Classes="caption" Text="{Binding}" TextWrapping="Wrap" Margin="0,2" /></DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+
+        <ItemsControl ItemsSource="{Binding Caveats}" IsVisible="{Binding HasCaveats}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="x:String">
+              <TextBlock Classes="caption" Text="{Binding StringFormat='ℹ  {0}'}" TextWrapping="Wrap" Margin="0,2" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <TextBlock Classes="caption" Text="{l:T Wishlist_ForecastNote}" TextWrapping="Wrap" />
+
+        <!-- Decisions about the item -->
+        <WrapPanel ItemSpacing="8" LineSpacing="8" IsVisible="{Binding CanBuy}">
+          <Button Classes="primary" Content="{l:T Wishlist_Buy}" Command="{Binding OpenPurchaseCommand}" IsVisible="{Binding !IsPurchaseOpen}" />
+          <Button Content="{l:T Wishlist_MarkSaving}" Command="{Binding MarkSavingCommand}" />
+          <Button Content="{l:T Wishlist_Postpone}" Command="{Binding PostponeCommand}" />
+          <Button Content="{l:T Wishlist_Cancel}" Command="{Binding CancelItemCommand}" />
+        </WrapPanel>
+        <Button Content="{l:T Wishlist_Reopen}" Command="{Binding ReopenCommand}" IsVisible="{Binding CanReopen}" HorizontalAlignment="Left" />
+
+        <!-- Buying: the expense is only recorded after this confirmation (spec §23) -->
+        <Border Classes="glass row" IsVisible="{Binding IsPurchaseOpen}">
+          <StackPanel Spacing="12">
+            <TextBlock Classes="headline" Text="{l:T Wishlist_BuyTitle}" />
+            <ToggleSwitch Content="{l:T Wishlist_RecordTransaction}" IsChecked="{Binding RecordTransaction}" />
+            <TextBlock Classes="caption" Text="{l:T Wishlist_RecordTransactionNote}" TextWrapping="Wrap" />
+            <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto">
+              <StackPanel IsVisible="{Binding RecordTransaction}">
+                <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_PaidWith}" />
+                <ComboBox ItemsSource="{Binding PurchaseAccounts}" SelectedItem="{Binding PurchaseAccount}" HorizontalAlignment="Stretch">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </StackPanel>
+              <StackPanel Grid.Column="2" IsVisible="{Binding RecordTransaction}">
+                <TextBlock Classes="fieldLabel" Text="{l:T Editor_Category}" />
+                <ComboBox ItemsSource="{Binding PurchaseCategories}" SelectedItem="{Binding PurchaseCategory}" HorizontalAlignment="Stretch">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="vm:CategoryOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+              </StackPanel>
+              <StackPanel Grid.Row="2">
+                <TextBlock Classes="fieldLabel" Text="{l:T Editor_Date}" />
+                <CalendarDatePicker SelectedDate="{Binding PurchaseDate}" HorizontalAlignment="Stretch" />
+              </StackPanel>
+              <StackPanel Grid.Row="2" Grid.Column="2">
+                <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_PaidAmount}" />
+                <TextBox Text="{Binding PurchaseAmountText}" PlaceholderText="0,00" />
+              </StackPanel>
+            </Grid>
+            <Border Classes="error" IsVisible="{Binding PurchaseError, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Text="{Binding PurchaseError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />
+            </Border>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+              <Button Classes="primary" Content="{l:T Wishlist_ConfirmBuy}" Command="{Binding ConfirmPurchaseCommand}" />
+              <Button Content="{l:T Accounts_Cancel}" Command="{Binding CancelPurchaseCommand}" />
+            </StackPanel>
+          </StackPanel>
+        </Border>
+      </StackPanel>
+    </Border>
+
+    <!-- Open items -->
+    <Border Classes="glass" Padding="24,20">
+      <StackPanel Spacing="8">
+        <TextBlock Classes="title" Text="{l:T Wishlist_Open}" />
+        <TextBlock Classes="caption" Text="{l:T Wishlist_Empty}" TextWrapping="Wrap" IsVisible="{Binding !HasItems}" />
+        <ItemsControl ItemsSource="{Binding Items}" ItemTemplate="{StaticResource WishlistRow}" />
+      </StackPanel>
+    </Border>
+
+    <Border Classes="glass" Padding="24,20" IsVisible="{Binding HasClosed}">
+      <StackPanel Spacing="8">
+        <TextBlock Classes="title" Text="{l:T Wishlist_Closed}" />
+        <ItemsControl ItemsSource="{Binding ClosedItems}" ItemTemplate="{StaticResource WishlistRow}" />
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>
