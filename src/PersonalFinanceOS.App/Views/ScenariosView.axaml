@@ -49,11 +49,11 @@
           <Grid ColumnDefinitions="*,16,2*">
             <StackPanel>
               <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Name}" />
-              <TextBox Text="{Binding FormName}" MaxLength="100" PlaceholderText="{l:T Scenario_NamePlaceholder}" />
+              <TextBox AutomationProperties.Name="{l:T Accounts_Name}" Text="{Binding FormName}" MaxLength="100" PlaceholderText="{l:T Scenario_NamePlaceholder}" />
             </StackPanel>
             <StackPanel Grid.Column="2">
               <TextBlock Classes="fieldLabel" Text="{l:T Scenario_Note}" />
-              <TextBox Text="{Binding FormNote}" MaxLength="500" />
+              <TextBox AutomationProperties.Name="{l:T Scenario_Note}" Text="{Binding FormNote}" MaxLength="500" />
             </StackPanel>
           </Grid>
           <Border Classes="error" IsVisible="{Binding NameError, Converter={x:Static ObjectConverters.IsNotNull}}">
@@ -105,7 +105,7 @@
           <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto,12,Auto">
             <StackPanel>
               <TextBlock Classes="fieldLabel" Text="{l:T Scenario_Kind}" />
-              <ComboBox ItemsSource="{Binding ChangeKinds}" SelectedItem="{Binding ChangeKind}" HorizontalAlignment="Stretch">
+              <ComboBox AutomationProperties.Name="{l:T Scenario_Kind}" ItemsSource="{Binding ChangeKinds}" SelectedItem="{Binding ChangeKind}" HorizontalAlignment="Stretch">
                 <ComboBox.ItemTemplate>
                   <DataTemplate DataType="vm:ChangeKindOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -113,7 +113,7 @@
             </StackPanel>
             <StackPanel Grid.Column="2" IsVisible="{Binding IsPurchase}">
               <TextBlock Classes="fieldLabel" Text="{l:T Scenario_WishlistItem}" />
-              <ComboBox ItemsSource="{Binding WishlistItems}" SelectedItem="{Binding ChangeItem}" HorizontalAlignment="Stretch">
+              <ComboBox AutomationProperties.Name="{l:T Scenario_WishlistItem}" ItemsSource="{Binding WishlistItems}" SelectedItem="{Binding ChangeItem}" HorizontalAlignment="Stretch">
                 <ComboBox.ItemTemplate>
                   <DataTemplate DataType="vm:ScenarioItemOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -121,7 +121,7 @@
             </StackPanel>
             <StackPanel Grid.Column="2" IsVisible="{Binding IsAmountChange}">
               <TextBlock Classes="fieldLabel" Text="{l:T Scenario_Direction}" />
-              <ComboBox ItemsSource="{Binding Directions}" SelectedItem="{Binding Direction}" HorizontalAlignment="Stretch">
+              <ComboBox AutomationProperties.Name="{l:T Scenario_Direction}" ItemsSource="{Binding Directions}" SelectedItem="{Binding Direction}" HorizontalAlignment="Stretch">
                 <ComboBox.ItemTemplate>
                   <DataTemplate DataType="vm:DirectionOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -129,7 +129,7 @@
             </StackPanel>
             <StackPanel Grid.Column="2" IsVisible="{Binding IsPlanned}">
               <TextBlock Classes="fieldLabel" Text="{l:T Scenario_PlannedItem}" />
-              <ComboBox ItemsSource="{Binding PlannedItems}" SelectedItem="{Binding ChangeRule}" HorizontalAlignment="Stretch">
+              <ComboBox AutomationProperties.Name="{l:T Scenario_PlannedItem}" ItemsSource="{Binding PlannedItems}" SelectedItem="{Binding ChangeRule}" HorizontalAlignment="Stretch">
                 <ComboBox.ItemTemplate>
                   <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -138,11 +138,11 @@
 
             <StackPanel Grid.Row="2" IsVisible="{Binding NeedsName}">
               <TextBlock Classes="fieldLabel" Text="{l:T Scenario_ChangeName}" />
-              <TextBox Text="{Binding ChangeName}" MaxLength="100" PlaceholderText="{l:T Scenario_ChangeNamePlaceholder}" />
+              <TextBox AutomationProperties.Name="{l:T Scenario_ChangeName}" Text="{Binding ChangeName}" MaxLength="100" PlaceholderText="{l:T Scenario_ChangeNamePlaceholder}" />
             </StackPanel>
             <StackPanel Grid.Row="2" Grid.Column="2">
               <TextBlock Classes="fieldLabel" Text="{Binding AmountLabel}" />
-              <TextBox Text="{Binding ChangeAmountText}" PlaceholderText="0,00" />
+              <TextBox AutomationProperties.Name="{Binding AmountLabel}" Text="{Binding ChangeAmountText}" PlaceholderText="0,00" />
             </StackPanel>
             <StackPanel Grid.Row="2" IsVisible="{Binding IsPlanned}">
               <TextBlock Classes="fieldLabel" Text="{l:T Scenario_PlannedHint}" />
@@ -151,11 +151,11 @@
 
             <StackPanel Grid.Row="4">
               <TextBlock Classes="fieldLabel" Text="{Binding DateLabel}" />
-              <CalendarDatePicker SelectedDate="{Binding ChangeDate}" HorizontalAlignment="Stretch" />
+              <CalendarDatePicker AutomationProperties.Name="{Binding DateLabel}" SelectedDate="{Binding ChangeDate}" HorizontalAlignment="Stretch" />
             </StackPanel>
             <StackPanel Grid.Row="4" Grid.Column="2" IsVisible="{Binding IsAmountChange}">
               <TextBlock Classes="fieldLabel" Text="{l:T Planning_Account}" />
-              <ComboBox ItemsSource="{Binding MoneyAccounts}" SelectedItem="{Binding ChangeAccount}" HorizontalAlignment="Stretch">
+              <ComboBox AutomationProperties.Name="{l:T Planning_Account}" ItemsSource="{Binding MoneyAccounts}" SelectedItem="{Binding ChangeAccount}" HorizontalAlignment="Stretch">
                 <ComboBox.ItemTemplate>
                   <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -163,7 +163,7 @@
             </StackPanel>
             <StackPanel Grid.Row="4" Grid.Column="2" IsVisible="{Binding IsPurchase}">
               <TextBlock Classes="fieldLabel" Text="{l:T Wishlist_PaidWith}" />
-              <ComboBox ItemsSource="{Binding PayOptions}" SelectedItem="{Binding ChangePay}" HorizontalAlignment="Stretch">
+              <ComboBox AutomationProperties.Name="{l:T Wishlist_PaidWith}" ItemsSource="{Binding PayOptions}" SelectedItem="{Binding ChangePay}" HorizontalAlignment="Stretch">
                 <ComboBox.ItemTemplate>
                   <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -172,7 +172,7 @@
           </Grid>
           <StackPanel IsVisible="{Binding IsMonthly}" Width="320" HorizontalAlignment="Left">
             <TextBlock Classes="fieldLabel" Text="{l:T Scenario_Until}" />
-            <CalendarDatePicker SelectedDate="{Binding ChangeEndDate}" HorizontalAlignment="Stretch" />
+            <CalendarDatePicker AutomationProperties.Name="{l:T Scenario_Until}" SelectedDate="{Binding ChangeEndDate}" HorizontalAlignment="Stretch" />
           </StackPanel>
           <Border Classes="error" IsVisible="{Binding ChangeError, Converter={x:Static ObjectConverters.IsNotNull}}">
             <TextBlock Text="{Binding ChangeError, StringFormat='✕  {0}'}" TextWrapping="Wrap" />

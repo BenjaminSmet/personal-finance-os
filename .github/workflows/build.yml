@@ -72,6 +72,45 @@ jobs:
           & $iscc "/DAppVersion=${{ steps.version.outputs.version }}" "/DNumericVersion=${{ steps.version.outputs.numeric }}" "/DPublishDir=$PWD\publish" "/O$PWD\installer-output" installer\PersonalFinanceOS.iss
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+      - name: Test installer (install, open data, upgrade, uninstall keeps data)
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem installer-output\*.exe | Select-Object -First 1
+          $data = Join-Path $env:LOCALAPPDATA 'PersonalFinanceOS'
+          New-Item -ItemType Directory -Force $data | Out-Null
+          Set-Content (Join-Path $data 'ci-keep-me.txt') 'synthetic marker, not real data'
+
+          function Install-App {
+            $p = Start-Process $setup.FullName -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/LOG=install.log' -Wait -PassThru
+            if ($p.ExitCode -ne 0) { Get-Content install.log -Tail 40; throw "Installer exited with $($p.ExitCode)" }
+          }
+
+          Install-App
+          $exe = Get-ChildItem "$env:LOCALAPPDATA\Programs\Personal Finance OS\PersonalFinanceOS.exe", "$env:ProgramFiles\Personal Finance OS\PersonalFinanceOS.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $exe) { throw 'PersonalFinanceOS.exe was not installed' }
+          "Installed at $($exe.FullName)"
+
+          # The installed app creates and opens a database through its normal safe startup.
+          $check = Join-Path $env:RUNNER_TEMP 'pfos-selfcheck'
+          $p = Start-Process $exe.FullName -ArgumentList '--self-check', "`"$check`"" -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "Self-check failed with $($p.ExitCode)" }
+          if (-not (Test-Path (Join-Path $check 'finance.db'))) { throw 'Self-check did not create a database' }
+
+          # Installing again over the top (an upgrade) keeps the data folder and the database.
+          Install-App
+          $p = Start-Process $exe.FullName -ArgumentList '--self-check', "`"$check`"" -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "Self-check after upgrade failed with $($p.ExitCode)" }
+          if (-not (Test-Path (Join-Path $data 'ci-keep-me.txt'))) { throw 'Upgrade touched the data folder' }
+
+          # Uninstalling removes the program but never the data.
+          $uninstaller = Get-ChildItem (Split-Path $exe.FullName) -Filter 'unins*.exe' | Select-Object -First 1
+          $p = Start-Process $uninstaller.FullName -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART' -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "Uninstaller exited with $($p.ExitCode)" }
+          Start-Sleep -Seconds 3
+          if (Test-Path $exe.FullName) { throw 'The program was not removed' }
+          if (-not (Test-Path (Join-Path $data 'ci-keep-me.txt'))) { throw 'Uninstalling deleted the data folder' }
+          'Installer test passed'
+
       - name: Upload installer
         uses: actions/upload-artifact@v4
         with:

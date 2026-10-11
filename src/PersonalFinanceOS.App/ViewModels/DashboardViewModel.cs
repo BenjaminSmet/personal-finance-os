@@ -10,6 +10,7 @@ using PersonalFinanceOS.Application.Budgets;
 using PersonalFinanceOS.Application.Cards;
 using PersonalFinanceOS.Application.Ledger;
 using PersonalFinanceOS.Application.Planning;
+using PersonalFinanceOS.Application.Settings;
 using PersonalFinanceOS.Domain;
 using PersonalFinanceOS.Domain.Accounts;
 using PersonalFinanceOS.Domain.Ledger;
@@ -24,6 +25,7 @@ public enum DashboardTarget
     Planning,
     Budgets,
     Assets,
+    Settings,
 }
 
 /// <summary>Something that needs the user (spec §13 "items needing attention"), with a way to go and look.</summary>
@@ -64,6 +66,7 @@ public sealed partial class DashboardViewModel : PageViewModel
     private readonly ReconciliationService _reconciliation;
     private readonly NetWorthService _netWorth;
     private readonly IClock _clock;
+    private readonly AppSettingsService _settings;
     private bool _active;
 
     public DashboardViewModel(
@@ -77,8 +80,10 @@ public sealed partial class DashboardViewModel : PageViewModel
         BudgetService budgets,
         NetWorthService netWorth,
         AssetService assets,
+        AppSettingsService settings,
         IClock clock)
     {
+        _settings = settings;
         _accounts = accounts;
         _ledger = ledger;
         _forecast = forecast;
@@ -111,6 +116,8 @@ public sealed partial class DashboardViewModel : PageViewModel
     public Action? NavigateToAssets { get; set; }
 
     public Action? NavigateToWishlist { get; set; }
+
+    public Action? NavigateToSettings { get; set; }
 
     public ObservableCollection<AttentionItemViewModel> Attention { get; } = [];
 
@@ -362,6 +369,17 @@ public sealed partial class DashboardViewModel : PageViewModel
             }
         }
 
+        // Backup reminder (spec §4), once there is something worth keeping.
+        if (accounts.Count > 0 && await _settings.IsBackupDueAsync(_clock.Now))
+        {
+            Attention.Add(new AttentionItemViewModel(
+                await _settings.GetLastBackupAsync() is { } last
+                    ? Loc.Format("Dashboard_BackupDue", LedgerText.Date(DateOnly.FromDateTime(last.ToLocalTime().DateTime), today))
+                    : Loc.T("Dashboard_BackupNever"),
+                DashboardTarget.Settings,
+                Open));
+        }
+
         OnPropertyChanged(nameof(HasAttention));
     }
 
@@ -372,6 +390,7 @@ public sealed partial class DashboardViewModel : PageViewModel
             DashboardTarget.Accounts => NavigateToAccounts,
             DashboardTarget.Budgets => NavigateToBudgets,
             DashboardTarget.Assets => NavigateToAssets,
+            DashboardTarget.Settings => NavigateToSettings,
             _ => NavigateToPlanning,
         };
         navigate?.Invoke();

@@ -10,8 +10,6 @@ Nav_Assets	Assets & Investments	Bezittingen & beleggingen
 Nav_Assistant	Assistant	Assistent
 Nav_Reports	Reports	Rapporten
 Nav_Settings	Settings & Backup	Instellingen & back-up
-Placeholder_Title	Coming soon	Binnenkort
-Placeholder_Body	This part of the app is built in phase {0}.	Dit onderdeel wordt gebouwd in fase {0}.
 Dashboard_Welcome	Welcome	Welkom
 Dashboard_Intro	This is the foundation of your finance app. Start by adding your accounts with their current balance.	Dit is de basis van je financiële app. Begin met je rekeningen toe te voegen, met hun huidige saldo.
 Dashboard_AccountsSummary	{0} active accounts	{0} actieve rekeningen
@@ -58,7 +56,6 @@ Settings_About	About	Over
 Settings_Version	App version	App-versie
 Settings_Schema	Database schema version	Versie databaseschema
 Settings_Offline	This app makes no internet connections.	Deze app maakt geen internetverbindingen.
-Settings_BackupComing	Manual backup and restore are added in phase 8. Automatic verified backups are already made before every database upgrade.	Handmatige back-up en herstel komen in fase 8. Vóór elke database-upgrade wordt nu al automatisch een gecontroleerde back-up gemaakt.
 Language_Dutch	Nederlands	Nederlands
 Language_English	English	English
 Error_account_name_required	Please enter a name.	Vul een naam in.
@@ -940,3 +937,233 @@ Error_scenario_payment_required	Choose how the purchase is paid.	Kies hoe de aan
 Error_scenario_planned_required	Choose a planned item.	Kies een geplande post.
 Error_scenario_account_required	Choose a current, joint, savings or cash account.	Kies een zicht-, gezamenlijke, spaar- of cashrekening.
 Error_scenario_notFound	This scenario no longer exists.	Dit scenario bestaat niet meer.
+ReportType_MonthlySummary	Monthly summary	Maandoverzicht
+ReportType_CashFlow	Cash flow	Kasstroom
+ReportType_Account	Account report	Rekeningrapport
+ReportType_Budget	Budget versus actual	Budget tegenover werkelijk
+ReportType_JointFinance	Joint finances	Gezamenlijke financiën
+ReportType_CreditCard	Credit card	Kredietkaart
+ReportType_NetWorth	Net worth	Vermogen
+ReportType_AnnualOverview	Annual overview	Jaaroverzicht
+ReportTypeHelp_MonthlySummary	Income, spending and net per month, by category, compared with earlier months.	Inkomsten, uitgaven en netto per maand, per categorie, vergeleken met eerdere maanden.
+ReportTypeHelp_CashFlow	Opening balances, money in and out, and with planned items the expected closing balances.	Beginsaldi, geld in en uit, en met geplande posten de verwachte eindsaldi.
+ReportTypeHelp_Account	All transactions of one account with the running balance and the reconciliations.	Alle transacties van één rekening met het lopende saldo en de afstemmingen.
+ReportTypeHelp_Budget	Budget, actual spending and what is left per category.	Budget, werkelijke uitgaven en wat overblijft per categorie.
+ReportTypeHelp_JointFinance	Full activity of shared accounts and your part, clearly separated.	Volledige activiteit van gedeelde rekeningen en jouw deel, duidelijk gescheiden.
+ReportTypeHelp_CreditCard	Statement periods, purchases, refunds, statements, payments and what remains.	Afrekenperiodes, aankopen, terugbetalingen, afrekeningen, betalingen en wat overblijft.
+ReportTypeHelp_NetWorth	Assets, liabilities and shares with their valuation dates, and the change over time.	Bezittingen, schulden en aandelen met hun waarderingsdatum, en de evolutie.
+ReportTypeHelp_AnnualOverview	Every month with data in the year, with totals and averages.	Elke maand met gegevens in het jaar, met totalen en gemiddelden.
+Report_Title_Account	Account report: {0}	Rekeningrapport: {0}
+Report_Total	Total	Totaal
+Report_TotalAssets	Total assets	Totaal bezittingen
+Report_TotalLiabilities	Total liabilities	Totaal schulden
+Report_TotalBudgeted	Total with a budget	Totaal met budget
+Report_TotalUnbudgeted	Spending without a budget	Uitgaven zonder budget
+Report_NetWorth	Net worth	Vermogen
+Report_Asset	Asset	Bezit
+Report_Liability	Liability	Schuld
+Report_OpeningBalance	Opening balance	Beginsaldo
+Report_ClosingBalance	Closing balance	Eindsaldo
+Report_CreditLimit	Credit limit	Kredietlimiet
+Report_Outstanding	Outstanding	Openstaand
+Report_AvailableCredit	Available credit	Beschikbaar krediet
+Report_Uncategorised	Uncategorised	Zonder categorie
+Report_NoBudget	No budget	Geen budget
+Report_Over	{0} over	{0} te veel
+Report_Used	{0} used	{0} gebruikt
+Report_Overdue	Overdue	Achterstallig
+Report_Incomplete	Incomplete	Onvolledig
+Report_Period	{0} to {1}	{0} tot {1}
+Report_UntilToday	Up to {0}	Tot {0}
+Report_FromDate	From {0}	Vanaf {0}
+Report_YearTotal	Total {0}	Totaal {0}
+Report_MonthAverage	Average per month ({0} months)	Gemiddelde per maand ({0} maanden)
+Report_Basis_Actual	Actual	Werkelijk
+Report_Basis_Estimate	Estimate	Schatting
+Report_Rec_Matched	Matched	Klopt
+Report_Rec_Adjusted	Corrected	Gecorrigeerd
+Report_Rec_Difference	Difference	Verschil
+Report_Event_RecordedLater	Recorded, later date	Geboekt, latere datum
+Report_Event_Planned	Planned	Gepland
+Report_Event_PlannedIn	Planned transfer in	Geplande overschrijving in
+Report_Event_Income	Expected income	Verwacht inkomen
+Report_Event_CardSettlement	Card statement	Kaartafrekening
+Report_Event_Purchase	Purchase	Aankoop
+Report_Event_Scenario	Scenario	Scenario
+Report_Col_Month	Month	Maand
+Report_Col_Income	Income	Inkomsten
+Report_Col_Spending	Spending	Uitgaven
+Report_Col_Net	Net	Netto
+Report_Col_Remark	Remark	Opmerking
+Report_Col_Item	Item	Post
+Report_Col_Category	Category	Categorie
+Report_Col_Amount	Amount	Bedrag
+Report_Col_PerMonth	Per month	Per maand
+Report_Col_PerMonthPeriod	Per month, this period	Per maand, deze periode
+Report_Col_PerMonthBefore	Per month, before	Per maand, ervoor
+Report_Col_Difference	Difference	Verschil
+Report_Col_Account	Account	Rekening
+Report_Col_Opening	Opening	Begin
+Report_Col_In	Money in	Geld in
+Report_Col_Out	Money out	Geld uit
+Report_Col_Closing	Closing	Einde
+Report_Col_Today	Today	Vandaag
+Report_Col_PlannedIn	Planned in	Gepland in
+Report_Col_PlannedOut	Planned out	Gepland uit
+Report_Col_CardStatements	Card statements	Kaartafrekeningen
+Report_Col_ProjectedClosing	Expected closing	Verwacht einde
+Report_Col_Date	Date	Datum
+Report_Col_Kind	Kind	Soort
+Report_Col_Description	Description	Omschrijving
+Report_Col_Balance	Balance	Saldo
+Report_Col_StatementDate	Statement date	Uittrekseldatum
+Report_Col_BankBalance	Bank balance	Saldo bank
+Report_Col_AppBalance	Balance in app	Saldo in app
+Report_Col_Status	Status	Status
+Report_Col_Budget	Budget	Budget
+Report_Col_Actual	Actual	Werkelijk
+Report_Col_Left	Left	Over
+Report_Col_Full	Full amount	Volledig bedrag
+Report_Col_Share	Your share	Jouw aandeel
+Report_Col_YourPart	Your part	Jouw deel
+Report_Col_Period	Period	Periode
+Report_Col_Purchases	Purchases	Aankopen
+Report_Col_Refunds	Refunds	Terugbetalingen
+Report_Col_Statement	Statement	Afrekening
+Report_Col_Basis	Basis	Basis
+Report_Col_Paid	Paid	Betaald
+Report_Col_Remaining	Remaining	Resterend
+Report_Col_DebitDate	Debit date	Debetdatum
+Report_Col_Source	Value from	Waarde uit
+Report_Col_ValuedOn	Valued on	Gewaardeerd op
+Report_Col_NetWorth	Net worth	Vermogen
+Report_Col_Change	Change	Verschil
+Report_Table_PerMonth	Per month	Per maand
+Report_Table_SpendingByCategory	Spending by category	Uitgaven per categorie
+Report_Table_SpendingByCategoryYear	Spending by category in {0}	Uitgaven per categorie in {0}
+Report_Table_IncomeByCategory	Income by category	Inkomsten per categorie
+Report_Table_Comparison	Compared with the {0} complete months before	Vergeleken met de {0} volledige maanden ervoor
+Report_Table_CashPerAccount	Actual cash flow per account, up to {0}	Werkelijke kasstroom per rekening, tot {0}
+Report_Table_Projection	Expected balances on {0} (estimate)	Verwachte saldi op {0} (schatting)
+Report_Table_Commitments	Planned commitments (estimate)	Geplande verplichtingen (schatting)
+Report_Table_Summary	Summary	Samenvatting
+Report_Table_Transactions	Transactions ({0})	Transacties ({0})
+Report_Table_Reconciliation	Reconciliations	Afstemmingen
+Report_Table_BudgetVsActual	Budget versus actual	Budget tegenover werkelijk
+Report_Table_JointSummary	{0}: full amount and your part	{0}: volledig bedrag en jouw deel
+Report_Table_JointActivity	{0}: all activity	{0}: alle activiteit
+Report_Table_Statements	{0}: statement periods	{0}: afrekenperiodes
+Report_Table_CardNow	{0}: today	{0}: vandaag
+Report_Table_CardLines	{0}: purchases and refunds	{0}: aankopen en terugbetalingen
+Report_Table_NetWorthOn	Net worth on {0}	Vermogen op {0}
+Report_Table_NetWorthHistory	Net worth over time	Vermogen doorheen de tijd
+Report_Table_Year	{0} per month	{0} per maand
+Report_Table_Planned	Planned items (estimate, not in the totals)	Geplande posten (schatting, niet in de totalen)
+Report_Note_CategoryFilter	Only {0} selected categories are included.	Alleen {0} gekozen categorieën zijn meegeteld.
+Report_Note_AccountFilter	Only these accounts are included: {0}.	Alleen deze rekeningen zijn meegeteld: {0}.
+Report_Note_BeforeHistory	Months before {0}, the first balance date, have no data and are left out.	Maanden vóór {0}, de eerste saldodatum, hebben geen gegevens en zijn weggelaten.
+Report_Note_NoAccounts	There are no accounts yet, so there is nothing to report.	Er zijn nog geen rekeningen, dus er is niets te rapporteren.
+Report_Note_FutureMonths	Months after today have no actual figures and are left out.	Maanden na vandaag hebben geen werkelijke cijfers en zijn weggelaten.
+Report_Note_NoComparison	There are no complete earlier months to compare with.	Er zijn geen volledige eerdere maanden om mee te vergelijken.
+Report_Note_PlannedExcluded	Planned items are not included. Turn on "Include planned items" to see them separately.	Geplande posten zijn niet meegeteld. Zet "Geplande posten tonen" aan om ze apart te zien.
+Report_Note_PlannedSeparate	These items have not happened yet. They are never added to the actual figures above.	Deze posten zijn nog niet gebeurd. Ze worden nooit bij de werkelijke cijfers hierboven geteld.
+Report_Note_CashFlowActual	Actual figures come from recorded transactions. Transfers between your accounts are included as money in and out.	Werkelijke cijfers komen uit geboekte transacties. Overschrijvingen tussen je rekeningen tellen als geld in en uit.
+Report_Note_TransfersIncluded	Money in and out include transfers between your own accounts.	Geld in en uit bevatten overschrijvingen tussen je eigen rekeningen.
+Report_Note_Projection	Expected balances are estimates based on planned items and card statements. Expected income is never guaranteed.	Verwachte saldi zijn schattingen op basis van geplande posten en kaartafrekeningen. Verwacht inkomen is nooit zeker.
+Report_Note_Estimates	All amounts in this table are estimates.	Alle bedragen in deze tabel zijn schattingen.
+Report_Note_CardsNotProjected	Credit cards have no projected balance; their statements are counted on the account that pays them.	Kredietkaarten hebben geen verwacht saldo; hun afrekeningen tellen op de rekening die ze betaalt.
+Report_Note_FutureWithoutPlanned	The period runs past today. Turn on "Include planned items" to see expected balances.	De periode loopt na vandaag. Zet "Geplande posten tonen" aan om verwachte saldi te zien.
+Report_Note_InOutVsIncome	Money in and out include transfers; income and spending do not.	Geld in en uit bevatten overschrijvingen; inkomsten en uitgaven niet.
+Report_Note_NotReconciled	This account has never been reconciled with a bank statement.	Deze rekening is nog nooit afgestemd met een uittreksel.
+Report_Note_ReconciledOn	Last reconciled on {0}: the balance matched.	Laatst afgestemd op {0}: het saldo klopte.
+Report_Note_ReconciledDifference	Last reconciled on {0} with a difference of {1}.	Laatst afgestemd op {0} met een verschil van {1}.
+Report_Note_CardBalance	A negative balance is what you owe on the card.	Een negatief saldo is wat je op de kaart verschuldigd bent.
+Report_Note_OpenedOn	The account was opened on {0}; the opening balance is from that date.	De rekening is geopend op {0}; het beginsaldo is van die datum.
+Report_Note_Budget	Spending counts only in months with a budget for that category. Planned items are not included.	Uitgaven tellen alleen in maanden met een budget voor die categorie. Geplande posten zijn niet meegeteld.
+Report_Note_Joint	Full amounts are the whole account. Your part uses your ownership share on each date.	Volledige bedragen zijn de hele rekening. Jouw deel gebruikt je eigendomsaandeel op elke datum.
+Report_Note_NoJoint	There are no shared accounts in the selection.	Er zijn geen gedeelde rekeningen in de selectie.
+Report_Note_ShareOn	Your share on {1}: {0}.	Jouw aandeel op {1}: {0}.
+Report_Note_CardNoDoubleCount	A card purchase counts once, on its purchase date. Paying the statement is a transfer and is not counted again.	Een kaartaankoop telt één keer, op de aankoopdatum. De afrekening betalen is een overschrijving en telt niet opnieuw.
+Report_Note_NoCards	There are no credit cards in the selection.	Er zijn geen kredietkaarten in de selectie.
+Report_Note_CardNotSetUp	{0} has no statement settings yet, so its periods cannot be shown.	{0} heeft nog geen afrekeninstellingen, dus de periodes kunnen niet getoond worden.
+Report_Note_StatementEstimate	The statement of the running period is an estimate until the period closes.	De afrekening van de lopende periode is een schatting tot de periode afsluit.
+Report_Note_CreditNotCash	Available credit is not your money and is not counted as cash.	Beschikbaar krediet is niet jouw geld en telt niet als cash.
+Report_Note_CardLines	Purchases are positive, refunds negative.	Aankopen zijn positief, terugbetalingen negatief.
+Report_Note_NetWorthLines	Grey lines have an uncertain value: no valuation, or an old one.	Grijze lijnen hebben een onzekere waarde: geen waardering, of een oude.
+Report_Note_NetWorthIncomplete	Some items have no valuation and count as zero.	Sommige posten hebben geen waardering en tellen als nul.
+Report_Note_StaleValues	Some valuations are older than {0} days.	Sommige waarderingen zijn ouder dan {0} dagen.
+Report_Note_NoCreditLimit	Unused credit limits are never counted as an asset.	Ongebruikte kredietlimieten tellen nooit als bezit.
+ValueSource_Ledger	Ledger	Boekingen
+ValueSource_Valuation	Valuation	Waardering
+ValueSource_ValuationPlusLedger	Valuation + later entries	Waardering + latere boekingen
+ValueSource_LedgerWithoutValuation	Deposits, no valuation	Stortingen, geen waardering
+ValueSource_NoValuation	No valuation	Geen waardering
+Report_PeriodLabel	Period: {0} to {1}	Periode: {0} tot {1}
+Report_Generated	Generated on {0} at {1}	Gemaakt op {0} om {1}
+Report_Page	Page {0} of {1}	Pagina {0} van {1}
+Report_Empty	No data in this period.	Geen gegevens in deze periode.
+Reports_Title	Reports	Rapporten
+Reports_Subtitle	Choose a report and a period. What you see here is exactly what is saved as PDF or CSV.	Kies een rapport en een periode. Wat je hier ziet, is precies wat als PDF of CSV wordt bewaard.
+Reports_Type	Report	Rapport
+Reports_Account	Account	Rekening
+Reports_Period	Period	Periode
+Reports_Period_ThisMonth	This month	Deze maand
+Reports_Period_LastMonth	Last month	Vorige maand
+Reports_Period_ThisYear	This year	Dit jaar
+Reports_Period_LastYear	Last year	Vorig jaar
+Reports_Period_Last12Months	Last 12 months	Laatste 12 maanden
+Reports_Period_Custom	Custom	Zelf kiezen
+Reports_From	From	Van
+Reports_To	To	Tot en met
+Reports_Accounts	Accounts	Rekeningen
+Reports_Categories	Categories	Categorieën
+Reports_NoneMeansAll	Nothing ticked means everything.	Niets aangevinkt betekent alles.
+Reports_IncludePlanned	Include planned items	Geplande posten tonen
+Reports_IncludePlannedHint	Planned items and expected balances are shown in their own tables, marked as estimates. They are never added to actual totals.	Geplande posten en verwachte saldi staan in eigen tabellen, gemarkeerd als schatting. Ze worden nooit bij werkelijke totalen geteld.
+Reports_Generate	Make report	Rapport maken
+Reports_SavePdf	Save as PDF	Bewaren als PDF
+Reports_SaveCsv	Save as CSV	Bewaren als CSV
+Reports_PdfType	PDF document	PDF-document
+Reports_CsvType	CSV file	CSV-bestand
+Reports_Saved	Saved as {0}.	Bewaard als {0}.
+Reports_OpenPdf	Open PDF	PDF openen
+Reports_Privacy	Reports are made on this computer only. Nothing is sent anywhere; you choose where a file is saved.	Rapporten worden alleen op deze computer gemaakt. Er wordt niets verzonden; je kiest zelf waar een bestand komt.
+Reports_Outdated	You changed the choices. Make the report again to see them; saving now saves the report shown below.	Je hebt de keuzes gewijzigd. Maak het rapport opnieuw om ze te zien; bewaren bewaart nu het rapport hieronder.
+Reports_Start	Choose a report and click Make report.	Kies een rapport en klik op Rapport maken.
+Error_report_period_invalid	Choose a start date on or before the end date.	Kies een begindatum op of vóór de einddatum.
+Error_report_period_tooLong	A report covers at most 10 years.	Een rapport beslaat hoogstens 10 jaar.
+Error_report_account_required	Choose the account for this report.	Kies de rekening voor dit rapport.
+Error_report_save_failed	The file could not be saved. Choose another place or close the file if it is open in another program.	Het bestand kon niet worden bewaard. Kies een andere plaats of sluit het bestand als het in een ander programma openstaat.
+Backup_Title	Backup and restore	Back-up en herstel
+Backup_Explain	A backup is one file with all your accounts, transactions, plans and settings. Keep it on a USB stick or another drive.	Een back-up is één bestand met al je rekeningen, transacties, planning en instellingen. Bewaar het op een USB-stick of een andere schijf.
+Backup_Last	Last backup: {0}	Laatste back-up: {0}
+Backup_Never	No backup made yet	Nog geen back-up gemaakt
+Backup_Due	Time for a new backup.	Tijd voor een nieuwe back-up.
+Backup_Make	Make backup	Back-up maken
+Backup_Reminder	Remind me	Herinner me
+Backup_ReminderOff	Never	Nooit
+Backup_ReminderDays	Every {0} days	Elke {0} dagen
+Backup_Done	Backup {0} made and checked: {1} transactions.	Back-up {0} gemaakt en gecontroleerd: {1} transacties.
+Backup_SameDrive	This backup is on the same drive as your data. It does not protect you if this disk breaks. Copy it to a USB stick or another drive as well.	Deze back-up staat op dezelfde schijf als je gegevens. Hij beschermt je niet als deze schijf kapotgaat. Kopieer hem ook naar een USB-stick of een andere schijf.
+Backup_DriveNote	A backup only counts once it has been checked. A backup on the same disk as the app does not survive a disk failure.	Een back-up telt pas als hij gecontroleerd is. Een back-up op dezelfde schijf als de app overleeft geen defecte schijf.
+Backup_RestoreTitle	Restore a backup	Een back-up terugzetten
+Backup_RestoreExplain	Replaces all current data with the backup. A copy of the current data is kept first.	Vervangt alle huidige gegevens door de back-up. Eerst wordt een kopie van de huidige gegevens bewaard.
+Backup_Choose	Choose backup…	Back-up kiezen…
+Backup_FileType	Personal Finance OS backup	Personal Finance OS-back-up
+Backup_ConfirmTitle	Restore this backup?	Deze back-up terugzetten?
+Backup_RestoreSummary	{0}, made on {1} with version {4}: {2} accounts and {3} transactions.	{0}, gemaakt op {1} met versie {4}: {2} rekeningen en {3} transacties.
+Backup_ConfirmExplain	All current data is replaced by this backup. A checked copy of the current data is saved in the backups folder first, and the app reopens on the restored data.	Alle huidige gegevens worden vervangen door deze back-up. Eerst wordt een gecontroleerde kopie van de huidige gegevens in de map backups bewaard, daarna opent de app opnieuw met de teruggezette gegevens.
+Backup_ConfirmRestore	Replace my data with this backup	Mijn gegevens vervangen door deze back-up
+Backup_Restored	The backup was restored.	De back-up is teruggezet.
+Dashboard_BackupNever	You have not made a backup yet.	Je hebt nog geen back-up gemaakt.
+Dashboard_BackupDue	Your last backup is from {0}. Time for a new one.	Je laatste back-up is van {0}. Tijd voor een nieuwe.
+Error_backup_verifyFailed	The backup could not be checked, so it was not kept. Try another place.	De back-up kon niet worden gecontroleerd en is daarom niet bewaard. Probeer een andere plaats.
+Error_backup_noAccess	The app may not write to that place. Choose another folder.	De app mag niet schrijven op die plaats. Kies een andere map.
+Error_backup_writeFailed	The backup could not be written. Check that there is enough space and try again.	De back-up kon niet worden geschreven. Controleer of er genoeg ruimte is en probeer opnieuw.
+Error_backup_notABackup	This file is not a Personal Finance OS backup.	Dit bestand is geen back-up van Personal Finance OS.
+Error_backup_tooNew	This backup was made by a newer version of the app. Update the app first.	Deze back-up is gemaakt met een nieuwere versie van de app. Werk de app eerst bij.
+Error_backup_damaged	This backup is damaged and cannot be restored.	Deze back-up is beschadigd en kan niet worden teruggezet.
+Error_backup_preRestoreFailed	A copy of the current data could not be made, so nothing was replaced.	Er kon geen kopie van de huidige gegevens worden gemaakt, dus er is niets vervangen.
+Error_backup_restoreFailed	Restoring failed. Your previous data was put back.	Terugzetten is mislukt. Je vorige gegevens zijn teruggezet.
+Error_backup_reminder_invalid	Choose one of the reminder options.	Kies een van de herinneringsopties.
+Settings_CategoryKind	Category kind	Soort categorie

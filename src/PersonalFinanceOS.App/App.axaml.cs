@@ -18,6 +18,9 @@ public partial class App : Avalonia.Application
 {
     private ServiceProvider? _services;
 
+    /// <summary>Raised with the new window after the app reopened on restored data.</summary>
+    public event Action<Window>? Restarted;
+
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
@@ -44,7 +47,7 @@ public partial class App : Avalonia.Application
 
         if (startup.CanOpen)
         {
-            return CreateMainWindow(paths, startup);
+            return CreateMainWindow(paths, startup, shutdown);
         }
 
         Loc.Instance.SetLanguage(Loc.FromSystem());
@@ -55,7 +58,7 @@ public partial class App : Avalonia.Application
             initializer.StartNewProfileAfterMissingDatabase,
             recovered =>
             {
-                var main = CreateMainWindow(paths, recovered);
+                var main = CreateMainWindow(paths, recovered, shutdown);
                 if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
                     desktop.MainWindow = main;
@@ -68,7 +71,7 @@ public partial class App : Avalonia.Application
         return window;
     }
 
-    private Window CreateMainWindow(AppDataPaths paths, DatabaseStartupResult startup)
+    private Window CreateMainWindow(AppDataPaths paths, DatabaseStartupResult startup, Action<int> shutdown)
     {
         _services?.Dispose();
         _services = AppComposition.Build(paths, startup);
@@ -86,6 +89,21 @@ public partial class App : Avalonia.Application
         var viewModel = _services.GetRequiredService<MainWindowViewModel>();
         var window = new MainWindow { DataContext = viewModel };
         window.Opened += async (_, _) => await viewModel.InitializeAsync();
+
+        // After a restore the app starts again on the restored data, through the same safe startup checks (which
+        // also upgrade a backup made by an older version).
+        _services.GetRequiredService<BackupViewModel>().Restored = () =>
+        {
+            var next = CreateStartWindow(paths, shutdown);
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = next;
+            }
+
+            next.Show();
+            window.Close();
+            Restarted?.Invoke(next);
+        };
         return window;
     }
 }

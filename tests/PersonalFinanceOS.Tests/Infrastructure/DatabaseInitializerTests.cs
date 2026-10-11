@@ -5,7 +5,7 @@ namespace PersonalFinanceOS.Tests.Infrastructure;
 /// <summary>Spec §4 "immutable data-preservation rule" and §23 "Updates, installer, backup".</summary>
 public class DatabaseInitializerTests
 {
-    private const string InsertAccount = """
+    internal const string InsertAccount = """
         INSERT INTO accounts (id, name, type, currency, ownership_share_bp, opening_date, opening_balance_cents, status, sort_order, created_at, updated_at)
         VALUES ('11111111-1111-1111-1111-111111111111', 'Zicht', 'PersonalCurrent', 'EUR', 10000, '2026-10-01', 123456, 'Active', 0, '2026-10-01T00:00:00.0000000Z', '2026-10-01T00:00:00.0000000Z');
         """;

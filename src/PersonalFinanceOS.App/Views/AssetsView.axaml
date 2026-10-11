@@ -60,11 +60,11 @@
         <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto,12,Auto">
           <StackPanel>
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Name}" />
-            <TextBox Text="{Binding NewName}" MaxLength="100" PlaceholderText="{l:T Assets_NamePlaceholder}" />
+            <TextBox AutomationProperties.Name="{l:T Accounts_Name}" Text="{Binding NewName}" MaxLength="100" PlaceholderText="{l:T Assets_NamePlaceholder}" />
           </StackPanel>
           <StackPanel Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Type}" />
-            <ComboBox ItemsSource="{Binding KindOptions}" SelectedItem="{Binding NewKind}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Accounts_Type}" ItemsSource="{Binding KindOptions}" SelectedItem="{Binding NewKind}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:AssetKindOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>
@@ -72,20 +72,20 @@
           </StackPanel>
           <StackPanel Grid.Row="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Assets_Value}" />
-            <TextBox Text="{Binding NewValueText}" PlaceholderText="0,00" />
+            <TextBox AutomationProperties.Name="{l:T Assets_Value}" Text="{Binding NewValueText}" PlaceholderText="0,00" />
             <TextBlock Classes="caption" Margin="4,6,0,0" Text="{l:T Assets_ValueHint}" TextWrapping="Wrap" />
           </StackPanel>
           <StackPanel Grid.Row="2" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Assets_ValueDate}" />
-            <CalendarDatePicker SelectedDate="{Binding NewValueDate}" HorizontalAlignment="Stretch" />
+            <CalendarDatePicker AutomationProperties.Name="{l:T Assets_ValueDate}" SelectedDate="{Binding NewValueDate}" HorizontalAlignment="Stretch" />
           </StackPanel>
           <StackPanel Grid.Row="4">
             <TextBlock Classes="fieldLabel" Text="{l:T Assets_YourShare}" />
-            <TextBox Text="{Binding NewShareText}" PlaceholderText="100" />
+            <TextBox AutomationProperties.Name="{l:T Assets_YourShare}" Text="{Binding NewShareText}" PlaceholderText="100" />
           </StackPanel>
           <StackPanel Grid.Row="4" Grid.Column="2">
             <TextBlock Classes="fieldLabel" Text="{l:T Accounts_Notes}" />
-            <TextBox Text="{Binding NewNotes}" MaxLength="1000" />
+            <TextBox AutomationProperties.Name="{l:T Accounts_Notes}" Text="{Binding NewNotes}" MaxLength="1000" />
           </StackPanel>
         </Grid>
         <Border Classes="error" IsVisible="{Binding AddError, Converter={x:Static ObjectConverters.IsNotNull}}">
@@ -142,7 +142,7 @@
           <Grid ColumnDefinitions="*,16,*,16,2*">
             <StackPanel>
               <TextBlock Classes="fieldLabel" Text="{l:T Assets_ValueDate}" />
-              <CalendarDatePicker SelectedDate="{Binding ValueDate}" HorizontalAlignment="Stretch" />
+              <CalendarDatePicker AutomationProperties.Name="{l:T Assets_ValueDate}" SelectedDate="{Binding ValueDate}" HorizontalAlignment="Stretch" />
             </StackPanel>
             <StackPanel Grid.Column="2">
               <TextBlock Classes="fieldLabel" Text="{l:T Assets_Value}" />
@@ -150,7 +150,7 @@
             </StackPanel>
             <StackPanel Grid.Column="4">
               <TextBlock Classes="fieldLabel" Text="{l:T Assets_ValuationComment}" />
-              <TextBox Text="{Binding ValueNote}" MaxLength="500" />
+              <TextBox AutomationProperties.Name="{l:T Assets_ValuationComment}" Text="{Binding ValueNote}" MaxLength="500" />
             </StackPanel>
           </Grid>
           <Border Classes="error" IsVisible="{Binding PanelError, Converter={x:Static ObjectConverters.IsNotNull}}">
@@ -190,7 +190,7 @@
           <Grid ColumnDefinitions="*,16,*">
             <StackPanel>
               <TextBlock Classes="fieldLabel" Text="{l:T Assets_ShareFromDate}" />
-              <CalendarDatePicker SelectedDate="{Binding ShareDate}" HorizontalAlignment="Stretch" />
+              <CalendarDatePicker AutomationProperties.Name="{l:T Assets_ShareFromDate}" SelectedDate="{Binding ShareDate}" HorizontalAlignment="Stretch" />
             </StackPanel>
             <StackPanel Grid.Column="2">
               <TextBlock Classes="fieldLabel" Text="{l:T Assets_YourShare}" />

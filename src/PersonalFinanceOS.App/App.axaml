@@ -19,8 +19,8 @@
     <DataTemplate DataType="vm:ForecastsViewModel"><v:ForecastsView /></DataTemplate>
     <DataTemplate DataType="vm:ScenariosViewModel"><v:ScenariosView /></DataTemplate>
     <DataTemplate DataType="vm:AssistantViewModel"><v:AssistantView /></DataTemplate>
+    <DataTemplate DataType="vm:ReportsViewModel"><v:ReportsView /></DataTemplate>
     <DataTemplate DataType="vm:SettingsViewModel"><v:SettingsView /></DataTemplate>
-    <DataTemplate DataType="vm:PlaceholderViewModel"><v:PlaceholderView /></DataTemplate>
   </Application.DataTemplates>
 
   <Application.Resources>

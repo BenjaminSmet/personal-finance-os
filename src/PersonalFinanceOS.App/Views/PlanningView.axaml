@@ -176,11 +176,11 @@
             <Grid ColumnDefinitions="*,16,*" RowDefinitions="Auto,12,Auto,12,Auto,12,Auto">
               <StackPanel>
                 <TextBlock Classes="fieldLabel" Text="{l:T Planning_RuleName}" />
-                <TextBox Text="{Binding NewName}" MaxLength="100" PlaceholderText="{l:T Planning_RuleNamePlaceholder}" />
+                <TextBox AutomationProperties.Name="{l:T Planning_RuleName}" Text="{Binding NewName}" MaxLength="100" PlaceholderText="{l:T Planning_RuleNamePlaceholder}" />
               </StackPanel>
               <StackPanel Grid.Column="2">
                 <TextBlock Classes="fieldLabel" Text="{l:T Planning_Kind}" />
-                <ComboBox ItemsSource="{Binding KindOptions}" SelectedItem="{Binding NewKind}" HorizontalAlignment="Stretch">
+                <ComboBox AutomationProperties.Name="{l:T Planning_Kind}" ItemsSource="{Binding KindOptions}" SelectedItem="{Binding NewKind}" HorizontalAlignment="Stretch">
                   <ComboBox.ItemTemplate>
                     <DataTemplate DataType="vm:KindOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                   </ComboBox.ItemTemplate>
@@ -189,7 +189,7 @@
 
               <StackPanel Grid.Row="2">
                 <TextBlock Classes="fieldLabel" Text="{Binding AccountLabel}" />
-                <ComboBox ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding NewAccount}" HorizontalAlignment="Stretch">
+                <ComboBox AutomationProperties.Name="{Binding AccountLabel}" ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding NewAccount}" HorizontalAlignment="Stretch">
                   <ComboBox.ItemTemplate>
                     <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                   </ComboBox.ItemTemplate>
@@ -197,7 +197,7 @@
               </StackPanel>
               <StackPanel Grid.Row="2" Grid.Column="2" IsVisible="{Binding IsTransfer}">
                 <TextBlock Classes="fieldLabel" Text="{l:T Planning_ToAccount}" />
-                <ComboBox ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding NewToAccount}" HorizontalAlignment="Stretch">
+                <ComboBox AutomationProperties.Name="{l:T Planning_ToAccount}" ItemsSource="{Binding AccountOptions}" SelectedItem="{Binding NewToAccount}" HorizontalAlignment="Stretch">
                   <ComboBox.ItemTemplate>
                     <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                   </ComboBox.ItemTemplate>
@@ -205,7 +205,7 @@
               </StackPanel>
               <StackPanel Grid.Row="2" Grid.Column="2" IsVisible="{Binding !IsTransfer}">
                 <TextBlock Classes="fieldLabel" Text="{l:T Editor_Category}" />
-                <ComboBox ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding NewCategory}" HorizontalAlignment="Stretch">
+                <ComboBox AutomationProperties.Name="{l:T Editor_Category}" ItemsSource="{Binding CategoryOptions}" SelectedItem="{Binding NewCategory}" HorizontalAlignment="Stretch">
                   <ComboBox.ItemTemplate>
                     <DataTemplate DataType="vm:CategoryOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                   </ComboBox.ItemTemplate>
@@ -214,11 +214,11 @@
 
               <StackPanel Grid.Row="4">
                 <TextBlock Classes="fieldLabel" Text="{l:T Planning_Amount}" />
-                <TextBox Text="{Binding NewAmountText}" PlaceholderText="0,00" />
+                <TextBox AutomationProperties.Name="{l:T Planning_Amount}" Text="{Binding NewAmountText}" PlaceholderText="0,00" />
               </StackPanel>
               <StackPanel Grid.Row="4" Grid.Column="2">
                 <TextBlock Classes="fieldLabel" Text="{l:T Planning_Frequency}" />
-                <ComboBox ItemsSource="{Binding FrequencyOptions}" SelectedItem="{Binding NewFrequency}" HorizontalAlignment="Stretch">
+                <ComboBox AutomationProperties.Name="{l:T Planning_Frequency}" ItemsSource="{Binding FrequencyOptions}" SelectedItem="{Binding NewFrequency}" HorizontalAlignment="Stretch">
                   <ComboBox.ItemTemplate>
                     <DataTemplate DataType="vm:FrequencyOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
                   </ComboBox.ItemTemplate>
@@ -227,12 +227,12 @@
 
               <StackPanel Grid.Row="6">
                 <TextBlock Classes="fieldLabel" Text="{l:T Planning_StartDate}" />
-                <CalendarDatePicker SelectedDate="{Binding NewStartDate}" HorizontalAlignment="Stretch" />
+                <CalendarDatePicker AutomationProperties.Name="{l:T Planning_StartDate}" SelectedDate="{Binding NewStartDate}" HorizontalAlignment="Stretch" />
                 <TextBlock Classes="caption" Margin="4,6,0,0" Text="{l:T Planning_StartDateHint}" TextWrapping="Wrap" />
               </StackPanel>
               <StackPanel Grid.Row="6" Grid.Column="2">
                 <TextBlock Classes="fieldLabel" Text="{l:T Planning_EndDate}" />
-                <CalendarDatePicker SelectedDate="{Binding NewEndDate}" HorizontalAlignment="Stretch" />
+                <CalendarDatePicker AutomationProperties.Name="{l:T Planning_EndDate}" SelectedDate="{Binding NewEndDate}" HorizontalAlignment="Stretch" />
               </StackPanel>
             </Grid>
             <Border Classes="error" IsVisible="{Binding RuleError, Converter={x:Static ObjectConverters.IsNotNull}}">
@@ -276,14 +276,14 @@
           <StackPanel Spacing="4">
             <TextBlock Classes="fieldLabel" Text="{l:T Planning_Buffer}" />
             <StackPanel Orientation="Horizontal" Spacing="8">
-              <TextBox Text="{Binding BufferText}" Width="130" PlaceholderText="0,00" />
+              <TextBox AutomationProperties.Name="{l:T Planning_Buffer}" Text="{Binding BufferText}" Width="130" PlaceholderText="0,00" />
               <Button Content="{l:T Editor_Save}" Command="{Binding SaveBufferCommand}" />
             </StackPanel>
             <TextBlock Classes="caption" Text="{l:T Planning_BufferHint}" TextWrapping="Wrap" />
           </StackPanel>
           <StackPanel Grid.Column="2" Spacing="4">
             <TextBlock Classes="fieldLabel" Text="{l:T Planning_RoundingAccount}" />
-            <ComboBox ItemsSource="{Binding RoundingOptions}" SelectedItem="{Binding RoundingAccount}" HorizontalAlignment="Stretch">
+            <ComboBox AutomationProperties.Name="{l:T Planning_RoundingAccount}" ItemsSource="{Binding RoundingOptions}" SelectedItem="{Binding RoundingAccount}" HorizontalAlignment="Stretch">
               <ComboBox.ItemTemplate>
                 <DataTemplate DataType="vm:AccountOption"><TextBlock Text="{Binding Name}" /></DataTemplate>
               </ComboBox.ItemTemplate>

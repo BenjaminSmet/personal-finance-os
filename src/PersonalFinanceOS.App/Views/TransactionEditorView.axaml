@@ -34,7 +34,7 @@
       </StackPanel>
       <StackPanel Grid.Row="2" Grid.Column="2">
         <TextBlock Classes="fieldLabel" Text="{l:T Editor_Date}" />
-        <CalendarDatePicker SelectedDate="{Binding Date}" HorizontalAlignment="Stretch" />
+        <CalendarDatePicker AutomationProperties.Name="{l:T Editor_Date}" SelectedDate="{Binding Date}" HorizontalAlignment="Stretch" />
       </StackPanel>
 
       <StackPanel Grid.Row="4" Grid.Column="0">

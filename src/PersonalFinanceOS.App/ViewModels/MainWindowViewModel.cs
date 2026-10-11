@@ -42,6 +42,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         WishlistViewModel wishlist,
         AssetsViewModel assets,
         AssistantViewModel assistant,
+        ReportsViewModel reports,
         SettingsViewModel settings,
         QuickAddViewModel quickAdd)
     {
@@ -57,7 +58,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             new NavItem("Nav_Wishlist", Icons.Wishlist, wishlist),
             new NavItem("Nav_Assets", Icons.Assets, assets),
             new NavItem("Nav_Assistant", Icons.Assistant, assistant),
-            new NavItem("Nav_Reports", Icons.Reports, new PlaceholderViewModel("Nav_Reports", 8)),
+            new NavItem("Nav_Reports", Icons.Reports, reports),
             new NavItem("Nav_Settings", Icons.Settings, settings),
         ];
 
@@ -70,6 +71,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         dashboard.NavigateToBudgets = () => SelectedItem = NavItems.First(n => n.Page == budgets);
         dashboard.NavigateToAssets = () => SelectedItem = NavItems.First(n => n.Page == assets);
         dashboard.NavigateToWishlist = () => SelectedItem = NavItems.First(n => n.Page == wishlist);
+        dashboard.NavigateToSettings = () => SelectedItem = NavItems.First(n => n.Page == settings);
         assistant.Navigate = async (action, scenarioId) =>
         {
             switch (action)
