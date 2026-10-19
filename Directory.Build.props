@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Deterministic>true</Deterministic>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Company>Benjamin Smet</Company>
     <Product>Personal Finance OS</Product>
     <NeutralLanguage>en</NeutralLanguage>
