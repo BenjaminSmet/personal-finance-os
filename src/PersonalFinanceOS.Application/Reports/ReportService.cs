@@ -225,7 +225,7 @@ public sealed class ReportService(
                 tables.Add(new ReportTable(
                     T("Report_Table_Commitments"),
                     [Col("Report_Col_Date"), Col("Report_Col_Item"), Col("Report_Col_Account"), Col("Report_Col_Kind"), Num("Report_Col_Amount")],
-                    events.Select(e => Row([e.Date, e.Name ?? string.Empty, d.Accounts[e.AccountId].Name, T("Report_Event_" + e.Kind), e.Amount], RowStyle.Subtle)).ToList(),
+                    Commitments(events).Select(e => Row([e.Date, e.Detected ? T("Report_Detected", e.Name ?? string.Empty) : e.Name ?? string.Empty, d.Accounts[e.AccountId].Name, T("Report_Event_" + e.Kind), e.Amount], RowStyle.Subtle)).ToList(),
                     T("Report_Note_Estimates")));
                 notes.AddRange(timeline.Caveats.Select(c => T("ForecastCaveat_" + c)));
                 if (list.Any(a => timeline.Accounts.All(x => x.Id != a.Id)))
@@ -242,6 +242,14 @@ public sealed class ReportService(
         notes.Insert(0, T("Report_Note_CashFlowActual"));
         return (T("ReportType_CashFlow"), notes, tables);
     }
+
+    /// <summary>The expected events one by one, except usual day-to-day spending: one line per account and month (D-039).</summary>
+    private static IEnumerable<AccountEvent> Commitments(IEnumerable<AccountEvent> events) =>
+        events.Where(e => e.Kind != CashEventKind.Usual)
+            .Concat(events.Where(e => e.Kind == CashEventKind.Usual)
+                .GroupBy(e => (e.AccountId, e.Date.Year, e.Date.Month))
+                .Select(g => new AccountEvent(g.Key.AccountId, g.Max(e => e.Date), Money.Sum(g.Select(e => e.Amount)), CashEventKind.Usual, null)))
+            .OrderBy(e => e.Date);
 
     // ===== 3. Account =====
 

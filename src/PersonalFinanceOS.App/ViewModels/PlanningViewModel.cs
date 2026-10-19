@@ -560,7 +560,7 @@ public sealed partial class PlanningViewModel : PageViewModel
         SafeAmountText = LedgerText.Amount(safe.Amount);
         SafeIsNegative = safe.Amount.IsNegative;
         SafeUntilText = safe.NextIncome is { } income
-            ? Loc.Format("Planning_SafeUntilIncome", LedgerText.Date(safe.Until, today), income.Rule.Name, LedgerText.Date(income.DueDate, today))
+            ? Loc.Format("Planning_SafeUntilIncome", LedgerText.Date(safe.Until, today), income.Name, LedgerText.Date(income.Date, today))
             : Loc.Format("Planning_SafeUntil", LedgerText.Date(safe.Until, today));
 
         SafeLines.Clear();
@@ -572,6 +572,8 @@ public sealed partial class PlanningViewModel : PageViewModel
                 ForecastLineKind.RecordedLater => Loc.T("Forecast_RecordedLater"),
                 ForecastLineKind.Buffer => Loc.T("Forecast_Buffer"),
                 ForecastLineKind.CardSettlement => Loc.Format("Forecast_CardSettlement", line.Name, LedgerText.Date(line.Date!.Value, today)),
+                ForecastLineKind.UsualSpending => Loc.Format("Forecast_Usual", LedgerText.Amount(safe.Profile!.UsualMonthly)),
+                _ when line.Detected => Loc.Format("Forecast_Detected", line.Name, LedgerText.Date(line.Date!.Value, today)),
                 _ => Loc.Format("Forecast_Planned", line.Name, LedgerText.Date(line.Date!.Value, today)),
             };
             SafeLines.Add(new ForecastLineViewModel(label, LedgerText.Amount(line.Amount), line.Amount.IsNegative));

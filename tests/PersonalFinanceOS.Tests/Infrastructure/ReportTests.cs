@@ -65,7 +65,7 @@ public sealed class ReportTests : IDisposable
         _reconciliation = new ReconciliationService(_ledger, accountRepository, reconciliations, audit, _clock);
         _recurring = new RecurringService(new RecurringRepository(db), accountRepository, categoryRepository, transactions, _ledger, audit, _clock);
         var cards = new CreditCardService(new CreditCardRepository(db), accountRepository, transactions, _recurring, audit, _clock);
-        var forecast = new ForecastService(accountRepository, _ledger, _recurring, cards, settings, _clock);
+        var forecast = new ForecastService(accountRepository, _ledger, _recurring, cards, settings, new SpendingProfileService(accountRepository, categoryRepository, transactions, new CreditCardRepository(db), _recurring, _clock), _clock);
         var assetRepository = new AssetRepository(db);
         var valuations = new ValuationRepository(db);
         _netWorth = new NetWorthService(accountRepository, transactions, assetRepository, valuations, ownership, _clock);
@@ -182,7 +182,8 @@ public sealed class ReportTests : IDisposable
         Assert.Equal([Euro(2_500), Money.Zero, Euro(340), Euro(2_160)], actualRow.Cells.Skip(1));
         var projected = RowFor(Table(cash, "Report_Table_Projection"), "Zichtrekening");
         Assert.Equal(RowStyle.Subtle, projected.Style);
-        Assert.Equal(Euro(2_160 - 900 + 2_400), projected.Cells[5]);
+        // Minus the usual day-to-day spending for the rest of October: €485 a month (the middle of August and September), 21 of 31 days.
+        Assert.Equal(Euro(2_160 - 900 + 2_400) - Money.FromCents(32_855), projected.Cells[5]);
 
         var withoutPlanned = await Generate(ReportType.CashFlow, new(2026, 10, 1), new(2026, 10, 31));
         Assert.Single(withoutPlanned.Tables);

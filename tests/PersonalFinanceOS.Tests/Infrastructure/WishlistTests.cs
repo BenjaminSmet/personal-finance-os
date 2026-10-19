@@ -45,7 +45,7 @@ public sealed class WishlistTests : IDisposable
         _ledger = new LedgerService(transactions, accountRepository, categoryRepository, audit, new UndoHistory(), _clock);
         _recurring = new RecurringService(new RecurringRepository(db), accountRepository, categoryRepository, transactions, _ledger, audit, _clock);
         var cards = new CreditCardService(new CreditCardRepository(db), accountRepository, transactions, _recurring, audit, _clock);
-        var forecast = new ForecastService(accountRepository, _ledger, _recurring, cards, _settings, _clock);
+        var forecast = new ForecastService(accountRepository, _ledger, _recurring, cards, _settings, new SpendingProfileService(accountRepository, categoryRepository, transactions, new CreditCardRepository(db), _recurring, _clock), _clock);
         _affordability = new AffordabilityService(forecast, cards);
         _wishlist = new WishlistService(new WishlistRepository(db), transactions, _ledger, audit, _clock);
     }
@@ -93,7 +93,7 @@ public sealed class WishlistTests : IDisposable
         Assert.True(a.BillsCovered);
         Assert.Equal(new DateOnly(2026, 10, 25), a.NextIncome);
         Assert.Equal(a.Today, a.EarliestPrudent);
-        Assert.Empty(a.Caveats);
+        Assert.Equal([ForecastCaveat.NoSpendingHistory], a.Caveats);
     }
 
     [Fact]

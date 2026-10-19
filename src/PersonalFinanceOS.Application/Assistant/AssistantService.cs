@@ -16,7 +16,8 @@ namespace PersonalFinanceOS.Application.Assistant;
 /// The local, rule-based financial assistant (spec §15). It recognises the question and answers with figures from the
 /// calculation services only: it never does its own arithmetic on the user's words, never invents a figure, never treats
 /// expected income as certain or card credit as money, and never changes data. When a missing value would change the
-/// answer, it asks one focused question.
+/// answer, it asks one focused question. Whether something fits is judged on fixed costs and usual spending learned from
+/// the history, never on budgets (D-039).
 /// </summary>
 public sealed class AssistantService(
     IAccountRepository accounts,
@@ -27,6 +28,7 @@ public sealed class AssistantService(
     AffordabilityService affordability,
     AnalysisService analysis,
     ScenarioService scenarios,
+    SpendingProfileService spending,
     IClock clock)
 {
     /// <summary>The days "What payments are coming up?" looks ahead.</summary>
@@ -39,7 +41,7 @@ public sealed class AssistantService(
     public static readonly string[] Examples =
     [
         "Ask_Example_Afford", "Ask_Example_Category", "Ask_Example_Safe", "Ask_Example_Upcoming", "Ask_Example_Lower",
-        "Ask_Example_WhatIf", "Ask_Example_When", "Ask_Example_Spent", "Ask_Example_Changed", "Ask_Example_Card",
+        "Ask_Example_WhatIf", "Ask_Example_When", "Ask_Example_Spent", "Ask_Example_Changed", "Ask_Example_Card", "Ask_Example_Fixed",
     ];
 
     /// <summary>Answers a question. <paramref name="pending"/> is the assistant's own last question, so a short reply can complete it.</summary>
@@ -75,6 +77,7 @@ public sealed class AssistantService(
             AssistantIntent.SpentOn => await SpentOnAsync(q, cats, ct),
             AssistantIntent.ChangedVsLastMonth => await ChangedAsync(ct),
             AssistantIntent.CardOrWait => await CardOrWaitAsync(q, open, ct),
+            AssistantIntent.FixedCosts => await FixedCostsAsync(rules, ct),
             AssistantIntent.Help => Help(AnswerKind.Direct, "Ask_Help"),
             _ => Help(AnswerKind.NotUnderstood, "Ask_NotUnderstood"),
         };
@@ -135,6 +138,10 @@ public sealed class AssistantService(
 
     // ---- Can I spend another €100 on groceries this month? ------------------------------------------------------
 
+    /// <summary>
+    /// Whether an extra amount fits in what is left after fixed costs, card statements, usual spending and the buffer until
+    /// the next income, with the user's own usual spending on the category next to it. Budgets play no part (D-039).
+    /// </summary>
     private async Task<AssistantAnswer> CategoryRoomAsync(ParsedQuestion q, IReadOnlyList<Category> cats, CancellationToken ct)
     {
         if (q.Amount is not { } amount)
@@ -156,40 +163,27 @@ public sealed class AssistantService(
         var month = await analysis.AnalyzeMonthAsync(clock.Today, ct);
         var line = month.Expenses.FirstOrDefault(e => e.Category?.Id == category.Id);
         var spent = line?.Actual ?? Money.Zero;
-        var budget = line?.Budget;
-        var fitsSafe = safe.Amount >= amount;
-        AnswerKind kind;
-        AnswerText headline;
-        if (!fitsSafe)
+        var usual = month.ComparedMonths > 0 ? line?.PreviousAverage ?? Money.Zero : (Money?)null;
+        var (kind, headline) = (safe.Amount >= amount, usual) switch
         {
-            (kind, headline) = (AnswerKind.Direct, T("Ask_Room_No", amount, Max0(safe.Amount), safe.Until));
-        }
-        else if (budget is not { } b)
-        {
-            (kind, headline) = (AnswerKind.Qualified, T("Ask_Room_NoBudget", amount, category.Name, safe.Amount, safe.Until));
-        }
-        else if (spent + amount <= b)
-        {
-            (kind, headline) = (AnswerKind.Direct, T("Ask_Room_Yes", amount, category.Name, b - spent, safe.Amount));
-        }
-        else
-        {
-            (kind, headline) = (AnswerKind.Qualified, T("Ask_Room_OverBudget", amount, category.Name, spent + amount - b));
-        }
+            (false, _) => (AnswerKind.Direct, T("Ask_Room_No", amount, Max0(safe.Amount), safe.Until)),
+            (true, { IsPositive: true } u) when spent + amount > u => (AnswerKind.Qualified, T("Ask_Room_MoreThanUsual", amount, category.Name, safe.Amount, safe.Until, u)),
+            _ => (AnswerKind.Direct, T("Ask_Room_Yes", amount, safe.Amount, safe.Until)),
+        };
 
         var figures = new List<AnswerFigure>
         {
             new(T("Ask_F_SpentThisMonth", category.Name), spent),
-            new(T("Ask_F_Budget"), budget is { } bb ? bb : T("Ask_V_NoBudget")),
+            new(T("Ask_F_UsualCategory", category.Name), usual is { } avg ? avg : T("Ask_V_NotKnownYet")),
+            new(T("Ask_F_SafeUntil", safe.Until), safe.Amount),
         };
-        if (line?.Remaining is { } left)
+        var assumptions = await AssumptionsAsync(safe.Caveats, safe.NextIncome?.Date, ct);
+        if (usual is not null)
         {
-            figures.Add(new(T("Ask_F_BudgetLeft"), left));
+            assumptions.Add(T("Ask_Assume_UsualCategory", month.ComparedMonths));
         }
 
-        figures.Add(new(T("Ask_F_SafeUntil", safe.Until), safe.Amount));
-        var assumptions = await AssumptionsAsync(safe.Caveats, safe.NextIncome?.DueDate, ct);
-        return new AssistantAnswer(q.Intent, kind, headline, figures, [], assumptions, T("Ask_Explain_Room"), [AssistantAction.OpenBudgets], []);
+        return new AssistantAnswer(q.Intent, kind, headline, figures, [], assumptions, T("Ask_Explain_Room"), [AssistantAction.OpenForecasts], []);
     }
 
     // ---- How much can I safely spend before payday? ---------------------------------------------------------------
@@ -213,6 +207,7 @@ public sealed class AssistantService(
                 ForecastLineKind.Planned => T("Ask_F_PlannedOut"),
                 ForecastLineKind.PlannedIn => T("Ask_F_PlannedIn"),
                 ForecastLineKind.CardSettlement => T("Ask_F_CardStatements"),
+                ForecastLineKind.UsualSpending => T("Ask_F_Usual"),
                 _ => T("Forecast_Buffer"),
             };
             figures.Add(new(label, Money.Sum(group.Select(l => l.Amount))));
@@ -223,9 +218,9 @@ public sealed class AssistantService(
             .Where(l => l.Kind is ForecastLineKind.Planned or ForecastLineKind.PlannedIn or ForecastLineKind.CardSettlement)
             .Select(l => l.Kind == ForecastLineKind.CardSettlement
                 ? T("Ask_Event_Card", l.Name ?? string.Empty, l.Amount.Abs(), l.Date!.Value)
-                : T(l.Amount.IsNegative ? "Ask_Event_Out" : "Ask_Event_In", l.Name ?? string.Empty, l.Amount.Abs(), l.Date!.Value))
+                : T(l.Amount.IsNegative ? "Ask_Event_Out" : "Ask_Event_In", Name(l.Name, l.Detected), l.Amount.Abs(), l.Date!.Value))
             .ToList();
-        var assumptions = await AssumptionsAsync(s.Caveats, s.NextIncome?.DueDate, ct);
+        var assumptions = await AssumptionsAsync(s.Caveats, s.NextIncome?.Date, ct);
         var explanation = s.NextIncome is not null ? T("Ask_Explain_Safe") : T("Ask_Explain_SafeNoIncome", ForecastService.DefaultHorizonDays);
         return new AssistantAnswer(
             AssistantIntent.SafeToSpend, s.Caveats.Count > 0 ? AnswerKind.Qualified : AnswerKind.Direct, headline, figures, Limit(considered), assumptions,
@@ -253,7 +248,7 @@ public sealed class AssistantService(
         var considered = outs
             .Select(e => e.Kind == CashEventKind.CardSettlement
                 ? T("Ask_Event_CardFrom", e.Name ?? string.Empty, e.Amount.Abs(), e.Date, names[e.AccountId])
-                : T("Ask_Event_OutFrom", e.Name ?? string.Empty, e.Amount.Abs(), e.Date, names[e.AccountId]))
+                : T("Ask_Event_OutFrom", Name(e.Name, e.Detected), e.Amount.Abs(), e.Date, names[e.AccountId]))
             .ToList();
         var figures = new List<AnswerFigure>
         {
@@ -295,16 +290,21 @@ public sealed class AssistantService(
             : T("Ask_Lower_No", balanceThis, balanceNext, new MonthRef(nextMonth));
 
         var rules = timeline.Open.Select(o => o.Rule).DistinctBy(r => r.Id).ToDictionary(r => r.Id);
-        var considered = next.Where(e => e.Amount.IsNegative)
+        var considered = next.Where(e => e.Amount.IsNegative && e.Kind != CashEventKind.Usual)
             .OrderBy(e => e.Amount.Cents)
             .Select(e =>
             {
                 var rare = e.RuleId is { } id && rules.TryGetValue(id, out var r) && (r.Frequency is RecurrenceFrequency.Quarterly or RecurrenceFrequency.Yearly || r.EndDate == r.StartDate);
                 return e.Kind == CashEventKind.CardSettlement
                     ? T("Ask_Event_Card", e.Name ?? string.Empty, e.Amount.Abs(), e.Date)
-                    : T(rare ? "Ask_Event_Rare" : "Ask_Event_Out", e.Name ?? string.Empty, e.Amount.Abs(), e.Date);
+                    : T(rare ? "Ask_Event_Rare" : "Ask_Event_Out", Name(e.Name, e.Detected), e.Amount.Abs(), e.Date);
             })
             .ToList();
+        var usualNext = Money.Sum(next.Where(e => e.Kind == CashEventKind.Usual).Select(e => e.Amount)).Negate();
+        if (usualNext.IsPositive)
+        {
+            considered.Insert(0, T("Ask_Event_UsualMonth", usualNext, new MonthRef(nextMonth)));
+        }
         var figures = new List<AnswerFigure>
         {
             new(T("Ask_F_EndOfMonth", new MonthRef(thisMonth)), balanceThis),
@@ -476,7 +476,7 @@ public sealed class AssistantService(
 
         var today = clock.Today;
         var period = q.Period ?? new QuestionPeriod(PeriodKind.ThisMonth, new DateOnly(today.Year, today.Month, 1), today);
-        var months = new List<(DateOnly Month, Money Amount, Money? Budget)>();
+        var months = new List<(DateOnly Month, Money Amount, Money? Usual)>();
         DateOnly? historyStart = null;
         var incomplete = false;
         for (var m = new DateOnly(period.From.Year, period.From.Month, 1); m <= period.To; m = m.AddMonths(1))
@@ -486,7 +486,7 @@ public sealed class AssistantService(
             incomplete |= month.IsIncomplete;
             var lines = category.Kind == CategoryKind.Income ? month.Income : month.Expenses;
             var line = lines.FirstOrDefault(l => l.Category?.Id == category.Id);
-            months.Add((m, line?.Actual ?? Money.Zero, line?.Budget));
+            months.Add((m, line?.Actual ?? Money.Zero, month.ComparedMonths > 0 ? line?.PreviousAverage ?? Money.Zero : null));
         }
 
         if (historyStart is null)
@@ -503,10 +503,9 @@ public sealed class AssistantService(
             figures.AddRange(months.Select(m => new AnswerFigure(T("Ask_F_Month", new MonthRef(m.Month)), m.Amount)));
             figures.Add(new(T("Ask_F_Average"), Money.FromCents((long)Math.Round(total.Cents / (decimal)months.Count, MidpointRounding.AwayFromZero))));
         }
-        else if (months[0].Budget is { } budget)
+        else if (months[0].Usual is { } usual)
         {
-            figures.Add(new(T("Ask_F_Budget"), budget));
-            figures.Add(new(T("Ask_F_BudgetLeft"), budget - months[0].Amount));
+            figures.Add(new(T("Ask_F_UsualCategory", category.Name), usual));
         }
 
         var assumptions = new List<AnswerText>();
@@ -637,6 +636,111 @@ public sealed class AssistantService(
             T("Ask_Explain_Card"), [AssistantAction.OpenWishlist], []);
     }
 
+    // ---- What are my fixed costs? What do I usually spend? --------------------------------------------------------
+
+    /// <summary>
+    /// What the app knows about the user's month without any budget (D-039): the fixed costs (planned by the user or
+    /// recognised in the history), the usual day-to-day spending on top of them, the income, and what is usually left.
+    /// </summary>
+    private async Task<AssistantAnswer> FixedCostsAsync(IReadOnlyList<RecurringRule> rules, CancellationToken ct)
+    {
+        var all = await accounts.ListAsync(includeArchived: false, ct);
+        var counted = all.Where(ForecastService.Counts).Select(a => a.Id).ToHashSet();
+        if (counted.Count == 0)
+        {
+            return NoSpendableAccount(AssistantIntent.FixedCosts);
+        }
+
+        var cardIds = all.Where(a => a.Type.IsLiability()).Select(a => a.Id).ToHashSet();
+        var profile = await spending.GetAsync(ct);
+        var costs = new List<(object Name, Money Monthly)>();
+        var income = Money.Zero;
+        foreach (var r in rules.Where(r => r.IsActive))
+        {
+            var monthly = Monthly(r);
+            switch (r.Kind)
+            {
+                case RecurringKind.Income when counted.Contains(r.AccountId):
+                    income += monthly;
+                    break;
+                case RecurringKind.Expense when counted.Contains(r.AccountId) || cardIds.Contains(r.AccountId):
+                case RecurringKind.Transfer when counted.Contains(r.AccountId) && !counted.Contains(r.ToAccountId!.Value) && !cardIds.Contains(r.ToAccountId!.Value):
+                    costs.Add((r.Name, monthly));
+                    break;
+            }
+        }
+
+        foreach (var f in profile.FixedCosts)
+        {
+            if (f.Kind == RecurringKind.Income)
+            {
+                income += f.Amount;
+            }
+            else
+            {
+                costs.Add((Name(f.Name, true), f.Amount));
+            }
+        }
+
+        if (!profile.IsKnown && costs.Count == 0)
+        {
+            return new AssistantAnswer(
+                AssistantIntent.FixedCosts, AnswerKind.Qualified, T("Ask_Fixed_NoHistory", SpendingProfileService.MinimumMonths), [], [], [], null,
+                [AssistantAction.OpenForecasts], []);
+        }
+
+        var fixedTotal = Money.Sum(costs.Select(c => c.Monthly));
+        var headline = profile.IsKnown ? T("Ask_Fixed", fixedTotal, profile.UsualMonthly) : T("Ask_Fixed_NoUsual", fixedTotal);
+        var figures = new List<AnswerFigure>
+        {
+            new(T("Ask_F_FixedMonthly"), fixedTotal),
+            new(T("Ask_F_UsualMonthly"), profile.IsKnown ? profile.UsualMonthly : T("Ask_V_NotKnownYet")),
+        };
+        if (profile.IsKnown)
+        {
+            figures.Add(new(T("Ask_F_UsualThisMonth"), profile.SpentThisMonth));
+        }
+
+        if (income.IsPositive)
+        {
+            figures.Add(new(T("Ask_F_IncomeMonthly"), income));
+            if (profile.IsKnown)
+            {
+                figures.Add(new(T("Ask_F_LeftMonthly"), income - fixedTotal - profile.UsualMonthly));
+            }
+        }
+
+        var considered = costs.OrderByDescending(c => c.Monthly.Cents).Select(c => T("Ask_Fixed_Item", c.Name, c.Monthly)).ToList();
+        var assumptions = new List<AnswerText>();
+        if (profile.IsKnown)
+        {
+            assumptions.Add(T("Ask_Assume_Learned", profile.Months, profile.From, profile.To));
+            assumptions.Add(T("Ask_Assume_Median"));
+        }
+        else
+        {
+            assumptions.Add(T("ForecastCaveat_NoSpendingHistory"));
+        }
+
+        if (profile.FixedCosts.Count > 0)
+        {
+            assumptions.Add(T("Ask_Assume_Detected"));
+        }
+
+        return new AssistantAnswer(
+            AssistantIntent.FixedCosts, AnswerKind.Direct, headline, figures, Limit(considered, 12), assumptions, T("Ask_Explain_Fixed"),
+            [AssistantAction.OpenForecasts], []);
+    }
+
+    /// <summary>A planned item's amount per month on average.</summary>
+    private static Money Monthly(RecurringRule rule) => rule.Frequency switch
+    {
+        RecurrenceFrequency.Weekly => Money.FromCents((long)RoundingPolicy.RoundToCents(rule.Amount.Cents * 52m / 12m)),
+        RecurrenceFrequency.Quarterly => Money.FromCents((long)RoundingPolicy.RoundToCents(rule.Amount.Cents / 3m)),
+        RecurrenceFrequency.Yearly => Money.FromCents((long)RoundingPolicy.RoundToCents(rule.Amount.Cents / 12m)),
+        _ => rule.Amount,
+    };
+
     // ---- Shared pieces -------------------------------------------------------------------------------------------
 
     /// <summary>The expected bills, card statements and income the spendable forecast counts in the coming days.</summary>
@@ -648,10 +752,16 @@ public sealed class AssistantService(
             .Select(e => e.Kind switch
             {
                 CashEventKind.CardSettlement => T("Ask_Event_Card", e.Name ?? string.Empty, e.Amount.Abs(), e.Date),
-                CashEventKind.Income => T("Ask_Event_Income", e.Name ?? string.Empty, e.Amount, e.Date),
-                _ => T(e.Amount.IsNegative ? "Ask_Event_Out" : "Ask_Event_In", e.Name ?? string.Empty, e.Amount.Abs(), e.Date),
+                CashEventKind.Income => T("Ask_Event_Income", Name(e.Name, e.Detected), e.Amount, e.Date),
+                _ => T(e.Amount.IsNegative ? "Ask_Event_Out" : "Ask_Event_In", Name(e.Name, e.Detected), e.Amount.Abs(), e.Date),
             })
             .ToList();
+        var usual = Money.Sum(projection.Events.Where(e => e.Kind == CashEventKind.Usual).Select(e => e.Amount)).Negate();
+        if (usual.IsPositive)
+        {
+            list.Insert(0, T("Ask_Event_Usual", usual, days));
+        }
+
         return Limit(list);
     }
 
@@ -672,9 +782,27 @@ public sealed class AssistantService(
             list.Add(T("Ask_Assume_NotSpendable"));
         }
 
+        if (spendableOnly)
+        {
+            var profile = await spending.GetAsync(ct);
+            if (profile.IsKnown)
+            {
+                list.Add(T("Ask_Assume_Usual", profile.UsualMonthly, profile.Months));
+            }
+
+            if (profile.FixedCosts.Count > 0)
+            {
+                list.Add(T("Ask_Assume_Detected"));
+            }
+        }
+
         list.AddRange(caveats.Select(c => T("ForecastCaveat_" + c)));
         return list;
     }
+
+    /// <summary>The name of a payment or income, marked when the app recognised it itself rather than the user planning it.</summary>
+    private static object Name(string? name, bool detected) =>
+        detected ? T("Ask_Name_Detected", name ?? string.Empty) : name ?? string.Empty;
 
     private static AssistantAnswer Ask(ParsedQuestion q, MissingValue missing, string key, IEnumerable<string> suggestions) =>
         new(q.Intent, AnswerKind.Question, T(key), [], [], [], null, [], suggestions.Take(8).ToList(), new PendingQuestion(q, missing));

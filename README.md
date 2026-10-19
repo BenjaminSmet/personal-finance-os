@@ -137,16 +137,20 @@ Export your transactions from your bank's website as CSV (or XLSX) and open **Im
 - **Recurring items** (salary, rent, subscriptions, transfers…) create expected items, not transactions. Under
   **To confirm** you confirm each one (date and amount editable), link it to a line that is already there (an
   import, for example), postpone it or skip it. Removing the confirmed transaction makes the item open again.
-- **Safe to spend** = personal current account and cash, minus everything planned and the card statements due
-  before your next expected income, minus your minimum buffer. Expected income is never counted before it arrives.
-  The calculation and anything that makes it less certain are shown with it.
+- **Safe to spend** = personal current account and cash, minus your fixed costs, the card statements and your usual
+  day-to-day spending until your next expected income, minus your minimum buffer. Fixed costs are your planned items
+  plus what the app recognises in your history by itself (rent, subscriptions, standing transfers, the salary that
+  ends the period), marked "recognised". Usual spending is learned from your last complete months; no budget is
+  needed. Expected income is never counted before it arrives. The calculation and anything that makes it less
+  certain are shown with it.
 
 ### Budgets and analysis
 
 - **Budgets & analysis** shows one month at a time (previous/next): income, spending and net, compared with the
   average of up to three earlier complete months. Months before your first balance date are never compared.
 - Each spending category shows what was spent, its budget with a bar and what is left or over (in words, not only in
-  colour), and its usual amount. Type a budget and press **Save**: it holds from that month until you change it;
+  colour), and its usual amount. Budgets are optional: nothing else in the app depends on them. Type a budget and
+  press **Save**: it holds from that month until you change it;
   earlier months keep theirs. Clear differences from your own history are marked "unusual" once there are three
   complete months to compare with.
 - Also on the page: income per category, recurring versus one-off spending, planned items next to what actually
@@ -193,7 +197,8 @@ Export your transactions from your bank's website as CSV (or XLSX) and open **Im
   aan boodschappen?*, *Hoeveel kan ik veilig uitgeven tot mijn loon?*, *Welke betalingen komen eraan?*, *Waarom is
   mijn saldo volgende maand lager?*, *Wat als de renovatie €5.000 meer kost?*, *Wanneer kan ik de laptop kopen?*,
   *Hoeveel heb ik de afgelopen 3 maanden uitgegeven aan abonnementen?*, *Wat is er veranderd ten opzichte van vorige
-  maand?* or *Moet ik de laptop met VISA betalen of wachten?*
+  maand?*, *Moet ik de laptop met VISA betalen of wachten?* or *Wat zijn mijn vaste kosten?* Whether something extra
+  fits is judged on your fixed costs and usual spending, never on budgets.
 - Each answer says whether it is a direct answer or one with conditions, and shows the key figures, what was taken
   into account, the assumptions and what is missing, and a next step. Every figure comes from the same calculations
   as the rest of the app. Expected salary is never treated as certain, a credit limit is never money, and the card

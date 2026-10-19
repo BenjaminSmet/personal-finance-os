@@ -133,6 +133,16 @@ public sealed partial class DashboardViewModel : PageViewModel
 
     public bool HasCards => Cards.Count > 0;
 
+    /// <summary>Usual day-to-day spending this month against the usual month (D-039); null while too little history.</summary>
+    [ObservableProperty]
+    private string? _usualText;
+
+    [ObservableProperty]
+    private double _usualUsedPercent;
+
+    [ObservableProperty]
+    private bool _usualIsOver;
+
     [ObservableProperty]
     private string? _budgetText;
 
@@ -222,6 +232,10 @@ public sealed partial class DashboardViewModel : PageViewModel
         SafeToSpendText = safe.Amount.Format(Loc.Instance.Culture);
         SafeIsNegative = safe.Amount.IsNegative;
         SafeCaption = Loc.Format("Dashboard_SafeUntil", LedgerText.Date(safe.Until, today));
+        var usual = safe.Profile is { IsKnown: true, UsualMonthly.IsPositive: true } p ? p : null;
+        UsualText = usual is null ? null : Loc.Format("Dashboard_UsualSpent", LedgerText.Amount(usual.SpentThisMonth), LedgerText.Amount(usual.UsualMonthly));
+        UsualUsedPercent = usual is null ? 0 : Math.Clamp(usual.SpentThisMonth.Cents * 100.0 / usual.UsualMonthly.Cents, 0, 100);
+        UsualIsOver = usual is not null && usual.SpentThisMonth > usual.UsualMonthly;
 
         // Savings, pension and investments: not spendable, so never part of the figures above (spec §13). Pension and
         // investments use their latest valuation, like net worth.

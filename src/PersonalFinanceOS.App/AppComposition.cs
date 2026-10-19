@@ -75,6 +75,7 @@ public static class AppComposition
         services.AddSingleton<ImportService>();
         services.AddSingleton<RecurringService>();
         services.AddSingleton<CreditCardService>();
+        services.AddSingleton<SpendingProfileService>();
         services.AddSingleton<ForecastService>();
         services.AddSingleton<BudgetService>();
         services.AddSingleton<AnalysisService>();

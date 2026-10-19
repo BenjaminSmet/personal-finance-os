@@ -28,6 +28,15 @@ public static partial class QuestionParser
     private static readonly string[] WhenWords = ["wanneer", "when", "vanaf wanneer", "hoe lang"];
     private static readonly string[] SafeWords = ["veilig", "safe", "safely", "besteedbaar", "hoeveel kan ik uitgeven", "how much can i spend", "payday", "pay day", "tot mijn loon", "tot het loon", "tot mijn salaris", "voor mijn loon", "before my salary", "until my salary", "vrij te besteden"];
     private static readonly string[] AffordWords = ["kan ik", "can i", "veroorloven", "afford", "betalen", "kopen", "buy", "aanschaffen", "permit", "lukt", "haalbaar"];
+    private static readonly string[] FixedWords =
+    [
+        "vaste kosten", "vaste lasten", "vaste uitgaven", "vaste rekeningen", "maandelijkse kosten", "maandelijkse uitgaven", "fixed costs", "fixed expenses",
+        "fixed bills", "monthly costs", "monthly expenses", "monthly bills", "normaal uit", "gewoonlijk uit", "meestal uit", "doorgaans uit", "gemiddeld uit",
+        "usually spend", "normally spend", "typically spend", "spend on average", "gewone uitgaven", "usual spending",
+    ];
+
+    private static readonly string[] ExtraWords = ["extra", "nog", "meer", "more", "another", "additional"];
+    private static readonly string[] SpendVerbs = ["uitgeven", "spenderen", "besteden", "spend", "kopen", "buy"];
     private static readonly string[] HelpWords = ["help", "hulp", "wat kan je", "wat kun je", "wat kan jij", "what can you", "what can i ask", "wat kan ik vragen", "voorbeelden", "examples"];
     private static readonly string[] IncomeWords = ["loon", "salaris", "inkomen", "wedde", "salary", "income", "wage", "wages", "pay rise", "paycheck"];
     private static readonly string[] MonthlyWords = ["per maand", "maandelijks", "elke maand", "iedere maand", "per month", "monthly", "a month", "every month", "each month"];
@@ -112,6 +121,17 @@ public static partial class QuestionParser
         if (category is { Kind: CategoryKind.Expense } && Any(w, RoomWords) && (amount is not null || Any(w, ["uitgeven", "spend"])))
         {
             return AssistantIntent.CategoryRoom;
+        }
+
+        if (amount is null && Any(w, FixedWords))
+        {
+            return category is null ? AssistantIntent.FixedCosts : AssistantIntent.SpentOn;
+        }
+
+        // "Can I still spend something extra?" without an amount: what is left after fixed costs and usual spending.
+        if (amount is null && item is null && category is null && Any(w, ExtraWords) && Any(w, SpendVerbs) && !Any(w, WhenWords))
+        {
+            return AssistantIntent.SafeToSpend;
         }
 
         if (Any(w, UpcomingWords) && amount is null && item is null)

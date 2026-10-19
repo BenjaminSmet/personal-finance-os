@@ -318,7 +318,7 @@
   <data name="Import_Columns_Edit" xml:space="preserve"><value>Kolommen aanpassen</value></data>
   <data name="Import_ConfirmOne" xml:space="preserve"><value>1 regel importeren</value></data>
   <data name="Import_ResultOne" xml:space="preserve"><value>1 regel is toegevoegd.</value></data>
-  <data name="Dashboard_SafeUntil" xml:space="preserve"><value>Tot en met {0}, na alles wat gepland is en je buffer. Een prognose, geen saldo.</value></data>
+  <data name="Dashboard_SafeUntil" xml:space="preserve"><value>Wat je tot en met {0} extra kunt uitgeven, na je vaste kosten, je gewone uitgaven en je buffer. Een prognose, geen saldo.</value></data>
   <data name="Dashboard_ToConfirmOne" xml:space="preserve"><value>1 geplande post wacht op bevestiging</value></data>
   <data name="Dashboard_ToConfirmMany" xml:space="preserve"><value>{0} geplande posten wachten op bevestiging</value></data>
   <data name="Dashboard_GoToPlanning" xml:space="preserve"><value>Naar planning</value></data>
@@ -369,7 +369,7 @@
   <data name="Forecast_Planned" xml:space="preserve"><value>{0} · {1}</value></data>
   <data name="Forecast_CardSettlement" xml:space="preserve"><value>Afrekening {0} · {1}</value></data>
   <data name="Forecast_Buffer" xml:space="preserve"><value>Minimumbuffer</value></data>
-  <data name="ForecastCaveat_NoIncomePlanned" xml:space="preserve"><value>Er is geen inkomen gepland, dus de komende 30 dagen worden gebruikt. Voeg je loon toe als terugkerende post voor een betere schatting.</value></data>
+  <data name="ForecastCaveat_NoIncomePlanned" xml:space="preserve"><value>Er is geen inkomen gepland of herkend in je geschiedenis, dus de komende 30 dagen worden gebruikt.</value></data>
   <data name="ForecastCaveat_CardNotSetUp" xml:space="preserve"><value>Een kredietkaart heeft nog geen instellingen; de afrekening telt niet mee.</value></data>
   <data name="ForecastCaveat_SettlementDateUnknown" xml:space="preserve"><value>De afschrijvingsdag van een kaart is niet ingesteld; de afrekening telt mee alsof ze meteen na de periode valt.</value></data>
   <data name="ForecastCaveat_SettlementAccountUnknown" xml:space="preserve"><value>Voor een kaart is geen betalende rekening ingesteld; de afrekening telt niet mee.</value></data>
@@ -517,8 +517,10 @@
   <data name="Dashboard_NothingUpcoming" xml:space="preserve"><value>Niets gepland in de komende 14 dagen.</value></data>
   <data name="Dashboard_CashFlow" xml:space="preserve"><value>Verwacht in en uit</value></data>
   <data name="Dashboard_Budget" xml:space="preserve"><value>Budget deze maand</value></data>
-  <data name="Dashboard_NoBudget" xml:space="preserve"><value>Nog geen budgetten ingesteld.</value></data>
-  <data name="Dashboard_GoToBudgets" xml:space="preserve"><value>Naar budgetten</value></data>
+  <data name="Dashboard_Usual" xml:space="preserve"><value>Gewone uitgaven deze maand</value></data>
+  <data name="Dashboard_UsualSpent" xml:space="preserve"><value>{0} van gewoonlijk {1}</value></data>
+  <data name="Dashboard_UsualUnknown" xml:space="preserve"><value>Na 2 volledige maanden geschiedenis weet de app wat je gewoonlijk uitgeeft.</value></data>
+  <data name="Dashboard_GoToBudgets" xml:space="preserve"><value>Naar analyse</value></data>
   <data name="Dashboard_Attention" xml:space="preserve"><value>Vraagt aandacht</value></data>
   <data name="Dashboard_OverBudget" xml:space="preserve"><value>{0} zit {1} boven budget</value></data>
   <data name="Dashboard_CardDifference" xml:space="preserve"><value>{0}: de geregistreerde betaling verschilt van het overzicht</value></data>
@@ -737,7 +739,6 @@
   <data name="Ask_What_Amount" xml:space="preserve"><value>{0}</value></data>
   <data name="Ask_What_Item" xml:space="preserve"><value>{0} ({1})</value></data>
   <data name="Ask_V_FromTo" xml:space="preserve"><value>{0} → {1}</value></data>
-  <data name="Ask_V_NoBudget" xml:space="preserve"><value>geen</value></data>
   <data name="Ask_V_Option" xml:space="preserve"><value>{0} · {1}</value></data>
   <data name="Ask_ScenarioSaved" xml:space="preserve"><value>Bewaard als scenario “{0}”.</value></data>
   <data name="Ask_Action_OpenForecasts" xml:space="preserve"><value>Open Planning</value></data>
@@ -758,22 +759,18 @@
   <data name="Ask_Earliest" xml:space="preserve"><value>Het wordt comfortabel vanaf {0}, als alles loopt zoals gepland.</value></data>
   <data name="Ask_Earliest_None" xml:space="preserve"><value>Met wat nu gepland is, wordt het binnen een jaar niet comfortabel.</value></data>
   <data name="Ask_Assume_LookAhead" xml:space="preserve"><value>Gecontroleerd over de komende {0} dagen.</value></data>
-  <data name="Ask_Room_No" xml:space="preserve"><value>Nee. {0} past niet: er is maar {1} veilig te besteden tot {2}.</value></data>
-  <data name="Ask_Room_NoBudget" xml:space="preserve"><value>{0} past in wat veilig te besteden is ({2} tot {3}). {1} heeft deze maand geen budget, dus er is geen budget om te controleren.</value></data>
-  <data name="Ask_Room_Yes" xml:space="preserve"><value>Ja. {0} past in je budget voor {1} (nog {2} over) en in wat veilig te besteden is ({3}).</value></data>
-  <data name="Ask_Room_OverBudget" xml:space="preserve"><value>{0} past in wat veilig te besteden is, maar je budget voor {1} zou met {2} overschreden worden.</value></data>
+  <data name="Ask_Room_No" xml:space="preserve"><value>Nee. {0} past niet: na je vaste kosten en je gewone uitgaven blijft er tot {2} maar {1} over.</value></data>
+  <data name="Ask_Room_Yes" xml:space="preserve"><value>Ja. {0} past: na je vaste kosten en je gewone uitgaven blijft er tot {2} nog {1} over.</value></data>
   <data name="Ask_F_SpentThisMonth" xml:space="preserve"><value>Deze maand uitgegeven aan {0}</value></data>
-  <data name="Ask_F_Budget" xml:space="preserve"><value>Budget deze maand</value></data>
-  <data name="Ask_F_BudgetLeft" xml:space="preserve"><value>Over in het budget</value></data>
   <data name="Ask_F_SafeUntil" xml:space="preserve"><value>Veilig te besteden tot {0}</value></data>
-  <data name="Ask_Explain_Room" xml:space="preserve"><value>Er worden twee dingen gecontroleerd: je eigen budget voor de categorie, en wat veilig te besteden is, zodat alle geplande rekeningen, kaartafrekeningen en je buffer gedekt blijven tot je volgende inkomen.</value></data>
-  <data name="Ask_Safe" xml:space="preserve"><value>Je kunt tot {1} veilig {0} uitgeven.</value></data>
-  <data name="Ask_Safe_Short" xml:space="preserve"><value>Tot {1} is er niets veilig te besteden: je komt {0} tekort om alles wat gepland is en je buffer te dekken.</value></data>
+  <data name="Ask_Explain_Room" xml:space="preserve"><value>Er wordt gekeken naar wat er overblijft tot je volgende inkomen: je saldo, min je vaste kosten (gepland of herkend in je geschiedenis), je kaartafrekeningen, je gewone dagelijkse uitgaven en je buffer. Budgetten tellen niet mee.</value></data>
+  <data name="Ask_Safe" xml:space="preserve"><value>Je kunt tot {1} nog {0} extra uitgeven, bovenop je vaste kosten en je gewone uitgaven.</value></data>
+  <data name="Ask_Safe_Short" xml:space="preserve"><value>Tot {1} is er niets extra te besteden: je komt {0} tekort om je vaste kosten, je gewone uitgaven en je buffer te dekken.</value></data>
   <data name="Ask_F_Balance" xml:space="preserve"><value>Zichtrekening en cash nu</value></data>
-  <data name="Ask_F_PlannedOut" xml:space="preserve"><value>Geplande betalingen</value></data>
+  <data name="Ask_F_PlannedOut" xml:space="preserve"><value>Vaste kosten en geplande betalingen</value></data>
   <data name="Ask_F_PlannedIn" xml:space="preserve"><value>Gepland geld in</value></data>
   <data name="Ask_F_CardStatements" xml:space="preserve"><value>Kaartafrekeningen</value></data>
-  <data name="Ask_Explain_Safe" xml:space="preserve"><value>Veilig te besteden is je zichtrekening en cash, min alles wat gepland is en de kaartafrekeningen voor je volgende verwachte inkomen, min je minimumbuffer.</value></data>
+  <data name="Ask_Explain_Safe" xml:space="preserve"><value>Je zichtrekening en cash, min je vaste kosten (gepland of herkend in je geschiedenis), de kaartafrekeningen en je gewone dagelijkse uitgaven tot je volgende verwachte inkomen, min je minimumbuffer. Wat overblijft kun je extra uitgeven. Budgetten tellen niet mee.</value></data>
   <data name="Ask_Explain_SafeNoIncome" xml:space="preserve"><value>Er is geen inkomen gepland, dus de komende {0} dagen worden geteld.</value></data>
   <data name="Ask_Event_Out" xml:space="preserve"><value>{0}: {1} op {2}</value></data>
   <data name="Ask_Event_In" xml:space="preserve"><value>{0}: +{1} op {2}</value></data>
@@ -1076,7 +1073,7 @@
   <data name="Report_Note_PlannedSeparate" xml:space="preserve"><value>Deze posten zijn nog niet gebeurd. Ze worden nooit bij de werkelijke cijfers hierboven geteld.</value></data>
   <data name="Report_Note_CashFlowActual" xml:space="preserve"><value>Werkelijke cijfers komen uit geboekte transacties. Overschrijvingen tussen je rekeningen tellen als geld in en uit.</value></data>
   <data name="Report_Note_TransfersIncluded" xml:space="preserve"><value>Geld in en uit bevatten overschrijvingen tussen je eigen rekeningen.</value></data>
-  <data name="Report_Note_Projection" xml:space="preserve"><value>Verwachte saldi zijn schattingen op basis van geplande posten en kaartafrekeningen. Verwacht inkomen is nooit zeker.</value></data>
+  <data name="Report_Note_Projection" xml:space="preserve"><value>Verwachte saldi zijn schattingen op basis van geplande posten, vaste kosten en inkomen die in je geschiedenis herkend zijn, je gewone uitgaven en kaartafrekeningen. Verwacht inkomen is nooit zeker.</value></data>
   <data name="Report_Note_Estimates" xml:space="preserve"><value>Alle bedragen in deze tabel zijn schattingen.</value></data>
   <data name="Report_Note_CardsNotProjected" xml:space="preserve"><value>Kredietkaarten hebben geen verwacht saldo; hun afrekeningen tellen op de rekening die ze betaalt.</value></data>
   <data name="Report_Note_FutureWithoutPlanned" xml:space="preserve"><value>De periode loopt na vandaag. Zet "Geplande posten tonen" aan om verwachte saldi te zien.</value></data>
@@ -1174,4 +1171,32 @@
   <data name="Error_backup_restoreFailed" xml:space="preserve"><value>Terugzetten is mislukt. Je vorige gegevens zijn teruggezet.</value></data>
   <data name="Error_backup_reminder_invalid" xml:space="preserve"><value>Kies een van de herinneringsopties.</value></data>
   <data name="Settings_CategoryKind" xml:space="preserve"><value>Soort categorie</value></data>
+  <data name="Ask_Room_MoreThanUsual" xml:space="preserve"><value>Dat kan: na je vaste kosten en je gewone uitgaven blijft er tot {3} nog {2} over. {0} extra is wel meer dan je normaal aan {1} uitgeeft (gemiddeld {4} per maand).</value></data>
+  <data name="ForecastCaveat_NoSpendingHistory" xml:space="preserve"><value>Er is nog geen 2 volledige maanden geschiedenis, dus je gewone uitgaven en vaste kosten zijn nog niet bekend en tellen niet mee. Importeer je bankafschriften van de vorige maanden.</value></data>
+  <data name="Report_Event_Usual" xml:space="preserve"><value>Gewone uitgaven (geschat)</value></data>
+  <data name="Report_Detected" xml:space="preserve"><value>{0} (herkend)</value></data>
+  <data name="Forecast_Usual" xml:space="preserve"><value>Gewone dagelijkse uitgaven (ongeveer {0} per maand)</value></data>
+  <data name="Forecast_Detected" xml:space="preserve"><value>{0} · {1} (herkend)</value></data>
+  <data name="Ask_F_Usual" xml:space="preserve"><value>Gewone dagelijkse uitgaven</value></data>
+  <data name="Ask_F_UsualCategory" xml:space="preserve"><value>Normaal per maand aan {0}</value></data>
+  <data name="Ask_V_NotKnownYet" xml:space="preserve"><value>nog niet bekend</value></data>
+  <data name="Ask_Assume_UsualCategory" xml:space="preserve"><value>'Normaal' is het gemiddelde van je laatste {0} volledige maanden.</value></data>
+  <data name="Ask_Assume_Usual" xml:space="preserve"><value>Je gewone dagelijkse uitgaven (ongeveer {0} per maand, geleerd uit je laatste {1} volledige maanden) tellen elke dag mee.</value></data>
+  <data name="Ask_Assume_Detected" xml:space="preserve"><value>Wat '(herkend)' is, heb ik zelf in je geschiedenis gevonden; het telt mee alsof het gepland is. Klopt een bedrag of dag niet, zet het dan als terugkerende post.</value></data>
+  <data name="Ask_Name_Detected" xml:space="preserve"><value>{0} (herkend)</value></data>
+  <data name="Ask_Event_Usual" xml:space="preserve"><value>Gewone dagelijkse uitgaven: {0} in de komende {1} dagen</value></data>
+  <data name="Ask_Event_UsualMonth" xml:space="preserve"><value>Gewone dagelijkse uitgaven: {0} in {1}</value></data>
+  <data name="Ask_Fixed" xml:space="preserve"><value>Je vaste kosten zijn ongeveer {0} per maand. Daarbovenop geef je gewoonlijk {1} per maand uit aan dagelijkse dingen.</value></data>
+  <data name="Ask_Fixed_NoUsual" xml:space="preserve"><value>Je vaste kosten zijn ongeveer {0} per maand. Wat je daarnaast gewoonlijk uitgeeft, weet ik nog niet: daarvoor is meer geschiedenis nodig.</value></data>
+  <data name="Ask_Fixed_NoHistory" xml:space="preserve"><value>Ik ken je vaste kosten en gewone uitgaven nog niet: daarvoor heb ik minstens {0} volledige maanden aan transacties nodig. Importeer je bankafschriften van de vorige maanden.</value></data>
+  <data name="Ask_F_FixedMonthly" xml:space="preserve"><value>Vaste kosten per maand</value></data>
+  <data name="Ask_F_UsualMonthly" xml:space="preserve"><value>Gewone uitgaven per maand</value></data>
+  <data name="Ask_F_UsualThisMonth" xml:space="preserve"><value>Gewone uitgaven deze maand tot nu</value></data>
+  <data name="Ask_F_IncomeMonthly" xml:space="preserve"><value>Inkomen per maand</value></data>
+  <data name="Ask_F_LeftMonthly" xml:space="preserve"><value>Normaal over per maand</value></data>
+  <data name="Ask_Fixed_Item" xml:space="preserve"><value>{0}: {1} per maand</value></data>
+  <data name="Ask_Assume_Learned" xml:space="preserve"><value>Geleerd uit {0} volledige maanden ({1} tot {2}).</value></data>
+  <data name="Ask_Assume_Median" xml:space="preserve"><value>Je gewone uitgaven zijn die van een middelmatige maand, zodat één grote aankoop het beeld niet scheeftrekt. Vaste kosten en geplande posten zitten er niet in.</value></data>
+  <data name="Ask_Explain_Fixed" xml:space="preserve"><value>Vaste kosten zijn je terugkerende posten plus wat elke maand ongeveer even groot terugkomt in je geschiedenis (huur, abonnementen, vaste overschrijvingen). Al de rest telt als gewone uitgaven. Daar zijn geen budgetten voor nodig.</value></data>
+  <data name="Ask_Example_Fixed" xml:space="preserve"><value>Wat zijn mijn vaste kosten?</value></data>
 </root>

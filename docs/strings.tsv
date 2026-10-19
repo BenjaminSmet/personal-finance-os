@@ -311,7 +311,7 @@ Import_Columns_Hide	Hide	Verbergen
 Import_Columns_Edit	Change columns	Kolommen aanpassen
 Import_ConfirmOne	Import 1 line	1 regel importeren
 Import_ResultOne	1 line was added.	1 regel is toegevoegd.
-Dashboard_SafeUntil	Until {0}, after everything planned and your buffer. A forecast, not a balance.	Tot en met {0}, na alles wat gepland is en je buffer. Een prognose, geen saldo.
+Dashboard_SafeUntil	Extra you can spend until {0}, after your fixed costs, usual spending and buffer. A forecast, not a balance.	Wat je tot en met {0} extra kunt uitgeven, na je vaste kosten, je gewone uitgaven en je buffer. Een prognose, geen saldo.
 Dashboard_ToConfirmOne	1 planned item is waiting to be confirmed	1 geplande post wacht op bevestiging
 Dashboard_ToConfirmMany	{0} planned items are waiting to be confirmed	{0} geplande posten wachten op bevestiging
 Dashboard_GoToPlanning	Open planning	Naar planning
@@ -362,7 +362,7 @@ Forecast_RecordedLater	Already recorded with a later date	Al geregistreerd met e
 Forecast_Planned	{0} · {1}	{0} · {1}
 Forecast_CardSettlement	{0} statement · {1}	Afrekening {0} · {1}
 Forecast_Buffer	Minimum buffer	Minimumbuffer
-ForecastCaveat_NoIncomePlanned	No income is planned, so the next 30 days are used. Add your salary as a recurring item for a better estimate.	Er is geen inkomen gepland, dus de komende 30 dagen worden gebruikt. Voeg je loon toe als terugkerende post voor een betere schatting.
+ForecastCaveat_NoIncomePlanned	No income is planned or recognised in your history, so the next 30 days are used.	Er is geen inkomen gepland of herkend in je geschiedenis, dus de komende 30 dagen worden gebruikt.
 ForecastCaveat_CardNotSetUp	A credit card has no settings yet; its statement is not counted.	Een kredietkaart heeft nog geen instellingen; de afrekening telt niet mee.
 ForecastCaveat_SettlementDateUnknown	A card's debit day is not set; its statement is counted as due right after the period ends.	De afschrijvingsdag van een kaart is niet ingesteld; de afrekening telt mee alsof ze meteen na de periode valt.
 ForecastCaveat_SettlementAccountUnknown	A card has no paying account set; its statement is not counted.	Voor een kaart is geen betalende rekening ingesteld; de afrekening telt niet mee.
@@ -510,8 +510,10 @@ Dashboard_Upcoming	Coming up in the next 14 days	Binnenkort, in de komende 14 da
 Dashboard_NothingUpcoming	Nothing planned in the next 14 days.	Niets gepland in de komende 14 dagen.
 Dashboard_CashFlow	Expected in and out	Verwacht in en uit
 Dashboard_Budget	Budget this month	Budget deze maand
-Dashboard_NoBudget	No budgets set yet.	Nog geen budgetten ingesteld.
-Dashboard_GoToBudgets	Open budgets	Naar budgetten
+Dashboard_Usual	Usual spending this month	Gewone uitgaven deze maand
+Dashboard_UsualSpent	{0} of usually {1}	{0} van gewoonlijk {1}
+Dashboard_UsualUnknown	After 2 complete months of history the app knows what you usually spend.	Na 2 volledige maanden geschiedenis weet de app wat je gewoonlijk uitgeeft.
+Dashboard_GoToBudgets	Open analysis	Naar analyse
 Dashboard_Attention	Needs attention	Vraagt aandacht
 Dashboard_OverBudget	{0} is {1} over budget	{0} zit {1} boven budget
 Dashboard_CardDifference	{0}: the recorded payment differs from the statement	{0}: de geregistreerde betaling verschilt van het overzicht
@@ -730,7 +732,6 @@ Ask_More	and {0} more	en nog {0}
 Ask_What_Amount	{0}	{0}
 Ask_What_Item	{0} ({1})	{0} ({1})
 Ask_V_FromTo	{0} → {1}	{0} → {1}
-Ask_V_NoBudget	none	geen
 Ask_V_Option	{0} · {1}	{0} · {1}
 Ask_ScenarioSaved	Saved as scenario “{0}”.	Bewaard als scenario “{0}”.
 Ask_Action_OpenForecasts	Open Planning	Open Planning
@@ -751,22 +752,18 @@ Ask_Explain_Prudent	Comfortable means the lowest expected balance stays at or ab
 Ask_Earliest	It becomes comfortable from {0}, if everything goes as planned.	Het wordt comfortabel vanaf {0}, als alles loopt zoals gepland.
 Ask_Earliest_None	With what is planned now, it does not become comfortable within a year.	Met wat nu gepland is, wordt het binnen een jaar niet comfortabel.
 Ask_Assume_LookAhead	Checked over the next {0} days.	Gecontroleerd over de komende {0} dagen.
-Ask_Room_No	No. {0} does not fit: only {1} is safe to spend until {2}.	Nee. {0} past niet: er is maar {1} veilig te besteden tot {2}.
-Ask_Room_NoBudget	{0} fits in what is safe to spend ({2} until {3}). {1} has no budget this month, so there is no budget to check.	{0} past in wat veilig te besteden is ({2} tot {3}). {1} heeft deze maand geen budget, dus er is geen budget om te controleren.
-Ask_Room_Yes	Yes. {0} fits in your budget for {1} ({2} left) and in what is safe to spend ({3}).	Ja. {0} past in je budget voor {1} (nog {2} over) en in wat veilig te besteden is ({3}).
-Ask_Room_OverBudget	{0} fits in what is safe to spend, but your budget for {1} would be exceeded by {2}.	{0} past in wat veilig te besteden is, maar je budget voor {1} zou met {2} overschreden worden.
+Ask_Room_No	No. {0} does not fit: after your fixed costs and usual spending only {1} is left until {2}.	Nee. {0} past niet: na je vaste kosten en je gewone uitgaven blijft er tot {2} maar {1} over.
+Ask_Room_Yes	Yes. {0} fits: after your fixed costs and usual spending {1} is left until {2}.	Ja. {0} past: na je vaste kosten en je gewone uitgaven blijft er tot {2} nog {1} over.
 Ask_F_SpentThisMonth	Spent on {0} this month	Deze maand uitgegeven aan {0}
-Ask_F_Budget	Budget this month	Budget deze maand
-Ask_F_BudgetLeft	Left in the budget	Over in het budget
 Ask_F_SafeUntil	Safe to spend until {0}	Veilig te besteden tot {0}
-Ask_Explain_Room	Two things are checked: your own budget for the category, and safe-to-spend, which keeps every planned bill, card statement and your buffer covered until your next income.	Er worden twee dingen gecontroleerd: je eigen budget voor de categorie, en wat veilig te besteden is, zodat alle geplande rekeningen, kaartafrekeningen en je buffer gedekt blijven tot je volgende inkomen.
-Ask_Safe	You can safely spend {0} until {1}.	Je kunt tot {1} veilig {0} uitgeven.
-Ask_Safe_Short	Nothing is safe to spend until {1}: you are {0} short of covering everything planned and your buffer.	Tot {1} is er niets veilig te besteden: je komt {0} tekort om alles wat gepland is en je buffer te dekken.
+Ask_Explain_Room	This looks at what is left until your next income: your balance, minus your fixed costs (planned or recognised in your history), card statements, your usual day-to-day spending and your buffer. Budgets are not used.	Er wordt gekeken naar wat er overblijft tot je volgende inkomen: je saldo, min je vaste kosten (gepland of herkend in je geschiedenis), je kaartafrekeningen, je gewone dagelijkse uitgaven en je buffer. Budgetten tellen niet mee.
+Ask_Safe	You can spend {0} extra until {1}, on top of your fixed costs and usual spending.	Je kunt tot {1} nog {0} extra uitgeven, bovenop je vaste kosten en je gewone uitgaven.
+Ask_Safe_Short	Nothing extra can be spent until {1}: you are {0} short of covering your fixed costs, usual spending and buffer.	Tot {1} is er niets extra te besteden: je komt {0} tekort om je vaste kosten, je gewone uitgaven en je buffer te dekken.
 Ask_F_Balance	Current account and cash now	Zichtrekening en cash nu
-Ask_F_PlannedOut	Planned payments	Geplande betalingen
+Ask_F_PlannedOut	Fixed costs and planned payments	Vaste kosten en geplande betalingen
 Ask_F_PlannedIn	Planned money in	Gepland geld in
 Ask_F_CardStatements	Card statements	Kaartafrekeningen
-Ask_Explain_Safe	Safe to spend is your current account and cash, minus everything planned and the card statements due before your next expected income, minus your minimum buffer.	Veilig te besteden is je zichtrekening en cash, min alles wat gepland is en de kaartafrekeningen voor je volgende verwachte inkomen, min je minimumbuffer.
+Ask_Explain_Safe	Your current account and cash, minus your fixed costs (planned or recognised in your history), the card statements and your usual day-to-day spending until your next expected income, minus your minimum buffer. What is left you can spend extra. Budgets are not used.	Je zichtrekening en cash, min je vaste kosten (gepland of herkend in je geschiedenis), de kaartafrekeningen en je gewone dagelijkse uitgaven tot je volgende verwachte inkomen, min je minimumbuffer. Wat overblijft kun je extra uitgeven. Budgetten tellen niet mee.
 Ask_Explain_SafeNoIncome	No income is planned, so the next {0} days are counted.	Er is geen inkomen gepland, dus de komende {0} dagen worden geteld.
 Ask_Event_Out	{0}: {1} on {2}	{0}: {1} op {2}
 Ask_Event_In	{0}: +{1} on {2}	{0}: +{1} op {2}
@@ -1069,7 +1066,7 @@ Report_Note_PlannedExcluded	Planned items are not included. Turn on "Include pla
 Report_Note_PlannedSeparate	These items have not happened yet. They are never added to the actual figures above.	Deze posten zijn nog niet gebeurd. Ze worden nooit bij de werkelijke cijfers hierboven geteld.
 Report_Note_CashFlowActual	Actual figures come from recorded transactions. Transfers between your accounts are included as money in and out.	Werkelijke cijfers komen uit geboekte transacties. Overschrijvingen tussen je rekeningen tellen als geld in en uit.
 Report_Note_TransfersIncluded	Money in and out include transfers between your own accounts.	Geld in en uit bevatten overschrijvingen tussen je eigen rekeningen.
-Report_Note_Projection	Expected balances are estimates based on planned items and card statements. Expected income is never guaranteed.	Verwachte saldi zijn schattingen op basis van geplande posten en kaartafrekeningen. Verwacht inkomen is nooit zeker.
+Report_Note_Projection	Expected balances are estimates based on planned items, fixed costs and income recognised in your history, your usual spending and card statements. Expected income is never certain.	Verwachte saldi zijn schattingen op basis van geplande posten, vaste kosten en inkomen die in je geschiedenis herkend zijn, je gewone uitgaven en kaartafrekeningen. Verwacht inkomen is nooit zeker.
 Report_Note_Estimates	All amounts in this table are estimates.	Alle bedragen in deze tabel zijn schattingen.
 Report_Note_CardsNotProjected	Credit cards have no projected balance; their statements are counted on the account that pays them.	Kredietkaarten hebben geen verwacht saldo; hun afrekeningen tellen op de rekening die ze betaalt.
 Report_Note_FutureWithoutPlanned	The period runs past today. Turn on "Include planned items" to see expected balances.	De periode loopt na vandaag. Zet "Geplande posten tonen" aan om verwachte saldi te zien.
@@ -1167,3 +1164,31 @@ Error_backup_preRestoreFailed	A copy of the current data could not be made, so n
 Error_backup_restoreFailed	Restoring failed. Your previous data was put back.	Terugzetten is mislukt. Je vorige gegevens zijn teruggezet.
 Error_backup_reminder_invalid	Choose one of the reminder options.	Kies een van de herinneringsopties.
 Settings_CategoryKind	Category kind	Soort categorie
+Ask_Room_MoreThanUsual	You can: after your fixed costs and usual spending {2} is left until {3}. {0} extra is more than you usually spend on {1} though (on average {4} a month).	Dat kan: na je vaste kosten en je gewone uitgaven blijft er tot {3} nog {2} over. {0} extra is wel meer dan je normaal aan {1} uitgeeft (gemiddeld {4} per maand).
+ForecastCaveat_NoSpendingHistory	There are not yet 2 complete months of history, so your usual spending and fixed costs are not known yet and are not counted. Import your bank statements of the previous months.	Er is nog geen 2 volledige maanden geschiedenis, dus je gewone uitgaven en vaste kosten zijn nog niet bekend en tellen niet mee. Importeer je bankafschriften van de vorige maanden.
+Report_Event_Usual	Usual spending (estimate)	Gewone uitgaven (geschat)
+Report_Detected	{0} (recognised)	{0} (herkend)
+Forecast_Usual	Usual day-to-day spending (about {0} a month)	Gewone dagelijkse uitgaven (ongeveer {0} per maand)
+Forecast_Detected	{0} · {1} (recognised)	{0} · {1} (herkend)
+Ask_F_Usual	Usual day-to-day spending	Gewone dagelijkse uitgaven
+Ask_F_UsualCategory	Usually a month on {0}	Normaal per maand aan {0}
+Ask_V_NotKnownYet	not known yet	nog niet bekend
+Ask_Assume_UsualCategory	'Usually' is the average of your last {0} complete months.	'Normaal' is het gemiddelde van je laatste {0} volledige maanden.
+Ask_Assume_Usual	Your usual day-to-day spending (about {0} a month, learned from your last {1} complete months) is counted every day.	Je gewone dagelijkse uitgaven (ongeveer {0} per maand, geleerd uit je laatste {1} volledige maanden) tellen elke dag mee.
+Ask_Assume_Detected	What says '(recognised)' I found in your history myself; it counts as if it were planned. If an amount or day is wrong, add it as a recurring item.	Wat '(herkend)' is, heb ik zelf in je geschiedenis gevonden; het telt mee alsof het gepland is. Klopt een bedrag of dag niet, zet het dan als terugkerende post.
+Ask_Name_Detected	{0} (recognised)	{0} (herkend)
+Ask_Event_Usual	Usual day-to-day spending: {0} in the next {1} days	Gewone dagelijkse uitgaven: {0} in de komende {1} dagen
+Ask_Event_UsualMonth	Usual day-to-day spending: {0} in {1}	Gewone dagelijkse uitgaven: {0} in {1}
+Ask_Fixed	Your fixed costs are about {0} a month. On top of that you usually spend {1} a month on day-to-day things.	Je vaste kosten zijn ongeveer {0} per maand. Daarbovenop geef je gewoonlijk {1} per maand uit aan dagelijkse dingen.
+Ask_Fixed_NoUsual	Your fixed costs are about {0} a month. What you usually spend on top of that I do not know yet: that needs more history.	Je vaste kosten zijn ongeveer {0} per maand. Wat je daarnaast gewoonlijk uitgeeft, weet ik nog niet: daarvoor is meer geschiedenis nodig.
+Ask_Fixed_NoHistory	I do not know your fixed costs and usual spending yet: I need at least {0} complete months of transactions for that. Import your bank statements of the previous months.	Ik ken je vaste kosten en gewone uitgaven nog niet: daarvoor heb ik minstens {0} volledige maanden aan transacties nodig. Importeer je bankafschriften van de vorige maanden.
+Ask_F_FixedMonthly	Fixed costs a month	Vaste kosten per maand
+Ask_F_UsualMonthly	Usual spending a month	Gewone uitgaven per maand
+Ask_F_UsualThisMonth	Usual spending this month so far	Gewone uitgaven deze maand tot nu
+Ask_F_IncomeMonthly	Income a month	Inkomen per maand
+Ask_F_LeftMonthly	Usually left a month	Normaal over per maand
+Ask_Fixed_Item	{0}: {1} a month	{0}: {1} per maand
+Ask_Assume_Learned	Learned from {0} complete months ({1} to {2}).	Geleerd uit {0} volledige maanden ({1} tot {2}).
+Ask_Assume_Median	Your usual spending is that of a middle month, so one big purchase does not skew it. Fixed costs and planned items are not part of it.	Je gewone uitgaven zijn die van een middelmatige maand, zodat één grote aankoop het beeld niet scheeftrekt. Vaste kosten en geplande posten zitten er niet in.
+Ask_Explain_Fixed	Fixed costs are your recurring items plus whatever comes back every month at about the same amount in your history (rent, subscriptions, standing transfers). Everything else counts as usual spending. No budgets are needed for this.	Vaste kosten zijn je terugkerende posten plus wat elke maand ongeveer even groot terugkomt in je geschiedenis (huur, abonnementen, vaste overschrijvingen). Al de rest telt als gewone uitgaven. Daar zijn geen budgetten voor nodig.
+Ask_Example_Fixed	What are my fixed costs?	Wat zijn mijn vaste kosten?

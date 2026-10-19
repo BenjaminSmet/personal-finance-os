@@ -318,7 +318,7 @@
   <data name="Import_Columns_Edit" xml:space="preserve"><value>Change columns</value></data>
   <data name="Import_ConfirmOne" xml:space="preserve"><value>Import 1 line</value></data>
   <data name="Import_ResultOne" xml:space="preserve"><value>1 line was added.</value></data>
-  <data name="Dashboard_SafeUntil" xml:space="preserve"><value>Until {0}, after everything planned and your buffer. A forecast, not a balance.</value></data>
+  <data name="Dashboard_SafeUntil" xml:space="preserve"><value>Extra you can spend until {0}, after your fixed costs, usual spending and buffer. A forecast, not a balance.</value></data>
   <data name="Dashboard_ToConfirmOne" xml:space="preserve"><value>1 planned item is waiting to be confirmed</value></data>
   <data name="Dashboard_ToConfirmMany" xml:space="preserve"><value>{0} planned items are waiting to be confirmed</value></data>
   <data name="Dashboard_GoToPlanning" xml:space="preserve"><value>Open planning</value></data>
@@ -369,7 +369,7 @@
   <data name="Forecast_Planned" xml:space="preserve"><value>{0} · {1}</value></data>
   <data name="Forecast_CardSettlement" xml:space="preserve"><value>{0} statement · {1}</value></data>
   <data name="Forecast_Buffer" xml:space="preserve"><value>Minimum buffer</value></data>
-  <data name="ForecastCaveat_NoIncomePlanned" xml:space="preserve"><value>No income is planned, so the next 30 days are used. Add your salary as a recurring item for a better estimate.</value></data>
+  <data name="ForecastCaveat_NoIncomePlanned" xml:space="preserve"><value>No income is planned or recognised in your history, so the next 30 days are used.</value></data>
   <data name="ForecastCaveat_CardNotSetUp" xml:space="preserve"><value>A credit card has no settings yet; its statement is not counted.</value></data>
   <data name="ForecastCaveat_SettlementDateUnknown" xml:space="preserve"><value>A card's debit day is not set; its statement is counted as due right after the period ends.</value></data>
   <data name="ForecastCaveat_SettlementAccountUnknown" xml:space="preserve"><value>A card has no paying account set; its statement is not counted.</value></data>
@@ -517,8 +517,10 @@
   <data name="Dashboard_NothingUpcoming" xml:space="preserve"><value>Nothing planned in the next 14 days.</value></data>
   <data name="Dashboard_CashFlow" xml:space="preserve"><value>Expected in and out</value></data>
   <data name="Dashboard_Budget" xml:space="preserve"><value>Budget this month</value></data>
-  <data name="Dashboard_NoBudget" xml:space="preserve"><value>No budgets set yet.</value></data>
-  <data name="Dashboard_GoToBudgets" xml:space="preserve"><value>Open budgets</value></data>
+  <data name="Dashboard_Usual" xml:space="preserve"><value>Usual spending this month</value></data>
+  <data name="Dashboard_UsualSpent" xml:space="preserve"><value>{0} of usually {1}</value></data>
+  <data name="Dashboard_UsualUnknown" xml:space="preserve"><value>After 2 complete months of history the app knows what you usually spend.</value></data>
+  <data name="Dashboard_GoToBudgets" xml:space="preserve"><value>Open analysis</value></data>
   <data name="Dashboard_Attention" xml:space="preserve"><value>Needs attention</value></data>
   <data name="Dashboard_OverBudget" xml:space="preserve"><value>{0} is {1} over budget</value></data>
   <data name="Dashboard_CardDifference" xml:space="preserve"><value>{0}: the recorded payment differs from the statement</value></data>
@@ -737,7 +739,6 @@
   <data name="Ask_What_Amount" xml:space="preserve"><value>{0}</value></data>
   <data name="Ask_What_Item" xml:space="preserve"><value>{0} ({1})</value></data>
   <data name="Ask_V_FromTo" xml:space="preserve"><value>{0} → {1}</value></data>
-  <data name="Ask_V_NoBudget" xml:space="preserve"><value>none</value></data>
   <data name="Ask_V_Option" xml:space="preserve"><value>{0} · {1}</value></data>
   <data name="Ask_ScenarioSaved" xml:space="preserve"><value>Saved as scenario “{0}”.</value></data>
   <data name="Ask_Action_OpenForecasts" xml:space="preserve"><value>Open Planning</value></data>
@@ -758,22 +759,18 @@
   <data name="Ask_Earliest" xml:space="preserve"><value>It becomes comfortable from {0}, if everything goes as planned.</value></data>
   <data name="Ask_Earliest_None" xml:space="preserve"><value>With what is planned now, it does not become comfortable within a year.</value></data>
   <data name="Ask_Assume_LookAhead" xml:space="preserve"><value>Checked over the next {0} days.</value></data>
-  <data name="Ask_Room_No" xml:space="preserve"><value>No. {0} does not fit: only {1} is safe to spend until {2}.</value></data>
-  <data name="Ask_Room_NoBudget" xml:space="preserve"><value>{0} fits in what is safe to spend ({2} until {3}). {1} has no budget this month, so there is no budget to check.</value></data>
-  <data name="Ask_Room_Yes" xml:space="preserve"><value>Yes. {0} fits in your budget for {1} ({2} left) and in what is safe to spend ({3}).</value></data>
-  <data name="Ask_Room_OverBudget" xml:space="preserve"><value>{0} fits in what is safe to spend, but your budget for {1} would be exceeded by {2}.</value></data>
+  <data name="Ask_Room_No" xml:space="preserve"><value>No. {0} does not fit: after your fixed costs and usual spending only {1} is left until {2}.</value></data>
+  <data name="Ask_Room_Yes" xml:space="preserve"><value>Yes. {0} fits: after your fixed costs and usual spending {1} is left until {2}.</value></data>
   <data name="Ask_F_SpentThisMonth" xml:space="preserve"><value>Spent on {0} this month</value></data>
-  <data name="Ask_F_Budget" xml:space="preserve"><value>Budget this month</value></data>
-  <data name="Ask_F_BudgetLeft" xml:space="preserve"><value>Left in the budget</value></data>
   <data name="Ask_F_SafeUntil" xml:space="preserve"><value>Safe to spend until {0}</value></data>
-  <data name="Ask_Explain_Room" xml:space="preserve"><value>Two things are checked: your own budget for the category, and safe-to-spend, which keeps every planned bill, card statement and your buffer covered until your next income.</value></data>
-  <data name="Ask_Safe" xml:space="preserve"><value>You can safely spend {0} until {1}.</value></data>
-  <data name="Ask_Safe_Short" xml:space="preserve"><value>Nothing is safe to spend until {1}: you are {0} short of covering everything planned and your buffer.</value></data>
+  <data name="Ask_Explain_Room" xml:space="preserve"><value>This looks at what is left until your next income: your balance, minus your fixed costs (planned or recognised in your history), card statements, your usual day-to-day spending and your buffer. Budgets are not used.</value></data>
+  <data name="Ask_Safe" xml:space="preserve"><value>You can spend {0} extra until {1}, on top of your fixed costs and usual spending.</value></data>
+  <data name="Ask_Safe_Short" xml:space="preserve"><value>Nothing extra can be spent until {1}: you are {0} short of covering your fixed costs, usual spending and buffer.</value></data>
   <data name="Ask_F_Balance" xml:space="preserve"><value>Current account and cash now</value></data>
-  <data name="Ask_F_PlannedOut" xml:space="preserve"><value>Planned payments</value></data>
+  <data name="Ask_F_PlannedOut" xml:space="preserve"><value>Fixed costs and planned payments</value></data>
   <data name="Ask_F_PlannedIn" xml:space="preserve"><value>Planned money in</value></data>
   <data name="Ask_F_CardStatements" xml:space="preserve"><value>Card statements</value></data>
-  <data name="Ask_Explain_Safe" xml:space="preserve"><value>Safe to spend is your current account and cash, minus everything planned and the card statements due before your next expected income, minus your minimum buffer.</value></data>
+  <data name="Ask_Explain_Safe" xml:space="preserve"><value>Your current account and cash, minus your fixed costs (planned or recognised in your history), the card statements and your usual day-to-day spending until your next expected income, minus your minimum buffer. What is left you can spend extra. Budgets are not used.</value></data>
   <data name="Ask_Explain_SafeNoIncome" xml:space="preserve"><value>No income is planned, so the next {0} days are counted.</value></data>
   <data name="Ask_Event_Out" xml:space="preserve"><value>{0}: {1} on {2}</value></data>
   <data name="Ask_Event_In" xml:space="preserve"><value>{0}: +{1} on {2}</value></data>
@@ -1076,7 +1073,7 @@
   <data name="Report_Note_PlannedSeparate" xml:space="preserve"><value>These items have not happened yet. They are never added to the actual figures above.</value></data>
   <data name="Report_Note_CashFlowActual" xml:space="preserve"><value>Actual figures come from recorded transactions. Transfers between your accounts are included as money in and out.</value></data>
   <data name="Report_Note_TransfersIncluded" xml:space="preserve"><value>Money in and out include transfers between your own accounts.</value></data>
-  <data name="Report_Note_Projection" xml:space="preserve"><value>Expected balances are estimates based on planned items and card statements. Expected income is never guaranteed.</value></data>
+  <data name="Report_Note_Projection" xml:space="preserve"><value>Expected balances are estimates based on planned items, fixed costs and income recognised in your history, your usual spending and card statements. Expected income is never certain.</value></data>
   <data name="Report_Note_Estimates" xml:space="preserve"><value>All amounts in this table are estimates.</value></data>
   <data name="Report_Note_CardsNotProjected" xml:space="preserve"><value>Credit cards have no projected balance; their statements are counted on the account that pays them.</value></data>
   <data name="Report_Note_FutureWithoutPlanned" xml:space="preserve"><value>The period runs past today. Turn on "Include planned items" to see expected balances.</value></data>
@@ -1174,4 +1171,32 @@
   <data name="Error_backup_restoreFailed" xml:space="preserve"><value>Restoring failed. Your previous data was put back.</value></data>
   <data name="Error_backup_reminder_invalid" xml:space="preserve"><value>Choose one of the reminder options.</value></data>
   <data name="Settings_CategoryKind" xml:space="preserve"><value>Category kind</value></data>
+  <data name="Ask_Room_MoreThanUsual" xml:space="preserve"><value>You can: after your fixed costs and usual spending {2} is left until {3}. {0} extra is more than you usually spend on {1} though (on average {4} a month).</value></data>
+  <data name="ForecastCaveat_NoSpendingHistory" xml:space="preserve"><value>There are not yet 2 complete months of history, so your usual spending and fixed costs are not known yet and are not counted. Import your bank statements of the previous months.</value></data>
+  <data name="Report_Event_Usual" xml:space="preserve"><value>Usual spending (estimate)</value></data>
+  <data name="Report_Detected" xml:space="preserve"><value>{0} (recognised)</value></data>
+  <data name="Forecast_Usual" xml:space="preserve"><value>Usual day-to-day spending (about {0} a month)</value></data>
+  <data name="Forecast_Detected" xml:space="preserve"><value>{0} · {1} (recognised)</value></data>
+  <data name="Ask_F_Usual" xml:space="preserve"><value>Usual day-to-day spending</value></data>
+  <data name="Ask_F_UsualCategory" xml:space="preserve"><value>Usually a month on {0}</value></data>
+  <data name="Ask_V_NotKnownYet" xml:space="preserve"><value>not known yet</value></data>
+  <data name="Ask_Assume_UsualCategory" xml:space="preserve"><value>'Usually' is the average of your last {0} complete months.</value></data>
+  <data name="Ask_Assume_Usual" xml:space="preserve"><value>Your usual day-to-day spending (about {0} a month, learned from your last {1} complete months) is counted every day.</value></data>
+  <data name="Ask_Assume_Detected" xml:space="preserve"><value>What says '(recognised)' I found in your history myself; it counts as if it were planned. If an amount or day is wrong, add it as a recurring item.</value></data>
+  <data name="Ask_Name_Detected" xml:space="preserve"><value>{0} (recognised)</value></data>
+  <data name="Ask_Event_Usual" xml:space="preserve"><value>Usual day-to-day spending: {0} in the next {1} days</value></data>
+  <data name="Ask_Event_UsualMonth" xml:space="preserve"><value>Usual day-to-day spending: {0} in {1}</value></data>
+  <data name="Ask_Fixed" xml:space="preserve"><value>Your fixed costs are about {0} a month. On top of that you usually spend {1} a month on day-to-day things.</value></data>
+  <data name="Ask_Fixed_NoUsual" xml:space="preserve"><value>Your fixed costs are about {0} a month. What you usually spend on top of that I do not know yet: that needs more history.</value></data>
+  <data name="Ask_Fixed_NoHistory" xml:space="preserve"><value>I do not know your fixed costs and usual spending yet: I need at least {0} complete months of transactions for that. Import your bank statements of the previous months.</value></data>
+  <data name="Ask_F_FixedMonthly" xml:space="preserve"><value>Fixed costs a month</value></data>
+  <data name="Ask_F_UsualMonthly" xml:space="preserve"><value>Usual spending a month</value></data>
+  <data name="Ask_F_UsualThisMonth" xml:space="preserve"><value>Usual spending this month so far</value></data>
+  <data name="Ask_F_IncomeMonthly" xml:space="preserve"><value>Income a month</value></data>
+  <data name="Ask_F_LeftMonthly" xml:space="preserve"><value>Usually left a month</value></data>
+  <data name="Ask_Fixed_Item" xml:space="preserve"><value>{0}: {1} a month</value></data>
+  <data name="Ask_Assume_Learned" xml:space="preserve"><value>Learned from {0} complete months ({1} to {2}).</value></data>
+  <data name="Ask_Assume_Median" xml:space="preserve"><value>Your usual spending is that of a middle month, so one big purchase does not skew it. Fixed costs and planned items are not part of it.</value></data>
+  <data name="Ask_Explain_Fixed" xml:space="preserve"><value>Fixed costs are your recurring items plus whatever comes back every month at about the same amount in your history (rent, subscriptions, standing transfers). Everything else counts as usual spending. No budgets are needed for this.</value></data>
+  <data name="Ask_Example_Fixed" xml:space="preserve"><value>What are my fixed costs?</value></data>
 </root>

@@ -133,7 +133,7 @@ public class AssistantUiTests
         var (window, vm) = Start(temp);
         var transactions = temp.Scalar("SELECT COUNT(*) FROM transactions;");
         var assistant = Navigate<AssistantViewModel>(vm);
-        Assert.Equal(10, assistant.Examples.Count);
+        Assert.Equal(11, assistant.Examples.Count);
         Assert.False(assistant.HasMessages);
         Save(window, "41-assistant-start");
 

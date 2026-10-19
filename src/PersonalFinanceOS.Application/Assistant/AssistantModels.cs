@@ -41,6 +41,9 @@ public enum AssistantIntent
 
     /// <summary>"Should I use VISA or wait?"</summary>
     CardOrWait,
+
+    /// <summary>"What are my fixed costs?", "What do I usually spend a month?" (D-039)</summary>
+    FixedCosts,
 }
 
 /// <summary>The period a spending question is about.</summary>
