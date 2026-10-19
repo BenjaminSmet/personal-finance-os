@@ -179,6 +179,18 @@ public sealed partial class ReleaseChecksTests
         Assert.Empty(unnamed);
     }
 
+    // ===== Release =====
+
+    /// <summary>The release notes for the version being built are in the repository; CI publishes them with the release.</summary>
+    [Fact]
+    public void The_current_version_has_release_notes()
+    {
+        var version = System.Xml.Linq.XDocument.Load(Path.Combine(Root, "Directory.Build.props")).Descendants("Version").Single().Value;
+        var notes = Path.Combine(Root, "docs", "releases", $"v{version}.md");
+        Assert.True(File.Exists(notes), $"docs/releases/v{version}.md is missing.");
+        Assert.StartsWith($"# Personal Finance OS {version}", File.ReadAllText(notes), StringComparison.Ordinal);
+    }
+
     private static string FindRoot()
     {
         var dir = new DirectoryInfo(AppContext.BaseDirectory);
