@@ -81,13 +81,20 @@
         <Border Classes="separator" />
         <Grid ColumnDefinitions="*,Auto">
           <StackPanel Spacing="6" VerticalAlignment="Center">
-            <TextBlock Classes="overline" Text="{l:T Dashboard_Budget}" />
-            <StackPanel Spacing="6" IsVisible="{Binding BudgetText, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <TextBlock Classes="overline" Text="{l:T Dashboard_Usual}" />
+            <StackPanel Spacing="6" IsVisible="{Binding UsualText, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Text="{Binding UsualText}" Classes.debt="{Binding UsualIsOver}" />
+              <ProgressBar Classes="meter" Classes.over="{Binding UsualIsOver}" Maximum="100" Value="{Binding UsualUsedPercent}" />
+            </StackPanel>
+            <TextBlock Classes="caption" Text="{l:T Dashboard_UsualUnknown}" TextWrapping="Wrap"
+                       IsVisible="{Binding UsualText, Converter={x:Static ObjectConverters.IsNull}}" />
+
+            <!-- Budgets are optional; only shown when the user set one. -->
+            <StackPanel Spacing="6" Margin="0,10,0,0" IsVisible="{Binding BudgetText, Converter={x:Static ObjectConverters.IsNotNull}}">
+              <TextBlock Classes="overline" Text="{l:T Dashboard_Budget}" />
               <TextBlock Text="{Binding BudgetText}" Classes.debt="{Binding BudgetIsOver}" />
               <ProgressBar Classes="meter" Classes.over="{Binding BudgetIsOver}" Maximum="100" Value="{Binding BudgetUsedPercent}" />
             </StackPanel>
-            <TextBlock Classes="caption" Text="{l:T Dashboard_NoBudget}"
-                       IsVisible="{Binding BudgetText, Converter={x:Static ObjectConverters.IsNull}}" />
           </StackPanel>
           <Button Grid.Column="1" Margin="16,0,0,0" Content="{l:T Dashboard_GoToBudgets}" Command="{Binding GoToBudgetsCommand}"
                   VerticalAlignment="Center" />

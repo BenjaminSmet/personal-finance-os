@@ -382,3 +382,33 @@ where the spec is open:
 - **Version:** 1.0.0. A `v1.0.0` tag publishes the release with `docs/releases/v1.0.0.md`. The tag is only pushed when
   Benjamin asks.
 - **Placeholder page removed:** every navigation item now leads to a real page.
+
+### D-039 · Fixed costs and usual spending are learned, not budgeted (2026-10-19)
+Benjamin does not want to work out a budget per category. Whether something extra fits is now judged on what his
+money usually does, learned from the history, and never on budgets. Budgets stay available on Budgets & analysis and
+in the budget report, but nothing else depends on them.
+- **What is learned:** the last complete months on or after the first balance date of the spendable accounts, at
+  most six. Fewer than two complete months learns nothing, and every forecast then says so.
+- **Which money:** what leaves the spendable accounts (personal current account and cash), purchases on cards that
+  they pay, transfers from them to savings or the joint account, and income on them. Card payments, transfers between
+  spendable accounts and adjustments are left out.
+- **Recognised fixed costs and income:** the same counterparty (the description without digits, punctuation, month
+  names and masked card numbers), once a month in at least 75% of the learned months (and at least two), seen last
+  month or this month, and always within 10% of its usual amount (20% for income). It is expected again on the same
+  day a month after it was last seen; a cost that is late is counted today, late income is not counted. The amount
+  is the last one, for income the lower of the last and the usual one. Anything a planned item already covers (same
+  kind and account, amount within 25%, or linked to the plan) is left to the plan, so nothing counts twice.
+- **Usual spending:** all other spending, per month, and then the middle month (median), so one large purchase does
+  not set the norm. The rest of this month is the usual month minus what is already spent, but never less than the
+  usual pace for the days left. It is spread evenly over the days, on the first personal current account.
+- **Where it counts:** safe-to-spend (one line for usual spending, recognised items marked "recognised"), the
+  next income (a recognised salary ends the safe-to-spend period like a planned one), the forecast timeline, the
+  affordability check and wishlist dates, scenarios, the 7/30/90-day cash flow, and the cash flow report (usual
+  spending as one line per month).
+- **Spec §13 note:** recognised transfers to savings or the joint account are expected to continue because they
+  happened every month, which is how "configured or planned" is read here; a planned item still wins.
+- **Assistant:** "Can I spend €X extra on a category" checks what is left after fixed costs, card statements, usual
+  spending and the buffer, and says when it is more than the user usually spends on that category (the average of
+  up to three complete months). "Can I still spend something extra?" without an amount answers with safe-to-spend.
+  A new question, "What are my fixed costs?" / "What do I usually spend?", lists fixed costs (planned and
+  recognised), usual spending, income and what is usually left per month. No answer shows a budget any more.

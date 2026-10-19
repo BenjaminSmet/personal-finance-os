@@ -49,7 +49,7 @@ public sealed class ScenarioTests : IDisposable
         _ledger = new LedgerService(transactions, accountRepository, categoryRepository, audit, new UndoHistory(), _clock);
         _recurring = new RecurringService(new RecurringRepository(db), accountRepository, categoryRepository, transactions, _ledger, audit, _clock);
         var cards = new CreditCardService(new CreditCardRepository(db), accountRepository, transactions, _recurring, audit, _clock);
-        var forecast = new ForecastService(accountRepository, _ledger, _recurring, cards, _settings, _clock);
+        var forecast = new ForecastService(accountRepository, _ledger, _recurring, cards, _settings, new SpendingProfileService(accountRepository, categoryRepository, transactions, new CreditCardRepository(db), _recurring, _clock), _clock);
         _wishlist = new WishlistService(wishlistRepository, transactions, _ledger, audit, _clock);
         _scenarios = new ScenarioService(new ScenarioRepository(db), accountRepository, wishlistRepository, _recurring, forecast, cards, audit, _clock);
     }

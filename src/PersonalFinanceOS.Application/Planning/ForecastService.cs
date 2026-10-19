@@ -29,6 +29,9 @@ public enum ForecastLineKind
 
     /// <summary>The minimum buffer that must stay on the account.</summary>
     Buffer,
+
+    /// <summary>The usual day-to-day spending until the horizon, learned from the history (D-039).</summary>
+    UsualSpending,
 }
 
 /// <summary>Why a forecast is less certain than it looks; screens show these next to the number.</summary>
@@ -48,10 +51,19 @@ public enum ForecastCaveat
 
     /// <summary>Planned items are past their date and not confirmed; they are still counted.</summary>
     OverdueItems,
+
+    /// <summary>Less than two complete months of history, so usual spending and fixed costs are not known yet (D-039).</summary>
+    NoSpendingHistory,
 }
 
-/// <summary>One line of the safe-to-spend breakdown. <see cref="Amount"/> is signed: money out is negative.</summary>
-public sealed record ForecastLine(ForecastLineKind Kind, Money Amount, string? Name = null, DateOnly? Date = null);
+/// <summary>
+/// One line of the safe-to-spend breakdown. <see cref="Amount"/> is signed: money out is negative. <see cref="Detected"/>
+/// marks a fixed cost or income the app recognised in the history rather than one the user planned (D-039).
+/// </summary>
+public sealed record ForecastLine(ForecastLineKind Kind, Money Amount, string? Name = null, DateOnly? Date = null, bool Detected = false);
+
+/// <summary>The next expected income: planned by the user, or recognised in the history. Expected, never guaranteed.</summary>
+public sealed record ExpectedIncome(string Name, DateOnly Date, Money Amount, bool Detected);
 
 /// <summary>
 /// Safe-to-spend (spec §13): money on the counted accounts minus everything that is expected to leave
@@ -65,11 +77,14 @@ public sealed record SafeToSpend(
     /// <summary>The last day counted: the day before the next expected income, or a fixed horizon.</summary>
     DateOnly Until,
 
-    /// <summary>The next expected income, when one is planned. Expected, never guaranteed.</summary>
-    PlannedOccurrence? NextIncome,
+    /// <summary>The next expected income, planned or recognised. Expected, never guaranteed.</summary>
+    ExpectedIncome? NextIncome,
     IReadOnlyList<Account> Accounts,
     IReadOnlyList<ForecastLine> Lines,
-    IReadOnlyList<ForecastCaveat> Caveats);
+    IReadOnlyList<ForecastCaveat> Caveats,
+
+    /// <summary>What the user's money usually does, which the usual spending and recognised items come from.</summary>
+    SpendingProfile? Profile = null);
 
 /// <summary>Expected money in and out over a number of days (spec §13: 7, 30 and 90 days).</summary>
 public sealed record CashFlow(int Days, Money ExpectedIn, Money ExpectedOut)
@@ -78,9 +93,10 @@ public sealed record CashFlow(int Days, Money ExpectedIn, Money ExpectedOut)
 }
 
 /// <summary>
-/// Forecasts from recorded transactions, open planned items and card statements. Planned items
-/// affect forecasts only; balances stay the ledger's (spec §12). Expected income is always labelled
-/// as expected and never counted before it arrives in safe-to-spend.
+/// Forecasts from recorded transactions, open planned items, card statements and what the history shows (D-039): fixed
+/// costs and income the app recognised by itself, and the usual day-to-day spending. Planned items affect forecasts
+/// only; balances stay the ledger's (spec §12). Expected income is always labelled as expected and never counted before
+/// it arrives in safe-to-spend. Budgets play no part.
 /// </summary>
 public sealed class ForecastService(
     IAccountRepository accounts,
@@ -88,6 +104,7 @@ public sealed class ForecastService(
     RecurringService recurring,
     CreditCardService cards,
     AppSettingsService settings,
+    SpendingProfileService spending,
     IClock clock)
 {
     /// <summary>The horizon when no income is planned.</summary>
@@ -115,8 +132,16 @@ public sealed class ForecastService(
         }
 
         var open = await recurring.ListOpenAsync(today.AddDays(366), withMatches: false, ct);
-        var nextIncome = open.FirstOrDefault(o => o.Rule.Kind == RecurringKind.Income && ids.Contains(o.Rule.AccountId) && o.DueDate > today);
-        var until = nextIncome is null ? today.AddDays(DefaultHorizonDays) : nextIncome.DueDate.AddDays(-1);
+        var profile = await spending.GetAsync(ct);
+        var cardProfiles = (await cards.ListStatusesAsync(ct)).Where(s => s.Profile is not null).ToDictionary(s => s.Card.Id, s => s.Profile!);
+        var learned = ProfileEvents(profile, cardProfiles, cardIds, today.AddDays(366)).Where(e => ids.Contains(e.AccountId)).ToList();
+        var nextIncome = open
+            .Where(o => o.Rule.Kind == RecurringKind.Income && ids.Contains(o.Rule.AccountId) && o.DueDate > today)
+            .Select(o => new ExpectedIncome(o.Rule.Name, o.DueDate, o.Amount, false))
+            .Concat(learned.Where(e => e.Kind == CashEventKind.Income && e.Date > today).Select(e => new ExpectedIncome(e.Name ?? string.Empty, e.Date, e.Amount, true)))
+            .OrderBy(i => i.Date)
+            .FirstOrDefault();
+        var until = nextIncome is null ? today.AddDays(DefaultHorizonDays) : nextIncome.Date.AddDays(-1);
         if (nextIncome is null)
         {
             caveats.Add(ForecastCaveat.NoIncomePlanned);
@@ -151,7 +176,23 @@ public sealed class ForecastService(
             lines.Add(new ForecastLine(change.IsNegative ? ForecastLineKind.Planned : ForecastLineKind.PlannedIn, change, o.Rule.Name, o.DueDate));
         }
 
+        foreach (var e in learned.Where(e => e.Date <= until && e.Kind != CashEventKind.Usual))
+        {
+            lines.Add(new ForecastLine(e.Amount.IsNegative ? ForecastLineKind.Planned : ForecastLineKind.PlannedIn, e.Amount, e.Name, e.Date, Detected: true));
+        }
+
         await AddCardsAsync(lines, caveats, ids, until, ct);
+
+        var usual = Money.Sum(learned.Where(e => e.Kind == CashEventKind.Usual && e.Date <= until).Select(e => e.Amount));
+        if (!usual.IsZero)
+        {
+            lines.Add(new ForecastLine(ForecastLineKind.UsualSpending, usual, Date: until));
+        }
+
+        if (!profile.IsKnown)
+        {
+            caveats.Add(ForecastCaveat.NoSpendingHistory);
+        }
 
         var buffer = await settings.GetMinimumBufferAsync(ct);
         if (buffer.IsPositive)
@@ -159,7 +200,7 @@ public sealed class ForecastService(
             lines.Add(new ForecastLine(ForecastLineKind.Buffer, buffer.Negate()));
         }
 
-        return new SafeToSpend(true, Money.Sum(lines.Select(l => l.Amount)), today, until, nextIncome, counted, lines, caveats);
+        return new SafeToSpend(true, Money.Sum(lines.Select(l => l.Amount)), today, until, nextIncome, counted, lines, caveats, profile);
     }
 
     /// <summary>Expected money in and out of the counted accounts in the coming <paramref name="days"/> days, overdue items included.</summary>
@@ -173,6 +214,7 @@ public sealed class ForecastService(
         var open = await recurring.ListOpenAsync(today.AddDays(max), withMatches: false, ct);
         var settlements = await cards.ListSettlementsAsync(today.AddDays(max), ct);
         var profiles = (await cards.ListStatusesAsync(ct)).Where(s => s.Profile is not null).ToDictionary(s => s.Card.Id, s => s.Profile!);
+        var learned = ProfileEvents(await spending.GetAsync(ct), profiles, cardIds, today.AddDays(max)).Where(e => ids.Contains(e.AccountId)).ToList();
 
         return days.Select(d =>
         {
@@ -181,6 +223,7 @@ public sealed class ForecastService(
                 .Concat(settlements
                     .Where(s => s.FromAccountId is { } from && ids.Contains(from) && CardMath.Due(profiles[s.Card.Id], s.Period, today) <= until)
                     .Select(s => s.Amount.Negate()))
+                .Concat(learned.Where(e => e.Date <= until).Select(e => e.Amount))
                 .ToList();
             return new CashFlow(d, Money.Sum(changes.Where(c => c.IsPositive)), Money.Sum(changes.Where(c => c.IsNegative)).Negate());
         }).ToList();
@@ -338,12 +381,63 @@ public sealed class ForecastService(
             events.Add(new AccountEvent(from, CardMath.Due(profiles[s.Card.Id], s.Period, today), s.Amount.Negate(), CashEventKind.CardSettlement, s.Card.Name, CardId: s.Card.Id));
         }
 
+        var profile = await spending.GetAsync(ct);
+        events.AddRange(ProfileEvents(profile, profiles, cardIds, until).Where(e => ids.Contains(e.AccountId)));
+        if (!profile.IsKnown)
+        {
+            caveats.Add(ForecastCaveat.NoSpendingHistory);
+        }
+
         if (!events.Any(e => e.Kind == CashEventKind.Income && e.Date > today && counted.Contains(e.AccountId)))
         {
             caveats.Add(ForecastCaveat.NoIncomePlanned);
         }
 
         return new ForecastTimeline(today, until, buffer, projected, counted, start, events, caveats, open, profiles);
+    }
+
+    /// <summary>
+    /// What the history adds to a forecast (D-039), on the accounts the money moves on: recognised fixed costs (a card's on
+    /// the account paying the card), transfers on both sides, recognised income, and the usual day-to-day spending a day
+    /// at a time on the spending account. All marked as recognised, never as planned by the user.
+    /// </summary>
+    public static IEnumerable<AccountEvent> ProfileEvents(
+        SpendingProfile profile, IReadOnlyDictionary<Guid, CreditCardProfile> cardProfiles, IReadOnlySet<Guid> cardIds, DateOnly until)
+    {
+        foreach (var f in profile.FixedCosts)
+        {
+            foreach (var date in f.DueDates(profile.Today, until))
+            {
+                switch (f.Kind)
+                {
+                    case RecurringKind.Income:
+                        yield return new AccountEvent(f.AccountId, date, f.Amount, CashEventKind.Income, f.Name, Detected: true);
+                        break;
+                    case RecurringKind.Expense:
+                        var payer = cardIds.Contains(f.AccountId)
+                            ? cardProfiles.GetValueOrDefault(f.AccountId)?.SettlementAccountId ?? profile.SpendingAccountId
+                            : f.AccountId;
+                        if (payer is { } p)
+                        {
+                            yield return new AccountEvent(p, date, f.Amount.Negate(), CashEventKind.Planned, f.Name, Detected: true);
+                        }
+
+                        break;
+                    default:
+                        yield return new AccountEvent(f.AccountId, date, f.Amount.Negate(), CashEventKind.Planned, f.Name, Detected: true);
+                        yield return new AccountEvent(f.ToAccountId!.Value, date, f.Amount, CashEventKind.PlannedIn, f.Name, Detected: true);
+                        break;
+                }
+            }
+        }
+
+        if (profile.SpendingAccountId is { } account)
+        {
+            foreach (var (date, amount) in profile.UsualSpending(until))
+            {
+                yield return new AccountEvent(account, date, amount.Negate(), CashEventKind.Usual, null);
+            }
+        }
     }
 
     /// <summary>The accounts a timeline projects: those whose balance comes from the ledger and holds money.</summary>
@@ -425,6 +519,9 @@ public enum CashEventKind
 
     /// <summary>A change from a what-if scenario; never in the ledger.</summary>
     Scenario,
+
+    /// <summary>A day of usual day-to-day spending, learned from the history (D-039).</summary>
+    Usual,
 }
 
 /// <summary>One expected change of one projected account. <see cref="Amount"/> is signed: money out is negative.</summary>
@@ -439,7 +536,10 @@ public sealed record AccountEvent(
     Guid? RuleId = null,
 
     /// <summary>The card of a statement payment.</summary>
-    Guid? CardId = null);
+    Guid? CardId = null,
+
+    /// <summary>A fixed cost, transfer or income the app recognised in the history, not one the user planned (D-039).</summary>
+    bool Detected = false);
 
 /// <summary>
 /// The expected balance of each money account from today to <see cref="Until"/> (spec §16). A forecast: it never
@@ -508,11 +608,11 @@ public sealed class ForecastTimeline(
     public ForecastTimeline With(IEnumerable<AccountEvent> replaced) =>
         new(Today, Until, Buffer, Accounts, Counted, Start, replaced.ToList(), Caveats, Open, CardProfiles);
 
-    private static CashEvent ToCash(AccountEvent e) => new(e.Date, e.Amount, e.Kind, e.Name);
+    private static CashEvent ToCash(AccountEvent e) => new(e.Date, e.Amount, e.Kind, e.Name, e.Detected);
 }
 
 /// <summary>One expected change of the counted accounts. <see cref="Amount"/> is signed: money out is negative.</summary>
-public sealed record CashEvent(DateOnly Date, Money Amount, CashEventKind Kind, string? Name);
+public sealed record CashEvent(DateOnly Date, Money Amount, CashEventKind Kind, string? Name, bool Detected = false);
 
 /// <summary>
 /// The expected balance of the counted accounts for every day from today to <see cref="Until"/>. A what-if purchase

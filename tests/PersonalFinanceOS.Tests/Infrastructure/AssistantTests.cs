@@ -23,6 +23,9 @@ namespace PersonalFinanceOS.Tests.Infrastructure;
 /// Phase 7 against a real migrated database: the rule-based assistant (spec §15). The fixture: history since 1 August,
 /// €2,000 on the current account today (10 October), €500 buffer, rent €900 on the 15th, salary €2,400 on the 25th, a
 /// €400 VISA purchase debited on 5 November, savings, a €400 grocery budget with €270 spent and a €700 laptop wish.
+/// What the history shows (D-039): a €15 subscription on the 12th that nobody planned, and usual day-to-day spending of
+/// €350 a month (groceries €300 and €400). October already has €670 of it (€270 groceries, €400 on the VISA), so the
+/// rest of October is counted at the usual pace: €350 × 21/31 = €237.10, €158.07 of it until the salary.
 /// </summary>
 public sealed class AssistantTests : IDisposable
 {
@@ -59,12 +62,13 @@ public sealed class AssistantTests : IDisposable
         _budgets = new BudgetService(budgetRepository, categoryRepository, audit, _clock);
         _recurring = new RecurringService(new RecurringRepository(db), accountRepository, categoryRepository, transactions, _ledger, audit, _clock);
         var cards = new CreditCardService(new CreditCardRepository(db), accountRepository, transactions, _recurring, audit, _clock);
-        var forecast = new ForecastService(accountRepository, _ledger, _recurring, cards, _settings, _clock);
+        var spending = new SpendingProfileService(accountRepository, categoryRepository, transactions, new CreditCardRepository(db), _recurring, _clock);
+        var forecast = new ForecastService(accountRepository, _ledger, _recurring, cards, _settings, spending, _clock);
         var affordability = new AffordabilityService(forecast, cards);
         var analysis = new AnalysisService(accountRepository, categoryRepository, transactions, budgetRepository, new OwnershipRepository(db), _recurring, _clock);
         _wishlist = new WishlistService(wishlistRepository, transactions, _ledger, audit, _clock);
         _scenarios = new ScenarioService(new ScenarioRepository(db), accountRepository, wishlistRepository, _recurring, forecast, cards, audit, _clock);
-        _assistant = new AssistantService(accountRepository, categoryRepository, _wishlist, _recurring, forecast, affordability, analysis, _scenarios, _clock);
+        _assistant = new AssistantService(accountRepository, categoryRepository, _wishlist, _recurring, forecast, affordability, analysis, _scenarios, spending, _clock);
     }
 
     public void Dispose() => _temp.Dispose();
@@ -120,16 +124,25 @@ public sealed class AssistantTests : IDisposable
     {
         await SetUpAsync();
 
-        var yes = await _assistant.AskAsync("Kan ik €500 uitgeven?");
+        var yes = await _assistant.AskAsync("Kan ik €400 uitgeven?");
         Assert.Equal((AssistantIntent.CanAfford, AnswerKind.Direct, "Ask_Afford_Prudent"), (yes.Intent, yes.Kind, yes.Headline.Key));
         Assert.Equal(Euro(2_000), Figure(yes, "Check_CashNow"));
-        Assert.Equal(Euro(1_500), Figure(yes, "Check_CashAfter"));
+        Assert.Equal(Euro(1_600), Figure(yes, "Check_CashAfter"));
+
+        // €500 would be fine on the planned bills alone, but not with the usual spending and the subscription until payday.
+        var usual = await _assistant.AskAsync("Kan ik €500 uitgeven?");
+        Assert.Equal((AnswerKind.Qualified, "Ask_Afford_Technical"), (usual.Kind, usual.Headline.Key));
+        Assert.Equal(Money.FromCents(42_693), usual.Headline.Args[1]);
 
         // Expected salary is an assumption, never a certainty, and savings are not spendable.
         Assert.True(Has(yes.Assumptions, "Ask_Assume_Income"));
         Assert.True(Has(yes.Assumptions, "Ask_Assume_NotSpendable"));
-        Assert.Contains(yes.Considered, t => t.Key == "Ask_Event_Out" && (string)t.Args[0] == "Huur");
-        Assert.Contains(yes.Considered, t => t.Key == "Ask_Event_Income" && (string)t.Args[0] == "Loon");
+        Assert.Contains(yes.Considered, t => t.Key == "Ask_Event_Out" && t.Args[0] is "Huur");
+        Assert.Contains(yes.Considered, t => t.Key == "Ask_Event_Income" && t.Args[0] is "Loon");
+        Assert.Contains(yes.Considered, t => t.Key == "Ask_Event_Out" && t.Args[0] is AnswerText { Key: "Ask_Name_Detected" } n && (string)n.Args[0] == "Abonnementen");
+        Assert.Equal("Ask_Event_Usual", yes.Considered[0].Key);
+        Assert.True(Has(yes.Assumptions, "Ask_Assume_Usual"));
+        Assert.True(Has(yes.Assumptions, "Ask_Assume_Detected"));
         Assert.Equal([AssistantAction.OpenWishlist], yes.Actions);
 
         var tight = await _assistant.AskAsync("Can I afford €700?");
@@ -151,7 +164,7 @@ public sealed class AssistantTests : IDisposable
         Assert.Equal(["Laptop"], question.Suggestions);
         Assert.Empty(question.Figures);
 
-        var answer = await _assistant.AskAsync("€500", question.Pending);
+        var answer = await _assistant.AskAsync("€400", question.Pending);
         Assert.Equal((AssistantIntent.CanAfford, "Ask_Afford_Prudent"), (answer.Intent, answer.Headline.Key));
 
         // Clicking the suggested wishlist item works as well.
@@ -166,28 +179,33 @@ public sealed class AssistantTests : IDisposable
     // ===== Can I spend another €100 on groceries this month? =====
 
     [Fact]
-    public async Task Category_room_checks_the_budget_and_safe_to_spend_together()
+    public async Task Category_room_uses_fixed_costs_and_usual_spending_never_the_budget()
     {
-        await SetUpAsync();
+        var f = await SetUpAsync();
 
-        var yes = await _assistant.AskAsync("Kan ik deze maand nog €100 uitgeven aan boodschappen?");
+        var yes = await _assistant.AskAsync("Kan ik deze maand nog €50 uitgeven aan boodschappen?");
         Assert.Equal((AssistantIntent.CategoryRoom, AnswerKind.Direct, "Ask_Room_Yes"), (yes.Intent, yes.Kind, yes.Headline.Key));
         Assert.Equal(Euro(270), Figure(yes, "Ask_F_SpentThisMonth"));
-        Assert.Equal(Euro(400), Figure(yes, "Ask_F_Budget"));
-        Assert.Equal(Euro(130), Figure(yes, "Ask_F_BudgetLeft"));
+        Assert.Equal(Euro(350), Figure(yes, "Ask_F_UsualCategory"));
 
-        // €2,000 − €900 rent − €500 buffer before the salary.
-        Assert.Equal(Euro(600), Figure(yes, "Ask_F_SafeUntil"));
+        // €2,000 − €900 rent − €15 subscription − €158.07 usual spending − €500 buffer before the salary.
+        Assert.Equal(Money.FromCents(42_693), Figure(yes, "Ask_F_SafeUntil"));
+        Assert.DoesNotContain(yes.Figures, x => x.Label.Key.Contains("Budget", StringComparison.Ordinal));
+        Assert.Equal([AssistantAction.OpenForecasts], yes.Actions);
 
-        var over = await _assistant.AskAsync("Can I spend another €200 on groceries this month?");
-        Assert.Equal((AnswerKind.Qualified, "Ask_Room_OverBudget"), (over.Kind, over.Headline.Key));
-        Assert.Equal(Euro(70), over.Headline.Args[2]);
+        // More than usual on groceries still fits, and the answer says it is more than usual.
+        var more = await _assistant.AskAsync("Can I spend another €200 on groceries this month?");
+        Assert.Equal((AnswerKind.Qualified, "Ask_Room_MoreThanUsual"), (more.Kind, more.Headline.Key));
+        Assert.Equal(Euro(350), more.Headline.Args[4]);
 
         var tooMuch = await _assistant.AskAsync("Kan ik nog €700 uitgeven aan boodschappen?");
         Assert.Equal("Ask_Room_No", tooMuch.Headline.Key);
 
-        var noBudget = await _assistant.AskAsync("Kan ik nog €20 uitgeven aan abonnementen?");
-        Assert.Equal((AnswerKind.Qualified, "Ask_Room_NoBudget"), (noBudget.Kind, noBudget.Headline.Key));
+        // The budget plays no part: a tiny budget changes nothing.
+        await _budgets.SetAsync(f.Groceries.Id, new(2026, 10, 1), Euro(1));
+        var again = await _assistant.AskAsync("Kan ik deze maand nog €50 uitgeven aan boodschappen?");
+        Assert.Equal((yes.Kind, yes.Headline.Key), (again.Kind, again.Headline.Key));
+        Assert.Equal(yes.Headline.Args, again.Headline.Args);
     }
 
     // ===== How much can I safely spend before payday? =====
@@ -199,9 +217,15 @@ public sealed class AssistantTests : IDisposable
         var answer = await _assistant.AskAsync("How much can I safely spend before payday?");
 
         Assert.Equal((AssistantIntent.SafeToSpend, "Ask_Safe"), (answer.Intent, answer.Headline.Key));
-        Assert.Equal(Euro(600), answer.Headline.Args[0]);
+        Assert.Equal(Money.FromCents(42_693), answer.Headline.Args[0]);
         Assert.Equal(Euro(2_000), Figure(answer, "Ask_F_Balance"));
-        Assert.Equal(Euro(-900), Figure(answer, "Ask_F_PlannedOut"));
+        Assert.Equal(Euro(-915), Figure(answer, "Ask_F_PlannedOut"));
+        Assert.Equal(Money.FromCents(-15_807), Figure(answer, "Ask_F_Usual"));
+
+        // "Can I still spend something extra?" without an amount is the same question.
+        var extra = await _assistant.AskAsync("Kan ik deze maand nog iets extra uitgeven?");
+        Assert.Equal((AssistantIntent.SafeToSpend, answer.Headline.Key), (extra.Intent, extra.Headline.Key));
+        Assert.Equal(answer.Headline.Args, extra.Headline.Args);
         Assert.Equal("Ask_Explain_Safe", answer.Explanation!.Key);
         Assert.Equal([AssistantAction.OpenForecasts], answer.Actions);
     }
@@ -215,8 +239,9 @@ public sealed class AssistantTests : IDisposable
         var answer = await _assistant.AskAsync("Welke betalingen komen eraan?");
 
         Assert.Equal("Ask_Upcoming", answer.Headline.Key);
-        Assert.Equal([2, Euro(1_300), AssistantService.UpcomingDays], answer.Headline.Args);
-        Assert.Contains(answer.Considered, t => t.Key == "Ask_Event_OutFrom" && (string)t.Args[0] == "Huur" && (string)t.Args[3] == "Zichtrekening");
+        Assert.Equal([3, Euro(1_315), AssistantService.UpcomingDays], answer.Headline.Args);
+        Assert.Contains(answer.Considered, t => t.Key == "Ask_Event_OutFrom" && t.Args[0] is AnswerText { Key: "Ask_Name_Detected" } && (DateOnly)t.Args[2] == new DateOnly(2026, 10, 12));
+        Assert.Contains(answer.Considered, t => t.Key == "Ask_Event_OutFrom" && t.Args[0] is "Huur" && (string)t.Args[3] == "Zichtrekening");
         Assert.Contains(answer.Considered, t => t.Key == "Ask_Event_CardFrom" && (string)t.Args[0] == "VISA" && (DateOnly)t.Args[2] == new DateOnly(2026, 11, 5));
         Assert.Equal(Euro(2_400), Figure(answer, "Ask_F_ExpectedIn"));
     }
@@ -233,11 +258,13 @@ public sealed class AssistantTests : IDisposable
         await _recurring.CreateRuleAsync(new RecurringRuleRequest("Autoverzekering", RecurringKind.Expense, f.Current.Id, null, null, Euro(1_200), RecurrenceFrequency.Yearly, new(2026, 11, 20)));
         var answer = await _assistant.AskAsync("Why will my balance be lower next month?");
 
-        // End of October 3,500; November − 400 VISA − 900 rent − 1,200 insurance + 2,400 salary.
+        // End of October 3,247.90 (3,500 − 15 subscription − 237.10 usual spending); November − 400 VISA − 900 rent
+        // − 1,200 insurance − 15 subscription − 350 usual spending + 2,400 salary.
         Assert.Equal((AssistantIntent.WhyLower, AnswerKind.Direct, "Ask_Lower_Yes"), (answer.Intent, answer.Kind, answer.Headline.Key));
-        Assert.Equal([Euro(3_500), Euro(3_400), Euro(2_500), Euro(2_400), new MonthRef(new(2026, 11, 1))], answer.Headline.Args);
-        Assert.Equal("Ask_Event_Rare", answer.Considered[0].Key);
-        Assert.Equal("Autoverzekering", answer.Considered[0].Args[0]);
+        Assert.Equal([Money.FromCents(324_790), Money.FromCents(278_290), Euro(2_865), Euro(2_400), new MonthRef(new(2026, 11, 1))], answer.Headline.Args);
+        Assert.Equal(("Ask_Event_UsualMonth", (object)Euro(350)), (answer.Considered[0].Key, answer.Considered[0].Args[0]));
+        Assert.Equal("Ask_Event_Rare", answer.Considered[1].Key);
+        Assert.Equal("Autoverzekering", answer.Considered[1].Args[0]);
     }
 
     // ===== What if renovation costs increase by €5,000? =====
@@ -316,7 +343,8 @@ public sealed class AssistantTests : IDisposable
 
         var groceries = await _assistant.AskAsync("How much did I spend on groceries?");
         Assert.Equal(Euro(270), groceries.Headline.Args[0]);
-        Assert.Equal(Euro(130), Figure(groceries, "Ask_F_BudgetLeft"));
+        Assert.Equal(Euro(350), Figure(groceries, "Ask_F_UsualCategory"));
+        Assert.DoesNotContain(groceries.Figures, x => x.Label.Key.Contains("Budget", StringComparison.Ordinal));
         Assert.True(Has(groceries.Assumptions, "Ask_Assume_SoFar"));
 
         var which = await _assistant.AskAsync("Hoeveel heb ik uitgegeven?");
@@ -324,6 +352,26 @@ public sealed class AssistantTests : IDisposable
         Assert.Contains("Abonnementen", which.Suggestions);
         var reply = await _assistant.AskAsync("Abonnementen", which.Pending);
         Assert.Equal((AssistantIntent.SpentOn, "Ask_Spent"), (reply.Intent, reply.Headline.Key));
+    }
+
+    // ===== What are my fixed costs? (D-039) =====
+
+    [Fact]
+    public async Task Fixed_costs_and_usual_spending_are_known_without_any_budget()
+    {
+        await SetUpAsync();
+        var answer = await _assistant.AskAsync("Wat zijn mijn vaste kosten?");
+
+        // Rent (planned) and the €15 subscription the app found itself; €350 usual day-to-day spending on top.
+        Assert.Equal((AssistantIntent.FixedCosts, AnswerKind.Direct, "Ask_Fixed"), (answer.Intent, answer.Kind, answer.Headline.Key));
+        Assert.Equal([Euro(915), Euro(350)], answer.Headline.Args);
+        Assert.Equal(Euro(2_400), Figure(answer, "Ask_F_IncomeMonthly"));
+        Assert.Equal(Euro(2_400 - 915 - 350), Figure(answer, "Ask_F_LeftMonthly"));
+        Assert.Equal(Euro(670), Figure(answer, "Ask_F_UsualThisMonth"));
+        Assert.Equal(("Ask_Fixed_Item", (object)"Huur"), (answer.Considered[0].Key, answer.Considered[0].Args[0]));
+        Assert.Contains(answer.Considered, t => t.Args[0] is AnswerText { Key: "Ask_Name_Detected" } n && (string)n.Args[0] == "Abonnementen");
+        Assert.True(Has(answer.Assumptions, "Ask_Assume_Learned"));
+        Assert.Equal([AssistantAction.OpenForecasts], answer.Actions);
     }
 
     // ===== What changed versus last month? =====

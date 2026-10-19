@@ -45,7 +45,7 @@ public sealed class PlanningTests : IDisposable
         _ledger = new LedgerService(transactions, accountRepository, categoryRepository, audit, new UndoHistory(), _clock);
         _recurring = new RecurringService(new RecurringRepository(db), accountRepository, categoryRepository, transactions, _ledger, audit, _clock);
         _cards = new CreditCardService(new CreditCardRepository(db), accountRepository, transactions, _recurring, audit, _clock);
-        _forecast = new ForecastService(accountRepository, _ledger, _recurring, _cards, _settings, _clock);
+        _forecast = new ForecastService(accountRepository, _ledger, _recurring, _cards, _settings, new SpendingProfileService(accountRepository, categoryRepository, transactions, new CreditCardRepository(db), _recurring, _clock), _clock);
         _import = new ImportService(new ImportRepository(db), transactions, accountRepository, categoryRepository, new PayeeRuleRepository(db), audit, _ledger, _settings, _clock);
     }
 
@@ -253,10 +253,12 @@ public sealed class PlanningTests : IDisposable
 
         Assert.True(safe.CanCalculate);
         Assert.Equal(new DateOnly(2026, 10, 24), safe.Until);
-        Assert.Equal("Loon", safe.NextIncome!.Rule.Name);
+        Assert.Equal("Loon", safe.NextIncome!.Name);
         Assert.Equal(Money.FromCents(200_000 - 85_000 - 20_000 - 30_000 - 10_000), safe.Amount);
         Assert.Contains(safe.Lines, l => l.Kind == ForecastLineKind.CardSettlement && l.Amount == Money.FromCents(-30_000) && l.Date == new DateOnly(2026, 10, 15));
-        Assert.Empty(safe.Caveats);
+
+        // Without two complete months of history there is no usual spending to count yet, and the forecast says so.
+        Assert.Equal([ForecastCaveat.NoSpendingHistory], safe.Caveats);
     }
 
     [Fact]
